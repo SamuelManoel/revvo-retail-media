@@ -11,7 +11,7 @@ export async function POST(req: NextRequest) {
 
     await prisma.$transaction(
       items.map(({ id, order }) =>
-        prisma.media.update({ where: { id }, data: { order } }),
+        prisma.terminalMedia.update({ where: { id }, data: { order } }),
       ),
     );
 
