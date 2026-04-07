@@ -91,7 +91,7 @@ const mainNav: NavItem[] = [
       </svg>
     ),
   },
-  {
+  { 
     href: "/midias",
     label: "Mídias",
     icon: (
