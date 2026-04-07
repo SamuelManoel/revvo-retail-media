@@ -90,7 +90,7 @@ const mainNav: NavItem[] = [
         <path d="M12 19V16.5M12 19L18 21M12 19L6 21" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
       </svg>
     ),
-  },
+  }, 
   { 
     href: "/midias", 
     label: "Mídias",
