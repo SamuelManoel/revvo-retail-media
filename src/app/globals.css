@@ -1,26 +1,105 @@
-@import "tailwindcss";
-
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@import "@heroui/styles/css";
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* ─── Custom Revvo Theme ──────────────────────────────────── */
+
+:root,
+.light,
+.default,
+[data-theme="light"],
+[data-theme="default"] {
+  --accent: oklch(76.97% 0.2124 148.67);
+  --accent-foreground: oklch(15% 0.0300 148.67);
+  --background: oklch(97.02% 0.0020 148.67);
+  --border: oklch(90.00% 0.0020 148.67);
+  --danger: oklch(0.5509 0.2166 25.29);
+  --danger-foreground: oklch(98% 0.0200 25.29);
+  --default: oklch(94.00% 0.0020 148.67);
+  --default-foreground: oklch(21.03% 0.0059 148.67);
+  --field-background: oklch(100.00% 0.0010 148.67);
+  --field-foreground: oklch(21.03% 0.0020 148.67);
+  --field-placeholder: oklch(55.17% 0.0040 148.67);
+  --focus: oklch(76.97% 0.2124 148.67);
+  --foreground: oklch(21.03% 0.0020 148.67);
+  --muted: oklch(55.17% 0.0040 148.67);
+  --overlay: oklch(100.00% 0.0006 148.67);
+  --overlay-foreground: oklch(21.03% 0.0020 148.67);
+  --scrollbar: oklch(87.10% 0.0020 148.67);
+  --segment: oklch(100.00% 0.0020 148.67);
+  --segment-foreground: oklch(21.03% 0.0020 148.67);
+  --separator: oklch(92.00% 0.0020 148.67);
+  --success: oklch(0.6072 0.1647 149.02);
+  --success-foreground: oklch(98% 0.0165 149.02);
+  --surface: oklch(100.00% 0.0010 148.67);
+  --surface-foreground: oklch(21.03% 0.0020 148.67);
+  --surface-secondary: oklch(95.24% 0.0016 148.67);
+  --surface-secondary-foreground: oklch(21.03% 0.0020 148.67);
+  --surface-tertiary: oklch(93.73% 0.0016 148.67);
+  --surface-tertiary-foreground: oklch(21.03% 0.0020 148.67);
+  --warning: oklch(0.6972 0.1687 54.22);
+  --warning-foreground: oklch(15% 0.0500 54.22);
+
+  --radius: 0.5rem;
+  --field-radius: 0.125rem;
+  --font-sans: var(--font-geist-sans);
+
+  /* Derived helpers used across components */
+  --accent-soft: color-mix(in oklch, var(--accent) 12%, transparent);
+  --accent-soft-hover: color-mix(in oklch, var(--accent) 20%, transparent);
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Cursor pointer em todos os elementos interativos */
+button:not(:disabled),
+a,
+label[for],
+label:has(input),
+[role="button"],
+[role="tab"],
+[role="checkbox"],
+[role="switch"],
+[role="option"],
+summary {
+  cursor: pointer;
+}
+
+.dark,
+[data-theme="dark"] {
+  color-scheme: dark;
+  --accent: oklch(76.97% 0.2124 148.67);
+  --accent-foreground: oklch(15% 0.0300 148.67);
+  --background: oklch(12.00% 0.0020 148.67);
+  --border: oklch(28.00% 0.0020 148.67);
+  --danger: oklch(0.5931 0.2338 25.42);
+  --danger-foreground: oklch(98% 0.0200 25.42);
+  --default: oklch(27.40% 0.0020 148.67);
+  --default-foreground: oklch(99.11% 0 0);
+  --field-background: oklch(21.03% 0.0040 148.67);
+  --field-foreground: oklch(99.11% 0.0020 148.67);
+  --field-placeholder: oklch(70.50% 0.0040 148.67);
+  --focus: oklch(76.97% 0.2124 148.67);
+  --foreground: oklch(99.11% 0.0020 148.67);
+  --muted: oklch(70.50% 0.0040 148.67);
+  --overlay: oklch(21.03% 0.0040 148.67);
+  --overlay-foreground: oklch(99.11% 0.0020 148.67);
+  --scrollbar: oklch(70.50% 0.0020 148.67);
+  --segment: oklch(39.64% 0.0020 148.67);
+  --segment-foreground: oklch(99.11% 0.0020 148.67);
+  --separator: oklch(25.00% 0.0020 148.67);
+  --success: oklch(0.7697 0.2124 148.67);
+  --success-foreground: oklch(15% 0.0500 148.67);
+  --surface: oklch(21.03% 0.0040 148.67);
+  --surface-foreground: oklch(99.11% 0.0020 148.67);
+  --surface-secondary: oklch(25.70% 0.0030 148.67);
+  --surface-secondary-foreground: oklch(99.11% 0.0020 148.67);
+  --surface-tertiary: oklch(27.21% 0.0030 148.67);
+  --surface-tertiary-foreground: oklch(99.11% 0.0020 148.67);
+  --warning: oklch(0.7921 0.1626 67.42);
+  --warning-foreground: oklch(15% 0.0488 67.42);
+
+  --accent-soft: color-mix(in oklch, var(--accent) 15%, transparent);
+  --accent-soft-hover: color-mix(in oklch, var(--accent) 22%, transparent);
 }

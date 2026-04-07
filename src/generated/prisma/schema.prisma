@@ -1,0 +1,332 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Company {
+  id        String @id @default(uuid())
+  name      String
+  legalName String
+  cnpj      String @unique
+  email     String @unique
+  slug      String @unique
+  status    String
+
+  users         User[]
+  stores        Store[]
+  terminals     Terminal[]
+  medias        Media[]
+  campaigns     Campaign[]
+  notifications Notification[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("companies")
+}
+
+model User {
+  id       String  @id @default(uuid())
+  name     String
+  email    String  @unique
+  password String
+  isActive Boolean @default(true)
+
+  companyId String
+  company   Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+
+  terminalActivations TerminalActivation[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("users")
+}
+
+model Store {
+  id      String  @id @default(uuid())
+  name    String
+  address String?
+
+  companyId String
+  company   Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+
+  terminals   Terminal[]
+  license     StoreLicense?
+  campaigns   Campaign[]
+  integration StoreIntegration?
+  products    Product[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("stores")
+}
+
+model Terminal {
+  id       String  @id @default(uuid())
+  name     String
+  ip       String? @unique
+  location String
+
+  isPriceChecker Boolean   @default(true)
+  isMediaDisplay Boolean   @default(false)
+  isActive       Boolean   @default(false)
+  isBlocked      Boolean   @default(false)
+  activationCode String?   @unique
+  lastSeenAt     DateTime?
+
+  revokedAt DateTime?
+  revokedBy String? // userId de quem revogou
+
+  storeId String?
+  store   Store?  @relation(fields: [storeId], references: [id], onDelete: SetNull)
+
+  companyId String
+  company   Company @relation(fields: [companyId], references: [id])
+
+  credential     TerminalCredential?
+  activations    TerminalActivation[]
+  terminalMedias TerminalMedia[]
+  heartbeats     TerminalHeartbeat[]
+  events         TerminalEvent[]
+  campaigns      Campaign[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("terminals")
+}
+
+model TerminalCredential {
+  id        String    @id @default(uuid())
+  token     String    @unique
+  status    String    @default("ACTIVE") // ACTIVE | REVOKED
+  expiresAt DateTime?
+  revokedAt DateTime?
+
+  terminalId String   @unique
+  terminal   Terminal @relation(fields: [terminalId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@map("terminal_credentials")
+}
+
+model TerminalActivation {
+  id          String    @id @default(uuid())
+  activatedAt DateTime  @default(now())
+  status      String    @default("USED") // PENDING | USED | EXPIRED | REVOKED
+  revokedAt   DateTime?
+  revokedBy   String? // userId de quem revogou
+
+  terminalId String
+  terminal   Terminal @relation(fields: [terminalId], references: [id], onDelete: Cascade)
+
+  activatedByUserId String?
+  activatedByUser   User?   @relation(fields: [activatedByUserId], references: [id], onDelete: SetNull)
+
+  @@map("terminal_activations")
+}
+
+model StoreLicense {
+  id            String   @id @default(uuid())
+  quantityTotal Int
+  quantityUsed  Int      @default(0)
+  startsAt      DateTime
+  expiresAt     DateTime
+  status        String // active | expired | suspended
+
+  storeId String @unique
+  store   Store  @relation(fields: [storeId], references: [id], onDelete: Cascade)
+
+  renewals LicenseRenewal[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("store_licenses")
+}
+
+model LicenseRenewal {
+  id                String   @id @default(uuid())
+  previousExpiresAt DateTime
+  newExpiresAt      DateTime
+  addedQuantity     Int
+
+  storeLicenseId String
+  storeLicense   StoreLicense @relation(fields: [storeLicenseId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@map("license_renewals")
+}
+
+model Campaign {
+  id       String   @id @default(uuid())
+  name     String
+  startsAt DateTime
+  endsAt   DateTime
+  isActive Boolean  @default(true)
+
+  companyId String
+  company   Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+
+  storeId String?
+  store   Store?  @relation(fields: [storeId], references: [id], onDelete: SetNull)
+
+  terminalId String?
+  terminal   Terminal? @relation(fields: [terminalId], references: [id], onDelete: SetNull)
+
+  terminalMedias TerminalMedia[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("campaigns")
+}
+
+model Media {
+  id           String  @id @default(uuid())
+  bucket       String
+  path         String  @unique
+  url          String?
+  fileName     String
+  originalName String?
+  mimeType     String
+  size         Int
+  type         String // image | video
+
+  companyId String?
+  company   Company? @relation(fields: [companyId], references: [id], onDelete: SetNull)
+
+  terminalMedias TerminalMedia[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("media")
+}
+
+model TerminalMedia {
+  id       String    @id @default(uuid())
+  order    Int       @default(0)
+  startsAt DateTime?
+  endsAt   DateTime?
+
+  terminalId String
+  terminal   Terminal @relation(fields: [terminalId], references: [id], onDelete: Cascade)
+
+  mediaId String
+  media   Media  @relation(fields: [mediaId], references: [id], onDelete: Cascade)
+
+  campaignId String?
+  campaign   Campaign? @relation(fields: [campaignId], references: [id], onDelete: SetNull)
+
+  @@unique([terminalId, mediaId])
+  @@map("terminal_medias")
+}
+
+model TerminalHeartbeat {
+  id         String  @id @default(uuid())
+  ip         String?
+  appVersion String?
+
+  terminalId String
+  terminal   Terminal @relation(fields: [terminalId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@map("terminal_heartbeats")
+}
+
+model TerminalEvent {
+  id      String @id @default(uuid())
+  type    String
+  payload Json?
+
+  terminalId String
+  terminal   Terminal @relation(fields: [terminalId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@map("terminal_events")
+}
+
+model StoreIntegration {
+  id                   String    @id @default(uuid())
+  baseUrl              String
+  token                String?
+  endpointProductByEan String    @default("/terminal/product/{ean}")
+  endpointCatalog      String    @default("/terminal/product")
+  endpointFullLoad     String?
+  endpointIncremental  String?
+  lastSyncAt           DateTime?
+  isActive             Boolean   @default(true)
+
+  storeId String @unique
+  store   Store  @relation(fields: [storeId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("store_integrations")
+}
+
+model Product {
+  id          String   @id @default(uuid())
+  ean         String
+  name        String
+  imageUrl    String?
+  price       Decimal  @db.Decimal(10, 2)
+  offerPrice  Decimal? @db.Decimal(10, 2)
+  clubPrice   Decimal? @db.Decimal(10, 2)
+  stock       Int?
+  isActive    Boolean  @default(true)
+  externalId  String?
+  hash        String?
+  description String?
+
+  storeId String
+  store   Store  @relation(fields: [storeId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([storeId, externalId])
+  @@index([storeId, ean])
+  @@map("products")
+}
+
+model Configuration {
+  id        String    @id @default(uuid())
+  resetTime Int       @default(30)
+  lastSync  DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("configurations")
+}
+
+model Notification {
+  id          String    @id @default(uuid())
+  title       String
+  body        String
+  type        String    @default("info") // info | warning | danger | success
+  actionLabel String?
+  actionUrl   String?
+  isRead      Boolean   @default(false)
+  readAt      DateTime?
+
+  companyId String?
+  company   Company? @relation(fields: [companyId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@map("notifications")
+}

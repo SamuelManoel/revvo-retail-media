@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm install:*)",
+      "Bash(node -e \"const m = require\\(''''./node_modules/@heroui/react/dist/index.js''''\\); console.log\\(Object.keys\\(m\\).filter\\(k => k.includes\\(''''Provider''''\\) || k.includes\\(''''provider''''\\)\\)\\)\")"
+    ]
+  }
+}
