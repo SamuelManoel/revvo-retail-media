@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { getSession } from '@/lib/auth';
+import { dropStoreSchema } from '@/lib/tenant-db';
 
 type Params = { params: Promise<{ id: string }> };
 
@@ -67,6 +68,7 @@ export async function DELETE(_req: NextRequest, { params }: Params) {
 
   try {
     await prisma.store.delete({ where: { id } });
+    await dropStoreSchema(id);
     return NextResponse.json({ message: 'Loja removida com sucesso' });
   } catch (error) {
     console.error('Erro ao deletar loja:', error);

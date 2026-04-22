@@ -127,6 +127,7 @@ exports.Prisma.CompanyScalarFieldEnum = {
   cnpj: 'cnpj',
   email: 'email',
   slug: 'slug',
+  conta: 'conta',
   status: 'status',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -266,39 +267,6 @@ exports.Prisma.TerminalEventScalarFieldEnum = {
   createdAt: 'createdAt'
 };
 
-exports.Prisma.StoreIntegrationScalarFieldEnum = {
-  id: 'id',
-  baseUrl: 'baseUrl',
-  token: 'token',
-  endpointProductByEan: 'endpointProductByEan',
-  endpointCatalog: 'endpointCatalog',
-  endpointFullLoad: 'endpointFullLoad',
-  endpointIncremental: 'endpointIncremental',
-  lastSyncAt: 'lastSyncAt',
-  isActive: 'isActive',
-  storeId: 'storeId',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-};
-
-exports.Prisma.ProductScalarFieldEnum = {
-  id: 'id',
-  ean: 'ean',
-  name: 'name',
-  imageUrl: 'imageUrl',
-  price: 'price',
-  offerPrice: 'offerPrice',
-  clubPrice: 'clubPrice',
-  stock: 'stock',
-  isActive: 'isActive',
-  externalId: 'externalId',
-  hash: 'hash',
-  description: 'description',
-  storeId: 'storeId',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-};
-
 exports.Prisma.ConfigurationScalarFieldEnum = {
   id: 'id',
   resetTime: 'resetTime',
@@ -361,8 +329,6 @@ exports.Prisma.ModelName = {
   TerminalMedia: 'TerminalMedia',
   TerminalHeartbeat: 'TerminalHeartbeat',
   TerminalEvent: 'TerminalEvent',
-  StoreIntegration: 'StoreIntegration',
-  Product: 'Product',
   Configuration: 'Configuration',
   Notification: 'Notification'
 };

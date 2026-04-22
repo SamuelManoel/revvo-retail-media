@@ -47,7 +47,7 @@ export async function PATCH(req: NextRequest, { params }: Params) {
 
   try {
     const body = await req.json();
-    const { name, legalName, cnpj, email, slug, status } = body;
+    const { name, legalName, cnpj, email, slug, conta, status } = body;
 
     const updated = await prisma.company.update({
       where: { id },
@@ -57,6 +57,7 @@ export async function PATCH(req: NextRequest, { params }: Params) {
         ...(cnpj !== undefined && { cnpj }),
         ...(email !== undefined && { email }),
         ...(slug !== undefined && { slug }),
+        ...(conta !== undefined && { conta }),
         ...(status !== undefined && { status }),
       },
     });
@@ -68,7 +69,7 @@ export async function PATCH(req: NextRequest, { params }: Params) {
 
     if (error?.code === 'P2002') {
       return NextResponse.json(
-        { message: 'CNPJ, e-mail ou slug já cadastrado' },
+        { message: 'CNPJ, e-mail, slug ou conta já cadastrado' },
         { status: 409 }
       );
     }

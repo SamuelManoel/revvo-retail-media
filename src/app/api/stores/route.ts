@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { getSession } from '@/lib/auth';
+import { createStoreSchema } from '@/lib/tenant-db';
 
 export async function GET() {
   const session = await getSession();
@@ -61,6 +62,8 @@ export async function POST(req: NextRequest) {
         _count: { select: { terminals: true } },
       },
     });
+
+    await createStoreSchema(store.id);
 
     return NextResponse.json(store, { status: 201 });
   } catch (error) {

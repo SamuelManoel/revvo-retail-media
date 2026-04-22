@@ -5,14 +5,14 @@ import { useRouter } from 'next/navigation';
 
 export default function LoginPage() {
   const router = useRouter();
-  const [form, setForm] = useState({ email: '', password: '' });
+  const [form, setForm] = useState({ conta: '', email: '', password: '' });
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    if (!form.email || !form.password) {
-      setError('Preencha e-mail e senha.');
+    if (!form.conta || !form.email || !form.password) {
+      setError('Preencha conta, e-mail e senha.');
       return;
     }
     setLoading(true);
@@ -117,6 +117,23 @@ export default function LoginPage() {
           </div>
 
           <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+            <div className="flex flex-col gap-1.5">
+              <label className="text-sm font-medium text-foreground">Conta</label>
+              <input
+                type="text"
+                placeholder="nome-da-sua-conta"
+                autoComplete="organization"
+                value={form.conta}
+                onChange={(e) => { setForm((f) => ({ ...f, conta: e.target.value })); setError(null); }}
+                className="
+                  w-full rounded-lg border border-border bg-surface px-3 py-2.5
+                  text-sm text-foreground placeholder:text-muted
+                  outline-none transition-colors
+                  focus:border-accent focus:ring-2 focus:ring-accent-soft-hover
+                "
+              />
+            </div>
+
             <div className="flex flex-col gap-1.5">
               <label className="text-sm font-medium text-foreground">E-mail</label>
               <input

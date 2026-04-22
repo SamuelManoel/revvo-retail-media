@@ -34,11 +34,6 @@ export async function GET(req: NextRequest) {
       config: { resetTime: config?.resetTime ?? 30 },
       endpoints: {
         productByEan: '/api/terminal/product/{ean}',
-        catalog: '/api/terminal/product',
-        // Endpoints públicos por loja — não exigem Bearer token
-        ...(terminal.storeId && {
-          publicProductByEan: `/api/terminal/${terminal.storeId}/{ean}`,
-        }),
       },
     });
   } catch (error) {

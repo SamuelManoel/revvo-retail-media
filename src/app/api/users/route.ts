@@ -50,9 +50,9 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const exists = await prisma.user.findUnique({ where: { email } });
+    const exists = await prisma.user.findUnique({ where: { email_companyId: { email, companyId } } });
     if (exists) {
-      return NextResponse.json({ message: 'Já existe um usuário com esse e-mail' }, { status: 409 });
+      return NextResponse.json({ message: 'Já existe um usuário com esse e-mail nesta empresa' }, { status: 409 });
     }
 
     const companyExists = await prisma.company.findUnique({ where: { id: companyId } });

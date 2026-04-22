@@ -1,0 +1,2551 @@
+openapi: 3.0.3
+info:
+  title: Revvo Smart Price API
+  description: |
+    API do sistema Revvo Smart Price — plataforma de gestão de terminais de consulta de preços e exibição de mídia em lojas.
+
+    ## Autenticação
+
+    A API possui dois mecanismos de autenticação:
+
+    ### 1. Web Session (Cookie JWT)
+    Utilizada pelo painel administrativo. O login via `POST /api/auth/login` retorna um cookie `revvo_session` (httpOnly, SameSite=lax) com validade de 8 horas.
+    Todas as rotas administrativas exigem esse cookie.
+
+    ### 2. Terminal Bearer Token
+    Utilizada pelos dispositivos físicos (terminais). O terminal obtém um JWT via `POST /api/terminal/activate` (primeira vez) ou `POST /api/terminal/auth` (reautenticação).
+    O token deve ser enviado no header `Authorization: Bearer <token>` e tem validade de 30 dias.
+
+    ## Perfis de acesso
+
+    - **Master** (`revvo-master`): acesso irrestrito a todas as empresas.
+    - **Usuário comum**: acesso restrito à própria empresa.
+  version: 1.0.0
+  contact:
+    name: Revvo Smart Price
+
+servers:
+  - url: https://revvo-smart-price-backend.vercel.app
+    description: Produção
+  - url: http://localhost:3000
+    description: Local
+
+tags:
+  - name: Auth
+    description: Autenticação de usuários web
+  - name: Companies
+    description: Gestão de empresas (Master only)
+  - name: Users
+    description: Gestão de usuários
+  - name: Profile
+    description: Perfil do usuário autenticado
+  - name: Stores
+    description: Gestão de lojas
+  - name: License
+    description: Licenças de terminais por loja (Master only para criar/editar)
+  - name: Integration
+    description: Integração de catálogo de produtos por loja
+  - name: Products
+    description: Catálogo de produtos por loja
+  - name: Terminals
+    description: Gestão de terminais
+  - name: Terminal Media
+    description: Mídias vinculadas a terminais
+  - name: Media
+    description: Biblioteca de mídias (imagens e vídeos)
+  - name: Notifications
+    description: Notificações por empresa
+  - name: Config
+    description: Configurações globais do sistema
+  - name: Terminal Device - Auth
+    description: Autenticação e ativação de dispositivos terminais
+  - name: Terminal Device - Data
+    description: Endpoints consumidos pelos dispositivos terminais em operação
+
+components:
+  securitySchemes:
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: revvo_session
+      description: Cookie JWT gerado pelo login web. Válido por 8 horas.
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: JWT gerado na ativação do terminal. Válido por 30 dias.
+
+  schemas:
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+      required: [message]
+
+    Company:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+          example: Santo Antônio Supermercados
+        legalName:
+          type: string
+          example: Santo Antônio Comercial Ltda
+        cnpj:
+          type: string
+          example: "12.345.678/0001-99"
+        email:
+          type: string
+          format: email
+        slug:
+          type: string
+          example: santo-antonio
+        status:
+          type: string
+          enum: [ATIVO, INATIVO]
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        email:
+          type: string
+          format: email
+        isActive:
+          type: boolean
+        companyId:
+          type: string
+          format: uuid
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        company:
+          type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+            name:
+              type: string
+
+    Store:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        address:
+          type: string
+          nullable: true
+        companyId:
+          type: string
+          format: uuid
+        company:
+          type: object
+          properties:
+            id:
+              type: string
+            name:
+              type: string
+        license:
+          $ref: '#/components/schemas/StoreLicense'
+          nullable: true
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+
+    StoreLicense:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        quantityTotal:
+          type: integer
+          example: 10
+        quantityUsed:
+          type: integer
+          example: 3
+        startsAt:
+          type: string
+          format: date-time
+        expiresAt:
+          type: string
+          format: date-time
+        status:
+          type: string
+          enum: [active, expired, suspended]
+        renewals:
+          type: array
+          items:
+            $ref: '#/components/schemas/LicenseRenewal'
+
+    LicenseRenewal:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        previousExpiresAt:
+          type: string
+          format: date-time
+        newExpiresAt:
+          type: string
+          format: date-time
+        addedQuantity:
+          type: integer
+        createdAt:
+          type: string
+          format: date-time
+
+    StoreIntegration:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        baseUrl:
+          type: string
+          example: https://erp.minhaloja.com.br
+        token:
+          type: string
+          nullable: true
+        endpointProductByEan:
+          type: string
+          default: /terminal/product/{ean}
+        endpointCatalog:
+          type: string
+          default: /terminal/product
+        endpointFullLoad:
+          type: string
+          nullable: true
+        endpointIncremental:
+          type: string
+          nullable: true
+        lastSyncAt:
+          type: string
+          format: date-time
+          nullable: true
+        isActive:
+          type: boolean
+        storeId:
+          type: string
+          format: uuid
+
+    Product:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        ean:
+          type: string
+          example: "7891000315507"
+        name:
+          type: string
+          example: Leite Integral 1L
+        imageUrl:
+          type: string
+          nullable: true
+        description:
+          type: string
+          nullable: true
+        price:
+          type: number
+          format: decimal
+          example: 4.99
+        offerPrice:
+          type: number
+          nullable: true
+          example: 3.99
+        clubPrice:
+          type: number
+          nullable: true
+          example: 3.49
+        stock:
+          type: integer
+          nullable: true
+        isActive:
+          type: boolean
+        externalId:
+          type: string
+          nullable: true
+        storeId:
+          type: string
+          format: uuid
+        updatedAt:
+          type: string
+          format: date-time
+
+    Terminal:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+          example: Caixa 01
+        ip:
+          type: string
+          nullable: true
+          example: 192.168.1.50
+        location:
+          type: string
+          example: Entrada principal
+        isPriceChecker:
+          type: boolean
+        isMediaDisplay:
+          type: boolean
+        isActive:
+          type: boolean
+        isBlocked:
+          type: boolean
+        activationCode:
+          type: string
+          nullable: true
+          example: AB3XKRP7
+        lastSeenAt:
+          type: string
+          format: date-time
+          nullable: true
+        storeId:
+          type: string
+          format: uuid
+          nullable: true
+        companyId:
+          type: string
+          format: uuid
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+
+    TerminalMedia:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        order:
+          type: integer
+        startsAt:
+          type: string
+          format: date-time
+          nullable: true
+        endsAt:
+          type: string
+          format: date-time
+          nullable: true
+        terminalId:
+          type: string
+          format: uuid
+        mediaId:
+          type: string
+          format: uuid
+        campaignId:
+          type: string
+          format: uuid
+          nullable: true
+        media:
+          $ref: '#/components/schemas/Media'
+        campaign:
+          type: object
+          nullable: true
+          properties:
+            id:
+              type: string
+            name:
+              type: string
+
+    Media:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        bucket:
+          type: string
+        path:
+          type: string
+        url:
+          type: string
+          nullable: true
+        fileName:
+          type: string
+        originalName:
+          type: string
+          nullable: true
+        mimeType:
+          type: string
+          example: image/jpeg
+        size:
+          type: integer
+          description: Tamanho em bytes
+        type:
+          type: string
+          enum: [image, video]
+        companyId:
+          type: string
+          format: uuid
+          nullable: true
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+
+    Notification:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        title:
+          type: string
+        body:
+          type: string
+        type:
+          type: string
+          enum: [info, warning, danger, success]
+        actionLabel:
+          type: string
+          nullable: true
+        actionUrl:
+          type: string
+          nullable: true
+        isRead:
+          type: boolean
+        readAt:
+          type: string
+          format: date-time
+          nullable: true
+        companyId:
+          type: string
+          format: uuid
+          nullable: true
+        createdAt:
+          type: string
+          format: date-time
+
+    Configuration:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        resetTime:
+          type: integer
+          description: Tempo em segundos para reset da tela do terminal
+          default: 30
+        lastSync:
+          type: string
+          format: date-time
+          nullable: true
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+
+    PaginatedProducts:
+      type: object
+      properties:
+        products:
+          type: array
+          items:
+            $ref: '#/components/schemas/Product'
+        total:
+          type: integer
+        page:
+          type: integer
+        limit:
+          type: integer
+        pages:
+          type: integer
+
+security:
+  - cookieAuth: []
+
+paths:
+
+  # ─────────────────────────────────────────────
+  # AUTH
+  # ─────────────────────────────────────────────
+
+  /api/auth/login:
+    post:
+      tags: [Auth]
+      summary: Login de usuário web
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email, password]
+              properties:
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+                  format: password
+      responses:
+        '200':
+          description: Login realizado com sucesso. Cookie `revvo_session` é definido.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  user:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      name:
+                        type: string
+                      email:
+                        type: string
+                      companyId:
+                        type: string
+                      company:
+                        type: object
+        '400':
+          description: E-mail e senha são obrigatórios
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: E-mail ou senha inválidos
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Usuário ou empresa inativos
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/auth/logout:
+    post:
+      tags: [Auth]
+      summary: Encerrar sessão
+      responses:
+        '200':
+          description: Sessão encerrada
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+
+  /api/auth/me:
+    get:
+      tags: [Auth]
+      summary: Retorna dados da sessão atual
+      responses:
+        '200':
+          description: Dados da sessão
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  userId:
+                    type: string
+                  companyId:
+                    type: string
+                  name:
+                    type: string
+                  email:
+                    type: string
+                  isMaster:
+                    type: boolean
+        '401':
+          description: Não autenticado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  # ─────────────────────────────────────────────
+  # COMPANIES
+  # ─────────────────────────────────────────────
+
+  /api/companies:
+    get:
+      tags: [Companies]
+      summary: Listar empresas
+      description: Retorna todas as empresas. Sem restrição de tenant (sem cookie obrigatório nos checks internos).
+      responses:
+        '200':
+          description: Lista de empresas
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  allOf:
+                    - $ref: '#/components/schemas/Company'
+                    - type: object
+                      properties:
+                        _count:
+                          type: object
+                          properties:
+                            terminals:
+                              type: integer
+                            users:
+                              type: integer
+    post:
+      tags: [Companies]
+      summary: Criar empresa
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [name, legalName, cnpj, email, slug]
+              properties:
+                name:
+                  type: string
+                legalName:
+                  type: string
+                cnpj:
+                  type: string
+                email:
+                  type: string
+                  format: email
+                slug:
+                  type: string
+                status:
+                  type: string
+                  enum: [ATIVO, INATIVO]
+                  default: ATIVO
+      responses:
+        '201':
+          description: Empresa criada
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+        '400':
+          description: Campos obrigatórios ausentes
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: CNPJ, e-mail ou slug já cadastrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/companies/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+    get:
+      tags: [Companies]
+      summary: Buscar empresa por ID
+      responses:
+        '200':
+          description: Dados da empresa
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/Company'
+                  - type: object
+                    properties:
+                      users:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/User'
+                      terminals:
+                        type: array
+                        items:
+                          type: object
+        '404':
+          description: Empresa não encontrada
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    patch:
+      tags: [Companies]
+      summary: Editar empresa
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                legalName:
+                  type: string
+                cnpj:
+                  type: string
+                email:
+                  type: string
+                slug:
+                  type: string
+                status:
+                  type: string
+                  enum: [ATIVO, INATIVO]
+      responses:
+        '200':
+          description: Empresa atualizada
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+        '409':
+          description: CNPJ, e-mail ou slug duplicado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    delete:
+      tags: [Companies]
+      summary: Remover empresa
+      responses:
+        '200':
+          description: Empresa removida
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+
+  # ─────────────────────────────────────────────
+  # USERS
+  # ─────────────────────────────────────────────
+
+  /api/users:
+    get:
+      tags: [Users]
+      summary: Listar usuários
+      description: Master retorna todos. Usuário comum retorna apenas da própria empresa.
+      responses:
+        '200':
+          description: Lista de usuários
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+        '401':
+          description: Não autenticado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      tags: [Users]
+      summary: Criar usuário
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [name, email, password]
+              properties:
+                name:
+                  type: string
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+                  format: password
+                isActive:
+                  type: boolean
+                  default: true
+                companyId:
+                  type: string
+                  format: uuid
+                  description: Apenas master pode especificar. Não-master usa a própria empresa.
+      responses:
+        '201':
+          description: Usuário criado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: Campos obrigatórios ausentes
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: E-mail já cadastrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/users/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+    patch:
+      tags: [Users]
+      summary: Editar usuário
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                email:
+                  type: string
+                isActive:
+                  type: boolean
+                password:
+                  type: string
+                  description: Será hasheado com bcrypt
+      responses:
+        '200':
+          description: Usuário atualizado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '409':
+          description: E-mail já cadastrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    delete:
+      tags: [Users]
+      summary: Remover usuário
+      responses:
+        '200':
+          description: Usuário removido
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+
+  # ─────────────────────────────────────────────
+  # PROFILE
+  # ─────────────────────────────────────────────
+
+  /api/profile:
+    get:
+      tags: [Profile]
+      summary: Buscar perfil do usuário autenticado
+      responses:
+        '200':
+          description: Dados do perfil
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '401':
+          description: Não autenticado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    patch:
+      tags: [Profile]
+      summary: Atualizar perfil
+      description: Permite alterar nome e/ou senha do usuário autenticado.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                currentPassword:
+                  type: string
+                  description: Obrigatório apenas ao trocar a senha
+                newPassword:
+                  type: string
+                  description: Nova senha — requer currentPassword
+      responses:
+        '200':
+          description: Perfil atualizado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  user:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      name:
+                        type: string
+                      email:
+                        type: string
+        '401':
+          description: Senha atual incorreta ou não autenticado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  # ─────────────────────────────────────────────
+  # STORES
+  # ─────────────────────────────────────────────
+
+  /api/stores:
+    get:
+      tags: [Stores]
+      summary: Listar lojas
+      responses:
+        '200':
+          description: Lista de lojas
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Store'
+        '401':
+          description: Não autenticado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      tags: [Stores]
+      summary: Criar loja
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [name]
+              properties:
+                name:
+                  type: string
+                address:
+                  type: string
+                companyId:
+                  type: string
+                  format: uuid
+                  description: Apenas master pode especificar.
+      responses:
+        '201':
+          description: Loja criada
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Store'
+        '400':
+          description: Nome é obrigatório
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Acesso não autorizado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/stores/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+    get:
+      tags: [Stores]
+      summary: Buscar loja por ID
+      responses:
+        '200':
+          description: Dados da loja
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Store'
+        '404':
+          description: Loja não encontrada
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    patch:
+      tags: [Stores]
+      summary: Editar loja
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                address:
+                  type: string
+      responses:
+        '200':
+          description: Loja atualizada
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Store'
+    delete:
+      tags: [Stores]
+      summary: Remover loja
+      responses:
+        '200':
+          description: Loja removida
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+
+  # ─────────────────────────────────────────────
+  # LICENSE
+  # ─────────────────────────────────────────────
+
+  /api/stores/{id}/license:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        description: ID da loja
+        schema:
+          type: string
+          format: uuid
+    get:
+      tags: [License]
+      summary: Buscar licença da loja
+      responses:
+        '200':
+          description: Dados da licença (null se não houver)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StoreLicense'
+        '404':
+          description: Loja não encontrada
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      tags: [License]
+      summary: Criar licença para a loja (Master only)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [quantityTotal, startsAt, expiresAt]
+              properties:
+                quantityTotal:
+                  type: integer
+                  example: 10
+                startsAt:
+                  type: string
+                  format: date-time
+                expiresAt:
+                  type: string
+                  format: date-time
+      responses:
+        '201':
+          description: Licença criada
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StoreLicense'
+        '403':
+          description: Acesso restrito ao master
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: Loja já possui licença
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    patch:
+      tags: [License]
+      summary: Renovar ou ajustar licença (Master only)
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                newExpiresAt:
+                  type: string
+                  format: date-time
+                  description: Nova data de expiração
+                addQuantity:
+                  type: integer
+                  description: Quantidade a adicionar ao total
+                removeQuantity:
+                  type: integer
+                  description: Quantidade a remover do total (não pode ficar abaixo do uso atual)
+                status:
+                  type: string
+                  enum: [active, expired, suspended]
+      responses:
+        '200':
+          description: Licença atualizada
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StoreLicense'
+        '422':
+          description: Não é possível reduzir abaixo do uso atual
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    delete:
+      tags: [License]
+      summary: Remover licença da loja (Master only)
+      responses:
+        '200':
+          description: Licença removida
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+
+  # ─────────────────────────────────────────────
+  # INTEGRATION
+  # ─────────────────────────────────────────────
+
+  /api/stores/{id}/integration:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        description: ID da loja
+        schema:
+          type: string
+          format: uuid
+    get:
+      tags: [Integration]
+      summary: Buscar integração da loja
+      responses:
+        '200':
+          description: Dados da integração (null se não houver)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StoreIntegration'
+    put:
+      tags: [Integration]
+      summary: Criar ou atualizar integração da loja (upsert)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [baseUrl]
+              properties:
+                baseUrl:
+                  type: string
+                  example: https://erp.minhaloja.com.br
+                token:
+                  type: string
+                  nullable: true
+                endpointProductByEan:
+                  type: string
+                  default: /terminal/product/{ean}
+                endpointCatalog:
+                  type: string
+                  default: /terminal/product
+                endpointFullLoad:
+                  type: string
+                  nullable: true
+                endpointIncremental:
+                  type: string
+                  nullable: true
+                isActive:
+                  type: boolean
+                  default: true
+      responses:
+        '200':
+          description: Integração salva
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StoreIntegration'
+    delete:
+      tags: [Integration]
+      summary: Remover integração da loja
+      responses:
+        '200':
+          description: Integração removida
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+
+  # ─────────────────────────────────────────────
+  # PRODUCTS
+  # ─────────────────────────────────────────────
+
+  /api/stores/{id}/products:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        description: ID da loja
+        schema:
+          type: string
+          format: uuid
+    get:
+      tags: [Products]
+      summary: Listar produtos da loja
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+            default: 1
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 50
+            maximum: 100
+        - name: q
+          in: query
+          description: Busca por nome ou EAN
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Produtos paginados
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedProducts'
+    post:
+      tags: [Products]
+      summary: Criar ou atualizar produto (upsert por storeId+ean)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [ean, name, price]
+              properties:
+                ean:
+                  type: string
+                name:
+                  type: string
+                price:
+                  type: number
+                offerPrice:
+                  type: number
+                  nullable: true
+                clubPrice:
+                  type: number
+                  nullable: true
+                stock:
+                  type: integer
+                  nullable: true
+                imageUrl:
+                  type: string
+                  nullable: true
+                isActive:
+                  type: boolean
+                  default: true
+                externalId:
+                  type: string
+                  nullable: true
+                hash:
+                  type: string
+                  nullable: true
+                description:
+                  type: string
+                  nullable: true
+      responses:
+        '200':
+          description: Produto atualizado (upsert)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        '201':
+          description: Produto criado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+
+  /api/stores/{id}/products/{productId}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        description: ID da loja
+        schema:
+          type: string
+          format: uuid
+      - name: productId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+    patch:
+      tags: [Products]
+      summary: Editar produto
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                ean:
+                  type: string
+                name:
+                  type: string
+                price:
+                  type: number
+                offerPrice:
+                  type: number
+                  nullable: true
+                clubPrice:
+                  type: number
+                  nullable: true
+                stock:
+                  type: integer
+                  nullable: true
+                imageUrl:
+                  type: string
+                  nullable: true
+                isActive:
+                  type: boolean
+                description:
+                  type: string
+                  nullable: true
+      responses:
+        '200':
+          description: Produto atualizado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        '404':
+          description: Produto não encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    delete:
+      tags: [Products]
+      summary: Remover produto
+      responses:
+        '200':
+          description: Produto removido
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+
+  # ─────────────────────────────────────────────
+  # TERMINALS
+  # ─────────────────────────────────────────────
+
+  /api/terminals:
+    get:
+      tags: [Terminals]
+      summary: Listar terminais
+      responses:
+        '200':
+          description: Lista de terminais
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Terminal'
+        '401':
+          description: Não autenticado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      tags: [Terminals]
+      summary: Criar terminal
+      description: |
+        Cria um terminal e gera um código de ativação. A licença da loja é consumida
+        apenas na ativação do dispositivo físico, não neste endpoint.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [name, location]
+              properties:
+                name:
+                  type: string
+                location:
+                  type: string
+                ip:
+                  type: string
+                  nullable: true
+                storeId:
+                  type: string
+                  format: uuid
+                  nullable: true
+                companyId:
+                  type: string
+                  format: uuid
+                  description: Apenas master pode especificar.
+                isPriceChecker:
+                  type: boolean
+                  default: true
+                isMediaDisplay:
+                  type: boolean
+                  default: false
+      responses:
+        '201':
+          description: Terminal criado com código de ativação
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Terminal'
+        '409':
+          description: IP já cadastrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '422':
+          description: Licença indisponível para a loja
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/terminals/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+    get:
+      tags: [Terminals]
+      summary: Buscar terminal por ID
+      responses:
+        '200':
+          description: Dados do terminal
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Terminal'
+        '404':
+          description: Terminal não encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    patch:
+      tags: [Terminals]
+      summary: Editar terminal
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                ip:
+                  type: string
+                location:
+                  type: string
+                storeId:
+                  type: string
+                  format: uuid
+                isPriceChecker:
+                  type: boolean
+                isMediaDisplay:
+                  type: boolean
+                isBlocked:
+                  type: boolean
+      responses:
+        '200':
+          description: Terminal atualizado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Terminal'
+        '409':
+          description: IP já cadastrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    delete:
+      tags: [Terminals]
+      summary: Remover terminal
+      description: Libera a licença se o terminal estava ativo.
+      responses:
+        '200':
+          description: Terminal removido
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+
+  /api/admin/terminals/{id}/revoke:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        description: ID do terminal
+        schema:
+          type: string
+          format: uuid
+    post:
+      tags: [Terminals]
+      summary: Revogar licença do terminal
+      description: |
+        Desativa o terminal, invalida todos os JWTs existentes (via revogação da credencial),
+        libera 1 slot da licença da loja e gera novo código de ativação.
+      responses:
+        '200':
+          description: Terminal revogado com sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  terminalId:
+                    type: string
+                  newActivationCode:
+                    type: string
+                    example: AB3XKRP7
+                  licenseFreed:
+                    type: boolean
+                  message:
+                    type: string
+        '403':
+          description: Acesso não autorizado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Terminal não encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '422':
+          description: Terminal já está inativo
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  # ─────────────────────────────────────────────
+  # TERMINAL MEDIA
+  # ─────────────────────────────────────────────
+
+  /api/admin/terminals/{id}/media:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        description: ID do terminal
+        schema:
+          type: string
+          format: uuid
+    get:
+      tags: [Terminal Media]
+      summary: Listar mídias vinculadas ao terminal
+      description: Terminal deve ter `isMediaDisplay = true`.
+      responses:
+        '200':
+          description: Lista de vínculos terminal-mídia ordenados
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TerminalMedia'
+        '400':
+          description: Terminal não é do tipo mídia
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      tags: [Terminal Media]
+      summary: Vincular mídia ao terminal
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [mediaId]
+              properties:
+                mediaId:
+                  type: string
+                  format: uuid
+                startsAt:
+                  type: string
+                  format: date-time
+                  nullable: true
+                endsAt:
+                  type: string
+                  format: date-time
+                  nullable: true
+                campaignId:
+                  type: string
+                  format: uuid
+                  nullable: true
+      responses:
+        '201':
+          description: Mídia vinculada
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TerminalMedia'
+        '409':
+          description: Mídia já vinculada a este terminal
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/admin/terminals/{id}/media/order:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        description: ID do terminal
+        schema:
+          type: string
+          format: uuid
+    put:
+      tags: [Terminal Media]
+      summary: Reordenar mídias do terminal
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [items]
+              properties:
+                items:
+                  type: array
+                  items:
+                    type: object
+                    required: [id, order]
+                    properties:
+                      id:
+                        type: string
+                        format: uuid
+                        description: ID do TerminalMedia
+                      order:
+                        type: integer
+      responses:
+        '200':
+          description: Ordem atualizada
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+
+  /api/admin/terminals/{id}/media/{terminalMediaId}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        description: ID do terminal
+        schema:
+          type: string
+          format: uuid
+      - name: terminalMediaId
+        in: path
+        required: true
+        description: ID do vínculo TerminalMedia
+        schema:
+          type: string
+          format: uuid
+    put:
+      tags: [Terminal Media]
+      summary: Editar vínculo de mídia (datas e campanha)
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                startsAt:
+                  type: string
+                  format: date-time
+                  nullable: true
+                endsAt:
+                  type: string
+                  format: date-time
+                  nullable: true
+                campaignId:
+                  type: string
+                  format: uuid
+                  nullable: true
+      responses:
+        '200':
+          description: Vínculo atualizado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TerminalMedia'
+        '404':
+          description: Vínculo não encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    delete:
+      tags: [Terminal Media]
+      summary: Desvincular mídia do terminal
+      description: |
+        Remove o vínculo. Se a mídia não estiver vinculada a nenhum outro terminal,
+        ela é automaticamente excluída do banco de dados e do Supabase Storage.
+      responses:
+        '200':
+          description: Mídia removida do terminal
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+
+  # ─────────────────────────────────────────────
+  # MEDIA
+  # ─────────────────────────────────────────────
+
+  /api/media:
+    get:
+      tags: [Media]
+      summary: Listar mídias da empresa
+      responses:
+        '200':
+          description: Lista de mídias
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Media'
+        '401':
+          description: Não autenticado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      tags: [Media]
+      summary: Upload de mídia
+      description: |
+        Faz upload de imagem (máx. 5MB) ou vídeo (máx. 50MB) para o Supabase Storage.
+        O arquivo é enviado como `multipart/form-data`.
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required: [file]
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  description: Arquivo de imagem (image/*) ou vídeo (video/*)
+      responses:
+        '201':
+          description: Mídia enviada com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Media'
+        '400':
+          description: Arquivo inválido ou excede limite de tamanho
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/media/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+    delete:
+      tags: [Media]
+      summary: Remover mídia
+      description: Remove a mídia do banco de dados e do Supabase Storage.
+      responses:
+        '200':
+          description: Mídia removida
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '404':
+          description: Mídia não encontrada
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/media/reorder:
+    post:
+      tags: [Media]
+      summary: Reordenar mídias (sem autenticação de sessão)
+      description: Atualiza a ordem dos vínculos TerminalMedia. Nota — este endpoint não verifica sessão.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [items]
+              properties:
+                items:
+                  type: array
+                  items:
+                    type: object
+                    required: [id, order]
+                    properties:
+                      id:
+                        type: string
+                        format: uuid
+                        description: ID do TerminalMedia
+                      order:
+                        type: integer
+      responses:
+        '200':
+          description: Reordenado com sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+
+  # ─────────────────────────────────────────────
+  # NOTIFICATIONS
+  # ─────────────────────────────────────────────
+
+  /api/notifications:
+    get:
+      tags: [Notifications]
+      summary: Listar notificações (últimas 50)
+      responses:
+        '200':
+          description: Lista de notificações
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Notification'
+        '401':
+          description: Não autenticado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      tags: [Notifications]
+      summary: Criar notificação
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [title, body]
+              properties:
+                title:
+                  type: string
+                body:
+                  type: string
+                type:
+                  type: string
+                  enum: [info, warning, danger, success]
+                  default: info
+                actionLabel:
+                  type: string
+                  nullable: true
+                actionUrl:
+                  type: string
+                  nullable: true
+                companyId:
+                  type: string
+                  format: uuid
+                  description: Apenas master pode especificar empresa destino.
+      responses:
+        '201':
+          description: Notificação criada
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Notification'
+
+  /api/notifications/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+    patch:
+      tags: [Notifications]
+      summary: Marcar notificação como lida
+      responses:
+        '200':
+          description: Notificação marcada como lida
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Notification'
+        '404':
+          description: Notificação não encontrada
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    delete:
+      tags: [Notifications]
+      summary: Remover notificação
+      responses:
+        '204':
+          description: Notificação removida
+
+  # ─────────────────────────────────────────────
+  # CONFIG
+  # ─────────────────────────────────────────────
+
+  /api/config:
+    get:
+      tags: [Config]
+      summary: Buscar configuração global
+      security: []
+      responses:
+        '200':
+          description: Configuração atual
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Configuration'
+    patch:
+      tags: [Config]
+      summary: Atualizar configuração global
+      security: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                resetTime:
+                  type: integer
+                  description: Tempo de reset em segundos (mínimo 1)
+                  minimum: 1
+      responses:
+        '200':
+          description: Configuração atualizada
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Configuration'
+        '400':
+          description: resetTime inválido
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/config/sync:
+    post:
+      tags: [Config]
+      summary: Gerar carga (marcar lastSync)
+      security: []
+      responses:
+        '200':
+          description: Carga gerada
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  lastSync:
+                    type: string
+                    format: date-time
+
+  /api/config/push:
+    post:
+      tags: [Config]
+      summary: Enviar carga para terminais
+      security: []
+      description: Endpoint placeholder — a comunicação real com os terminais por IP deve ser implementada.
+      responses:
+        '200':
+          description: Carga enviada
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  terminals:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        name:
+                          type: string
+                        ip:
+                          type: string
+        '400':
+          description: Nenhum terminal ou lastSync ausente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  # ─────────────────────────────────────────────
+  # TERMINAL DEVICE — AUTH
+  # ─────────────────────────────────────────────
+
+  /api/terminal/activate:
+    post:
+      tags: [Terminal Device - Auth]
+      summary: Ativar terminal (primeira vez)
+      description: |
+        Ativa o terminal usando o código de ativação gerado no painel.
+        Consome 1 slot da licença da loja atomicamente.
+        Retorna um Bearer JWT válido por 30 dias.
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [activationCode]
+              properties:
+                activationCode:
+                  type: string
+                  example: AB3XKRP7
+                  description: Código de 8 caracteres gerado no painel (case-insensitive)
+      responses:
+        '200':
+          description: Terminal ativado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                    description: Bearer JWT para uso nas demais chamadas do terminal
+                  terminalId:
+                    type: string
+                  name:
+                    type: string
+                  isPriceChecker:
+                    type: boolean
+                  isMediaDisplay:
+                    type: boolean
+        '403':
+          description: Terminal bloqueado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Código de ativação inválido
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '422':
+          description: Licença indisponível
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/terminal/auth:
+    post:
+      tags: [Terminal Device - Auth]
+      summary: Reautenticar terminal (renovar token)
+      description: |
+        Renova o JWT de um terminal já ativo. Não consome licença.
+        Útil quando o token de 30 dias expira.
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [activationCode]
+              properties:
+                activationCode:
+                  type: string
+                  example: AB3XKRP7
+      responses:
+        '200':
+          description: Novo token gerado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+        '403':
+          description: Terminal bloqueado ou licença expirada
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Terminal não encontrado ou inativo
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  # ─────────────────────────────────────────────
+  # TERMINAL DEVICE — DATA
+  # ─────────────────────────────────────────────
+
+  /api/terminal/bootstrap:
+    get:
+      tags: [Terminal Device - Data]
+      summary: Bootstrap do terminal (dados iniciais)
+      description: Retorna configuração, loja, empresa e endpoints que o terminal deve usar.
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Dados de bootstrap
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  terminal:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      name:
+                        type: string
+                      location:
+                        type: string
+                      isPriceChecker:
+                        type: boolean
+                      isMediaDisplay:
+                        type: boolean
+                  store:
+                    type: object
+                    nullable: true
+                    properties:
+                      id:
+                        type: string
+                      name:
+                        type: string
+                      address:
+                        type: string
+                  company:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      name:
+                        type: string
+                  config:
+                    type: object
+                    properties:
+                      resetTime:
+                        type: integer
+                  endpoints:
+                    type: object
+                    properties:
+                      productByEan:
+                        type: string
+                      catalog:
+                        type: string
+                      publicProductByEan:
+                        type: string
+        '401':
+          description: Token inválido
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Terminal bloqueado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/terminal/config:
+    get:
+      tags: [Terminal Device - Data]
+      summary: Configuração do terminal
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Configuração
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  terminalId:
+                    type: string
+                  name:
+                    type: string
+                  location:
+                    type: string
+                  isPriceChecker:
+                    type: boolean
+                  isMediaDisplay:
+                    type: boolean
+                  resetTime:
+                    type: integer
+
+  /api/terminal/heartbeat:
+    post:
+      tags: [Terminal Device - Data]
+      summary: Registrar heartbeat
+      description: Atualiza `lastSeenAt` do terminal e registra IP e versão do app.
+      security:
+        - bearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                ip:
+                  type: string
+                  nullable: true
+                appVersion:
+                  type: string
+                  nullable: true
+      responses:
+        '200':
+          description: Heartbeat registrado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+
+  /api/terminal/content/current:
+    get:
+      tags: [Terminal Device - Data]
+      summary: Conteúdo de mídia atual do terminal
+      description: Retorna as mídias vinculadas ao terminal com status de vigência calculado.
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Lista de mídias com status
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  medias:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        terminalMediaId:
+                          type: string
+                        order:
+                          type: integer
+                        startsAt:
+                          type: string
+                          format: date-time
+                          nullable: true
+                        endsAt:
+                          type: string
+                          format: date-time
+                          nullable: true
+                        active:
+                          type: boolean
+                          description: true se dentro do período de vigência
+                        expired:
+                          type: boolean
+                          description: true se endsAt já passou
+                        media:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                            url:
+                              type: string
+                            type:
+                              type: string
+                              enum: [image, video]
+                            fileName:
+                              type: string
+                            mimeType:
+                              type: string
+
+  /api/terminal/events:
+    post:
+      tags: [Terminal Device - Data]
+      summary: Registrar evento do terminal
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [type]
+              properties:
+                type:
+                  type: string
+                  example: PRICE_QUERY
+                payload:
+                  type: object
+                  nullable: true
+                  description: Dados adicionais do evento (formato livre)
+      responses:
+        '200':
+          description: Evento registrado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+
+  /api/terminal/product:
+    get:
+      tags: [Terminal Device - Data]
+      summary: Listar produtos da loja (com paginação e busca)
+      description: O storeId é derivado do JWT — nunca do cliente.
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+            default: 1
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 50
+            maximum: 100
+        - name: q
+          in: query
+          description: Busca por nome ou EAN
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Produtos paginados
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedProducts'
+        '403':
+          description: Terminal inativo ou bloqueado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/terminal/product/{ean}:
+    parameters:
+      - name: ean
+        in: path
+        required: true
+        schema:
+          type: string
+        example: "7891000315507"
+    get:
+      tags: [Terminal Device - Data]
+      summary: Buscar produto por EAN
+      description: O storeId é derivado do JWT do terminal.
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Produto encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        '404':
+          description: Produto não encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/terminal/{storeId}/{ean}:
+    parameters:
+      - name: storeId
+        in: path
+        required: true
+        description: UUID da loja (funciona como identificador de acesso público)
+        schema:
+          type: string
+          format: uuid
+      - name: ean
+        in: path
+        required: true
+        schema:
+          type: string
+    get:
+      tags: [Terminal Device - Data]
+      summary: Buscar produto por EAN (endpoint público por loja)
+      description: |
+        Endpoint público — não exige Bearer token.
+        O UUID da loja funciona como identificador de acesso.
+        Retornado pelo bootstrap no campo `endpoints.publicProductByEan`.
+      security: []
+      responses:
+        '200':
+          description: Produto encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        '404':
+          description: Produto ou loja não encontrados
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'

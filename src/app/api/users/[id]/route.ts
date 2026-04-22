@@ -41,7 +41,7 @@ export async function PATCH(req: NextRequest, { params }: Params) {
 
     if (error?.code === 'P2002') {
       return NextResponse.json(
-        { message: 'E-mail já cadastrado' },
+        { message: 'E-mail já cadastrado nesta empresa' },
         { status: 409 }
       );
     }

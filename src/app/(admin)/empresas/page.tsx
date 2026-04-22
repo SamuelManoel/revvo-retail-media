@@ -4,6 +4,27 @@ import { useEffect, useMemo, useState } from 'react';
 import { Button, Card, Modal, useOverlayState } from '@heroui/react';
 import { ActionTooltip } from '@/components/ui/action-tooltip';
 
+// ── CNPJ helpers ──────────────────────────────────────────────────────────────
+function cnpjDigits(value: string): string {
+  return value.replace(/\D/g, '').slice(0, 14);
+}
+
+function cnpjMask(value: string): string {
+  const d = cnpjDigits(value);
+  return d
+    .replace(/^(\d{2})(\d)/, '$1.$2')
+    .replace(/^(\d{2})\.(\d{3})(\d)/, '$1.$2.$3')
+    .replace(/\.(\d{3})(\d)/, '.$1/$2')
+    .replace(/(\d{4})(\d)/, '$1-$2');
+}
+
+function cnpjDisplay(raw: string): string {
+  // Se já tem 14 dígitos sem formatação, aplica a máscara para exibição
+  const digits = cnpjDigits(raw);
+  if (digits.length === 14) return cnpjMask(digits);
+  return raw; // fallback: exibe como está
+}
+
 type Company = {
   id: string;
   name: string;
@@ -11,6 +32,7 @@ type Company = {
   cnpj: string;
   email: string;
   slug: string;
+  conta: string;
   status: string;
   createdAt: string;
   _count?: { terminals: number; users: number };
@@ -24,7 +46,7 @@ type User = {
   createdAt: string;
 };
 
-const EMPTY_COMPANY_FORM = { name: '', legalName: '', cnpj: '', email: '', slug: '', status: 'ATIVO' };
+const EMPTY_COMPANY_FORM = { name: '', legalName: '', cnpj: '', email: '', slug: '', conta: '', status: 'ATIVO' };
 const EMPTY_USER_FORM = { name: '', email: '', password: '', isActive: true };
 
 const AVATAR_COLORS = [
@@ -147,7 +169,7 @@ export default function EmpresasPage() {
 
   function openEdit(c: Company) {
     setEditingId(c.id);
-    setForm({ name: c.name, legalName: c.legalName, cnpj: c.cnpj, email: c.email, slug: c.slug, status: c.status });
+    setForm({ name: c.name, legalName: c.legalName, cnpj: c.cnpj, email: c.email, slug: c.slug, conta: c.conta, status: c.status });
     setError(null);
     formModal.open();
   }
@@ -164,7 +186,7 @@ export default function EmpresasPage() {
   }
 
   async function handleSave() {
-    if (!form.name || !form.legalName || !form.cnpj || !form.email || !form.slug) {
+    if (!form.name || !form.legalName || !form.cnpj || !form.email || !form.slug || !form.conta) {
       setError('Preencha todos os campos obrigatórios.');
       return;
     }
@@ -340,7 +362,7 @@ export default function EmpresasPage() {
                           </div>
                         </div>
                       </td>
-                      <td className="px-5 py-3.5 font-mono text-xs text-muted whitespace-nowrap">{c.cnpj}</td>
+                      <td className="px-5 py-3.5 font-mono text-xs text-muted whitespace-nowrap">{cnpjDisplay(c.cnpj)}</td>
                       <td className="px-5 py-3.5">
                         <div className="flex items-center gap-1.5 text-foreground">
                           <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-muted">
@@ -425,8 +447,14 @@ export default function EmpresasPage() {
                     onChange={(e) => setForm((f) => ({ ...f, legalName: e.target.value }))} className={inputClass} />
                 </Field>
                 <Field label="CNPJ">
-                  <input type="text" placeholder="00.000.000/0001-00" value={form.cnpj}
-                    onChange={(e) => setForm((f) => ({ ...f, cnpj: e.target.value }))} className={inputClass} />
+                  <input
+                    type="text"
+                    placeholder="00.000.000/0001-00"
+                    value={cnpjMask(form.cnpj)}
+                    onChange={(e) => setForm((f) => ({ ...f, cnpj: cnpjDigits(e.target.value) }))}
+                    maxLength={18}
+                    className={inputClass}
+                  />
                 </Field>
                 <Field label="E-mail">
                   <input type="email" placeholder="contato@empresa.com" value={form.email}
@@ -435,6 +463,11 @@ export default function EmpresasPage() {
                 <Field label="Slug">
                   <input type="text" placeholder="supermercado-central" value={form.slug}
                     onChange={(e) => setForm((f) => ({ ...f, slug: e.target.value }))} className={inputClass} />
+                </Field>
+                <Field label="Conta">
+                  <input type="text" placeholder="santo-antonio (usado no login)" value={form.conta}
+                    onChange={(e) => setForm((f) => ({ ...f, conta: e.target.value }))} className={inputClass} />
+                  <p className="text-xs text-muted">Identificador único para login. Ex.: santo-antonio</p>
                 </Field>
                 <Field label="Status">
                   <select value={form.status} onChange={(e) => setForm((f) => ({ ...f, status: e.target.value }))} className={inputClass}>

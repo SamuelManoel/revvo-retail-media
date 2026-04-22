@@ -14,6 +14,7 @@ model Company {
   cnpj      String @unique
   email     String @unique
   slug      String @unique
+  conta     String @unique  // identificador do tenant usado no login
   status    String
 
   users         User[]
@@ -32,7 +33,7 @@ model Company {
 model User {
   id       String  @id @default(uuid())
   name     String
-  email    String  @unique
+  email    String
   password String
   isActive Boolean @default(true)
 
@@ -44,6 +45,7 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
+  @@unique([email, companyId])
   @@map("users")
 }
 
@@ -55,11 +57,9 @@ model Store {
   companyId String
   company   Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
 
-  terminals   Terminal[]
-  license     StoreLicense?
-  campaigns   Campaign[]
-  integration StoreIntegration?
-  products    Product[]
+  terminals Terminal[]
+  license   StoreLicense?
+  campaigns Campaign[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -87,7 +87,7 @@ model Terminal {
   store     Store?   @relation(fields: [storeId], references: [id], onDelete: SetNull)
 
   companyId String
-  company   Company  @relation(fields: [companyId], references: [id])
+  company   Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
 
   credential     TerminalCredential?
   activations    TerminalActivation[]
@@ -255,51 +255,6 @@ model TerminalEvent {
   createdAt DateTime @default(now())
 
   @@map("terminal_events")
-}
-
-model StoreIntegration {
-  id                   String    @id @default(uuid())
-  baseUrl              String
-  token                String?
-  endpointProductByEan String    @default("/terminal/product/{ean}")
-  endpointCatalog      String    @default("/terminal/product")
-  endpointFullLoad     String?
-  endpointIncremental  String?
-  lastSyncAt           DateTime?
-  isActive             Boolean   @default(true)
-
-  storeId String @unique
-  store   Store  @relation(fields: [storeId], references: [id], onDelete: Cascade)
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@map("store_integrations")
-}
-
-model Product {
-  id          String   @id @default(uuid())
-  ean         String
-  name        String
-  imageUrl    String?
-  price       Decimal  @db.Decimal(10, 2)
-  offerPrice  Decimal? @db.Decimal(10, 2)
-  clubPrice   Decimal? @db.Decimal(10, 2)
-  stock       Int?
-  isActive    Boolean  @default(true)
-  externalId  String?
-  hash        String?
-  description String?
-
-  storeId String
-  store   Store  @relation(fields: [storeId], references: [id], onDelete: Cascade)
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@index([storeId, ean])
-  @@unique([storeId, externalId])
-  @@map("products")
 }
 
 model Configuration {

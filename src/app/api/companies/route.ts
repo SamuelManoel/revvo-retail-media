@@ -7,6 +7,7 @@ type CreateCompanyBody = {
   cnpj: string;
   email: string;
   slug: string;
+  conta: string;
   status?: string;
 };
 
@@ -39,10 +40,11 @@ export async function POST(request: NextRequest) {
       cnpj,
       email,
       slug,
+      conta,
       status = 'ATIVO',
     } = body;
 
-    if (!name || !legalName || !cnpj || !email || !slug) {
+    if (!name || !legalName || !cnpj || !email || !slug || !conta) {
       return NextResponse.json(
         { message: 'Todos os campos obrigatórios devem ser enviados' },
         { status: 400 }
@@ -50,14 +52,7 @@ export async function POST(request: NextRequest) {
     }
 
     const company = await prisma.company.create({
-      data: {
-        name,
-        legalName,
-        cnpj,
-        email,
-        slug,
-        status
-      },
+      data: { name, legalName, cnpj, email, slug, conta, status },
     });
 
     return NextResponse.json(company, { status: 201 });
@@ -67,7 +62,7 @@ export async function POST(request: NextRequest) {
 
     if (error?.code === 'P2002') {
       return NextResponse.json(
-        { message: 'CNPJ, e-mail ou slug já cadastrado' },
+        { message: 'CNPJ, e-mail, slug ou conta já cadastrado' },
         { status: 409 }
       );
     }
