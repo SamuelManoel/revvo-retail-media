@@ -82,6 +82,19 @@ export async function DELETE(_req: NextRequest, { params }: Params) {
   const { id } = await params;
 
   try {
+    const company = await prisma.company.findUnique({ where: { id }, select: { id: true } });
+    if (!company) {
+      return NextResponse.json({ message: 'Empresa não encontrada' }, { status: 404 });
+    }
+
+    // Verifica se é master via raw SQL para não depender do Prisma client cacheado
+    const rows = await prisma.$queryRaw<{ type: string }[]>`
+      SELECT type FROM companies WHERE id = ${id} LIMIT 1
+    `;
+    if (rows[0]?.type === 'master') {
+      return NextResponse.json({ message: 'A empresa master não pode ser excluída' }, { status: 403 });
+    }
+
     await prisma.company.delete({ where: { id } });
 
     return NextResponse.json({ message: 'Empresa removida com sucesso' });

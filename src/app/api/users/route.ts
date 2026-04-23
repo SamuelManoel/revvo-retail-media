@@ -8,6 +8,7 @@ const userSelect = {
   name: true,
   email: true,
   isActive: true,
+  isOwner: true,
   companyId: true,
   createdAt: true,
   updatedAt: true,
@@ -62,8 +63,11 @@ export async function POST(req: NextRequest) {
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
+    // isOwner só pode ser definido pelo master
+    const isOwner = session.isMaster ? (body.isOwner ?? false) : false;
+
     const user = await prisma.user.create({
-      data: { name, email, password: hashedPassword, isActive: body.isActive ?? true, companyId },
+      data: { name, email, password: hashedPassword, isActive: body.isActive ?? true, isOwner, companyId },
       select: userSelect,
     });
 

@@ -17,7 +17,6 @@ export async function POST(req: NextRequest) {
     // 1. Localizar a empresa pelo identificador de conta
     const company = await prisma.company.findUnique({
       where: { conta },
-      select: { id: true, name: true, status: true, slug: true, conta: true },
     });
 
     if (!company) {

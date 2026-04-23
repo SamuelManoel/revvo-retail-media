@@ -33,6 +33,7 @@ type Company = {
   email: string;
   slug: string;
   conta: string;
+  type: string;
   status: string;
   createdAt: string;
   _count?: { terminals: number; users: number };
@@ -43,11 +44,12 @@ type User = {
   name: string;
   email: string;
   isActive: boolean;
+  isOwner: boolean;
   createdAt: string;
 };
 
 const EMPTY_COMPANY_FORM = { name: '', legalName: '', cnpj: '', email: '', slug: '', conta: '', status: 'ATIVO' };
-const EMPTY_USER_FORM = { name: '', email: '', password: '', isActive: true };
+const EMPTY_USER_FORM = { name: '', email: '', password: '', isActive: true, isOwner: false };
 
 const AVATAR_COLORS = [
   'from-violet-500 to-purple-600',
@@ -94,6 +96,7 @@ export default function EmpresasPage() {
   const [companies, setCompanies] = useState<Company[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
+  const [isMaster, setIsMaster] = useState(false);
 
   const formModal = useOverlayState();
   const deleteModal = useOverlayState();
@@ -146,6 +149,9 @@ export default function EmpresasPage() {
   }
 
   useEffect(() => { fetchCompanies(); }, []);
+  useEffect(() => {
+    fetch('/api/auth/me').then(r => r.ok ? r.json() : null).then(d => { if (d?.isMaster) setIsMaster(true); }).catch(() => {});
+  }, []);
   useEffect(() => { if (usersTarget) fetchUsers(usersTarget.id); }, [usersTarget]);
 
   const filtered = useMemo(() => {
@@ -231,7 +237,7 @@ export default function EmpresasPage() {
 
   function openEditUser(u: User) {
     setEditingUserId(u.id);
-    setUserForm({ name: u.name, email: u.email, password: '', isActive: u.isActive });
+    setUserForm({ name: u.name, email: u.email, password: '', isActive: u.isActive, isOwner: u.isOwner });
     setUserError(null);
     userFormModal.open();
   }
@@ -251,15 +257,18 @@ export default function EmpresasPage() {
       if (editingUserId) {
         const body: Record<string, unknown> = { name: userForm.name, email: userForm.email, isActive: userForm.isActive };
         if (userForm.password) body.password = userForm.password;
+        if (isMaster) body.isOwner = userForm.isOwner;
         const res = await fetch(`/api/users/${editingUserId}`, {
           method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body),
         });
         const data = await res.json();
         if (!res.ok) { setUserError(data.message ?? 'Erro ao editar usuário.'); return; }
       } else {
+        const body: Record<string, unknown> = { name: userForm.name, email: userForm.email, password: userForm.password, isActive: userForm.isActive, companyId: usersTarget.id };
+        if (isMaster) body.isOwner = userForm.isOwner;
         const res = await fetch('/api/users', {
           method: 'POST', headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ ...userForm, companyId: usersTarget.id }),
+          body: JSON.stringify(body),
         });
         const data = await res.json();
         if (!res.ok) { setUserError(data.message ?? 'Erro ao criar usuário.'); return; }
@@ -275,6 +284,10 @@ export default function EmpresasPage() {
 
   async function handleDeleteUser() {
     if (!deleteUserTarget || !usersTarget) return;
+    if (deleteUserTarget.isOwner && !isMaster) {
+      deleteUserModal.close();
+      return;
+    }
     setDeletingUser(true);
     try {
       await fetch(`/api/users/${deleteUserTarget.id}`, { method: 'DELETE' });
@@ -398,13 +411,15 @@ export default function EmpresasPage() {
                               </svg>
                             </button>
                           </ActionTooltip>
-                          <ActionTooltip label="Excluir empresa">
-                            <button onClick={() => openDelete(c)} className="p-1.5 rounded-lg text-muted hover:text-danger hover:bg-danger/10 transition-colors">
-                              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                <path d="M3 6h18" /><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" /><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
-                              </svg>
-                            </button>
-                          </ActionTooltip>
+                          {c.type !== 'master' && (
+                            <ActionTooltip label="Excluir empresa">
+                              <button onClick={() => openDelete(c)} className="p-1.5 rounded-lg text-muted hover:text-danger hover:bg-danger/10 transition-colors">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                  <path d="M3 6h18" /><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" /><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
+                                </svg>
+                              </button>
+                            </ActionTooltip>
+                          )}
                         </div>
                       </td>
                     </tr>
@@ -583,7 +598,12 @@ export default function EmpresasPage() {
                               <div className="flex items-center gap-3">
                                 <Avatar name={u.name} index={idx} />
                                 <div className="min-w-0">
-                                  <p className="font-medium text-foreground truncate leading-tight text-sm">{u.name}</p>
+                                  <div className="flex items-center gap-1.5">
+                                    <p className="font-medium text-foreground truncate leading-tight text-sm">{u.name}</p>
+                                    {u.isOwner && (
+                                      <span className="shrink-0 inline-flex items-center rounded-full bg-amber-500/10 px-1.5 py-0.5 text-[10px] font-semibold text-amber-600">Proprietário</span>
+                                    )}
+                                  </div>
                                   <p className="text-xs text-muted truncate mt-0.5">{u.email}</p>
                                 </div>
                               </div>
@@ -606,13 +626,15 @@ export default function EmpresasPage() {
                                     </svg>
                                   </button>
                                 </ActionTooltip>
-                                <ActionTooltip label="Excluir usuário">
-                                  <button onClick={() => openDeleteUser(u)} className="p-1.5 rounded-lg text-muted hover:text-danger hover:bg-danger/10 transition-colors">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                      <path d="M3 6h18" /><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" /><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
-                                    </svg>
-                                  </button>
-                                </ActionTooltip>
+                                {(!u.isOwner || isMaster) && (
+                                  <ActionTooltip label="Excluir usuário">
+                                    <button onClick={() => openDeleteUser(u)} className="p-1.5 rounded-lg text-muted hover:text-danger hover:bg-danger/10 transition-colors">
+                                      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                        <path d="M3 6h18" /><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" /><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
+                                      </svg>
+                                    </button>
+                                  </ActionTooltip>
+                                )}
                               </div>
                             </td>
                           </tr>
@@ -661,6 +683,21 @@ export default function EmpresasPage() {
                     <option value="false">Inativo</option>
                   </select>
                 </Field>
+                {isMaster && (
+                  <div className="flex items-center justify-between rounded-lg border border-border bg-surface-secondary/50 px-4 py-3">
+                    <div>
+                      <p className="text-sm font-medium text-foreground">Proprietário</p>
+                      <p className="text-xs text-muted">Proprietários só podem ser excluídos pelo master</p>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => setUserForm((f) => ({ ...f, isOwner: !f.isOwner }))}
+                      className={`relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors focus:outline-none ${userForm.isOwner ? 'bg-accent' : 'bg-border'}`}
+                    >
+                      <span className={`pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow-lg ring-0 transition duration-200 ease-in-out ${userForm.isOwner ? 'translate-x-5' : 'translate-x-0'}`} />
+                    </button>
+                  </div>
+                )}
                 {userError && <p className="rounded-lg bg-danger/10 px-3 py-2 text-sm text-danger">{userError}</p>}
               </Modal.Body>
               <Modal.Footer className="border-t border-border px-6 pb-5 pt-4 flex justify-end gap-2">

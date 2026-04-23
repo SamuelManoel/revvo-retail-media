@@ -128,6 +128,7 @@ exports.Prisma.CompanyScalarFieldEnum = {
   email: 'email',
   slug: 'slug',
   conta: 'conta',
+  type: 'type',
   status: 'status',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -139,6 +140,7 @@ exports.Prisma.UserScalarFieldEnum = {
   email: 'email',
   password: 'password',
   isActive: 'isActive',
+  isOwner: 'isOwner',
   companyId: 'companyId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'

@@ -15,6 +15,7 @@ model Company {
   email     String @unique
   slug      String @unique
   conta     String @unique // identificador do tenant usado no login
+  type      String @default("tenant") // "master" | "tenant"
   status    String
 
   users         User[]
@@ -36,6 +37,7 @@ model User {
   email    String
   password String
   isActive Boolean @default(true)
+  isOwner  Boolean @default(false)
 
   companyId String
   company   Company @relation(fields: [companyId], references: [id], onDelete: Cascade)

@@ -2464,6 +2464,7 @@ export namespace Prisma {
     email: string | null
     slug: string | null
     conta: string | null
+    type: string | null
     status: string | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -2477,6 +2478,7 @@ export namespace Prisma {
     email: string | null
     slug: string | null
     conta: string | null
+    type: string | null
     status: string | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -2490,6 +2492,7 @@ export namespace Prisma {
     email: number
     slug: number
     conta: number
+    type: number
     status: number
     createdAt: number
     updatedAt: number
@@ -2505,6 +2508,7 @@ export namespace Prisma {
     email?: true
     slug?: true
     conta?: true
+    type?: true
     status?: true
     createdAt?: true
     updatedAt?: true
@@ -2518,6 +2522,7 @@ export namespace Prisma {
     email?: true
     slug?: true
     conta?: true
+    type?: true
     status?: true
     createdAt?: true
     updatedAt?: true
@@ -2531,6 +2536,7 @@ export namespace Prisma {
     email?: true
     slug?: true
     conta?: true
+    type?: true
     status?: true
     createdAt?: true
     updatedAt?: true
@@ -2617,6 +2623,7 @@ export namespace Prisma {
     email: string
     slug: string
     conta: string
+    type: string
     status: string
     createdAt: Date
     updatedAt: Date
@@ -2647,6 +2654,7 @@ export namespace Prisma {
     email?: boolean
     slug?: boolean
     conta?: boolean
+    type?: boolean
     status?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -2667,6 +2675,7 @@ export namespace Prisma {
     email?: boolean
     slug?: boolean
     conta?: boolean
+    type?: boolean
     status?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -2680,6 +2689,7 @@ export namespace Prisma {
     email?: boolean
     slug?: boolean
     conta?: boolean
+    type?: boolean
     status?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -2693,12 +2703,13 @@ export namespace Prisma {
     email?: boolean
     slug?: boolean
     conta?: boolean
+    type?: boolean
     status?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type CompanyOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "legalName" | "cnpj" | "email" | "slug" | "conta" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["company"]>
+  export type CompanyOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "legalName" | "cnpj" | "email" | "slug" | "conta" | "type" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["company"]>
   export type CompanyInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     users?: boolean | Company$usersArgs<ExtArgs>
     stores?: boolean | Company$storesArgs<ExtArgs>
@@ -2729,6 +2740,7 @@ export namespace Prisma {
       email: string
       slug: string
       conta: string
+      type: string
       status: string
       createdAt: Date
       updatedAt: Date
@@ -3168,6 +3180,7 @@ export namespace Prisma {
     readonly email: FieldRef<"Company", 'String'>
     readonly slug: FieldRef<"Company", 'String'>
     readonly conta: FieldRef<"Company", 'String'>
+    readonly type: FieldRef<"Company", 'String'>
     readonly status: FieldRef<"Company", 'String'>
     readonly createdAt: FieldRef<"Company", 'DateTime'>
     readonly updatedAt: FieldRef<"Company", 'DateTime'>
@@ -3742,6 +3755,7 @@ export namespace Prisma {
     email: string | null
     password: string | null
     isActive: boolean | null
+    isOwner: boolean | null
     companyId: string | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -3753,6 +3767,7 @@ export namespace Prisma {
     email: string | null
     password: string | null
     isActive: boolean | null
+    isOwner: boolean | null
     companyId: string | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -3764,6 +3779,7 @@ export namespace Prisma {
     email: number
     password: number
     isActive: number
+    isOwner: number
     companyId: number
     createdAt: number
     updatedAt: number
@@ -3777,6 +3793,7 @@ export namespace Prisma {
     email?: true
     password?: true
     isActive?: true
+    isOwner?: true
     companyId?: true
     createdAt?: true
     updatedAt?: true
@@ -3788,6 +3805,7 @@ export namespace Prisma {
     email?: true
     password?: true
     isActive?: true
+    isOwner?: true
     companyId?: true
     createdAt?: true
     updatedAt?: true
@@ -3799,6 +3817,7 @@ export namespace Prisma {
     email?: true
     password?: true
     isActive?: true
+    isOwner?: true
     companyId?: true
     createdAt?: true
     updatedAt?: true
@@ -3883,6 +3902,7 @@ export namespace Prisma {
     email: string
     password: string
     isActive: boolean
+    isOwner: boolean
     companyId: string
     createdAt: Date
     updatedAt: Date
@@ -3911,6 +3931,7 @@ export namespace Prisma {
     email?: boolean
     password?: boolean
     isActive?: boolean
+    isOwner?: boolean
     companyId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -3925,6 +3946,7 @@ export namespace Prisma {
     email?: boolean
     password?: boolean
     isActive?: boolean
+    isOwner?: boolean
     companyId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -3937,6 +3959,7 @@ export namespace Prisma {
     email?: boolean
     password?: boolean
     isActive?: boolean
+    isOwner?: boolean
     companyId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -3949,12 +3972,13 @@ export namespace Prisma {
     email?: boolean
     password?: boolean
     isActive?: boolean
+    isOwner?: boolean
     companyId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "password" | "isActive" | "companyId" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "password" | "isActive" | "isOwner" | "companyId" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     company?: boolean | CompanyDefaultArgs<ExtArgs>
     terminalActivations?: boolean | User$terminalActivationsArgs<ExtArgs>
@@ -3979,6 +4003,7 @@ export namespace Prisma {
       email: string
       password: string
       isActive: boolean
+      isOwner: boolean
       companyId: string
       createdAt: Date
       updatedAt: Date
@@ -4412,6 +4437,7 @@ export namespace Prisma {
     readonly email: FieldRef<"User", 'String'>
     readonly password: FieldRef<"User", 'String'>
     readonly isActive: FieldRef<"User", 'Boolean'>
+    readonly isOwner: FieldRef<"User", 'Boolean'>
     readonly companyId: FieldRef<"User", 'String'>
     readonly createdAt: FieldRef<"User", 'DateTime'>
     readonly updatedAt: FieldRef<"User", 'DateTime'>
@@ -19843,6 +19869,7 @@ export namespace Prisma {
     email: 'email',
     slug: 'slug',
     conta: 'conta',
+    type: 'type',
     status: 'status',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
@@ -19857,6 +19884,7 @@ export namespace Prisma {
     email: 'email',
     password: 'password',
     isActive: 'isActive',
+    isOwner: 'isOwner',
     companyId: 'companyId',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
@@ -20185,6 +20213,7 @@ export namespace Prisma {
     email?: StringFilter<"Company"> | string
     slug?: StringFilter<"Company"> | string
     conta?: StringFilter<"Company"> | string
+    type?: StringFilter<"Company"> | string
     status?: StringFilter<"Company"> | string
     createdAt?: DateTimeFilter<"Company"> | Date | string
     updatedAt?: DateTimeFilter<"Company"> | Date | string
@@ -20204,6 +20233,7 @@ export namespace Prisma {
     email?: SortOrder
     slug?: SortOrder
     conta?: SortOrder
+    type?: SortOrder
     status?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -20226,6 +20256,7 @@ export namespace Prisma {
     NOT?: CompanyWhereInput | CompanyWhereInput[]
     name?: StringFilter<"Company"> | string
     legalName?: StringFilter<"Company"> | string
+    type?: StringFilter<"Company"> | string
     status?: StringFilter<"Company"> | string
     createdAt?: DateTimeFilter<"Company"> | Date | string
     updatedAt?: DateTimeFilter<"Company"> | Date | string
@@ -20245,6 +20276,7 @@ export namespace Prisma {
     email?: SortOrder
     slug?: SortOrder
     conta?: SortOrder
+    type?: SortOrder
     status?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -20264,6 +20296,7 @@ export namespace Prisma {
     email?: StringWithAggregatesFilter<"Company"> | string
     slug?: StringWithAggregatesFilter<"Company"> | string
     conta?: StringWithAggregatesFilter<"Company"> | string
+    type?: StringWithAggregatesFilter<"Company"> | string
     status?: StringWithAggregatesFilter<"Company"> | string
     createdAt?: DateTimeWithAggregatesFilter<"Company"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Company"> | Date | string
@@ -20278,6 +20311,7 @@ export namespace Prisma {
     email?: StringFilter<"User"> | string
     password?: StringFilter<"User"> | string
     isActive?: BoolFilter<"User"> | boolean
+    isOwner?: BoolFilter<"User"> | boolean
     companyId?: StringFilter<"User"> | string
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
@@ -20291,6 +20325,7 @@ export namespace Prisma {
     email?: SortOrder
     password?: SortOrder
     isActive?: SortOrder
+    isOwner?: SortOrder
     companyId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -20308,6 +20343,7 @@ export namespace Prisma {
     email?: StringFilter<"User"> | string
     password?: StringFilter<"User"> | string
     isActive?: BoolFilter<"User"> | boolean
+    isOwner?: BoolFilter<"User"> | boolean
     companyId?: StringFilter<"User"> | string
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
@@ -20321,6 +20357,7 @@ export namespace Prisma {
     email?: SortOrder
     password?: SortOrder
     isActive?: SortOrder
+    isOwner?: SortOrder
     companyId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -20338,6 +20375,7 @@ export namespace Prisma {
     email?: StringWithAggregatesFilter<"User"> | string
     password?: StringWithAggregatesFilter<"User"> | string
     isActive?: BoolWithAggregatesFilter<"User"> | boolean
+    isOwner?: BoolWithAggregatesFilter<"User"> | boolean
     companyId?: StringWithAggregatesFilter<"User"> | string
     createdAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
@@ -21328,6 +21366,7 @@ export namespace Prisma {
     email: string
     slug: string
     conta: string
+    type?: string
     status: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -21347,6 +21386,7 @@ export namespace Prisma {
     email: string
     slug: string
     conta: string
+    type?: string
     status: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -21366,6 +21406,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     slug?: StringFieldUpdateOperationsInput | string
     conta?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -21385,6 +21426,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     slug?: StringFieldUpdateOperationsInput | string
     conta?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -21404,6 +21446,7 @@ export namespace Prisma {
     email: string
     slug: string
     conta: string
+    type?: string
     status: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -21417,6 +21460,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     slug?: StringFieldUpdateOperationsInput | string
     conta?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -21430,6 +21474,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     slug?: StringFieldUpdateOperationsInput | string
     conta?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -21441,6 +21486,7 @@ export namespace Prisma {
     email: string
     password: string
     isActive?: boolean
+    isOwner?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     company: CompanyCreateNestedOneWithoutUsersInput
@@ -21453,6 +21499,7 @@ export namespace Prisma {
     email: string
     password: string
     isActive?: boolean
+    isOwner?: boolean
     companyId: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -21465,6 +21512,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    isOwner?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     company?: CompanyUpdateOneRequiredWithoutUsersNestedInput
@@ -21477,6 +21525,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    isOwner?: BoolFieldUpdateOperationsInput | boolean
     companyId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -21489,6 +21538,7 @@ export namespace Prisma {
     email: string
     password: string
     isActive?: boolean
+    isOwner?: boolean
     companyId: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -21500,6 +21550,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    isOwner?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -21510,6 +21561,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    isOwner?: BoolFieldUpdateOperationsInput | boolean
     companyId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -22647,6 +22699,7 @@ export namespace Prisma {
     email?: SortOrder
     slug?: SortOrder
     conta?: SortOrder
+    type?: SortOrder
     status?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -22660,6 +22713,7 @@ export namespace Prisma {
     email?: SortOrder
     slug?: SortOrder
     conta?: SortOrder
+    type?: SortOrder
     status?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -22673,6 +22727,7 @@ export namespace Prisma {
     email?: SortOrder
     slug?: SortOrder
     conta?: SortOrder
+    type?: SortOrder
     status?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -22741,6 +22796,7 @@ export namespace Prisma {
     email?: SortOrder
     password?: SortOrder
     isActive?: SortOrder
+    isOwner?: SortOrder
     companyId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -22752,6 +22808,7 @@ export namespace Prisma {
     email?: SortOrder
     password?: SortOrder
     isActive?: SortOrder
+    isOwner?: SortOrder
     companyId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -22763,6 +22820,7 @@ export namespace Prisma {
     email?: SortOrder
     password?: SortOrder
     isActive?: SortOrder
+    isOwner?: SortOrder
     companyId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -24776,6 +24834,7 @@ export namespace Prisma {
     email: string
     password: string
     isActive?: boolean
+    isOwner?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     terminalActivations?: TerminalActivationCreateNestedManyWithoutActivatedByUserInput
@@ -24787,6 +24846,7 @@ export namespace Prisma {
     email: string
     password: string
     isActive?: boolean
+    isOwner?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     terminalActivations?: TerminalActivationUncheckedCreateNestedManyWithoutActivatedByUserInput
@@ -25027,6 +25087,7 @@ export namespace Prisma {
     email?: StringFilter<"User"> | string
     password?: StringFilter<"User"> | string
     isActive?: BoolFilter<"User"> | boolean
+    isOwner?: BoolFilter<"User"> | boolean
     companyId?: StringFilter<"User"> | string
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
@@ -25204,6 +25265,7 @@ export namespace Prisma {
     email: string
     slug: string
     conta: string
+    type?: string
     status: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -25222,6 +25284,7 @@ export namespace Prisma {
     email: string
     slug: string
     conta: string
+    type?: string
     status: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -25284,6 +25347,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     slug?: StringFieldUpdateOperationsInput | string
     conta?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -25302,6 +25366,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     slug?: StringFieldUpdateOperationsInput | string
     conta?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -25349,6 +25414,7 @@ export namespace Prisma {
     email: string
     slug: string
     conta: string
+    type?: string
     status: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -25367,6 +25433,7 @@ export namespace Prisma {
     email: string
     slug: string
     conta: string
+    type?: string
     status: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -25524,6 +25591,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     slug?: StringFieldUpdateOperationsInput | string
     conta?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -25542,6 +25610,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     slug?: StringFieldUpdateOperationsInput | string
     conta?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -25654,6 +25723,7 @@ export namespace Prisma {
     email: string
     slug: string
     conta: string
+    type?: string
     status: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -25672,6 +25742,7 @@ export namespace Prisma {
     email: string
     slug: string
     conta: string
+    type?: string
     status: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -25902,6 +25973,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     slug?: StringFieldUpdateOperationsInput | string
     conta?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -25920,6 +25992,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     slug?: StringFieldUpdateOperationsInput | string
     conta?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -26245,6 +26318,7 @@ export namespace Prisma {
     email: string
     password: string
     isActive?: boolean
+    isOwner?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     company: CompanyCreateNestedOneWithoutUsersInput
@@ -26256,6 +26330,7 @@ export namespace Prisma {
     email: string
     password: string
     isActive?: boolean
+    isOwner?: boolean
     companyId: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -26342,6 +26417,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    isOwner?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     company?: CompanyUpdateOneRequiredWithoutUsersNestedInput
@@ -26353,6 +26429,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    isOwner?: BoolFieldUpdateOperationsInput | boolean
     companyId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -26544,6 +26621,7 @@ export namespace Prisma {
     email: string
     slug: string
     conta: string
+    type?: string
     status: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -26562,6 +26640,7 @@ export namespace Prisma {
     email: string
     slug: string
     conta: string
+    type?: string
     status: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -26704,6 +26783,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     slug?: StringFieldUpdateOperationsInput | string
     conta?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -26722,6 +26802,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     slug?: StringFieldUpdateOperationsInput | string
     conta?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -26848,6 +26929,7 @@ export namespace Prisma {
     email: string
     slug: string
     conta: string
+    type?: string
     status: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -26866,6 +26948,7 @@ export namespace Prisma {
     email: string
     slug: string
     conta: string
+    type?: string
     status: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -26928,6 +27011,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     slug?: StringFieldUpdateOperationsInput | string
     conta?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -26946,6 +27030,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     slug?: StringFieldUpdateOperationsInput | string
     conta?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -27460,6 +27545,7 @@ export namespace Prisma {
     email: string
     slug: string
     conta: string
+    type?: string
     status: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -27478,6 +27564,7 @@ export namespace Prisma {
     email: string
     slug: string
     conta: string
+    type?: string
     status: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -27512,6 +27599,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     slug?: StringFieldUpdateOperationsInput | string
     conta?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -27530,6 +27618,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     slug?: StringFieldUpdateOperationsInput | string
     conta?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -27546,6 +27635,7 @@ export namespace Prisma {
     email: string
     password: string
     isActive?: boolean
+    isOwner?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -27620,6 +27710,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    isOwner?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     terminalActivations?: TerminalActivationUpdateManyWithoutActivatedByUserNestedInput
@@ -27631,6 +27722,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    isOwner?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     terminalActivations?: TerminalActivationUncheckedUpdateManyWithoutActivatedByUserNestedInput
@@ -27642,6 +27734,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    isOwner?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }

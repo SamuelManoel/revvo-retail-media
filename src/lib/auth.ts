@@ -8,7 +8,7 @@ const SECRET = new TextEncoder().encode(
 const COOKIE = 'revvo_session';
 const EXPIRES_IN = 60 * 60 * 8; // 8 hours
 
-export const MASTER_COMPANY_SLUG = 'revvo-master';
+export const MASTER_COMPANY_SLUG = process.env.MASTER_COMPANY_SLUG ?? 'revvo';
 
 export type SessionPayload = {
   userId: string;
