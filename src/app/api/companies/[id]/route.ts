@@ -17,6 +17,7 @@ export async function GET(_req: NextRequest, { params }: Params) {
             name: true,
             email: true,
             isActive: true,
+            isOwner: true,
             createdAt: true,
           },
         },

@@ -12,6 +12,11 @@ export function getTenantSchema(storeId: string): string {
   return `tenant_${storeId.replace(/-/g, '')}`
 }
 
+/** Normaliza o storeId para uso como tenant_id (sem hífens). */
+function tenantId(storeId: string): string {
+  return storeId.replace(/-/g, '')
+}
+
 /**
  * Cria o schema e a tabela de produtos para uma loja.
  * Chamado automaticamente ao criar uma Store.
@@ -31,11 +36,15 @@ export async function createStoreSchema(storeId: string): Promise<void> {
       preco1        NUMERIC(10,2) NOT NULL,
       preco2        NUMERIC(10,2),
       preco3        NUMERIC(10,2),
+      image_url     TEXT,
       created_at    TIMESTAMPTZ NOT NULL DEFAULT NOW(),
       updated_at    TIMESTAMPTZ NOT NULL DEFAULT NOW(),
       UNIQUE (ean)
     )
   `)
+
+  // Garante que schemas existentes também tenham a coluna
+  await pool.query(`ALTER TABLE "${schema}".products ADD COLUMN IF NOT EXISTS image_url TEXT`)
 }
 
 /**
@@ -57,6 +66,7 @@ export interface TenantProduct {
   preco1: string
   preco2: string | null
   preco3: string | null
+  image_url: string | null
   created_at: string
   updated_at: string
 }
@@ -77,7 +87,7 @@ export async function listProducts(
   const offset = (page - 1) * limit
 
   let where = ''
-  const params: unknown[] = [storeId]
+  const params: unknown[] = [tenantId(storeId)]
 
   if (options.q) {
     params.push(`%${options.q}%`)
@@ -115,7 +125,7 @@ export async function getProductByEan(
   const schema = getTenantSchema(storeId)
   const result = await pool.query(
     `SELECT * FROM "${schema}".products WHERE tenant_id = $1 AND ean = $2 LIMIT 1`,
-    [storeId, ean]
+    [tenantId(storeId), ean]
   )
   return result.rows[0] ?? null
 }
@@ -127,6 +137,7 @@ export interface UpsertProductInput {
   preco1: number
   preco2?: number | null
   preco3?: number | null
+  imageUrl?: string | null
 }
 
 /**
@@ -139,24 +150,26 @@ export async function upsertProduct(
   const schema = getTenantSchema(storeId)
 
   const result = await pool.query(
-    `INSERT INTO "${schema}".products (tenant_id, ean, codigo_produto, produto, preco1, preco2, preco3)
-     VALUES ($1, $2, $3, $4, $5, $6, $7)
+    `INSERT INTO "${schema}".products (tenant_id, ean, codigo_produto, produto, preco1, preco2, preco3, image_url)
+     VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
      ON CONFLICT (ean) DO UPDATE SET
        codigo_produto = EXCLUDED.codigo_produto,
        produto        = EXCLUDED.produto,
        preco1         = EXCLUDED.preco1,
        preco2         = EXCLUDED.preco2,
        preco3         = EXCLUDED.preco3,
+       image_url      = EXCLUDED.image_url,
        updated_at     = NOW()
      RETURNING *, (xmax = 0) AS created`,
     [
-      storeId,
+      tenantId(storeId),
       input.ean,
       input.codigoProduto ?? null,
       input.produto,
       input.preco1,
       input.preco2 ?? null,
       input.preco3 ?? null,
+      input.imageUrl ?? null,
     ]
   )
 
@@ -174,7 +187,7 @@ export async function updateProduct(
   const schema = getTenantSchema(storeId)
 
   const fields: string[] = []
-  const params: unknown[] = [storeId, productId]
+  const params: unknown[] = [tenantId(storeId), productId]
 
   if (input.ean !== undefined) { params.push(input.ean); fields.push(`ean = $${params.length}`) }
   if (input.codigoProduto !== undefined) { params.push(input.codigoProduto); fields.push(`codigo_produto = $${params.length}`) }
@@ -182,6 +195,7 @@ export async function updateProduct(
   if (input.preco1 !== undefined) { params.push(input.preco1); fields.push(`preco1 = $${params.length}`) }
   if (input.preco2 !== undefined) { params.push(input.preco2); fields.push(`preco2 = $${params.length}`) }
   if (input.preco3 !== undefined) { params.push(input.preco3); fields.push(`preco3 = $${params.length}`) }
+  if (input.imageUrl !== undefined) { params.push(input.imageUrl); fields.push(`image_url = $${params.length}`) }
 
   if (fields.length === 0) return null
 
@@ -203,7 +217,7 @@ export async function deleteProduct(
   const schema = getTenantSchema(storeId)
   const result = await pool.query(
     `DELETE FROM "${schema}".products WHERE tenant_id = $1 AND id = $2`,
-    [storeId, productId]
+    [tenantId(storeId), productId]
   )
   return (result.rowCount ?? 0) > 0
 }
@@ -212,7 +226,7 @@ export async function deleteAllProducts(storeId: string): Promise<number> {
   const schema = getTenantSchema(storeId)
   const result = await pool.query(
     `DELETE FROM "${schema}".products WHERE tenant_id = $1`,
-    [storeId]
+    [tenantId(storeId)]
   )
   return result.rowCount ?? 0
 }
