@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getSession } from '@/lib/auth';
 
-export const maxDuration = 600; // 10 min (segundos) — aguarda o workflow n8n terminar
+export const maxDuration = 300; // 5 min (máx. plano hobby) — aguarda o workflow n8n terminar
 import { prisma } from '@/lib/prisma';
 import {
   n8nWebhookBase, featureWebhookPath,
@@ -12,7 +12,7 @@ import {
 
 type Params = { params: Promise<{ slug: string }> };
 
-const WEBHOOK_TIMEOUT_MS = 10 * 60 * 1000; // 10 min — aguarda o workflow terminar (responseMode: lastNode)
+const WEBHOOK_TIMEOUT_MS = 5 * 60 * 1000; // 5 min — aguarda o workflow terminar (responseMode: lastNode)
 
 async function callWebhook(webhookUrl: string): Promise<{ ok: boolean; status: number; text: string }> {
   const controller = new AbortController();
