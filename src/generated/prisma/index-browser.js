@@ -277,6 +277,44 @@ exports.Prisma.ConfigurationScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.IntegrationScalarFieldEnum = {
+  id: 'id',
+  slug: 'slug',
+  name: 'name',
+  category: 'category',
+  description: 'description',
+  logoLetters: 'logoLetters',
+  logoColor: 'logoColor',
+  isActive: 'isActive',
+  fields: 'fields',
+  features: 'features',
+  n8nApiUrl: 'n8nApiUrl',
+  n8nApiKey: 'n8nApiKey',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.IntegrationCategoryScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.CompanyIntegrationScalarFieldEnum = {
+  id: 'id',
+  slug: 'slug',
+  isEnabled: 'isEnabled',
+  config: 'config',
+  features: 'features',
+  n8nWorkflowId: 'n8nWorkflowId',
+  companyId: 'companyId',
+  storeId: 'storeId',
+  integrationId: 'integrationId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.NotificationScalarFieldEnum = {
   id: 'id',
   title: 'title',
@@ -297,6 +335,10 @@ exports.Prisma.SortOrder = {
 
 exports.Prisma.NullableJsonNullValueInput = {
   DbNull: Prisma.DbNull,
+  JsonNull: Prisma.JsonNull
+};
+
+exports.Prisma.JsonNullValueInput = {
   JsonNull: Prisma.JsonNull
 };
 
@@ -332,6 +374,9 @@ exports.Prisma.ModelName = {
   TerminalHeartbeat: 'TerminalHeartbeat',
   TerminalEvent: 'TerminalEvent',
   Configuration: 'Configuration',
+  Integration: 'Integration',
+  IntegrationCategory: 'IntegrationCategory',
+  CompanyIntegration: 'CompanyIntegration',
   Notification: 'Notification'
 };
 

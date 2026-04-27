@@ -24,6 +24,7 @@ model Company {
   medias        Media[]
   campaigns     Campaign[]
   notifications Notification[]
+  integrations  CompanyIntegration[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -59,9 +60,10 @@ model Store {
   companyId String
   company   Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
 
-  terminals Terminal[]
-  license   StoreLicense?
-  campaigns Campaign[]
+  terminals    Terminal[]
+  license      StoreLicense?
+  campaigns    Campaign[]
+  integrations CompanyIntegration[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -268,6 +270,66 @@ model Configuration {
   updatedAt DateTime @updatedAt
 
   @@map("configurations")
+}
+
+model Integration {
+  id          String  @id @default(uuid())
+  slug        String  @unique
+  name        String
+  category    String
+  description String
+  logoLetters String  @default("??")
+  logoColor   String  @default("from-muted to-muted/60")
+  isActive    Boolean @default(true)
+  fields      Json    @default("[]")
+  features    Json    @default("[]")
+
+  // n8n — cada feature tem seu próprio workflowJson dentro do array features
+  n8nApiUrl String? // URL da instância n8n (ex: https://n8n.empresa.com)
+  n8nApiKey String? // API key do n8n
+
+  companyIntegrations CompanyIntegration[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("integrations")
+}
+
+model IntegrationCategory {
+  id   String @id @default(uuid())
+  name String @unique
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("integration_categories")
+}
+
+model CompanyIntegration {
+  id        String  @id @default(uuid())
+  slug      String
+  isEnabled Boolean @default(false)
+  config    Json    @default("{}") // campos livres: account, token, etc.
+  features  Json    @default("[]") // lista de keys de features ativas
+
+  // mapa de featureKey → workflowId no n8n (um workflow por feature)
+  n8nWorkflowId Json? // ex: { "update_price": "123", "update_product": "456" }
+
+  companyId String
+  company   Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+
+  storeId String
+  store   Store  @relation(fields: [storeId], references: [id], onDelete: Cascade)
+
+  integrationId String?
+  integration   Integration? @relation(fields: [integrationId], references: [id], onDelete: SetNull)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([slug, storeId])
+  @@map("company_integrations")
 }
 
 model Notification {

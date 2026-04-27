@@ -103,6 +103,29 @@ const mainNav: NavItem[] = [
     ),
   },
   {
+    href: "/integracoes",
+    label: "Integrações",
+    icon: (
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24">
+        <path d="M4 13a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-1Z" stroke="currentColor" strokeWidth="1.5"/>
+        <path d="M17 13a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1h-1a1 1 0 0 1-1-1v-1Z" stroke="currentColor" strokeWidth="1.5"/>
+        <path d="M10.5 7a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1h-1a1 1 0 0 1-1-1V7Z" stroke="currentColor" strokeWidth="1.5"/>
+        <path d="M7 13.5h3.5M13.5 13.5H17M12 8v5.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+      </svg>
+    ),
+  },
+  {
+    href: "/admin/integracoes",
+    label: "Catálogo de Integrações",
+    icon: (
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24">
+        <path d="M12 2L2 7l10 5 10-5-10-5z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+        <path d="M2 17l10 5 10-5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+        <path d="M2 12l10 5 10-5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+      </svg>
+    ),
+  },
+  {
     href: "/relatorios",
     label: "Relatórios",
     disabled: true,
@@ -166,7 +189,7 @@ function NavLink({
         "flex items-center gap-3 w-full rounded-xl h-10 text-sm font-medium transition-all duration-150 select-none",
         collapsed ? "justify-center px-0" : "px-3",
         isActive
-          ? "bg-[var(--accent-soft)] text-accent"
+          ? "bg-(--accent-soft) text-accent"
           : item.disabled
           ? "text-muted/40 cursor-not-allowed"
           : "text-muted hover:text-foreground hover:bg-surface-secondary/70 cursor-pointer",
@@ -177,7 +200,7 @@ function NavLink({
         <>
           <span className="flex-1 truncate">{item.label}</span>
           {item.badge && (
-            <span className="ml-auto rounded-full bg-accent/15 px-2 py-0.5 text-[10px] font-semibold text-accent">
+            <span className="ml-auto rounded-full bg-accent-soft px-2 py-0.5 text-[10px] font-semibold text-accent">
               {item.badge}
             </span>
           )}
@@ -223,6 +246,7 @@ export function Sidebar({
   const visibleMainNav = mainNav.filter((item) => {
     if (item.href === "/empresas") return user?.isMaster;
     if (item.href === "/licencas") return user?.isMaster;
+    if (item.href === "/admin/integracoes") return user?.isMaster;
     return true;
   });
 
@@ -239,7 +263,7 @@ export function Sidebar({
         isMobileOpen ? "translate-x-0 shadow-2xl" : "-translate-x-full",
         "md:relative md:inset-auto md:z-auto md:translate-x-0 md:shadow-none",
         "md:transition-[width] md:duration-300 md:ease-in-out",
-        collapsed ? "md:w-[68px]" : "md:w-64",
+        collapsed ? "md:w-17" : "md:w-64",
       ].join(" ")}
     >
       {/* ── Logo + Collapse ── */}
@@ -287,7 +311,7 @@ export function Sidebar({
           <TooltipRoot>
             <TooltipEl>
               <Link href="/perfil" className="flex justify-center">
-                <div className="h-9 w-9 rounded-full bg-gradient-to-br from-accent to-success flex items-center justify-center text-xs font-bold text-white">
+                <div className="h-9 w-9 rounded-full bg-linear-to-br from-accent to-success flex items-center justify-center text-xs font-bold text-white">
                   {initials}
                 </div>
               </Link>
@@ -296,7 +320,7 @@ export function Sidebar({
           </TooltipRoot>
         ) : (
           <Link href="/perfil" className="flex items-center gap-3 rounded-xl px-2 py-2 hover:bg-surface-secondary transition-colors group">
-            <div className="h-9 w-9 shrink-0 rounded-full bg-gradient-to-br from-accent to-success flex items-center justify-center text-xs font-bold text-white">
+            <div className="h-9 w-9 shrink-0 rounded-full bg-linear-to-br from-accent to-success flex items-center justify-center text-xs font-bold text-white">
               {initials}
             </div>
             <div className="min-w-0 flex-1">

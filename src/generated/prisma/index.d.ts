@@ -84,6 +84,21 @@ export type TerminalEvent = $Result.DefaultSelection<Prisma.$TerminalEventPayloa
  */
 export type Configuration = $Result.DefaultSelection<Prisma.$ConfigurationPayload>
 /**
+ * Model Integration
+ * 
+ */
+export type Integration = $Result.DefaultSelection<Prisma.$IntegrationPayload>
+/**
+ * Model IntegrationCategory
+ * 
+ */
+export type IntegrationCategory = $Result.DefaultSelection<Prisma.$IntegrationCategoryPayload>
+/**
+ * Model CompanyIntegration
+ * 
+ */
+export type CompanyIntegration = $Result.DefaultSelection<Prisma.$CompanyIntegrationPayload>
+/**
  * Model Notification
  * 
  */
@@ -349,6 +364,36 @@ export class PrismaClient<
     * ```
     */
   get configuration(): Prisma.ConfigurationDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.integration`: Exposes CRUD operations for the **Integration** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Integrations
+    * const integrations = await prisma.integration.findMany()
+    * ```
+    */
+  get integration(): Prisma.IntegrationDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.integrationCategory`: Exposes CRUD operations for the **IntegrationCategory** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more IntegrationCategories
+    * const integrationCategories = await prisma.integrationCategory.findMany()
+    * ```
+    */
+  get integrationCategory(): Prisma.IntegrationCategoryDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.companyIntegration`: Exposes CRUD operations for the **CompanyIntegration** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more CompanyIntegrations
+    * const companyIntegrations = await prisma.companyIntegration.findMany()
+    * ```
+    */
+  get companyIntegration(): Prisma.CompanyIntegrationDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.notification`: Exposes CRUD operations for the **Notification** model.
@@ -807,6 +852,9 @@ export namespace Prisma {
     TerminalHeartbeat: 'TerminalHeartbeat',
     TerminalEvent: 'TerminalEvent',
     Configuration: 'Configuration',
+    Integration: 'Integration',
+    IntegrationCategory: 'IntegrationCategory',
+    CompanyIntegration: 'CompanyIntegration',
     Notification: 'Notification'
   };
 
@@ -823,7 +871,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "company" | "user" | "store" | "terminal" | "terminalCredential" | "terminalActivation" | "storeLicense" | "licenseRenewal" | "campaign" | "media" | "terminalMedia" | "terminalHeartbeat" | "terminalEvent" | "configuration" | "notification"
+      modelProps: "company" | "user" | "store" | "terminal" | "terminalCredential" | "terminalActivation" | "storeLicense" | "licenseRenewal" | "campaign" | "media" | "terminalMedia" | "terminalHeartbeat" | "terminalEvent" | "configuration" | "integration" | "integrationCategory" | "companyIntegration" | "notification"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1863,6 +1911,228 @@ export namespace Prisma {
           }
         }
       }
+      Integration: {
+        payload: Prisma.$IntegrationPayload<ExtArgs>
+        fields: Prisma.IntegrationFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.IntegrationFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IntegrationPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.IntegrationFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IntegrationPayload>
+          }
+          findFirst: {
+            args: Prisma.IntegrationFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IntegrationPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.IntegrationFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IntegrationPayload>
+          }
+          findMany: {
+            args: Prisma.IntegrationFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IntegrationPayload>[]
+          }
+          create: {
+            args: Prisma.IntegrationCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IntegrationPayload>
+          }
+          createMany: {
+            args: Prisma.IntegrationCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.IntegrationCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IntegrationPayload>[]
+          }
+          delete: {
+            args: Prisma.IntegrationDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IntegrationPayload>
+          }
+          update: {
+            args: Prisma.IntegrationUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IntegrationPayload>
+          }
+          deleteMany: {
+            args: Prisma.IntegrationDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.IntegrationUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.IntegrationUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IntegrationPayload>[]
+          }
+          upsert: {
+            args: Prisma.IntegrationUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IntegrationPayload>
+          }
+          aggregate: {
+            args: Prisma.IntegrationAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateIntegration>
+          }
+          groupBy: {
+            args: Prisma.IntegrationGroupByArgs<ExtArgs>
+            result: $Utils.Optional<IntegrationGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.IntegrationCountArgs<ExtArgs>
+            result: $Utils.Optional<IntegrationCountAggregateOutputType> | number
+          }
+        }
+      }
+      IntegrationCategory: {
+        payload: Prisma.$IntegrationCategoryPayload<ExtArgs>
+        fields: Prisma.IntegrationCategoryFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.IntegrationCategoryFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IntegrationCategoryPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.IntegrationCategoryFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IntegrationCategoryPayload>
+          }
+          findFirst: {
+            args: Prisma.IntegrationCategoryFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IntegrationCategoryPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.IntegrationCategoryFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IntegrationCategoryPayload>
+          }
+          findMany: {
+            args: Prisma.IntegrationCategoryFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IntegrationCategoryPayload>[]
+          }
+          create: {
+            args: Prisma.IntegrationCategoryCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IntegrationCategoryPayload>
+          }
+          createMany: {
+            args: Prisma.IntegrationCategoryCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.IntegrationCategoryCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IntegrationCategoryPayload>[]
+          }
+          delete: {
+            args: Prisma.IntegrationCategoryDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IntegrationCategoryPayload>
+          }
+          update: {
+            args: Prisma.IntegrationCategoryUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IntegrationCategoryPayload>
+          }
+          deleteMany: {
+            args: Prisma.IntegrationCategoryDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.IntegrationCategoryUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.IntegrationCategoryUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IntegrationCategoryPayload>[]
+          }
+          upsert: {
+            args: Prisma.IntegrationCategoryUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IntegrationCategoryPayload>
+          }
+          aggregate: {
+            args: Prisma.IntegrationCategoryAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateIntegrationCategory>
+          }
+          groupBy: {
+            args: Prisma.IntegrationCategoryGroupByArgs<ExtArgs>
+            result: $Utils.Optional<IntegrationCategoryGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.IntegrationCategoryCountArgs<ExtArgs>
+            result: $Utils.Optional<IntegrationCategoryCountAggregateOutputType> | number
+          }
+        }
+      }
+      CompanyIntegration: {
+        payload: Prisma.$CompanyIntegrationPayload<ExtArgs>
+        fields: Prisma.CompanyIntegrationFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.CompanyIntegrationFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CompanyIntegrationPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.CompanyIntegrationFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CompanyIntegrationPayload>
+          }
+          findFirst: {
+            args: Prisma.CompanyIntegrationFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CompanyIntegrationPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.CompanyIntegrationFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CompanyIntegrationPayload>
+          }
+          findMany: {
+            args: Prisma.CompanyIntegrationFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CompanyIntegrationPayload>[]
+          }
+          create: {
+            args: Prisma.CompanyIntegrationCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CompanyIntegrationPayload>
+          }
+          createMany: {
+            args: Prisma.CompanyIntegrationCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.CompanyIntegrationCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CompanyIntegrationPayload>[]
+          }
+          delete: {
+            args: Prisma.CompanyIntegrationDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CompanyIntegrationPayload>
+          }
+          update: {
+            args: Prisma.CompanyIntegrationUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CompanyIntegrationPayload>
+          }
+          deleteMany: {
+            args: Prisma.CompanyIntegrationDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.CompanyIntegrationUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.CompanyIntegrationUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CompanyIntegrationPayload>[]
+          }
+          upsert: {
+            args: Prisma.CompanyIntegrationUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CompanyIntegrationPayload>
+          }
+          aggregate: {
+            args: Prisma.CompanyIntegrationAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateCompanyIntegration>
+          }
+          groupBy: {
+            args: Prisma.CompanyIntegrationGroupByArgs<ExtArgs>
+            result: $Utils.Optional<CompanyIntegrationGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.CompanyIntegrationCountArgs<ExtArgs>
+            result: $Utils.Optional<CompanyIntegrationCountAggregateOutputType> | number
+          }
+        }
+      }
       Notification: {
         payload: Prisma.$NotificationPayload<ExtArgs>
         fields: Prisma.NotificationFieldRefs
@@ -2059,6 +2329,9 @@ export namespace Prisma {
     terminalHeartbeat?: TerminalHeartbeatOmit
     terminalEvent?: TerminalEventOmit
     configuration?: ConfigurationOmit
+    integration?: IntegrationOmit
+    integrationCategory?: IntegrationCategoryOmit
+    companyIntegration?: CompanyIntegrationOmit
     notification?: NotificationOmit
   }
 
@@ -2146,6 +2419,7 @@ export namespace Prisma {
     medias: number
     campaigns: number
     notifications: number
+    integrations: number
   }
 
   export type CompanyCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2155,6 +2429,7 @@ export namespace Prisma {
     medias?: boolean | CompanyCountOutputTypeCountMediasArgs
     campaigns?: boolean | CompanyCountOutputTypeCountCampaignsArgs
     notifications?: boolean | CompanyCountOutputTypeCountNotificationsArgs
+    integrations?: boolean | CompanyCountOutputTypeCountIntegrationsArgs
   }
 
   // Custom InputTypes
@@ -2210,6 +2485,13 @@ export namespace Prisma {
     where?: NotificationWhereInput
   }
 
+  /**
+   * CompanyCountOutputType without action
+   */
+  export type CompanyCountOutputTypeCountIntegrationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CompanyIntegrationWhereInput
+  }
+
 
   /**
    * Count Type UserCountOutputType
@@ -2249,11 +2531,13 @@ export namespace Prisma {
   export type StoreCountOutputType = {
     terminals: number
     campaigns: number
+    integrations: number
   }
 
   export type StoreCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     terminals?: boolean | StoreCountOutputTypeCountTerminalsArgs
     campaigns?: boolean | StoreCountOutputTypeCountCampaignsArgs
+    integrations?: boolean | StoreCountOutputTypeCountIntegrationsArgs
   }
 
   // Custom InputTypes
@@ -2279,6 +2563,13 @@ export namespace Prisma {
    */
   export type StoreCountOutputTypeCountCampaignsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: CampaignWhereInput
+  }
+
+  /**
+   * StoreCountOutputType without action
+   */
+  export type StoreCountOutputTypeCountIntegrationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CompanyIntegrationWhereInput
   }
 
 
@@ -2439,6 +2730,37 @@ export namespace Prisma {
    */
   export type MediaCountOutputTypeCountTerminalMediasArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: TerminalMediaWhereInput
+  }
+
+
+  /**
+   * Count Type IntegrationCountOutputType
+   */
+
+  export type IntegrationCountOutputType = {
+    companyIntegrations: number
+  }
+
+  export type IntegrationCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    companyIntegrations?: boolean | IntegrationCountOutputTypeCountCompanyIntegrationsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * IntegrationCountOutputType without action
+   */
+  export type IntegrationCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the IntegrationCountOutputType
+     */
+    select?: IntegrationCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * IntegrationCountOutputType without action
+   */
+  export type IntegrationCountOutputTypeCountCompanyIntegrationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CompanyIntegrationWhereInput
   }
 
 
@@ -2664,6 +2986,7 @@ export namespace Prisma {
     medias?: boolean | Company$mediasArgs<ExtArgs>
     campaigns?: boolean | Company$campaignsArgs<ExtArgs>
     notifications?: boolean | Company$notificationsArgs<ExtArgs>
+    integrations?: boolean | Company$integrationsArgs<ExtArgs>
     _count?: boolean | CompanyCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["company"]>
 
@@ -2717,6 +3040,7 @@ export namespace Prisma {
     medias?: boolean | Company$mediasArgs<ExtArgs>
     campaigns?: boolean | Company$campaignsArgs<ExtArgs>
     notifications?: boolean | Company$notificationsArgs<ExtArgs>
+    integrations?: boolean | Company$integrationsArgs<ExtArgs>
     _count?: boolean | CompanyCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type CompanyIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -2731,6 +3055,7 @@ export namespace Prisma {
       medias: Prisma.$MediaPayload<ExtArgs>[]
       campaigns: Prisma.$CampaignPayload<ExtArgs>[]
       notifications: Prisma.$NotificationPayload<ExtArgs>[]
+      integrations: Prisma.$CompanyIntegrationPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -3144,6 +3469,7 @@ export namespace Prisma {
     medias<T extends Company$mediasArgs<ExtArgs> = {}>(args?: Subset<T, Company$mediasArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MediaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     campaigns<T extends Company$campaignsArgs<ExtArgs> = {}>(args?: Subset<T, Company$campaignsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CampaignPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     notifications<T extends Company$notificationsArgs<ExtArgs> = {}>(args?: Subset<T, Company$notificationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    integrations<T extends Company$integrationsArgs<ExtArgs> = {}>(args?: Subset<T, Company$integrationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CompanyIntegrationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3718,6 +4044,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: NotificationScalarFieldEnum | NotificationScalarFieldEnum[]
+  }
+
+  /**
+   * Company.integrations
+   */
+  export type Company$integrationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CompanyIntegration
+     */
+    select?: CompanyIntegrationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CompanyIntegration
+     */
+    omit?: CompanyIntegrationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CompanyIntegrationInclude<ExtArgs> | null
+    where?: CompanyIntegrationWhereInput
+    orderBy?: CompanyIntegrationOrderByWithRelationInput | CompanyIntegrationOrderByWithRelationInput[]
+    cursor?: CompanyIntegrationWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: CompanyIntegrationScalarFieldEnum | CompanyIntegrationScalarFieldEnum[]
   }
 
   /**
@@ -5060,6 +5410,7 @@ export namespace Prisma {
     terminals?: boolean | Store$terminalsArgs<ExtArgs>
     license?: boolean | Store$licenseArgs<ExtArgs>
     campaigns?: boolean | Store$campaignsArgs<ExtArgs>
+    integrations?: boolean | Store$integrationsArgs<ExtArgs>
     _count?: boolean | StoreCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["store"]>
 
@@ -5098,6 +5449,7 @@ export namespace Prisma {
     terminals?: boolean | Store$terminalsArgs<ExtArgs>
     license?: boolean | Store$licenseArgs<ExtArgs>
     campaigns?: boolean | Store$campaignsArgs<ExtArgs>
+    integrations?: boolean | Store$integrationsArgs<ExtArgs>
     _count?: boolean | StoreCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type StoreIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -5114,6 +5466,7 @@ export namespace Prisma {
       terminals: Prisma.$TerminalPayload<ExtArgs>[]
       license: Prisma.$StoreLicensePayload<ExtArgs> | null
       campaigns: Prisma.$CampaignPayload<ExtArgs>[]
+      integrations: Prisma.$CompanyIntegrationPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -5520,6 +5873,7 @@ export namespace Prisma {
     terminals<T extends Store$terminalsArgs<ExtArgs> = {}>(args?: Subset<T, Store$terminalsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TerminalPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     license<T extends Store$licenseArgs<ExtArgs> = {}>(args?: Subset<T, Store$licenseArgs<ExtArgs>>): Prisma__StoreLicenseClient<$Result.GetResult<Prisma.$StoreLicensePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     campaigns<T extends Store$campaignsArgs<ExtArgs> = {}>(args?: Subset<T, Store$campaignsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CampaignPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    integrations<T extends Store$integrationsArgs<ExtArgs> = {}>(args?: Subset<T, Store$integrationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CompanyIntegrationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -6020,6 +6374,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: CampaignScalarFieldEnum | CampaignScalarFieldEnum[]
+  }
+
+  /**
+   * Store.integrations
+   */
+  export type Store$integrationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CompanyIntegration
+     */
+    select?: CompanyIntegrationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CompanyIntegration
+     */
+    omit?: CompanyIntegrationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CompanyIntegrationInclude<ExtArgs> | null
+    where?: CompanyIntegrationWhereInput
+    orderBy?: CompanyIntegrationOrderByWithRelationInput | CompanyIntegrationOrderByWithRelationInput[]
+    cursor?: CompanyIntegrationWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: CompanyIntegrationScalarFieldEnum | CompanyIntegrationScalarFieldEnum[]
   }
 
   /**
@@ -18701,6 +19079,3341 @@ export namespace Prisma {
 
 
   /**
+   * Model Integration
+   */
+
+  export type AggregateIntegration = {
+    _count: IntegrationCountAggregateOutputType | null
+    _min: IntegrationMinAggregateOutputType | null
+    _max: IntegrationMaxAggregateOutputType | null
+  }
+
+  export type IntegrationMinAggregateOutputType = {
+    id: string | null
+    slug: string | null
+    name: string | null
+    category: string | null
+    description: string | null
+    logoLetters: string | null
+    logoColor: string | null
+    isActive: boolean | null
+    n8nApiUrl: string | null
+    n8nApiKey: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type IntegrationMaxAggregateOutputType = {
+    id: string | null
+    slug: string | null
+    name: string | null
+    category: string | null
+    description: string | null
+    logoLetters: string | null
+    logoColor: string | null
+    isActive: boolean | null
+    n8nApiUrl: string | null
+    n8nApiKey: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type IntegrationCountAggregateOutputType = {
+    id: number
+    slug: number
+    name: number
+    category: number
+    description: number
+    logoLetters: number
+    logoColor: number
+    isActive: number
+    fields: number
+    features: number
+    n8nApiUrl: number
+    n8nApiKey: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type IntegrationMinAggregateInputType = {
+    id?: true
+    slug?: true
+    name?: true
+    category?: true
+    description?: true
+    logoLetters?: true
+    logoColor?: true
+    isActive?: true
+    n8nApiUrl?: true
+    n8nApiKey?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type IntegrationMaxAggregateInputType = {
+    id?: true
+    slug?: true
+    name?: true
+    category?: true
+    description?: true
+    logoLetters?: true
+    logoColor?: true
+    isActive?: true
+    n8nApiUrl?: true
+    n8nApiKey?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type IntegrationCountAggregateInputType = {
+    id?: true
+    slug?: true
+    name?: true
+    category?: true
+    description?: true
+    logoLetters?: true
+    logoColor?: true
+    isActive?: true
+    fields?: true
+    features?: true
+    n8nApiUrl?: true
+    n8nApiKey?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type IntegrationAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Integration to aggregate.
+     */
+    where?: IntegrationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Integrations to fetch.
+     */
+    orderBy?: IntegrationOrderByWithRelationInput | IntegrationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: IntegrationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Integrations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Integrations.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Integrations
+    **/
+    _count?: true | IntegrationCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: IntegrationMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: IntegrationMaxAggregateInputType
+  }
+
+  export type GetIntegrationAggregateType<T extends IntegrationAggregateArgs> = {
+        [P in keyof T & keyof AggregateIntegration]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateIntegration[P]>
+      : GetScalarType<T[P], AggregateIntegration[P]>
+  }
+
+
+
+
+  export type IntegrationGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: IntegrationWhereInput
+    orderBy?: IntegrationOrderByWithAggregationInput | IntegrationOrderByWithAggregationInput[]
+    by: IntegrationScalarFieldEnum[] | IntegrationScalarFieldEnum
+    having?: IntegrationScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: IntegrationCountAggregateInputType | true
+    _min?: IntegrationMinAggregateInputType
+    _max?: IntegrationMaxAggregateInputType
+  }
+
+  export type IntegrationGroupByOutputType = {
+    id: string
+    slug: string
+    name: string
+    category: string
+    description: string
+    logoLetters: string
+    logoColor: string
+    isActive: boolean
+    fields: JsonValue
+    features: JsonValue
+    n8nApiUrl: string | null
+    n8nApiKey: string | null
+    createdAt: Date
+    updatedAt: Date
+    _count: IntegrationCountAggregateOutputType | null
+    _min: IntegrationMinAggregateOutputType | null
+    _max: IntegrationMaxAggregateOutputType | null
+  }
+
+  type GetIntegrationGroupByPayload<T extends IntegrationGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<IntegrationGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof IntegrationGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], IntegrationGroupByOutputType[P]>
+            : GetScalarType<T[P], IntegrationGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type IntegrationSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    slug?: boolean
+    name?: boolean
+    category?: boolean
+    description?: boolean
+    logoLetters?: boolean
+    logoColor?: boolean
+    isActive?: boolean
+    fields?: boolean
+    features?: boolean
+    n8nApiUrl?: boolean
+    n8nApiKey?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    companyIntegrations?: boolean | Integration$companyIntegrationsArgs<ExtArgs>
+    _count?: boolean | IntegrationCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["integration"]>
+
+  export type IntegrationSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    slug?: boolean
+    name?: boolean
+    category?: boolean
+    description?: boolean
+    logoLetters?: boolean
+    logoColor?: boolean
+    isActive?: boolean
+    fields?: boolean
+    features?: boolean
+    n8nApiUrl?: boolean
+    n8nApiKey?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["integration"]>
+
+  export type IntegrationSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    slug?: boolean
+    name?: boolean
+    category?: boolean
+    description?: boolean
+    logoLetters?: boolean
+    logoColor?: boolean
+    isActive?: boolean
+    fields?: boolean
+    features?: boolean
+    n8nApiUrl?: boolean
+    n8nApiKey?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["integration"]>
+
+  export type IntegrationSelectScalar = {
+    id?: boolean
+    slug?: boolean
+    name?: boolean
+    category?: boolean
+    description?: boolean
+    logoLetters?: boolean
+    logoColor?: boolean
+    isActive?: boolean
+    fields?: boolean
+    features?: boolean
+    n8nApiUrl?: boolean
+    n8nApiKey?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type IntegrationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "slug" | "name" | "category" | "description" | "logoLetters" | "logoColor" | "isActive" | "fields" | "features" | "n8nApiUrl" | "n8nApiKey" | "createdAt" | "updatedAt", ExtArgs["result"]["integration"]>
+  export type IntegrationInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    companyIntegrations?: boolean | Integration$companyIntegrationsArgs<ExtArgs>
+    _count?: boolean | IntegrationCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type IntegrationIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type IntegrationIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+
+  export type $IntegrationPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Integration"
+    objects: {
+      companyIntegrations: Prisma.$CompanyIntegrationPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      slug: string
+      name: string
+      category: string
+      description: string
+      logoLetters: string
+      logoColor: string
+      isActive: boolean
+      fields: Prisma.JsonValue
+      features: Prisma.JsonValue
+      n8nApiUrl: string | null
+      n8nApiKey: string | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["integration"]>
+    composites: {}
+  }
+
+  type IntegrationGetPayload<S extends boolean | null | undefined | IntegrationDefaultArgs> = $Result.GetResult<Prisma.$IntegrationPayload, S>
+
+  type IntegrationCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<IntegrationFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: IntegrationCountAggregateInputType | true
+    }
+
+  export interface IntegrationDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Integration'], meta: { name: 'Integration' } }
+    /**
+     * Find zero or one Integration that matches the filter.
+     * @param {IntegrationFindUniqueArgs} args - Arguments to find a Integration
+     * @example
+     * // Get one Integration
+     * const integration = await prisma.integration.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends IntegrationFindUniqueArgs>(args: SelectSubset<T, IntegrationFindUniqueArgs<ExtArgs>>): Prisma__IntegrationClient<$Result.GetResult<Prisma.$IntegrationPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Integration that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {IntegrationFindUniqueOrThrowArgs} args - Arguments to find a Integration
+     * @example
+     * // Get one Integration
+     * const integration = await prisma.integration.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends IntegrationFindUniqueOrThrowArgs>(args: SelectSubset<T, IntegrationFindUniqueOrThrowArgs<ExtArgs>>): Prisma__IntegrationClient<$Result.GetResult<Prisma.$IntegrationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Integration that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {IntegrationFindFirstArgs} args - Arguments to find a Integration
+     * @example
+     * // Get one Integration
+     * const integration = await prisma.integration.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends IntegrationFindFirstArgs>(args?: SelectSubset<T, IntegrationFindFirstArgs<ExtArgs>>): Prisma__IntegrationClient<$Result.GetResult<Prisma.$IntegrationPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Integration that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {IntegrationFindFirstOrThrowArgs} args - Arguments to find a Integration
+     * @example
+     * // Get one Integration
+     * const integration = await prisma.integration.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends IntegrationFindFirstOrThrowArgs>(args?: SelectSubset<T, IntegrationFindFirstOrThrowArgs<ExtArgs>>): Prisma__IntegrationClient<$Result.GetResult<Prisma.$IntegrationPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Integrations that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {IntegrationFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Integrations
+     * const integrations = await prisma.integration.findMany()
+     * 
+     * // Get first 10 Integrations
+     * const integrations = await prisma.integration.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const integrationWithIdOnly = await prisma.integration.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends IntegrationFindManyArgs>(args?: SelectSubset<T, IntegrationFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$IntegrationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Integration.
+     * @param {IntegrationCreateArgs} args - Arguments to create a Integration.
+     * @example
+     * // Create one Integration
+     * const Integration = await prisma.integration.create({
+     *   data: {
+     *     // ... data to create a Integration
+     *   }
+     * })
+     * 
+     */
+    create<T extends IntegrationCreateArgs>(args: SelectSubset<T, IntegrationCreateArgs<ExtArgs>>): Prisma__IntegrationClient<$Result.GetResult<Prisma.$IntegrationPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Integrations.
+     * @param {IntegrationCreateManyArgs} args - Arguments to create many Integrations.
+     * @example
+     * // Create many Integrations
+     * const integration = await prisma.integration.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends IntegrationCreateManyArgs>(args?: SelectSubset<T, IntegrationCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Integrations and returns the data saved in the database.
+     * @param {IntegrationCreateManyAndReturnArgs} args - Arguments to create many Integrations.
+     * @example
+     * // Create many Integrations
+     * const integration = await prisma.integration.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Integrations and only return the `id`
+     * const integrationWithIdOnly = await prisma.integration.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends IntegrationCreateManyAndReturnArgs>(args?: SelectSubset<T, IntegrationCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$IntegrationPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Integration.
+     * @param {IntegrationDeleteArgs} args - Arguments to delete one Integration.
+     * @example
+     * // Delete one Integration
+     * const Integration = await prisma.integration.delete({
+     *   where: {
+     *     // ... filter to delete one Integration
+     *   }
+     * })
+     * 
+     */
+    delete<T extends IntegrationDeleteArgs>(args: SelectSubset<T, IntegrationDeleteArgs<ExtArgs>>): Prisma__IntegrationClient<$Result.GetResult<Prisma.$IntegrationPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Integration.
+     * @param {IntegrationUpdateArgs} args - Arguments to update one Integration.
+     * @example
+     * // Update one Integration
+     * const integration = await prisma.integration.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends IntegrationUpdateArgs>(args: SelectSubset<T, IntegrationUpdateArgs<ExtArgs>>): Prisma__IntegrationClient<$Result.GetResult<Prisma.$IntegrationPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Integrations.
+     * @param {IntegrationDeleteManyArgs} args - Arguments to filter Integrations to delete.
+     * @example
+     * // Delete a few Integrations
+     * const { count } = await prisma.integration.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends IntegrationDeleteManyArgs>(args?: SelectSubset<T, IntegrationDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Integrations.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {IntegrationUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Integrations
+     * const integration = await prisma.integration.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends IntegrationUpdateManyArgs>(args: SelectSubset<T, IntegrationUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Integrations and returns the data updated in the database.
+     * @param {IntegrationUpdateManyAndReturnArgs} args - Arguments to update many Integrations.
+     * @example
+     * // Update many Integrations
+     * const integration = await prisma.integration.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Integrations and only return the `id`
+     * const integrationWithIdOnly = await prisma.integration.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends IntegrationUpdateManyAndReturnArgs>(args: SelectSubset<T, IntegrationUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$IntegrationPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Integration.
+     * @param {IntegrationUpsertArgs} args - Arguments to update or create a Integration.
+     * @example
+     * // Update or create a Integration
+     * const integration = await prisma.integration.upsert({
+     *   create: {
+     *     // ... data to create a Integration
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Integration we want to update
+     *   }
+     * })
+     */
+    upsert<T extends IntegrationUpsertArgs>(args: SelectSubset<T, IntegrationUpsertArgs<ExtArgs>>): Prisma__IntegrationClient<$Result.GetResult<Prisma.$IntegrationPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Integrations.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {IntegrationCountArgs} args - Arguments to filter Integrations to count.
+     * @example
+     * // Count the number of Integrations
+     * const count = await prisma.integration.count({
+     *   where: {
+     *     // ... the filter for the Integrations we want to count
+     *   }
+     * })
+    **/
+    count<T extends IntegrationCountArgs>(
+      args?: Subset<T, IntegrationCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], IntegrationCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Integration.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {IntegrationAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends IntegrationAggregateArgs>(args: Subset<T, IntegrationAggregateArgs>): Prisma.PrismaPromise<GetIntegrationAggregateType<T>>
+
+    /**
+     * Group by Integration.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {IntegrationGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends IntegrationGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: IntegrationGroupByArgs['orderBy'] }
+        : { orderBy?: IntegrationGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, IntegrationGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetIntegrationGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Integration model
+   */
+  readonly fields: IntegrationFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Integration.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__IntegrationClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    companyIntegrations<T extends Integration$companyIntegrationsArgs<ExtArgs> = {}>(args?: Subset<T, Integration$companyIntegrationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CompanyIntegrationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Integration model
+   */
+  interface IntegrationFieldRefs {
+    readonly id: FieldRef<"Integration", 'String'>
+    readonly slug: FieldRef<"Integration", 'String'>
+    readonly name: FieldRef<"Integration", 'String'>
+    readonly category: FieldRef<"Integration", 'String'>
+    readonly description: FieldRef<"Integration", 'String'>
+    readonly logoLetters: FieldRef<"Integration", 'String'>
+    readonly logoColor: FieldRef<"Integration", 'String'>
+    readonly isActive: FieldRef<"Integration", 'Boolean'>
+    readonly fields: FieldRef<"Integration", 'Json'>
+    readonly features: FieldRef<"Integration", 'Json'>
+    readonly n8nApiUrl: FieldRef<"Integration", 'String'>
+    readonly n8nApiKey: FieldRef<"Integration", 'String'>
+    readonly createdAt: FieldRef<"Integration", 'DateTime'>
+    readonly updatedAt: FieldRef<"Integration", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Integration findUnique
+   */
+  export type IntegrationFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Integration
+     */
+    select?: IntegrationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Integration
+     */
+    omit?: IntegrationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: IntegrationInclude<ExtArgs> | null
+    /**
+     * Filter, which Integration to fetch.
+     */
+    where: IntegrationWhereUniqueInput
+  }
+
+  /**
+   * Integration findUniqueOrThrow
+   */
+  export type IntegrationFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Integration
+     */
+    select?: IntegrationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Integration
+     */
+    omit?: IntegrationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: IntegrationInclude<ExtArgs> | null
+    /**
+     * Filter, which Integration to fetch.
+     */
+    where: IntegrationWhereUniqueInput
+  }
+
+  /**
+   * Integration findFirst
+   */
+  export type IntegrationFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Integration
+     */
+    select?: IntegrationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Integration
+     */
+    omit?: IntegrationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: IntegrationInclude<ExtArgs> | null
+    /**
+     * Filter, which Integration to fetch.
+     */
+    where?: IntegrationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Integrations to fetch.
+     */
+    orderBy?: IntegrationOrderByWithRelationInput | IntegrationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Integrations.
+     */
+    cursor?: IntegrationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Integrations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Integrations.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Integrations.
+     */
+    distinct?: IntegrationScalarFieldEnum | IntegrationScalarFieldEnum[]
+  }
+
+  /**
+   * Integration findFirstOrThrow
+   */
+  export type IntegrationFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Integration
+     */
+    select?: IntegrationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Integration
+     */
+    omit?: IntegrationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: IntegrationInclude<ExtArgs> | null
+    /**
+     * Filter, which Integration to fetch.
+     */
+    where?: IntegrationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Integrations to fetch.
+     */
+    orderBy?: IntegrationOrderByWithRelationInput | IntegrationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Integrations.
+     */
+    cursor?: IntegrationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Integrations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Integrations.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Integrations.
+     */
+    distinct?: IntegrationScalarFieldEnum | IntegrationScalarFieldEnum[]
+  }
+
+  /**
+   * Integration findMany
+   */
+  export type IntegrationFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Integration
+     */
+    select?: IntegrationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Integration
+     */
+    omit?: IntegrationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: IntegrationInclude<ExtArgs> | null
+    /**
+     * Filter, which Integrations to fetch.
+     */
+    where?: IntegrationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Integrations to fetch.
+     */
+    orderBy?: IntegrationOrderByWithRelationInput | IntegrationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Integrations.
+     */
+    cursor?: IntegrationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Integrations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Integrations.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Integrations.
+     */
+    distinct?: IntegrationScalarFieldEnum | IntegrationScalarFieldEnum[]
+  }
+
+  /**
+   * Integration create
+   */
+  export type IntegrationCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Integration
+     */
+    select?: IntegrationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Integration
+     */
+    omit?: IntegrationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: IntegrationInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Integration.
+     */
+    data: XOR<IntegrationCreateInput, IntegrationUncheckedCreateInput>
+  }
+
+  /**
+   * Integration createMany
+   */
+  export type IntegrationCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Integrations.
+     */
+    data: IntegrationCreateManyInput | IntegrationCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Integration createManyAndReturn
+   */
+  export type IntegrationCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Integration
+     */
+    select?: IntegrationSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Integration
+     */
+    omit?: IntegrationOmit<ExtArgs> | null
+    /**
+     * The data used to create many Integrations.
+     */
+    data: IntegrationCreateManyInput | IntegrationCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Integration update
+   */
+  export type IntegrationUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Integration
+     */
+    select?: IntegrationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Integration
+     */
+    omit?: IntegrationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: IntegrationInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Integration.
+     */
+    data: XOR<IntegrationUpdateInput, IntegrationUncheckedUpdateInput>
+    /**
+     * Choose, which Integration to update.
+     */
+    where: IntegrationWhereUniqueInput
+  }
+
+  /**
+   * Integration updateMany
+   */
+  export type IntegrationUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Integrations.
+     */
+    data: XOR<IntegrationUpdateManyMutationInput, IntegrationUncheckedUpdateManyInput>
+    /**
+     * Filter which Integrations to update
+     */
+    where?: IntegrationWhereInput
+    /**
+     * Limit how many Integrations to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Integration updateManyAndReturn
+   */
+  export type IntegrationUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Integration
+     */
+    select?: IntegrationSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Integration
+     */
+    omit?: IntegrationOmit<ExtArgs> | null
+    /**
+     * The data used to update Integrations.
+     */
+    data: XOR<IntegrationUpdateManyMutationInput, IntegrationUncheckedUpdateManyInput>
+    /**
+     * Filter which Integrations to update
+     */
+    where?: IntegrationWhereInput
+    /**
+     * Limit how many Integrations to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Integration upsert
+   */
+  export type IntegrationUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Integration
+     */
+    select?: IntegrationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Integration
+     */
+    omit?: IntegrationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: IntegrationInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Integration to update in case it exists.
+     */
+    where: IntegrationWhereUniqueInput
+    /**
+     * In case the Integration found by the `where` argument doesn't exist, create a new Integration with this data.
+     */
+    create: XOR<IntegrationCreateInput, IntegrationUncheckedCreateInput>
+    /**
+     * In case the Integration was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<IntegrationUpdateInput, IntegrationUncheckedUpdateInput>
+  }
+
+  /**
+   * Integration delete
+   */
+  export type IntegrationDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Integration
+     */
+    select?: IntegrationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Integration
+     */
+    omit?: IntegrationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: IntegrationInclude<ExtArgs> | null
+    /**
+     * Filter which Integration to delete.
+     */
+    where: IntegrationWhereUniqueInput
+  }
+
+  /**
+   * Integration deleteMany
+   */
+  export type IntegrationDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Integrations to delete
+     */
+    where?: IntegrationWhereInput
+    /**
+     * Limit how many Integrations to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Integration.companyIntegrations
+   */
+  export type Integration$companyIntegrationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CompanyIntegration
+     */
+    select?: CompanyIntegrationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CompanyIntegration
+     */
+    omit?: CompanyIntegrationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CompanyIntegrationInclude<ExtArgs> | null
+    where?: CompanyIntegrationWhereInput
+    orderBy?: CompanyIntegrationOrderByWithRelationInput | CompanyIntegrationOrderByWithRelationInput[]
+    cursor?: CompanyIntegrationWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: CompanyIntegrationScalarFieldEnum | CompanyIntegrationScalarFieldEnum[]
+  }
+
+  /**
+   * Integration without action
+   */
+  export type IntegrationDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Integration
+     */
+    select?: IntegrationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Integration
+     */
+    omit?: IntegrationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: IntegrationInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model IntegrationCategory
+   */
+
+  export type AggregateIntegrationCategory = {
+    _count: IntegrationCategoryCountAggregateOutputType | null
+    _min: IntegrationCategoryMinAggregateOutputType | null
+    _max: IntegrationCategoryMaxAggregateOutputType | null
+  }
+
+  export type IntegrationCategoryMinAggregateOutputType = {
+    id: string | null
+    name: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type IntegrationCategoryMaxAggregateOutputType = {
+    id: string | null
+    name: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type IntegrationCategoryCountAggregateOutputType = {
+    id: number
+    name: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type IntegrationCategoryMinAggregateInputType = {
+    id?: true
+    name?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type IntegrationCategoryMaxAggregateInputType = {
+    id?: true
+    name?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type IntegrationCategoryCountAggregateInputType = {
+    id?: true
+    name?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type IntegrationCategoryAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which IntegrationCategory to aggregate.
+     */
+    where?: IntegrationCategoryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of IntegrationCategories to fetch.
+     */
+    orderBy?: IntegrationCategoryOrderByWithRelationInput | IntegrationCategoryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: IntegrationCategoryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` IntegrationCategories from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` IntegrationCategories.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned IntegrationCategories
+    **/
+    _count?: true | IntegrationCategoryCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: IntegrationCategoryMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: IntegrationCategoryMaxAggregateInputType
+  }
+
+  export type GetIntegrationCategoryAggregateType<T extends IntegrationCategoryAggregateArgs> = {
+        [P in keyof T & keyof AggregateIntegrationCategory]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateIntegrationCategory[P]>
+      : GetScalarType<T[P], AggregateIntegrationCategory[P]>
+  }
+
+
+
+
+  export type IntegrationCategoryGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: IntegrationCategoryWhereInput
+    orderBy?: IntegrationCategoryOrderByWithAggregationInput | IntegrationCategoryOrderByWithAggregationInput[]
+    by: IntegrationCategoryScalarFieldEnum[] | IntegrationCategoryScalarFieldEnum
+    having?: IntegrationCategoryScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: IntegrationCategoryCountAggregateInputType | true
+    _min?: IntegrationCategoryMinAggregateInputType
+    _max?: IntegrationCategoryMaxAggregateInputType
+  }
+
+  export type IntegrationCategoryGroupByOutputType = {
+    id: string
+    name: string
+    createdAt: Date
+    updatedAt: Date
+    _count: IntegrationCategoryCountAggregateOutputType | null
+    _min: IntegrationCategoryMinAggregateOutputType | null
+    _max: IntegrationCategoryMaxAggregateOutputType | null
+  }
+
+  type GetIntegrationCategoryGroupByPayload<T extends IntegrationCategoryGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<IntegrationCategoryGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof IntegrationCategoryGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], IntegrationCategoryGroupByOutputType[P]>
+            : GetScalarType<T[P], IntegrationCategoryGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type IntegrationCategorySelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["integrationCategory"]>
+
+  export type IntegrationCategorySelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["integrationCategory"]>
+
+  export type IntegrationCategorySelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["integrationCategory"]>
+
+  export type IntegrationCategorySelectScalar = {
+    id?: boolean
+    name?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type IntegrationCategoryOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "createdAt" | "updatedAt", ExtArgs["result"]["integrationCategory"]>
+
+  export type $IntegrationCategoryPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "IntegrationCategory"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      name: string
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["integrationCategory"]>
+    composites: {}
+  }
+
+  type IntegrationCategoryGetPayload<S extends boolean | null | undefined | IntegrationCategoryDefaultArgs> = $Result.GetResult<Prisma.$IntegrationCategoryPayload, S>
+
+  type IntegrationCategoryCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<IntegrationCategoryFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: IntegrationCategoryCountAggregateInputType | true
+    }
+
+  export interface IntegrationCategoryDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['IntegrationCategory'], meta: { name: 'IntegrationCategory' } }
+    /**
+     * Find zero or one IntegrationCategory that matches the filter.
+     * @param {IntegrationCategoryFindUniqueArgs} args - Arguments to find a IntegrationCategory
+     * @example
+     * // Get one IntegrationCategory
+     * const integrationCategory = await prisma.integrationCategory.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends IntegrationCategoryFindUniqueArgs>(args: SelectSubset<T, IntegrationCategoryFindUniqueArgs<ExtArgs>>): Prisma__IntegrationCategoryClient<$Result.GetResult<Prisma.$IntegrationCategoryPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one IntegrationCategory that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {IntegrationCategoryFindUniqueOrThrowArgs} args - Arguments to find a IntegrationCategory
+     * @example
+     * // Get one IntegrationCategory
+     * const integrationCategory = await prisma.integrationCategory.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends IntegrationCategoryFindUniqueOrThrowArgs>(args: SelectSubset<T, IntegrationCategoryFindUniqueOrThrowArgs<ExtArgs>>): Prisma__IntegrationCategoryClient<$Result.GetResult<Prisma.$IntegrationCategoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first IntegrationCategory that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {IntegrationCategoryFindFirstArgs} args - Arguments to find a IntegrationCategory
+     * @example
+     * // Get one IntegrationCategory
+     * const integrationCategory = await prisma.integrationCategory.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends IntegrationCategoryFindFirstArgs>(args?: SelectSubset<T, IntegrationCategoryFindFirstArgs<ExtArgs>>): Prisma__IntegrationCategoryClient<$Result.GetResult<Prisma.$IntegrationCategoryPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first IntegrationCategory that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {IntegrationCategoryFindFirstOrThrowArgs} args - Arguments to find a IntegrationCategory
+     * @example
+     * // Get one IntegrationCategory
+     * const integrationCategory = await prisma.integrationCategory.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends IntegrationCategoryFindFirstOrThrowArgs>(args?: SelectSubset<T, IntegrationCategoryFindFirstOrThrowArgs<ExtArgs>>): Prisma__IntegrationCategoryClient<$Result.GetResult<Prisma.$IntegrationCategoryPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more IntegrationCategories that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {IntegrationCategoryFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all IntegrationCategories
+     * const integrationCategories = await prisma.integrationCategory.findMany()
+     * 
+     * // Get first 10 IntegrationCategories
+     * const integrationCategories = await prisma.integrationCategory.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const integrationCategoryWithIdOnly = await prisma.integrationCategory.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends IntegrationCategoryFindManyArgs>(args?: SelectSubset<T, IntegrationCategoryFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$IntegrationCategoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a IntegrationCategory.
+     * @param {IntegrationCategoryCreateArgs} args - Arguments to create a IntegrationCategory.
+     * @example
+     * // Create one IntegrationCategory
+     * const IntegrationCategory = await prisma.integrationCategory.create({
+     *   data: {
+     *     // ... data to create a IntegrationCategory
+     *   }
+     * })
+     * 
+     */
+    create<T extends IntegrationCategoryCreateArgs>(args: SelectSubset<T, IntegrationCategoryCreateArgs<ExtArgs>>): Prisma__IntegrationCategoryClient<$Result.GetResult<Prisma.$IntegrationCategoryPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many IntegrationCategories.
+     * @param {IntegrationCategoryCreateManyArgs} args - Arguments to create many IntegrationCategories.
+     * @example
+     * // Create many IntegrationCategories
+     * const integrationCategory = await prisma.integrationCategory.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends IntegrationCategoryCreateManyArgs>(args?: SelectSubset<T, IntegrationCategoryCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many IntegrationCategories and returns the data saved in the database.
+     * @param {IntegrationCategoryCreateManyAndReturnArgs} args - Arguments to create many IntegrationCategories.
+     * @example
+     * // Create many IntegrationCategories
+     * const integrationCategory = await prisma.integrationCategory.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many IntegrationCategories and only return the `id`
+     * const integrationCategoryWithIdOnly = await prisma.integrationCategory.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends IntegrationCategoryCreateManyAndReturnArgs>(args?: SelectSubset<T, IntegrationCategoryCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$IntegrationCategoryPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a IntegrationCategory.
+     * @param {IntegrationCategoryDeleteArgs} args - Arguments to delete one IntegrationCategory.
+     * @example
+     * // Delete one IntegrationCategory
+     * const IntegrationCategory = await prisma.integrationCategory.delete({
+     *   where: {
+     *     // ... filter to delete one IntegrationCategory
+     *   }
+     * })
+     * 
+     */
+    delete<T extends IntegrationCategoryDeleteArgs>(args: SelectSubset<T, IntegrationCategoryDeleteArgs<ExtArgs>>): Prisma__IntegrationCategoryClient<$Result.GetResult<Prisma.$IntegrationCategoryPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one IntegrationCategory.
+     * @param {IntegrationCategoryUpdateArgs} args - Arguments to update one IntegrationCategory.
+     * @example
+     * // Update one IntegrationCategory
+     * const integrationCategory = await prisma.integrationCategory.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends IntegrationCategoryUpdateArgs>(args: SelectSubset<T, IntegrationCategoryUpdateArgs<ExtArgs>>): Prisma__IntegrationCategoryClient<$Result.GetResult<Prisma.$IntegrationCategoryPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more IntegrationCategories.
+     * @param {IntegrationCategoryDeleteManyArgs} args - Arguments to filter IntegrationCategories to delete.
+     * @example
+     * // Delete a few IntegrationCategories
+     * const { count } = await prisma.integrationCategory.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends IntegrationCategoryDeleteManyArgs>(args?: SelectSubset<T, IntegrationCategoryDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more IntegrationCategories.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {IntegrationCategoryUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many IntegrationCategories
+     * const integrationCategory = await prisma.integrationCategory.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends IntegrationCategoryUpdateManyArgs>(args: SelectSubset<T, IntegrationCategoryUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more IntegrationCategories and returns the data updated in the database.
+     * @param {IntegrationCategoryUpdateManyAndReturnArgs} args - Arguments to update many IntegrationCategories.
+     * @example
+     * // Update many IntegrationCategories
+     * const integrationCategory = await prisma.integrationCategory.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more IntegrationCategories and only return the `id`
+     * const integrationCategoryWithIdOnly = await prisma.integrationCategory.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends IntegrationCategoryUpdateManyAndReturnArgs>(args: SelectSubset<T, IntegrationCategoryUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$IntegrationCategoryPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one IntegrationCategory.
+     * @param {IntegrationCategoryUpsertArgs} args - Arguments to update or create a IntegrationCategory.
+     * @example
+     * // Update or create a IntegrationCategory
+     * const integrationCategory = await prisma.integrationCategory.upsert({
+     *   create: {
+     *     // ... data to create a IntegrationCategory
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the IntegrationCategory we want to update
+     *   }
+     * })
+     */
+    upsert<T extends IntegrationCategoryUpsertArgs>(args: SelectSubset<T, IntegrationCategoryUpsertArgs<ExtArgs>>): Prisma__IntegrationCategoryClient<$Result.GetResult<Prisma.$IntegrationCategoryPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of IntegrationCategories.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {IntegrationCategoryCountArgs} args - Arguments to filter IntegrationCategories to count.
+     * @example
+     * // Count the number of IntegrationCategories
+     * const count = await prisma.integrationCategory.count({
+     *   where: {
+     *     // ... the filter for the IntegrationCategories we want to count
+     *   }
+     * })
+    **/
+    count<T extends IntegrationCategoryCountArgs>(
+      args?: Subset<T, IntegrationCategoryCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], IntegrationCategoryCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a IntegrationCategory.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {IntegrationCategoryAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends IntegrationCategoryAggregateArgs>(args: Subset<T, IntegrationCategoryAggregateArgs>): Prisma.PrismaPromise<GetIntegrationCategoryAggregateType<T>>
+
+    /**
+     * Group by IntegrationCategory.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {IntegrationCategoryGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends IntegrationCategoryGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: IntegrationCategoryGroupByArgs['orderBy'] }
+        : { orderBy?: IntegrationCategoryGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, IntegrationCategoryGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetIntegrationCategoryGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the IntegrationCategory model
+   */
+  readonly fields: IntegrationCategoryFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for IntegrationCategory.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__IntegrationCategoryClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the IntegrationCategory model
+   */
+  interface IntegrationCategoryFieldRefs {
+    readonly id: FieldRef<"IntegrationCategory", 'String'>
+    readonly name: FieldRef<"IntegrationCategory", 'String'>
+    readonly createdAt: FieldRef<"IntegrationCategory", 'DateTime'>
+    readonly updatedAt: FieldRef<"IntegrationCategory", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * IntegrationCategory findUnique
+   */
+  export type IntegrationCategoryFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the IntegrationCategory
+     */
+    select?: IntegrationCategorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the IntegrationCategory
+     */
+    omit?: IntegrationCategoryOmit<ExtArgs> | null
+    /**
+     * Filter, which IntegrationCategory to fetch.
+     */
+    where: IntegrationCategoryWhereUniqueInput
+  }
+
+  /**
+   * IntegrationCategory findUniqueOrThrow
+   */
+  export type IntegrationCategoryFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the IntegrationCategory
+     */
+    select?: IntegrationCategorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the IntegrationCategory
+     */
+    omit?: IntegrationCategoryOmit<ExtArgs> | null
+    /**
+     * Filter, which IntegrationCategory to fetch.
+     */
+    where: IntegrationCategoryWhereUniqueInput
+  }
+
+  /**
+   * IntegrationCategory findFirst
+   */
+  export type IntegrationCategoryFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the IntegrationCategory
+     */
+    select?: IntegrationCategorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the IntegrationCategory
+     */
+    omit?: IntegrationCategoryOmit<ExtArgs> | null
+    /**
+     * Filter, which IntegrationCategory to fetch.
+     */
+    where?: IntegrationCategoryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of IntegrationCategories to fetch.
+     */
+    orderBy?: IntegrationCategoryOrderByWithRelationInput | IntegrationCategoryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for IntegrationCategories.
+     */
+    cursor?: IntegrationCategoryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` IntegrationCategories from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` IntegrationCategories.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of IntegrationCategories.
+     */
+    distinct?: IntegrationCategoryScalarFieldEnum | IntegrationCategoryScalarFieldEnum[]
+  }
+
+  /**
+   * IntegrationCategory findFirstOrThrow
+   */
+  export type IntegrationCategoryFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the IntegrationCategory
+     */
+    select?: IntegrationCategorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the IntegrationCategory
+     */
+    omit?: IntegrationCategoryOmit<ExtArgs> | null
+    /**
+     * Filter, which IntegrationCategory to fetch.
+     */
+    where?: IntegrationCategoryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of IntegrationCategories to fetch.
+     */
+    orderBy?: IntegrationCategoryOrderByWithRelationInput | IntegrationCategoryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for IntegrationCategories.
+     */
+    cursor?: IntegrationCategoryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` IntegrationCategories from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` IntegrationCategories.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of IntegrationCategories.
+     */
+    distinct?: IntegrationCategoryScalarFieldEnum | IntegrationCategoryScalarFieldEnum[]
+  }
+
+  /**
+   * IntegrationCategory findMany
+   */
+  export type IntegrationCategoryFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the IntegrationCategory
+     */
+    select?: IntegrationCategorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the IntegrationCategory
+     */
+    omit?: IntegrationCategoryOmit<ExtArgs> | null
+    /**
+     * Filter, which IntegrationCategories to fetch.
+     */
+    where?: IntegrationCategoryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of IntegrationCategories to fetch.
+     */
+    orderBy?: IntegrationCategoryOrderByWithRelationInput | IntegrationCategoryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing IntegrationCategories.
+     */
+    cursor?: IntegrationCategoryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` IntegrationCategories from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` IntegrationCategories.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of IntegrationCategories.
+     */
+    distinct?: IntegrationCategoryScalarFieldEnum | IntegrationCategoryScalarFieldEnum[]
+  }
+
+  /**
+   * IntegrationCategory create
+   */
+  export type IntegrationCategoryCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the IntegrationCategory
+     */
+    select?: IntegrationCategorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the IntegrationCategory
+     */
+    omit?: IntegrationCategoryOmit<ExtArgs> | null
+    /**
+     * The data needed to create a IntegrationCategory.
+     */
+    data: XOR<IntegrationCategoryCreateInput, IntegrationCategoryUncheckedCreateInput>
+  }
+
+  /**
+   * IntegrationCategory createMany
+   */
+  export type IntegrationCategoryCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many IntegrationCategories.
+     */
+    data: IntegrationCategoryCreateManyInput | IntegrationCategoryCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * IntegrationCategory createManyAndReturn
+   */
+  export type IntegrationCategoryCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the IntegrationCategory
+     */
+    select?: IntegrationCategorySelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the IntegrationCategory
+     */
+    omit?: IntegrationCategoryOmit<ExtArgs> | null
+    /**
+     * The data used to create many IntegrationCategories.
+     */
+    data: IntegrationCategoryCreateManyInput | IntegrationCategoryCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * IntegrationCategory update
+   */
+  export type IntegrationCategoryUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the IntegrationCategory
+     */
+    select?: IntegrationCategorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the IntegrationCategory
+     */
+    omit?: IntegrationCategoryOmit<ExtArgs> | null
+    /**
+     * The data needed to update a IntegrationCategory.
+     */
+    data: XOR<IntegrationCategoryUpdateInput, IntegrationCategoryUncheckedUpdateInput>
+    /**
+     * Choose, which IntegrationCategory to update.
+     */
+    where: IntegrationCategoryWhereUniqueInput
+  }
+
+  /**
+   * IntegrationCategory updateMany
+   */
+  export type IntegrationCategoryUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update IntegrationCategories.
+     */
+    data: XOR<IntegrationCategoryUpdateManyMutationInput, IntegrationCategoryUncheckedUpdateManyInput>
+    /**
+     * Filter which IntegrationCategories to update
+     */
+    where?: IntegrationCategoryWhereInput
+    /**
+     * Limit how many IntegrationCategories to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * IntegrationCategory updateManyAndReturn
+   */
+  export type IntegrationCategoryUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the IntegrationCategory
+     */
+    select?: IntegrationCategorySelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the IntegrationCategory
+     */
+    omit?: IntegrationCategoryOmit<ExtArgs> | null
+    /**
+     * The data used to update IntegrationCategories.
+     */
+    data: XOR<IntegrationCategoryUpdateManyMutationInput, IntegrationCategoryUncheckedUpdateManyInput>
+    /**
+     * Filter which IntegrationCategories to update
+     */
+    where?: IntegrationCategoryWhereInput
+    /**
+     * Limit how many IntegrationCategories to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * IntegrationCategory upsert
+   */
+  export type IntegrationCategoryUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the IntegrationCategory
+     */
+    select?: IntegrationCategorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the IntegrationCategory
+     */
+    omit?: IntegrationCategoryOmit<ExtArgs> | null
+    /**
+     * The filter to search for the IntegrationCategory to update in case it exists.
+     */
+    where: IntegrationCategoryWhereUniqueInput
+    /**
+     * In case the IntegrationCategory found by the `where` argument doesn't exist, create a new IntegrationCategory with this data.
+     */
+    create: XOR<IntegrationCategoryCreateInput, IntegrationCategoryUncheckedCreateInput>
+    /**
+     * In case the IntegrationCategory was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<IntegrationCategoryUpdateInput, IntegrationCategoryUncheckedUpdateInput>
+  }
+
+  /**
+   * IntegrationCategory delete
+   */
+  export type IntegrationCategoryDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the IntegrationCategory
+     */
+    select?: IntegrationCategorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the IntegrationCategory
+     */
+    omit?: IntegrationCategoryOmit<ExtArgs> | null
+    /**
+     * Filter which IntegrationCategory to delete.
+     */
+    where: IntegrationCategoryWhereUniqueInput
+  }
+
+  /**
+   * IntegrationCategory deleteMany
+   */
+  export type IntegrationCategoryDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which IntegrationCategories to delete
+     */
+    where?: IntegrationCategoryWhereInput
+    /**
+     * Limit how many IntegrationCategories to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * IntegrationCategory without action
+   */
+  export type IntegrationCategoryDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the IntegrationCategory
+     */
+    select?: IntegrationCategorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the IntegrationCategory
+     */
+    omit?: IntegrationCategoryOmit<ExtArgs> | null
+  }
+
+
+  /**
+   * Model CompanyIntegration
+   */
+
+  export type AggregateCompanyIntegration = {
+    _count: CompanyIntegrationCountAggregateOutputType | null
+    _min: CompanyIntegrationMinAggregateOutputType | null
+    _max: CompanyIntegrationMaxAggregateOutputType | null
+  }
+
+  export type CompanyIntegrationMinAggregateOutputType = {
+    id: string | null
+    slug: string | null
+    isEnabled: boolean | null
+    companyId: string | null
+    storeId: string | null
+    integrationId: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type CompanyIntegrationMaxAggregateOutputType = {
+    id: string | null
+    slug: string | null
+    isEnabled: boolean | null
+    companyId: string | null
+    storeId: string | null
+    integrationId: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type CompanyIntegrationCountAggregateOutputType = {
+    id: number
+    slug: number
+    isEnabled: number
+    config: number
+    features: number
+    n8nWorkflowId: number
+    companyId: number
+    storeId: number
+    integrationId: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type CompanyIntegrationMinAggregateInputType = {
+    id?: true
+    slug?: true
+    isEnabled?: true
+    companyId?: true
+    storeId?: true
+    integrationId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type CompanyIntegrationMaxAggregateInputType = {
+    id?: true
+    slug?: true
+    isEnabled?: true
+    companyId?: true
+    storeId?: true
+    integrationId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type CompanyIntegrationCountAggregateInputType = {
+    id?: true
+    slug?: true
+    isEnabled?: true
+    config?: true
+    features?: true
+    n8nWorkflowId?: true
+    companyId?: true
+    storeId?: true
+    integrationId?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type CompanyIntegrationAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which CompanyIntegration to aggregate.
+     */
+    where?: CompanyIntegrationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CompanyIntegrations to fetch.
+     */
+    orderBy?: CompanyIntegrationOrderByWithRelationInput | CompanyIntegrationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: CompanyIntegrationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CompanyIntegrations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CompanyIntegrations.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned CompanyIntegrations
+    **/
+    _count?: true | CompanyIntegrationCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: CompanyIntegrationMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: CompanyIntegrationMaxAggregateInputType
+  }
+
+  export type GetCompanyIntegrationAggregateType<T extends CompanyIntegrationAggregateArgs> = {
+        [P in keyof T & keyof AggregateCompanyIntegration]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateCompanyIntegration[P]>
+      : GetScalarType<T[P], AggregateCompanyIntegration[P]>
+  }
+
+
+
+
+  export type CompanyIntegrationGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CompanyIntegrationWhereInput
+    orderBy?: CompanyIntegrationOrderByWithAggregationInput | CompanyIntegrationOrderByWithAggregationInput[]
+    by: CompanyIntegrationScalarFieldEnum[] | CompanyIntegrationScalarFieldEnum
+    having?: CompanyIntegrationScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: CompanyIntegrationCountAggregateInputType | true
+    _min?: CompanyIntegrationMinAggregateInputType
+    _max?: CompanyIntegrationMaxAggregateInputType
+  }
+
+  export type CompanyIntegrationGroupByOutputType = {
+    id: string
+    slug: string
+    isEnabled: boolean
+    config: JsonValue
+    features: JsonValue
+    n8nWorkflowId: JsonValue | null
+    companyId: string
+    storeId: string
+    integrationId: string | null
+    createdAt: Date
+    updatedAt: Date
+    _count: CompanyIntegrationCountAggregateOutputType | null
+    _min: CompanyIntegrationMinAggregateOutputType | null
+    _max: CompanyIntegrationMaxAggregateOutputType | null
+  }
+
+  type GetCompanyIntegrationGroupByPayload<T extends CompanyIntegrationGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<CompanyIntegrationGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof CompanyIntegrationGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], CompanyIntegrationGroupByOutputType[P]>
+            : GetScalarType<T[P], CompanyIntegrationGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type CompanyIntegrationSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    slug?: boolean
+    isEnabled?: boolean
+    config?: boolean
+    features?: boolean
+    n8nWorkflowId?: boolean
+    companyId?: boolean
+    storeId?: boolean
+    integrationId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    company?: boolean | CompanyDefaultArgs<ExtArgs>
+    store?: boolean | StoreDefaultArgs<ExtArgs>
+    integration?: boolean | CompanyIntegration$integrationArgs<ExtArgs>
+  }, ExtArgs["result"]["companyIntegration"]>
+
+  export type CompanyIntegrationSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    slug?: boolean
+    isEnabled?: boolean
+    config?: boolean
+    features?: boolean
+    n8nWorkflowId?: boolean
+    companyId?: boolean
+    storeId?: boolean
+    integrationId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    company?: boolean | CompanyDefaultArgs<ExtArgs>
+    store?: boolean | StoreDefaultArgs<ExtArgs>
+    integration?: boolean | CompanyIntegration$integrationArgs<ExtArgs>
+  }, ExtArgs["result"]["companyIntegration"]>
+
+  export type CompanyIntegrationSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    slug?: boolean
+    isEnabled?: boolean
+    config?: boolean
+    features?: boolean
+    n8nWorkflowId?: boolean
+    companyId?: boolean
+    storeId?: boolean
+    integrationId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    company?: boolean | CompanyDefaultArgs<ExtArgs>
+    store?: boolean | StoreDefaultArgs<ExtArgs>
+    integration?: boolean | CompanyIntegration$integrationArgs<ExtArgs>
+  }, ExtArgs["result"]["companyIntegration"]>
+
+  export type CompanyIntegrationSelectScalar = {
+    id?: boolean
+    slug?: boolean
+    isEnabled?: boolean
+    config?: boolean
+    features?: boolean
+    n8nWorkflowId?: boolean
+    companyId?: boolean
+    storeId?: boolean
+    integrationId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type CompanyIntegrationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "slug" | "isEnabled" | "config" | "features" | "n8nWorkflowId" | "companyId" | "storeId" | "integrationId" | "createdAt" | "updatedAt", ExtArgs["result"]["companyIntegration"]>
+  export type CompanyIntegrationInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    company?: boolean | CompanyDefaultArgs<ExtArgs>
+    store?: boolean | StoreDefaultArgs<ExtArgs>
+    integration?: boolean | CompanyIntegration$integrationArgs<ExtArgs>
+  }
+  export type CompanyIntegrationIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    company?: boolean | CompanyDefaultArgs<ExtArgs>
+    store?: boolean | StoreDefaultArgs<ExtArgs>
+    integration?: boolean | CompanyIntegration$integrationArgs<ExtArgs>
+  }
+  export type CompanyIntegrationIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    company?: boolean | CompanyDefaultArgs<ExtArgs>
+    store?: boolean | StoreDefaultArgs<ExtArgs>
+    integration?: boolean | CompanyIntegration$integrationArgs<ExtArgs>
+  }
+
+  export type $CompanyIntegrationPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "CompanyIntegration"
+    objects: {
+      company: Prisma.$CompanyPayload<ExtArgs>
+      store: Prisma.$StorePayload<ExtArgs>
+      integration: Prisma.$IntegrationPayload<ExtArgs> | null
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      slug: string
+      isEnabled: boolean
+      config: Prisma.JsonValue
+      features: Prisma.JsonValue
+      n8nWorkflowId: Prisma.JsonValue | null
+      companyId: string
+      storeId: string
+      integrationId: string | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["companyIntegration"]>
+    composites: {}
+  }
+
+  type CompanyIntegrationGetPayload<S extends boolean | null | undefined | CompanyIntegrationDefaultArgs> = $Result.GetResult<Prisma.$CompanyIntegrationPayload, S>
+
+  type CompanyIntegrationCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<CompanyIntegrationFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: CompanyIntegrationCountAggregateInputType | true
+    }
+
+  export interface CompanyIntegrationDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['CompanyIntegration'], meta: { name: 'CompanyIntegration' } }
+    /**
+     * Find zero or one CompanyIntegration that matches the filter.
+     * @param {CompanyIntegrationFindUniqueArgs} args - Arguments to find a CompanyIntegration
+     * @example
+     * // Get one CompanyIntegration
+     * const companyIntegration = await prisma.companyIntegration.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends CompanyIntegrationFindUniqueArgs>(args: SelectSubset<T, CompanyIntegrationFindUniqueArgs<ExtArgs>>): Prisma__CompanyIntegrationClient<$Result.GetResult<Prisma.$CompanyIntegrationPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one CompanyIntegration that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {CompanyIntegrationFindUniqueOrThrowArgs} args - Arguments to find a CompanyIntegration
+     * @example
+     * // Get one CompanyIntegration
+     * const companyIntegration = await prisma.companyIntegration.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends CompanyIntegrationFindUniqueOrThrowArgs>(args: SelectSubset<T, CompanyIntegrationFindUniqueOrThrowArgs<ExtArgs>>): Prisma__CompanyIntegrationClient<$Result.GetResult<Prisma.$CompanyIntegrationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first CompanyIntegration that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CompanyIntegrationFindFirstArgs} args - Arguments to find a CompanyIntegration
+     * @example
+     * // Get one CompanyIntegration
+     * const companyIntegration = await prisma.companyIntegration.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends CompanyIntegrationFindFirstArgs>(args?: SelectSubset<T, CompanyIntegrationFindFirstArgs<ExtArgs>>): Prisma__CompanyIntegrationClient<$Result.GetResult<Prisma.$CompanyIntegrationPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first CompanyIntegration that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CompanyIntegrationFindFirstOrThrowArgs} args - Arguments to find a CompanyIntegration
+     * @example
+     * // Get one CompanyIntegration
+     * const companyIntegration = await prisma.companyIntegration.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends CompanyIntegrationFindFirstOrThrowArgs>(args?: SelectSubset<T, CompanyIntegrationFindFirstOrThrowArgs<ExtArgs>>): Prisma__CompanyIntegrationClient<$Result.GetResult<Prisma.$CompanyIntegrationPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more CompanyIntegrations that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CompanyIntegrationFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all CompanyIntegrations
+     * const companyIntegrations = await prisma.companyIntegration.findMany()
+     * 
+     * // Get first 10 CompanyIntegrations
+     * const companyIntegrations = await prisma.companyIntegration.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const companyIntegrationWithIdOnly = await prisma.companyIntegration.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends CompanyIntegrationFindManyArgs>(args?: SelectSubset<T, CompanyIntegrationFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CompanyIntegrationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a CompanyIntegration.
+     * @param {CompanyIntegrationCreateArgs} args - Arguments to create a CompanyIntegration.
+     * @example
+     * // Create one CompanyIntegration
+     * const CompanyIntegration = await prisma.companyIntegration.create({
+     *   data: {
+     *     // ... data to create a CompanyIntegration
+     *   }
+     * })
+     * 
+     */
+    create<T extends CompanyIntegrationCreateArgs>(args: SelectSubset<T, CompanyIntegrationCreateArgs<ExtArgs>>): Prisma__CompanyIntegrationClient<$Result.GetResult<Prisma.$CompanyIntegrationPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many CompanyIntegrations.
+     * @param {CompanyIntegrationCreateManyArgs} args - Arguments to create many CompanyIntegrations.
+     * @example
+     * // Create many CompanyIntegrations
+     * const companyIntegration = await prisma.companyIntegration.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends CompanyIntegrationCreateManyArgs>(args?: SelectSubset<T, CompanyIntegrationCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many CompanyIntegrations and returns the data saved in the database.
+     * @param {CompanyIntegrationCreateManyAndReturnArgs} args - Arguments to create many CompanyIntegrations.
+     * @example
+     * // Create many CompanyIntegrations
+     * const companyIntegration = await prisma.companyIntegration.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many CompanyIntegrations and only return the `id`
+     * const companyIntegrationWithIdOnly = await prisma.companyIntegration.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends CompanyIntegrationCreateManyAndReturnArgs>(args?: SelectSubset<T, CompanyIntegrationCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CompanyIntegrationPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a CompanyIntegration.
+     * @param {CompanyIntegrationDeleteArgs} args - Arguments to delete one CompanyIntegration.
+     * @example
+     * // Delete one CompanyIntegration
+     * const CompanyIntegration = await prisma.companyIntegration.delete({
+     *   where: {
+     *     // ... filter to delete one CompanyIntegration
+     *   }
+     * })
+     * 
+     */
+    delete<T extends CompanyIntegrationDeleteArgs>(args: SelectSubset<T, CompanyIntegrationDeleteArgs<ExtArgs>>): Prisma__CompanyIntegrationClient<$Result.GetResult<Prisma.$CompanyIntegrationPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one CompanyIntegration.
+     * @param {CompanyIntegrationUpdateArgs} args - Arguments to update one CompanyIntegration.
+     * @example
+     * // Update one CompanyIntegration
+     * const companyIntegration = await prisma.companyIntegration.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends CompanyIntegrationUpdateArgs>(args: SelectSubset<T, CompanyIntegrationUpdateArgs<ExtArgs>>): Prisma__CompanyIntegrationClient<$Result.GetResult<Prisma.$CompanyIntegrationPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more CompanyIntegrations.
+     * @param {CompanyIntegrationDeleteManyArgs} args - Arguments to filter CompanyIntegrations to delete.
+     * @example
+     * // Delete a few CompanyIntegrations
+     * const { count } = await prisma.companyIntegration.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends CompanyIntegrationDeleteManyArgs>(args?: SelectSubset<T, CompanyIntegrationDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more CompanyIntegrations.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CompanyIntegrationUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many CompanyIntegrations
+     * const companyIntegration = await prisma.companyIntegration.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends CompanyIntegrationUpdateManyArgs>(args: SelectSubset<T, CompanyIntegrationUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more CompanyIntegrations and returns the data updated in the database.
+     * @param {CompanyIntegrationUpdateManyAndReturnArgs} args - Arguments to update many CompanyIntegrations.
+     * @example
+     * // Update many CompanyIntegrations
+     * const companyIntegration = await prisma.companyIntegration.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more CompanyIntegrations and only return the `id`
+     * const companyIntegrationWithIdOnly = await prisma.companyIntegration.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends CompanyIntegrationUpdateManyAndReturnArgs>(args: SelectSubset<T, CompanyIntegrationUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CompanyIntegrationPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one CompanyIntegration.
+     * @param {CompanyIntegrationUpsertArgs} args - Arguments to update or create a CompanyIntegration.
+     * @example
+     * // Update or create a CompanyIntegration
+     * const companyIntegration = await prisma.companyIntegration.upsert({
+     *   create: {
+     *     // ... data to create a CompanyIntegration
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the CompanyIntegration we want to update
+     *   }
+     * })
+     */
+    upsert<T extends CompanyIntegrationUpsertArgs>(args: SelectSubset<T, CompanyIntegrationUpsertArgs<ExtArgs>>): Prisma__CompanyIntegrationClient<$Result.GetResult<Prisma.$CompanyIntegrationPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of CompanyIntegrations.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CompanyIntegrationCountArgs} args - Arguments to filter CompanyIntegrations to count.
+     * @example
+     * // Count the number of CompanyIntegrations
+     * const count = await prisma.companyIntegration.count({
+     *   where: {
+     *     // ... the filter for the CompanyIntegrations we want to count
+     *   }
+     * })
+    **/
+    count<T extends CompanyIntegrationCountArgs>(
+      args?: Subset<T, CompanyIntegrationCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], CompanyIntegrationCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a CompanyIntegration.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CompanyIntegrationAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends CompanyIntegrationAggregateArgs>(args: Subset<T, CompanyIntegrationAggregateArgs>): Prisma.PrismaPromise<GetCompanyIntegrationAggregateType<T>>
+
+    /**
+     * Group by CompanyIntegration.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CompanyIntegrationGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends CompanyIntegrationGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: CompanyIntegrationGroupByArgs['orderBy'] }
+        : { orderBy?: CompanyIntegrationGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, CompanyIntegrationGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetCompanyIntegrationGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the CompanyIntegration model
+   */
+  readonly fields: CompanyIntegrationFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for CompanyIntegration.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__CompanyIntegrationClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    company<T extends CompanyDefaultArgs<ExtArgs> = {}>(args?: Subset<T, CompanyDefaultArgs<ExtArgs>>): Prisma__CompanyClient<$Result.GetResult<Prisma.$CompanyPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    store<T extends StoreDefaultArgs<ExtArgs> = {}>(args?: Subset<T, StoreDefaultArgs<ExtArgs>>): Prisma__StoreClient<$Result.GetResult<Prisma.$StorePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    integration<T extends CompanyIntegration$integrationArgs<ExtArgs> = {}>(args?: Subset<T, CompanyIntegration$integrationArgs<ExtArgs>>): Prisma__IntegrationClient<$Result.GetResult<Prisma.$IntegrationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the CompanyIntegration model
+   */
+  interface CompanyIntegrationFieldRefs {
+    readonly id: FieldRef<"CompanyIntegration", 'String'>
+    readonly slug: FieldRef<"CompanyIntegration", 'String'>
+    readonly isEnabled: FieldRef<"CompanyIntegration", 'Boolean'>
+    readonly config: FieldRef<"CompanyIntegration", 'Json'>
+    readonly features: FieldRef<"CompanyIntegration", 'Json'>
+    readonly n8nWorkflowId: FieldRef<"CompanyIntegration", 'Json'>
+    readonly companyId: FieldRef<"CompanyIntegration", 'String'>
+    readonly storeId: FieldRef<"CompanyIntegration", 'String'>
+    readonly integrationId: FieldRef<"CompanyIntegration", 'String'>
+    readonly createdAt: FieldRef<"CompanyIntegration", 'DateTime'>
+    readonly updatedAt: FieldRef<"CompanyIntegration", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * CompanyIntegration findUnique
+   */
+  export type CompanyIntegrationFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CompanyIntegration
+     */
+    select?: CompanyIntegrationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CompanyIntegration
+     */
+    omit?: CompanyIntegrationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CompanyIntegrationInclude<ExtArgs> | null
+    /**
+     * Filter, which CompanyIntegration to fetch.
+     */
+    where: CompanyIntegrationWhereUniqueInput
+  }
+
+  /**
+   * CompanyIntegration findUniqueOrThrow
+   */
+  export type CompanyIntegrationFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CompanyIntegration
+     */
+    select?: CompanyIntegrationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CompanyIntegration
+     */
+    omit?: CompanyIntegrationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CompanyIntegrationInclude<ExtArgs> | null
+    /**
+     * Filter, which CompanyIntegration to fetch.
+     */
+    where: CompanyIntegrationWhereUniqueInput
+  }
+
+  /**
+   * CompanyIntegration findFirst
+   */
+  export type CompanyIntegrationFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CompanyIntegration
+     */
+    select?: CompanyIntegrationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CompanyIntegration
+     */
+    omit?: CompanyIntegrationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CompanyIntegrationInclude<ExtArgs> | null
+    /**
+     * Filter, which CompanyIntegration to fetch.
+     */
+    where?: CompanyIntegrationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CompanyIntegrations to fetch.
+     */
+    orderBy?: CompanyIntegrationOrderByWithRelationInput | CompanyIntegrationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for CompanyIntegrations.
+     */
+    cursor?: CompanyIntegrationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CompanyIntegrations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CompanyIntegrations.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of CompanyIntegrations.
+     */
+    distinct?: CompanyIntegrationScalarFieldEnum | CompanyIntegrationScalarFieldEnum[]
+  }
+
+  /**
+   * CompanyIntegration findFirstOrThrow
+   */
+  export type CompanyIntegrationFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CompanyIntegration
+     */
+    select?: CompanyIntegrationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CompanyIntegration
+     */
+    omit?: CompanyIntegrationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CompanyIntegrationInclude<ExtArgs> | null
+    /**
+     * Filter, which CompanyIntegration to fetch.
+     */
+    where?: CompanyIntegrationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CompanyIntegrations to fetch.
+     */
+    orderBy?: CompanyIntegrationOrderByWithRelationInput | CompanyIntegrationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for CompanyIntegrations.
+     */
+    cursor?: CompanyIntegrationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CompanyIntegrations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CompanyIntegrations.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of CompanyIntegrations.
+     */
+    distinct?: CompanyIntegrationScalarFieldEnum | CompanyIntegrationScalarFieldEnum[]
+  }
+
+  /**
+   * CompanyIntegration findMany
+   */
+  export type CompanyIntegrationFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CompanyIntegration
+     */
+    select?: CompanyIntegrationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CompanyIntegration
+     */
+    omit?: CompanyIntegrationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CompanyIntegrationInclude<ExtArgs> | null
+    /**
+     * Filter, which CompanyIntegrations to fetch.
+     */
+    where?: CompanyIntegrationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CompanyIntegrations to fetch.
+     */
+    orderBy?: CompanyIntegrationOrderByWithRelationInput | CompanyIntegrationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing CompanyIntegrations.
+     */
+    cursor?: CompanyIntegrationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CompanyIntegrations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CompanyIntegrations.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of CompanyIntegrations.
+     */
+    distinct?: CompanyIntegrationScalarFieldEnum | CompanyIntegrationScalarFieldEnum[]
+  }
+
+  /**
+   * CompanyIntegration create
+   */
+  export type CompanyIntegrationCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CompanyIntegration
+     */
+    select?: CompanyIntegrationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CompanyIntegration
+     */
+    omit?: CompanyIntegrationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CompanyIntegrationInclude<ExtArgs> | null
+    /**
+     * The data needed to create a CompanyIntegration.
+     */
+    data: XOR<CompanyIntegrationCreateInput, CompanyIntegrationUncheckedCreateInput>
+  }
+
+  /**
+   * CompanyIntegration createMany
+   */
+  export type CompanyIntegrationCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many CompanyIntegrations.
+     */
+    data: CompanyIntegrationCreateManyInput | CompanyIntegrationCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * CompanyIntegration createManyAndReturn
+   */
+  export type CompanyIntegrationCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CompanyIntegration
+     */
+    select?: CompanyIntegrationSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the CompanyIntegration
+     */
+    omit?: CompanyIntegrationOmit<ExtArgs> | null
+    /**
+     * The data used to create many CompanyIntegrations.
+     */
+    data: CompanyIntegrationCreateManyInput | CompanyIntegrationCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CompanyIntegrationIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * CompanyIntegration update
+   */
+  export type CompanyIntegrationUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CompanyIntegration
+     */
+    select?: CompanyIntegrationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CompanyIntegration
+     */
+    omit?: CompanyIntegrationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CompanyIntegrationInclude<ExtArgs> | null
+    /**
+     * The data needed to update a CompanyIntegration.
+     */
+    data: XOR<CompanyIntegrationUpdateInput, CompanyIntegrationUncheckedUpdateInput>
+    /**
+     * Choose, which CompanyIntegration to update.
+     */
+    where: CompanyIntegrationWhereUniqueInput
+  }
+
+  /**
+   * CompanyIntegration updateMany
+   */
+  export type CompanyIntegrationUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update CompanyIntegrations.
+     */
+    data: XOR<CompanyIntegrationUpdateManyMutationInput, CompanyIntegrationUncheckedUpdateManyInput>
+    /**
+     * Filter which CompanyIntegrations to update
+     */
+    where?: CompanyIntegrationWhereInput
+    /**
+     * Limit how many CompanyIntegrations to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * CompanyIntegration updateManyAndReturn
+   */
+  export type CompanyIntegrationUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CompanyIntegration
+     */
+    select?: CompanyIntegrationSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the CompanyIntegration
+     */
+    omit?: CompanyIntegrationOmit<ExtArgs> | null
+    /**
+     * The data used to update CompanyIntegrations.
+     */
+    data: XOR<CompanyIntegrationUpdateManyMutationInput, CompanyIntegrationUncheckedUpdateManyInput>
+    /**
+     * Filter which CompanyIntegrations to update
+     */
+    where?: CompanyIntegrationWhereInput
+    /**
+     * Limit how many CompanyIntegrations to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CompanyIntegrationIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * CompanyIntegration upsert
+   */
+  export type CompanyIntegrationUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CompanyIntegration
+     */
+    select?: CompanyIntegrationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CompanyIntegration
+     */
+    omit?: CompanyIntegrationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CompanyIntegrationInclude<ExtArgs> | null
+    /**
+     * The filter to search for the CompanyIntegration to update in case it exists.
+     */
+    where: CompanyIntegrationWhereUniqueInput
+    /**
+     * In case the CompanyIntegration found by the `where` argument doesn't exist, create a new CompanyIntegration with this data.
+     */
+    create: XOR<CompanyIntegrationCreateInput, CompanyIntegrationUncheckedCreateInput>
+    /**
+     * In case the CompanyIntegration was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<CompanyIntegrationUpdateInput, CompanyIntegrationUncheckedUpdateInput>
+  }
+
+  /**
+   * CompanyIntegration delete
+   */
+  export type CompanyIntegrationDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CompanyIntegration
+     */
+    select?: CompanyIntegrationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CompanyIntegration
+     */
+    omit?: CompanyIntegrationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CompanyIntegrationInclude<ExtArgs> | null
+    /**
+     * Filter which CompanyIntegration to delete.
+     */
+    where: CompanyIntegrationWhereUniqueInput
+  }
+
+  /**
+   * CompanyIntegration deleteMany
+   */
+  export type CompanyIntegrationDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which CompanyIntegrations to delete
+     */
+    where?: CompanyIntegrationWhereInput
+    /**
+     * Limit how many CompanyIntegrations to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * CompanyIntegration.integration
+   */
+  export type CompanyIntegration$integrationArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Integration
+     */
+    select?: IntegrationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Integration
+     */
+    omit?: IntegrationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: IntegrationInclude<ExtArgs> | null
+    where?: IntegrationWhereInput
+  }
+
+  /**
+   * CompanyIntegration without action
+   */
+  export type CompanyIntegrationDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CompanyIntegration
+     */
+    select?: CompanyIntegrationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CompanyIntegration
+     */
+    omit?: CompanyIntegrationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CompanyIntegrationInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Model Notification
    */
 
@@ -20060,6 +23773,53 @@ export namespace Prisma {
   export type ConfigurationScalarFieldEnum = (typeof ConfigurationScalarFieldEnum)[keyof typeof ConfigurationScalarFieldEnum]
 
 
+  export const IntegrationScalarFieldEnum: {
+    id: 'id',
+    slug: 'slug',
+    name: 'name',
+    category: 'category',
+    description: 'description',
+    logoLetters: 'logoLetters',
+    logoColor: 'logoColor',
+    isActive: 'isActive',
+    fields: 'fields',
+    features: 'features',
+    n8nApiUrl: 'n8nApiUrl',
+    n8nApiKey: 'n8nApiKey',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type IntegrationScalarFieldEnum = (typeof IntegrationScalarFieldEnum)[keyof typeof IntegrationScalarFieldEnum]
+
+
+  export const IntegrationCategoryScalarFieldEnum: {
+    id: 'id',
+    name: 'name',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type IntegrationCategoryScalarFieldEnum = (typeof IntegrationCategoryScalarFieldEnum)[keyof typeof IntegrationCategoryScalarFieldEnum]
+
+
+  export const CompanyIntegrationScalarFieldEnum: {
+    id: 'id',
+    slug: 'slug',
+    isEnabled: 'isEnabled',
+    config: 'config',
+    features: 'features',
+    n8nWorkflowId: 'n8nWorkflowId',
+    companyId: 'companyId',
+    storeId: 'storeId',
+    integrationId: 'integrationId',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type CompanyIntegrationScalarFieldEnum = (typeof CompanyIntegrationScalarFieldEnum)[keyof typeof CompanyIntegrationScalarFieldEnum]
+
+
   export const NotificationScalarFieldEnum: {
     id: 'id',
     title: 'title',
@@ -20090,6 +23850,13 @@ export namespace Prisma {
   };
 
   export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
+
+
+  export const JsonNullValueInput: {
+    JsonNull: typeof JsonNull
+  };
+
+  export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
 
 
   export const QueryMode: {
@@ -20223,6 +23990,7 @@ export namespace Prisma {
     medias?: MediaListRelationFilter
     campaigns?: CampaignListRelationFilter
     notifications?: NotificationListRelationFilter
+    integrations?: CompanyIntegrationListRelationFilter
   }
 
   export type CompanyOrderByWithRelationInput = {
@@ -20243,6 +24011,7 @@ export namespace Prisma {
     medias?: MediaOrderByRelationAggregateInput
     campaigns?: CampaignOrderByRelationAggregateInput
     notifications?: NotificationOrderByRelationAggregateInput
+    integrations?: CompanyIntegrationOrderByRelationAggregateInput
   }
 
   export type CompanyWhereUniqueInput = Prisma.AtLeast<{
@@ -20266,6 +24035,7 @@ export namespace Prisma {
     medias?: MediaListRelationFilter
     campaigns?: CampaignListRelationFilter
     notifications?: NotificationListRelationFilter
+    integrations?: CompanyIntegrationListRelationFilter
   }, "id" | "cnpj" | "email" | "slug" | "conta">
 
   export type CompanyOrderByWithAggregationInput = {
@@ -20395,6 +24165,7 @@ export namespace Prisma {
     terminals?: TerminalListRelationFilter
     license?: XOR<StoreLicenseNullableScalarRelationFilter, StoreLicenseWhereInput> | null
     campaigns?: CampaignListRelationFilter
+    integrations?: CompanyIntegrationListRelationFilter
   }
 
   export type StoreOrderByWithRelationInput = {
@@ -20408,6 +24179,7 @@ export namespace Prisma {
     terminals?: TerminalOrderByRelationAggregateInput
     license?: StoreLicenseOrderByWithRelationInput
     campaigns?: CampaignOrderByRelationAggregateInput
+    integrations?: CompanyIntegrationOrderByRelationAggregateInput
   }
 
   export type StoreWhereUniqueInput = Prisma.AtLeast<{
@@ -20424,6 +24196,7 @@ export namespace Prisma {
     terminals?: TerminalListRelationFilter
     license?: XOR<StoreLicenseNullableScalarRelationFilter, StoreLicenseWhereInput> | null
     campaigns?: CampaignListRelationFilter
+    integrations?: CompanyIntegrationListRelationFilter
   }, "id">
 
   export type StoreOrderByWithAggregationInput = {
@@ -21278,6 +25051,245 @@ export namespace Prisma {
     updatedAt?: DateTimeWithAggregatesFilter<"Configuration"> | Date | string
   }
 
+  export type IntegrationWhereInput = {
+    AND?: IntegrationWhereInput | IntegrationWhereInput[]
+    OR?: IntegrationWhereInput[]
+    NOT?: IntegrationWhereInput | IntegrationWhereInput[]
+    id?: StringFilter<"Integration"> | string
+    slug?: StringFilter<"Integration"> | string
+    name?: StringFilter<"Integration"> | string
+    category?: StringFilter<"Integration"> | string
+    description?: StringFilter<"Integration"> | string
+    logoLetters?: StringFilter<"Integration"> | string
+    logoColor?: StringFilter<"Integration"> | string
+    isActive?: BoolFilter<"Integration"> | boolean
+    fields?: JsonFilter<"Integration">
+    features?: JsonFilter<"Integration">
+    n8nApiUrl?: StringNullableFilter<"Integration"> | string | null
+    n8nApiKey?: StringNullableFilter<"Integration"> | string | null
+    createdAt?: DateTimeFilter<"Integration"> | Date | string
+    updatedAt?: DateTimeFilter<"Integration"> | Date | string
+    companyIntegrations?: CompanyIntegrationListRelationFilter
+  }
+
+  export type IntegrationOrderByWithRelationInput = {
+    id?: SortOrder
+    slug?: SortOrder
+    name?: SortOrder
+    category?: SortOrder
+    description?: SortOrder
+    logoLetters?: SortOrder
+    logoColor?: SortOrder
+    isActive?: SortOrder
+    fields?: SortOrder
+    features?: SortOrder
+    n8nApiUrl?: SortOrderInput | SortOrder
+    n8nApiKey?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    companyIntegrations?: CompanyIntegrationOrderByRelationAggregateInput
+  }
+
+  export type IntegrationWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    slug?: string
+    AND?: IntegrationWhereInput | IntegrationWhereInput[]
+    OR?: IntegrationWhereInput[]
+    NOT?: IntegrationWhereInput | IntegrationWhereInput[]
+    name?: StringFilter<"Integration"> | string
+    category?: StringFilter<"Integration"> | string
+    description?: StringFilter<"Integration"> | string
+    logoLetters?: StringFilter<"Integration"> | string
+    logoColor?: StringFilter<"Integration"> | string
+    isActive?: BoolFilter<"Integration"> | boolean
+    fields?: JsonFilter<"Integration">
+    features?: JsonFilter<"Integration">
+    n8nApiUrl?: StringNullableFilter<"Integration"> | string | null
+    n8nApiKey?: StringNullableFilter<"Integration"> | string | null
+    createdAt?: DateTimeFilter<"Integration"> | Date | string
+    updatedAt?: DateTimeFilter<"Integration"> | Date | string
+    companyIntegrations?: CompanyIntegrationListRelationFilter
+  }, "id" | "slug">
+
+  export type IntegrationOrderByWithAggregationInput = {
+    id?: SortOrder
+    slug?: SortOrder
+    name?: SortOrder
+    category?: SortOrder
+    description?: SortOrder
+    logoLetters?: SortOrder
+    logoColor?: SortOrder
+    isActive?: SortOrder
+    fields?: SortOrder
+    features?: SortOrder
+    n8nApiUrl?: SortOrderInput | SortOrder
+    n8nApiKey?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: IntegrationCountOrderByAggregateInput
+    _max?: IntegrationMaxOrderByAggregateInput
+    _min?: IntegrationMinOrderByAggregateInput
+  }
+
+  export type IntegrationScalarWhereWithAggregatesInput = {
+    AND?: IntegrationScalarWhereWithAggregatesInput | IntegrationScalarWhereWithAggregatesInput[]
+    OR?: IntegrationScalarWhereWithAggregatesInput[]
+    NOT?: IntegrationScalarWhereWithAggregatesInput | IntegrationScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Integration"> | string
+    slug?: StringWithAggregatesFilter<"Integration"> | string
+    name?: StringWithAggregatesFilter<"Integration"> | string
+    category?: StringWithAggregatesFilter<"Integration"> | string
+    description?: StringWithAggregatesFilter<"Integration"> | string
+    logoLetters?: StringWithAggregatesFilter<"Integration"> | string
+    logoColor?: StringWithAggregatesFilter<"Integration"> | string
+    isActive?: BoolWithAggregatesFilter<"Integration"> | boolean
+    fields?: JsonWithAggregatesFilter<"Integration">
+    features?: JsonWithAggregatesFilter<"Integration">
+    n8nApiUrl?: StringNullableWithAggregatesFilter<"Integration"> | string | null
+    n8nApiKey?: StringNullableWithAggregatesFilter<"Integration"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"Integration"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Integration"> | Date | string
+  }
+
+  export type IntegrationCategoryWhereInput = {
+    AND?: IntegrationCategoryWhereInput | IntegrationCategoryWhereInput[]
+    OR?: IntegrationCategoryWhereInput[]
+    NOT?: IntegrationCategoryWhereInput | IntegrationCategoryWhereInput[]
+    id?: StringFilter<"IntegrationCategory"> | string
+    name?: StringFilter<"IntegrationCategory"> | string
+    createdAt?: DateTimeFilter<"IntegrationCategory"> | Date | string
+    updatedAt?: DateTimeFilter<"IntegrationCategory"> | Date | string
+  }
+
+  export type IntegrationCategoryOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type IntegrationCategoryWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    name?: string
+    AND?: IntegrationCategoryWhereInput | IntegrationCategoryWhereInput[]
+    OR?: IntegrationCategoryWhereInput[]
+    NOT?: IntegrationCategoryWhereInput | IntegrationCategoryWhereInput[]
+    createdAt?: DateTimeFilter<"IntegrationCategory"> | Date | string
+    updatedAt?: DateTimeFilter<"IntegrationCategory"> | Date | string
+  }, "id" | "name">
+
+  export type IntegrationCategoryOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: IntegrationCategoryCountOrderByAggregateInput
+    _max?: IntegrationCategoryMaxOrderByAggregateInput
+    _min?: IntegrationCategoryMinOrderByAggregateInput
+  }
+
+  export type IntegrationCategoryScalarWhereWithAggregatesInput = {
+    AND?: IntegrationCategoryScalarWhereWithAggregatesInput | IntegrationCategoryScalarWhereWithAggregatesInput[]
+    OR?: IntegrationCategoryScalarWhereWithAggregatesInput[]
+    NOT?: IntegrationCategoryScalarWhereWithAggregatesInput | IntegrationCategoryScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"IntegrationCategory"> | string
+    name?: StringWithAggregatesFilter<"IntegrationCategory"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"IntegrationCategory"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"IntegrationCategory"> | Date | string
+  }
+
+  export type CompanyIntegrationWhereInput = {
+    AND?: CompanyIntegrationWhereInput | CompanyIntegrationWhereInput[]
+    OR?: CompanyIntegrationWhereInput[]
+    NOT?: CompanyIntegrationWhereInput | CompanyIntegrationWhereInput[]
+    id?: StringFilter<"CompanyIntegration"> | string
+    slug?: StringFilter<"CompanyIntegration"> | string
+    isEnabled?: BoolFilter<"CompanyIntegration"> | boolean
+    config?: JsonFilter<"CompanyIntegration">
+    features?: JsonFilter<"CompanyIntegration">
+    n8nWorkflowId?: JsonNullableFilter<"CompanyIntegration">
+    companyId?: StringFilter<"CompanyIntegration"> | string
+    storeId?: StringFilter<"CompanyIntegration"> | string
+    integrationId?: StringNullableFilter<"CompanyIntegration"> | string | null
+    createdAt?: DateTimeFilter<"CompanyIntegration"> | Date | string
+    updatedAt?: DateTimeFilter<"CompanyIntegration"> | Date | string
+    company?: XOR<CompanyScalarRelationFilter, CompanyWhereInput>
+    store?: XOR<StoreScalarRelationFilter, StoreWhereInput>
+    integration?: XOR<IntegrationNullableScalarRelationFilter, IntegrationWhereInput> | null
+  }
+
+  export type CompanyIntegrationOrderByWithRelationInput = {
+    id?: SortOrder
+    slug?: SortOrder
+    isEnabled?: SortOrder
+    config?: SortOrder
+    features?: SortOrder
+    n8nWorkflowId?: SortOrderInput | SortOrder
+    companyId?: SortOrder
+    storeId?: SortOrder
+    integrationId?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    company?: CompanyOrderByWithRelationInput
+    store?: StoreOrderByWithRelationInput
+    integration?: IntegrationOrderByWithRelationInput
+  }
+
+  export type CompanyIntegrationWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    slug_storeId?: CompanyIntegrationSlugStoreIdCompoundUniqueInput
+    AND?: CompanyIntegrationWhereInput | CompanyIntegrationWhereInput[]
+    OR?: CompanyIntegrationWhereInput[]
+    NOT?: CompanyIntegrationWhereInput | CompanyIntegrationWhereInput[]
+    slug?: StringFilter<"CompanyIntegration"> | string
+    isEnabled?: BoolFilter<"CompanyIntegration"> | boolean
+    config?: JsonFilter<"CompanyIntegration">
+    features?: JsonFilter<"CompanyIntegration">
+    n8nWorkflowId?: JsonNullableFilter<"CompanyIntegration">
+    companyId?: StringFilter<"CompanyIntegration"> | string
+    storeId?: StringFilter<"CompanyIntegration"> | string
+    integrationId?: StringNullableFilter<"CompanyIntegration"> | string | null
+    createdAt?: DateTimeFilter<"CompanyIntegration"> | Date | string
+    updatedAt?: DateTimeFilter<"CompanyIntegration"> | Date | string
+    company?: XOR<CompanyScalarRelationFilter, CompanyWhereInput>
+    store?: XOR<StoreScalarRelationFilter, StoreWhereInput>
+    integration?: XOR<IntegrationNullableScalarRelationFilter, IntegrationWhereInput> | null
+  }, "id" | "slug_storeId">
+
+  export type CompanyIntegrationOrderByWithAggregationInput = {
+    id?: SortOrder
+    slug?: SortOrder
+    isEnabled?: SortOrder
+    config?: SortOrder
+    features?: SortOrder
+    n8nWorkflowId?: SortOrderInput | SortOrder
+    companyId?: SortOrder
+    storeId?: SortOrder
+    integrationId?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: CompanyIntegrationCountOrderByAggregateInput
+    _max?: CompanyIntegrationMaxOrderByAggregateInput
+    _min?: CompanyIntegrationMinOrderByAggregateInput
+  }
+
+  export type CompanyIntegrationScalarWhereWithAggregatesInput = {
+    AND?: CompanyIntegrationScalarWhereWithAggregatesInput | CompanyIntegrationScalarWhereWithAggregatesInput[]
+    OR?: CompanyIntegrationScalarWhereWithAggregatesInput[]
+    NOT?: CompanyIntegrationScalarWhereWithAggregatesInput | CompanyIntegrationScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"CompanyIntegration"> | string
+    slug?: StringWithAggregatesFilter<"CompanyIntegration"> | string
+    isEnabled?: BoolWithAggregatesFilter<"CompanyIntegration"> | boolean
+    config?: JsonWithAggregatesFilter<"CompanyIntegration">
+    features?: JsonWithAggregatesFilter<"CompanyIntegration">
+    n8nWorkflowId?: JsonNullableWithAggregatesFilter<"CompanyIntegration">
+    companyId?: StringWithAggregatesFilter<"CompanyIntegration"> | string
+    storeId?: StringWithAggregatesFilter<"CompanyIntegration"> | string
+    integrationId?: StringNullableWithAggregatesFilter<"CompanyIntegration"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"CompanyIntegration"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"CompanyIntegration"> | Date | string
+  }
+
   export type NotificationWhereInput = {
     AND?: NotificationWhereInput | NotificationWhereInput[]
     OR?: NotificationWhereInput[]
@@ -21376,6 +25388,7 @@ export namespace Prisma {
     medias?: MediaCreateNestedManyWithoutCompanyInput
     campaigns?: CampaignCreateNestedManyWithoutCompanyInput
     notifications?: NotificationCreateNestedManyWithoutCompanyInput
+    integrations?: CompanyIntegrationCreateNestedManyWithoutCompanyInput
   }
 
   export type CompanyUncheckedCreateInput = {
@@ -21396,6 +25409,7 @@ export namespace Prisma {
     medias?: MediaUncheckedCreateNestedManyWithoutCompanyInput
     campaigns?: CampaignUncheckedCreateNestedManyWithoutCompanyInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutCompanyInput
+    integrations?: CompanyIntegrationUncheckedCreateNestedManyWithoutCompanyInput
   }
 
   export type CompanyUpdateInput = {
@@ -21416,6 +25430,7 @@ export namespace Prisma {
     medias?: MediaUpdateManyWithoutCompanyNestedInput
     campaigns?: CampaignUpdateManyWithoutCompanyNestedInput
     notifications?: NotificationUpdateManyWithoutCompanyNestedInput
+    integrations?: CompanyIntegrationUpdateManyWithoutCompanyNestedInput
   }
 
   export type CompanyUncheckedUpdateInput = {
@@ -21436,6 +25451,7 @@ export namespace Prisma {
     medias?: MediaUncheckedUpdateManyWithoutCompanyNestedInput
     campaigns?: CampaignUncheckedUpdateManyWithoutCompanyNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutCompanyNestedInput
+    integrations?: CompanyIntegrationUncheckedUpdateManyWithoutCompanyNestedInput
   }
 
   export type CompanyCreateManyInput = {
@@ -21577,6 +25593,7 @@ export namespace Prisma {
     terminals?: TerminalCreateNestedManyWithoutStoreInput
     license?: StoreLicenseCreateNestedOneWithoutStoreInput
     campaigns?: CampaignCreateNestedManyWithoutStoreInput
+    integrations?: CompanyIntegrationCreateNestedManyWithoutStoreInput
   }
 
   export type StoreUncheckedCreateInput = {
@@ -21589,6 +25606,7 @@ export namespace Prisma {
     terminals?: TerminalUncheckedCreateNestedManyWithoutStoreInput
     license?: StoreLicenseUncheckedCreateNestedOneWithoutStoreInput
     campaigns?: CampaignUncheckedCreateNestedManyWithoutStoreInput
+    integrations?: CompanyIntegrationUncheckedCreateNestedManyWithoutStoreInput
   }
 
   export type StoreUpdateInput = {
@@ -21601,6 +25619,7 @@ export namespace Prisma {
     terminals?: TerminalUpdateManyWithoutStoreNestedInput
     license?: StoreLicenseUpdateOneWithoutStoreNestedInput
     campaigns?: CampaignUpdateManyWithoutStoreNestedInput
+    integrations?: CompanyIntegrationUpdateManyWithoutStoreNestedInput
   }
 
   export type StoreUncheckedUpdateInput = {
@@ -21613,6 +25632,7 @@ export namespace Prisma {
     terminals?: TerminalUncheckedUpdateManyWithoutStoreNestedInput
     license?: StoreLicenseUncheckedUpdateOneWithoutStoreNestedInput
     campaigns?: CampaignUncheckedUpdateManyWithoutStoreNestedInput
+    integrations?: CompanyIntegrationUncheckedUpdateManyWithoutStoreNestedInput
   }
 
   export type StoreCreateManyInput = {
@@ -22515,6 +26535,273 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type IntegrationCreateInput = {
+    id?: string
+    slug: string
+    name: string
+    category: string
+    description: string
+    logoLetters?: string
+    logoColor?: string
+    isActive?: boolean
+    fields?: JsonNullValueInput | InputJsonValue
+    features?: JsonNullValueInput | InputJsonValue
+    n8nApiUrl?: string | null
+    n8nApiKey?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    companyIntegrations?: CompanyIntegrationCreateNestedManyWithoutIntegrationInput
+  }
+
+  export type IntegrationUncheckedCreateInput = {
+    id?: string
+    slug: string
+    name: string
+    category: string
+    description: string
+    logoLetters?: string
+    logoColor?: string
+    isActive?: boolean
+    fields?: JsonNullValueInput | InputJsonValue
+    features?: JsonNullValueInput | InputJsonValue
+    n8nApiUrl?: string | null
+    n8nApiKey?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    companyIntegrations?: CompanyIntegrationUncheckedCreateNestedManyWithoutIntegrationInput
+  }
+
+  export type IntegrationUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    category?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    logoLetters?: StringFieldUpdateOperationsInput | string
+    logoColor?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    fields?: JsonNullValueInput | InputJsonValue
+    features?: JsonNullValueInput | InputJsonValue
+    n8nApiUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    n8nApiKey?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    companyIntegrations?: CompanyIntegrationUpdateManyWithoutIntegrationNestedInput
+  }
+
+  export type IntegrationUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    category?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    logoLetters?: StringFieldUpdateOperationsInput | string
+    logoColor?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    fields?: JsonNullValueInput | InputJsonValue
+    features?: JsonNullValueInput | InputJsonValue
+    n8nApiUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    n8nApiKey?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    companyIntegrations?: CompanyIntegrationUncheckedUpdateManyWithoutIntegrationNestedInput
+  }
+
+  export type IntegrationCreateManyInput = {
+    id?: string
+    slug: string
+    name: string
+    category: string
+    description: string
+    logoLetters?: string
+    logoColor?: string
+    isActive?: boolean
+    fields?: JsonNullValueInput | InputJsonValue
+    features?: JsonNullValueInput | InputJsonValue
+    n8nApiUrl?: string | null
+    n8nApiKey?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type IntegrationUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    category?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    logoLetters?: StringFieldUpdateOperationsInput | string
+    logoColor?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    fields?: JsonNullValueInput | InputJsonValue
+    features?: JsonNullValueInput | InputJsonValue
+    n8nApiUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    n8nApiKey?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type IntegrationUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    category?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    logoLetters?: StringFieldUpdateOperationsInput | string
+    logoColor?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    fields?: JsonNullValueInput | InputJsonValue
+    features?: JsonNullValueInput | InputJsonValue
+    n8nApiUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    n8nApiKey?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type IntegrationCategoryCreateInput = {
+    id?: string
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type IntegrationCategoryUncheckedCreateInput = {
+    id?: string
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type IntegrationCategoryUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type IntegrationCategoryUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type IntegrationCategoryCreateManyInput = {
+    id?: string
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type IntegrationCategoryUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type IntegrationCategoryUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CompanyIntegrationCreateInput = {
+    id?: string
+    slug: string
+    isEnabled?: boolean
+    config?: JsonNullValueInput | InputJsonValue
+    features?: JsonNullValueInput | InputJsonValue
+    n8nWorkflowId?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    company: CompanyCreateNestedOneWithoutIntegrationsInput
+    store: StoreCreateNestedOneWithoutIntegrationsInput
+    integration?: IntegrationCreateNestedOneWithoutCompanyIntegrationsInput
+  }
+
+  export type CompanyIntegrationUncheckedCreateInput = {
+    id?: string
+    slug: string
+    isEnabled?: boolean
+    config?: JsonNullValueInput | InputJsonValue
+    features?: JsonNullValueInput | InputJsonValue
+    n8nWorkflowId?: NullableJsonNullValueInput | InputJsonValue
+    companyId: string
+    storeId: string
+    integrationId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CompanyIntegrationUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    isEnabled?: BoolFieldUpdateOperationsInput | boolean
+    config?: JsonNullValueInput | InputJsonValue
+    features?: JsonNullValueInput | InputJsonValue
+    n8nWorkflowId?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    company?: CompanyUpdateOneRequiredWithoutIntegrationsNestedInput
+    store?: StoreUpdateOneRequiredWithoutIntegrationsNestedInput
+    integration?: IntegrationUpdateOneWithoutCompanyIntegrationsNestedInput
+  }
+
+  export type CompanyIntegrationUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    isEnabled?: BoolFieldUpdateOperationsInput | boolean
+    config?: JsonNullValueInput | InputJsonValue
+    features?: JsonNullValueInput | InputJsonValue
+    n8nWorkflowId?: NullableJsonNullValueInput | InputJsonValue
+    companyId?: StringFieldUpdateOperationsInput | string
+    storeId?: StringFieldUpdateOperationsInput | string
+    integrationId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CompanyIntegrationCreateManyInput = {
+    id?: string
+    slug: string
+    isEnabled?: boolean
+    config?: JsonNullValueInput | InputJsonValue
+    features?: JsonNullValueInput | InputJsonValue
+    n8nWorkflowId?: NullableJsonNullValueInput | InputJsonValue
+    companyId: string
+    storeId: string
+    integrationId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CompanyIntegrationUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    isEnabled?: BoolFieldUpdateOperationsInput | boolean
+    config?: JsonNullValueInput | InputJsonValue
+    features?: JsonNullValueInput | InputJsonValue
+    n8nWorkflowId?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CompanyIntegrationUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    isEnabled?: BoolFieldUpdateOperationsInput | boolean
+    config?: JsonNullValueInput | InputJsonValue
+    features?: JsonNullValueInput | InputJsonValue
+    n8nWorkflowId?: NullableJsonNullValueInput | InputJsonValue
+    companyId?: StringFieldUpdateOperationsInput | string
+    storeId?: StringFieldUpdateOperationsInput | string
+    integrationId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type NotificationCreateInput = {
     id?: string
     title: string
@@ -22667,6 +26954,12 @@ export namespace Prisma {
     none?: NotificationWhereInput
   }
 
+  export type CompanyIntegrationListRelationFilter = {
+    every?: CompanyIntegrationWhereInput
+    some?: CompanyIntegrationWhereInput
+    none?: CompanyIntegrationWhereInput
+  }
+
   export type UserOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
@@ -22688,6 +26981,10 @@ export namespace Prisma {
   }
 
   export type NotificationOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type CompanyIntegrationOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -23505,6 +27802,169 @@ export namespace Prisma {
   export type ConfigurationSumOrderByAggregateInput = {
     resetTime?: SortOrder
   }
+  export type JsonFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<JsonFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonFilterBase<$PrismaModel>>, 'path'>>,
+        Required<JsonFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<JsonFilterBase<$PrismaModel>>, 'path'>>
+
+  export type JsonFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+  }
+
+  export type IntegrationCountOrderByAggregateInput = {
+    id?: SortOrder
+    slug?: SortOrder
+    name?: SortOrder
+    category?: SortOrder
+    description?: SortOrder
+    logoLetters?: SortOrder
+    logoColor?: SortOrder
+    isActive?: SortOrder
+    fields?: SortOrder
+    features?: SortOrder
+    n8nApiUrl?: SortOrder
+    n8nApiKey?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type IntegrationMaxOrderByAggregateInput = {
+    id?: SortOrder
+    slug?: SortOrder
+    name?: SortOrder
+    category?: SortOrder
+    description?: SortOrder
+    logoLetters?: SortOrder
+    logoColor?: SortOrder
+    isActive?: SortOrder
+    n8nApiUrl?: SortOrder
+    n8nApiKey?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type IntegrationMinOrderByAggregateInput = {
+    id?: SortOrder
+    slug?: SortOrder
+    name?: SortOrder
+    category?: SortOrder
+    description?: SortOrder
+    logoLetters?: SortOrder
+    logoColor?: SortOrder
+    isActive?: SortOrder
+    n8nApiUrl?: SortOrder
+    n8nApiKey?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+  export type JsonWithAggregatesFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<JsonWithAggregatesFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonWithAggregatesFilterBase<$PrismaModel>>, 'path'>>,
+        Required<JsonWithAggregatesFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<JsonWithAggregatesFilterBase<$PrismaModel>>, 'path'>>
+
+  export type JsonWithAggregatesFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedJsonFilter<$PrismaModel>
+    _max?: NestedJsonFilter<$PrismaModel>
+  }
+
+  export type IntegrationCategoryCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type IntegrationCategoryMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type IntegrationCategoryMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type IntegrationNullableScalarRelationFilter = {
+    is?: IntegrationWhereInput | null
+    isNot?: IntegrationWhereInput | null
+  }
+
+  export type CompanyIntegrationSlugStoreIdCompoundUniqueInput = {
+    slug: string
+    storeId: string
+  }
+
+  export type CompanyIntegrationCountOrderByAggregateInput = {
+    id?: SortOrder
+    slug?: SortOrder
+    isEnabled?: SortOrder
+    config?: SortOrder
+    features?: SortOrder
+    n8nWorkflowId?: SortOrder
+    companyId?: SortOrder
+    storeId?: SortOrder
+    integrationId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type CompanyIntegrationMaxOrderByAggregateInput = {
+    id?: SortOrder
+    slug?: SortOrder
+    isEnabled?: SortOrder
+    companyId?: SortOrder
+    storeId?: SortOrder
+    integrationId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type CompanyIntegrationMinOrderByAggregateInput = {
+    id?: SortOrder
+    slug?: SortOrder
+    isEnabled?: SortOrder
+    companyId?: SortOrder
+    storeId?: SortOrder
+    integrationId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
 
   export type NotificationCountOrderByAggregateInput = {
     id?: SortOrder
@@ -23587,6 +28047,13 @@ export namespace Prisma {
     connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
   }
 
+  export type CompanyIntegrationCreateNestedManyWithoutCompanyInput = {
+    create?: XOR<CompanyIntegrationCreateWithoutCompanyInput, CompanyIntegrationUncheckedCreateWithoutCompanyInput> | CompanyIntegrationCreateWithoutCompanyInput[] | CompanyIntegrationUncheckedCreateWithoutCompanyInput[]
+    connectOrCreate?: CompanyIntegrationCreateOrConnectWithoutCompanyInput | CompanyIntegrationCreateOrConnectWithoutCompanyInput[]
+    createMany?: CompanyIntegrationCreateManyCompanyInputEnvelope
+    connect?: CompanyIntegrationWhereUniqueInput | CompanyIntegrationWhereUniqueInput[]
+  }
+
   export type UserUncheckedCreateNestedManyWithoutCompanyInput = {
     create?: XOR<UserCreateWithoutCompanyInput, UserUncheckedCreateWithoutCompanyInput> | UserCreateWithoutCompanyInput[] | UserUncheckedCreateWithoutCompanyInput[]
     connectOrCreate?: UserCreateOrConnectWithoutCompanyInput | UserCreateOrConnectWithoutCompanyInput[]
@@ -23627,6 +28094,13 @@ export namespace Prisma {
     connectOrCreate?: NotificationCreateOrConnectWithoutCompanyInput | NotificationCreateOrConnectWithoutCompanyInput[]
     createMany?: NotificationCreateManyCompanyInputEnvelope
     connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+  }
+
+  export type CompanyIntegrationUncheckedCreateNestedManyWithoutCompanyInput = {
+    create?: XOR<CompanyIntegrationCreateWithoutCompanyInput, CompanyIntegrationUncheckedCreateWithoutCompanyInput> | CompanyIntegrationCreateWithoutCompanyInput[] | CompanyIntegrationUncheckedCreateWithoutCompanyInput[]
+    connectOrCreate?: CompanyIntegrationCreateOrConnectWithoutCompanyInput | CompanyIntegrationCreateOrConnectWithoutCompanyInput[]
+    createMany?: CompanyIntegrationCreateManyCompanyInputEnvelope
+    connect?: CompanyIntegrationWhereUniqueInput | CompanyIntegrationWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -23721,6 +28195,20 @@ export namespace Prisma {
     deleteMany?: NotificationScalarWhereInput | NotificationScalarWhereInput[]
   }
 
+  export type CompanyIntegrationUpdateManyWithoutCompanyNestedInput = {
+    create?: XOR<CompanyIntegrationCreateWithoutCompanyInput, CompanyIntegrationUncheckedCreateWithoutCompanyInput> | CompanyIntegrationCreateWithoutCompanyInput[] | CompanyIntegrationUncheckedCreateWithoutCompanyInput[]
+    connectOrCreate?: CompanyIntegrationCreateOrConnectWithoutCompanyInput | CompanyIntegrationCreateOrConnectWithoutCompanyInput[]
+    upsert?: CompanyIntegrationUpsertWithWhereUniqueWithoutCompanyInput | CompanyIntegrationUpsertWithWhereUniqueWithoutCompanyInput[]
+    createMany?: CompanyIntegrationCreateManyCompanyInputEnvelope
+    set?: CompanyIntegrationWhereUniqueInput | CompanyIntegrationWhereUniqueInput[]
+    disconnect?: CompanyIntegrationWhereUniqueInput | CompanyIntegrationWhereUniqueInput[]
+    delete?: CompanyIntegrationWhereUniqueInput | CompanyIntegrationWhereUniqueInput[]
+    connect?: CompanyIntegrationWhereUniqueInput | CompanyIntegrationWhereUniqueInput[]
+    update?: CompanyIntegrationUpdateWithWhereUniqueWithoutCompanyInput | CompanyIntegrationUpdateWithWhereUniqueWithoutCompanyInput[]
+    updateMany?: CompanyIntegrationUpdateManyWithWhereWithoutCompanyInput | CompanyIntegrationUpdateManyWithWhereWithoutCompanyInput[]
+    deleteMany?: CompanyIntegrationScalarWhereInput | CompanyIntegrationScalarWhereInput[]
+  }
+
   export type UserUncheckedUpdateManyWithoutCompanyNestedInput = {
     create?: XOR<UserCreateWithoutCompanyInput, UserUncheckedCreateWithoutCompanyInput> | UserCreateWithoutCompanyInput[] | UserUncheckedCreateWithoutCompanyInput[]
     connectOrCreate?: UserCreateOrConnectWithoutCompanyInput | UserCreateOrConnectWithoutCompanyInput[]
@@ -23803,6 +28291,20 @@ export namespace Prisma {
     update?: NotificationUpdateWithWhereUniqueWithoutCompanyInput | NotificationUpdateWithWhereUniqueWithoutCompanyInput[]
     updateMany?: NotificationUpdateManyWithWhereWithoutCompanyInput | NotificationUpdateManyWithWhereWithoutCompanyInput[]
     deleteMany?: NotificationScalarWhereInput | NotificationScalarWhereInput[]
+  }
+
+  export type CompanyIntegrationUncheckedUpdateManyWithoutCompanyNestedInput = {
+    create?: XOR<CompanyIntegrationCreateWithoutCompanyInput, CompanyIntegrationUncheckedCreateWithoutCompanyInput> | CompanyIntegrationCreateWithoutCompanyInput[] | CompanyIntegrationUncheckedCreateWithoutCompanyInput[]
+    connectOrCreate?: CompanyIntegrationCreateOrConnectWithoutCompanyInput | CompanyIntegrationCreateOrConnectWithoutCompanyInput[]
+    upsert?: CompanyIntegrationUpsertWithWhereUniqueWithoutCompanyInput | CompanyIntegrationUpsertWithWhereUniqueWithoutCompanyInput[]
+    createMany?: CompanyIntegrationCreateManyCompanyInputEnvelope
+    set?: CompanyIntegrationWhereUniqueInput | CompanyIntegrationWhereUniqueInput[]
+    disconnect?: CompanyIntegrationWhereUniqueInput | CompanyIntegrationWhereUniqueInput[]
+    delete?: CompanyIntegrationWhereUniqueInput | CompanyIntegrationWhereUniqueInput[]
+    connect?: CompanyIntegrationWhereUniqueInput | CompanyIntegrationWhereUniqueInput[]
+    update?: CompanyIntegrationUpdateWithWhereUniqueWithoutCompanyInput | CompanyIntegrationUpdateWithWhereUniqueWithoutCompanyInput[]
+    updateMany?: CompanyIntegrationUpdateManyWithWhereWithoutCompanyInput | CompanyIntegrationUpdateManyWithWhereWithoutCompanyInput[]
+    deleteMany?: CompanyIntegrationScalarWhereInput | CompanyIntegrationScalarWhereInput[]
   }
 
   export type CompanyCreateNestedOneWithoutUsersInput = {
@@ -23891,6 +28393,13 @@ export namespace Prisma {
     connect?: CampaignWhereUniqueInput | CampaignWhereUniqueInput[]
   }
 
+  export type CompanyIntegrationCreateNestedManyWithoutStoreInput = {
+    create?: XOR<CompanyIntegrationCreateWithoutStoreInput, CompanyIntegrationUncheckedCreateWithoutStoreInput> | CompanyIntegrationCreateWithoutStoreInput[] | CompanyIntegrationUncheckedCreateWithoutStoreInput[]
+    connectOrCreate?: CompanyIntegrationCreateOrConnectWithoutStoreInput | CompanyIntegrationCreateOrConnectWithoutStoreInput[]
+    createMany?: CompanyIntegrationCreateManyStoreInputEnvelope
+    connect?: CompanyIntegrationWhereUniqueInput | CompanyIntegrationWhereUniqueInput[]
+  }
+
   export type TerminalUncheckedCreateNestedManyWithoutStoreInput = {
     create?: XOR<TerminalCreateWithoutStoreInput, TerminalUncheckedCreateWithoutStoreInput> | TerminalCreateWithoutStoreInput[] | TerminalUncheckedCreateWithoutStoreInput[]
     connectOrCreate?: TerminalCreateOrConnectWithoutStoreInput | TerminalCreateOrConnectWithoutStoreInput[]
@@ -23909,6 +28418,13 @@ export namespace Prisma {
     connectOrCreate?: CampaignCreateOrConnectWithoutStoreInput | CampaignCreateOrConnectWithoutStoreInput[]
     createMany?: CampaignCreateManyStoreInputEnvelope
     connect?: CampaignWhereUniqueInput | CampaignWhereUniqueInput[]
+  }
+
+  export type CompanyIntegrationUncheckedCreateNestedManyWithoutStoreInput = {
+    create?: XOR<CompanyIntegrationCreateWithoutStoreInput, CompanyIntegrationUncheckedCreateWithoutStoreInput> | CompanyIntegrationCreateWithoutStoreInput[] | CompanyIntegrationUncheckedCreateWithoutStoreInput[]
+    connectOrCreate?: CompanyIntegrationCreateOrConnectWithoutStoreInput | CompanyIntegrationCreateOrConnectWithoutStoreInput[]
+    createMany?: CompanyIntegrationCreateManyStoreInputEnvelope
+    connect?: CompanyIntegrationWhereUniqueInput | CompanyIntegrationWhereUniqueInput[]
   }
 
   export type NullableStringFieldUpdateOperationsInput = {
@@ -23961,6 +28477,20 @@ export namespace Prisma {
     deleteMany?: CampaignScalarWhereInput | CampaignScalarWhereInput[]
   }
 
+  export type CompanyIntegrationUpdateManyWithoutStoreNestedInput = {
+    create?: XOR<CompanyIntegrationCreateWithoutStoreInput, CompanyIntegrationUncheckedCreateWithoutStoreInput> | CompanyIntegrationCreateWithoutStoreInput[] | CompanyIntegrationUncheckedCreateWithoutStoreInput[]
+    connectOrCreate?: CompanyIntegrationCreateOrConnectWithoutStoreInput | CompanyIntegrationCreateOrConnectWithoutStoreInput[]
+    upsert?: CompanyIntegrationUpsertWithWhereUniqueWithoutStoreInput | CompanyIntegrationUpsertWithWhereUniqueWithoutStoreInput[]
+    createMany?: CompanyIntegrationCreateManyStoreInputEnvelope
+    set?: CompanyIntegrationWhereUniqueInput | CompanyIntegrationWhereUniqueInput[]
+    disconnect?: CompanyIntegrationWhereUniqueInput | CompanyIntegrationWhereUniqueInput[]
+    delete?: CompanyIntegrationWhereUniqueInput | CompanyIntegrationWhereUniqueInput[]
+    connect?: CompanyIntegrationWhereUniqueInput | CompanyIntegrationWhereUniqueInput[]
+    update?: CompanyIntegrationUpdateWithWhereUniqueWithoutStoreInput | CompanyIntegrationUpdateWithWhereUniqueWithoutStoreInput[]
+    updateMany?: CompanyIntegrationUpdateManyWithWhereWithoutStoreInput | CompanyIntegrationUpdateManyWithWhereWithoutStoreInput[]
+    deleteMany?: CompanyIntegrationScalarWhereInput | CompanyIntegrationScalarWhereInput[]
+  }
+
   export type TerminalUncheckedUpdateManyWithoutStoreNestedInput = {
     create?: XOR<TerminalCreateWithoutStoreInput, TerminalUncheckedCreateWithoutStoreInput> | TerminalCreateWithoutStoreInput[] | TerminalUncheckedCreateWithoutStoreInput[]
     connectOrCreate?: TerminalCreateOrConnectWithoutStoreInput | TerminalCreateOrConnectWithoutStoreInput[]
@@ -23997,6 +28527,20 @@ export namespace Prisma {
     update?: CampaignUpdateWithWhereUniqueWithoutStoreInput | CampaignUpdateWithWhereUniqueWithoutStoreInput[]
     updateMany?: CampaignUpdateManyWithWhereWithoutStoreInput | CampaignUpdateManyWithWhereWithoutStoreInput[]
     deleteMany?: CampaignScalarWhereInput | CampaignScalarWhereInput[]
+  }
+
+  export type CompanyIntegrationUncheckedUpdateManyWithoutStoreNestedInput = {
+    create?: XOR<CompanyIntegrationCreateWithoutStoreInput, CompanyIntegrationUncheckedCreateWithoutStoreInput> | CompanyIntegrationCreateWithoutStoreInput[] | CompanyIntegrationUncheckedCreateWithoutStoreInput[]
+    connectOrCreate?: CompanyIntegrationCreateOrConnectWithoutStoreInput | CompanyIntegrationCreateOrConnectWithoutStoreInput[]
+    upsert?: CompanyIntegrationUpsertWithWhereUniqueWithoutStoreInput | CompanyIntegrationUpsertWithWhereUniqueWithoutStoreInput[]
+    createMany?: CompanyIntegrationCreateManyStoreInputEnvelope
+    set?: CompanyIntegrationWhereUniqueInput | CompanyIntegrationWhereUniqueInput[]
+    disconnect?: CompanyIntegrationWhereUniqueInput | CompanyIntegrationWhereUniqueInput[]
+    delete?: CompanyIntegrationWhereUniqueInput | CompanyIntegrationWhereUniqueInput[]
+    connect?: CompanyIntegrationWhereUniqueInput | CompanyIntegrationWhereUniqueInput[]
+    update?: CompanyIntegrationUpdateWithWhereUniqueWithoutStoreInput | CompanyIntegrationUpdateWithWhereUniqueWithoutStoreInput[]
+    updateMany?: CompanyIntegrationUpdateManyWithWhereWithoutStoreInput | CompanyIntegrationUpdateManyWithWhereWithoutStoreInput[]
+    deleteMany?: CompanyIntegrationScalarWhereInput | CompanyIntegrationScalarWhereInput[]
   }
 
   export type StoreCreateNestedOneWithoutTerminalsInput = {
@@ -24615,6 +29159,92 @@ export namespace Prisma {
     update?: XOR<XOR<TerminalUpdateToOneWithWhereWithoutEventsInput, TerminalUpdateWithoutEventsInput>, TerminalUncheckedUpdateWithoutEventsInput>
   }
 
+  export type CompanyIntegrationCreateNestedManyWithoutIntegrationInput = {
+    create?: XOR<CompanyIntegrationCreateWithoutIntegrationInput, CompanyIntegrationUncheckedCreateWithoutIntegrationInput> | CompanyIntegrationCreateWithoutIntegrationInput[] | CompanyIntegrationUncheckedCreateWithoutIntegrationInput[]
+    connectOrCreate?: CompanyIntegrationCreateOrConnectWithoutIntegrationInput | CompanyIntegrationCreateOrConnectWithoutIntegrationInput[]
+    createMany?: CompanyIntegrationCreateManyIntegrationInputEnvelope
+    connect?: CompanyIntegrationWhereUniqueInput | CompanyIntegrationWhereUniqueInput[]
+  }
+
+  export type CompanyIntegrationUncheckedCreateNestedManyWithoutIntegrationInput = {
+    create?: XOR<CompanyIntegrationCreateWithoutIntegrationInput, CompanyIntegrationUncheckedCreateWithoutIntegrationInput> | CompanyIntegrationCreateWithoutIntegrationInput[] | CompanyIntegrationUncheckedCreateWithoutIntegrationInput[]
+    connectOrCreate?: CompanyIntegrationCreateOrConnectWithoutIntegrationInput | CompanyIntegrationCreateOrConnectWithoutIntegrationInput[]
+    createMany?: CompanyIntegrationCreateManyIntegrationInputEnvelope
+    connect?: CompanyIntegrationWhereUniqueInput | CompanyIntegrationWhereUniqueInput[]
+  }
+
+  export type CompanyIntegrationUpdateManyWithoutIntegrationNestedInput = {
+    create?: XOR<CompanyIntegrationCreateWithoutIntegrationInput, CompanyIntegrationUncheckedCreateWithoutIntegrationInput> | CompanyIntegrationCreateWithoutIntegrationInput[] | CompanyIntegrationUncheckedCreateWithoutIntegrationInput[]
+    connectOrCreate?: CompanyIntegrationCreateOrConnectWithoutIntegrationInput | CompanyIntegrationCreateOrConnectWithoutIntegrationInput[]
+    upsert?: CompanyIntegrationUpsertWithWhereUniqueWithoutIntegrationInput | CompanyIntegrationUpsertWithWhereUniqueWithoutIntegrationInput[]
+    createMany?: CompanyIntegrationCreateManyIntegrationInputEnvelope
+    set?: CompanyIntegrationWhereUniqueInput | CompanyIntegrationWhereUniqueInput[]
+    disconnect?: CompanyIntegrationWhereUniqueInput | CompanyIntegrationWhereUniqueInput[]
+    delete?: CompanyIntegrationWhereUniqueInput | CompanyIntegrationWhereUniqueInput[]
+    connect?: CompanyIntegrationWhereUniqueInput | CompanyIntegrationWhereUniqueInput[]
+    update?: CompanyIntegrationUpdateWithWhereUniqueWithoutIntegrationInput | CompanyIntegrationUpdateWithWhereUniqueWithoutIntegrationInput[]
+    updateMany?: CompanyIntegrationUpdateManyWithWhereWithoutIntegrationInput | CompanyIntegrationUpdateManyWithWhereWithoutIntegrationInput[]
+    deleteMany?: CompanyIntegrationScalarWhereInput | CompanyIntegrationScalarWhereInput[]
+  }
+
+  export type CompanyIntegrationUncheckedUpdateManyWithoutIntegrationNestedInput = {
+    create?: XOR<CompanyIntegrationCreateWithoutIntegrationInput, CompanyIntegrationUncheckedCreateWithoutIntegrationInput> | CompanyIntegrationCreateWithoutIntegrationInput[] | CompanyIntegrationUncheckedCreateWithoutIntegrationInput[]
+    connectOrCreate?: CompanyIntegrationCreateOrConnectWithoutIntegrationInput | CompanyIntegrationCreateOrConnectWithoutIntegrationInput[]
+    upsert?: CompanyIntegrationUpsertWithWhereUniqueWithoutIntegrationInput | CompanyIntegrationUpsertWithWhereUniqueWithoutIntegrationInput[]
+    createMany?: CompanyIntegrationCreateManyIntegrationInputEnvelope
+    set?: CompanyIntegrationWhereUniqueInput | CompanyIntegrationWhereUniqueInput[]
+    disconnect?: CompanyIntegrationWhereUniqueInput | CompanyIntegrationWhereUniqueInput[]
+    delete?: CompanyIntegrationWhereUniqueInput | CompanyIntegrationWhereUniqueInput[]
+    connect?: CompanyIntegrationWhereUniqueInput | CompanyIntegrationWhereUniqueInput[]
+    update?: CompanyIntegrationUpdateWithWhereUniqueWithoutIntegrationInput | CompanyIntegrationUpdateWithWhereUniqueWithoutIntegrationInput[]
+    updateMany?: CompanyIntegrationUpdateManyWithWhereWithoutIntegrationInput | CompanyIntegrationUpdateManyWithWhereWithoutIntegrationInput[]
+    deleteMany?: CompanyIntegrationScalarWhereInput | CompanyIntegrationScalarWhereInput[]
+  }
+
+  export type CompanyCreateNestedOneWithoutIntegrationsInput = {
+    create?: XOR<CompanyCreateWithoutIntegrationsInput, CompanyUncheckedCreateWithoutIntegrationsInput>
+    connectOrCreate?: CompanyCreateOrConnectWithoutIntegrationsInput
+    connect?: CompanyWhereUniqueInput
+  }
+
+  export type StoreCreateNestedOneWithoutIntegrationsInput = {
+    create?: XOR<StoreCreateWithoutIntegrationsInput, StoreUncheckedCreateWithoutIntegrationsInput>
+    connectOrCreate?: StoreCreateOrConnectWithoutIntegrationsInput
+    connect?: StoreWhereUniqueInput
+  }
+
+  export type IntegrationCreateNestedOneWithoutCompanyIntegrationsInput = {
+    create?: XOR<IntegrationCreateWithoutCompanyIntegrationsInput, IntegrationUncheckedCreateWithoutCompanyIntegrationsInput>
+    connectOrCreate?: IntegrationCreateOrConnectWithoutCompanyIntegrationsInput
+    connect?: IntegrationWhereUniqueInput
+  }
+
+  export type CompanyUpdateOneRequiredWithoutIntegrationsNestedInput = {
+    create?: XOR<CompanyCreateWithoutIntegrationsInput, CompanyUncheckedCreateWithoutIntegrationsInput>
+    connectOrCreate?: CompanyCreateOrConnectWithoutIntegrationsInput
+    upsert?: CompanyUpsertWithoutIntegrationsInput
+    connect?: CompanyWhereUniqueInput
+    update?: XOR<XOR<CompanyUpdateToOneWithWhereWithoutIntegrationsInput, CompanyUpdateWithoutIntegrationsInput>, CompanyUncheckedUpdateWithoutIntegrationsInput>
+  }
+
+  export type StoreUpdateOneRequiredWithoutIntegrationsNestedInput = {
+    create?: XOR<StoreCreateWithoutIntegrationsInput, StoreUncheckedCreateWithoutIntegrationsInput>
+    connectOrCreate?: StoreCreateOrConnectWithoutIntegrationsInput
+    upsert?: StoreUpsertWithoutIntegrationsInput
+    connect?: StoreWhereUniqueInput
+    update?: XOR<XOR<StoreUpdateToOneWithWhereWithoutIntegrationsInput, StoreUpdateWithoutIntegrationsInput>, StoreUncheckedUpdateWithoutIntegrationsInput>
+  }
+
+  export type IntegrationUpdateOneWithoutCompanyIntegrationsNestedInput = {
+    create?: XOR<IntegrationCreateWithoutCompanyIntegrationsInput, IntegrationUncheckedCreateWithoutCompanyIntegrationsInput>
+    connectOrCreate?: IntegrationCreateOrConnectWithoutCompanyIntegrationsInput
+    upsert?: IntegrationUpsertWithoutCompanyIntegrationsInput
+    disconnect?: IntegrationWhereInput | boolean
+    delete?: IntegrationWhereInput | boolean
+    connect?: IntegrationWhereUniqueInput
+    update?: XOR<XOR<IntegrationUpdateToOneWithWhereWithoutCompanyIntegrationsInput, IntegrationUpdateWithoutCompanyIntegrationsInput>, IntegrationUncheckedUpdateWithoutCompanyIntegrationsInput>
+  }
+
   export type CompanyCreateNestedOneWithoutNotificationsInput = {
     create?: XOR<CompanyCreateWithoutNotificationsInput, CompanyUncheckedCreateWithoutNotificationsInput>
     connectOrCreate?: CompanyCreateOrConnectWithoutNotificationsInput
@@ -24827,6 +29457,29 @@ export namespace Prisma {
     gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
     not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
   }
+  export type NestedJsonFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<NestedJsonFilterBase<$PrismaModel>>, Exclude<keyof Required<NestedJsonFilterBase<$PrismaModel>>, 'path'>>,
+        Required<NestedJsonFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<NestedJsonFilterBase<$PrismaModel>>, 'path'>>
+
+  export type NestedJsonFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+  }
 
   export type UserCreateWithoutCompanyInput = {
     id?: string
@@ -24871,6 +29524,7 @@ export namespace Prisma {
     terminals?: TerminalCreateNestedManyWithoutStoreInput
     license?: StoreLicenseCreateNestedOneWithoutStoreInput
     campaigns?: CampaignCreateNestedManyWithoutStoreInput
+    integrations?: CompanyIntegrationCreateNestedManyWithoutStoreInput
   }
 
   export type StoreUncheckedCreateWithoutCompanyInput = {
@@ -24882,6 +29536,7 @@ export namespace Prisma {
     terminals?: TerminalUncheckedCreateNestedManyWithoutStoreInput
     license?: StoreLicenseUncheckedCreateNestedOneWithoutStoreInput
     campaigns?: CampaignUncheckedCreateNestedManyWithoutStoreInput
+    integrations?: CompanyIntegrationUncheckedCreateNestedManyWithoutStoreInput
   }
 
   export type StoreCreateOrConnectWithoutCompanyInput = {
@@ -25059,6 +29714,42 @@ export namespace Prisma {
 
   export type NotificationCreateManyCompanyInputEnvelope = {
     data: NotificationCreateManyCompanyInput | NotificationCreateManyCompanyInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type CompanyIntegrationCreateWithoutCompanyInput = {
+    id?: string
+    slug: string
+    isEnabled?: boolean
+    config?: JsonNullValueInput | InputJsonValue
+    features?: JsonNullValueInput | InputJsonValue
+    n8nWorkflowId?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    store: StoreCreateNestedOneWithoutIntegrationsInput
+    integration?: IntegrationCreateNestedOneWithoutCompanyIntegrationsInput
+  }
+
+  export type CompanyIntegrationUncheckedCreateWithoutCompanyInput = {
+    id?: string
+    slug: string
+    isEnabled?: boolean
+    config?: JsonNullValueInput | InputJsonValue
+    features?: JsonNullValueInput | InputJsonValue
+    n8nWorkflowId?: NullableJsonNullValueInput | InputJsonValue
+    storeId: string
+    integrationId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CompanyIntegrationCreateOrConnectWithoutCompanyInput = {
+    where: CompanyIntegrationWhereUniqueInput
+    create: XOR<CompanyIntegrationCreateWithoutCompanyInput, CompanyIntegrationUncheckedCreateWithoutCompanyInput>
+  }
+
+  export type CompanyIntegrationCreateManyCompanyInputEnvelope = {
+    data: CompanyIntegrationCreateManyCompanyInput | CompanyIntegrationCreateManyCompanyInput[]
     skipDuplicates?: boolean
   }
 
@@ -25257,6 +29948,39 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Notification"> | Date | string
   }
 
+  export type CompanyIntegrationUpsertWithWhereUniqueWithoutCompanyInput = {
+    where: CompanyIntegrationWhereUniqueInput
+    update: XOR<CompanyIntegrationUpdateWithoutCompanyInput, CompanyIntegrationUncheckedUpdateWithoutCompanyInput>
+    create: XOR<CompanyIntegrationCreateWithoutCompanyInput, CompanyIntegrationUncheckedCreateWithoutCompanyInput>
+  }
+
+  export type CompanyIntegrationUpdateWithWhereUniqueWithoutCompanyInput = {
+    where: CompanyIntegrationWhereUniqueInput
+    data: XOR<CompanyIntegrationUpdateWithoutCompanyInput, CompanyIntegrationUncheckedUpdateWithoutCompanyInput>
+  }
+
+  export type CompanyIntegrationUpdateManyWithWhereWithoutCompanyInput = {
+    where: CompanyIntegrationScalarWhereInput
+    data: XOR<CompanyIntegrationUpdateManyMutationInput, CompanyIntegrationUncheckedUpdateManyWithoutCompanyInput>
+  }
+
+  export type CompanyIntegrationScalarWhereInput = {
+    AND?: CompanyIntegrationScalarWhereInput | CompanyIntegrationScalarWhereInput[]
+    OR?: CompanyIntegrationScalarWhereInput[]
+    NOT?: CompanyIntegrationScalarWhereInput | CompanyIntegrationScalarWhereInput[]
+    id?: StringFilter<"CompanyIntegration"> | string
+    slug?: StringFilter<"CompanyIntegration"> | string
+    isEnabled?: BoolFilter<"CompanyIntegration"> | boolean
+    config?: JsonFilter<"CompanyIntegration">
+    features?: JsonFilter<"CompanyIntegration">
+    n8nWorkflowId?: JsonNullableFilter<"CompanyIntegration">
+    companyId?: StringFilter<"CompanyIntegration"> | string
+    storeId?: StringFilter<"CompanyIntegration"> | string
+    integrationId?: StringNullableFilter<"CompanyIntegration"> | string | null
+    createdAt?: DateTimeFilter<"CompanyIntegration"> | Date | string
+    updatedAt?: DateTimeFilter<"CompanyIntegration"> | Date | string
+  }
+
   export type CompanyCreateWithoutUsersInput = {
     id?: string
     name: string
@@ -25274,6 +29998,7 @@ export namespace Prisma {
     medias?: MediaCreateNestedManyWithoutCompanyInput
     campaigns?: CampaignCreateNestedManyWithoutCompanyInput
     notifications?: NotificationCreateNestedManyWithoutCompanyInput
+    integrations?: CompanyIntegrationCreateNestedManyWithoutCompanyInput
   }
 
   export type CompanyUncheckedCreateWithoutUsersInput = {
@@ -25293,6 +30018,7 @@ export namespace Prisma {
     medias?: MediaUncheckedCreateNestedManyWithoutCompanyInput
     campaigns?: CampaignUncheckedCreateNestedManyWithoutCompanyInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutCompanyInput
+    integrations?: CompanyIntegrationUncheckedCreateNestedManyWithoutCompanyInput
   }
 
   export type CompanyCreateOrConnectWithoutUsersInput = {
@@ -25356,6 +30082,7 @@ export namespace Prisma {
     medias?: MediaUpdateManyWithoutCompanyNestedInput
     campaigns?: CampaignUpdateManyWithoutCompanyNestedInput
     notifications?: NotificationUpdateManyWithoutCompanyNestedInput
+    integrations?: CompanyIntegrationUpdateManyWithoutCompanyNestedInput
   }
 
   export type CompanyUncheckedUpdateWithoutUsersInput = {
@@ -25375,6 +30102,7 @@ export namespace Prisma {
     medias?: MediaUncheckedUpdateManyWithoutCompanyNestedInput
     campaigns?: CampaignUncheckedUpdateManyWithoutCompanyNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutCompanyNestedInput
+    integrations?: CompanyIntegrationUncheckedUpdateManyWithoutCompanyNestedInput
   }
 
   export type TerminalActivationUpsertWithWhereUniqueWithoutActivatedByUserInput = {
@@ -25423,6 +30151,7 @@ export namespace Prisma {
     medias?: MediaCreateNestedManyWithoutCompanyInput
     campaigns?: CampaignCreateNestedManyWithoutCompanyInput
     notifications?: NotificationCreateNestedManyWithoutCompanyInput
+    integrations?: CompanyIntegrationCreateNestedManyWithoutCompanyInput
   }
 
   export type CompanyUncheckedCreateWithoutStoresInput = {
@@ -25442,6 +30171,7 @@ export namespace Prisma {
     medias?: MediaUncheckedCreateNestedManyWithoutCompanyInput
     campaigns?: CampaignUncheckedCreateNestedManyWithoutCompanyInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutCompanyInput
+    integrations?: CompanyIntegrationUncheckedCreateNestedManyWithoutCompanyInput
   }
 
   export type CompanyCreateOrConnectWithoutStoresInput = {
@@ -25572,6 +30302,42 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type CompanyIntegrationCreateWithoutStoreInput = {
+    id?: string
+    slug: string
+    isEnabled?: boolean
+    config?: JsonNullValueInput | InputJsonValue
+    features?: JsonNullValueInput | InputJsonValue
+    n8nWorkflowId?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    company: CompanyCreateNestedOneWithoutIntegrationsInput
+    integration?: IntegrationCreateNestedOneWithoutCompanyIntegrationsInput
+  }
+
+  export type CompanyIntegrationUncheckedCreateWithoutStoreInput = {
+    id?: string
+    slug: string
+    isEnabled?: boolean
+    config?: JsonNullValueInput | InputJsonValue
+    features?: JsonNullValueInput | InputJsonValue
+    n8nWorkflowId?: NullableJsonNullValueInput | InputJsonValue
+    companyId: string
+    integrationId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CompanyIntegrationCreateOrConnectWithoutStoreInput = {
+    where: CompanyIntegrationWhereUniqueInput
+    create: XOR<CompanyIntegrationCreateWithoutStoreInput, CompanyIntegrationUncheckedCreateWithoutStoreInput>
+  }
+
+  export type CompanyIntegrationCreateManyStoreInputEnvelope = {
+    data: CompanyIntegrationCreateManyStoreInput | CompanyIntegrationCreateManyStoreInput[]
+    skipDuplicates?: boolean
+  }
+
   export type CompanyUpsertWithoutStoresInput = {
     update: XOR<CompanyUpdateWithoutStoresInput, CompanyUncheckedUpdateWithoutStoresInput>
     create: XOR<CompanyCreateWithoutStoresInput, CompanyUncheckedCreateWithoutStoresInput>
@@ -25600,6 +30366,7 @@ export namespace Prisma {
     medias?: MediaUpdateManyWithoutCompanyNestedInput
     campaigns?: CampaignUpdateManyWithoutCompanyNestedInput
     notifications?: NotificationUpdateManyWithoutCompanyNestedInput
+    integrations?: CompanyIntegrationUpdateManyWithoutCompanyNestedInput
   }
 
   export type CompanyUncheckedUpdateWithoutStoresInput = {
@@ -25619,6 +30386,7 @@ export namespace Prisma {
     medias?: MediaUncheckedUpdateManyWithoutCompanyNestedInput
     campaigns?: CampaignUncheckedUpdateManyWithoutCompanyNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutCompanyNestedInput
+    integrations?: CompanyIntegrationUncheckedUpdateManyWithoutCompanyNestedInput
   }
 
   export type TerminalUpsertWithWhereUniqueWithoutStoreInput = {
@@ -25688,6 +30456,22 @@ export namespace Prisma {
     data: XOR<CampaignUpdateManyMutationInput, CampaignUncheckedUpdateManyWithoutStoreInput>
   }
 
+  export type CompanyIntegrationUpsertWithWhereUniqueWithoutStoreInput = {
+    where: CompanyIntegrationWhereUniqueInput
+    update: XOR<CompanyIntegrationUpdateWithoutStoreInput, CompanyIntegrationUncheckedUpdateWithoutStoreInput>
+    create: XOR<CompanyIntegrationCreateWithoutStoreInput, CompanyIntegrationUncheckedCreateWithoutStoreInput>
+  }
+
+  export type CompanyIntegrationUpdateWithWhereUniqueWithoutStoreInput = {
+    where: CompanyIntegrationWhereUniqueInput
+    data: XOR<CompanyIntegrationUpdateWithoutStoreInput, CompanyIntegrationUncheckedUpdateWithoutStoreInput>
+  }
+
+  export type CompanyIntegrationUpdateManyWithWhereWithoutStoreInput = {
+    where: CompanyIntegrationScalarWhereInput
+    data: XOR<CompanyIntegrationUpdateManyMutationInput, CompanyIntegrationUncheckedUpdateManyWithoutStoreInput>
+  }
+
   export type StoreCreateWithoutTerminalsInput = {
     id?: string
     name: string
@@ -25697,6 +30481,7 @@ export namespace Prisma {
     company: CompanyCreateNestedOneWithoutStoresInput
     license?: StoreLicenseCreateNestedOneWithoutStoreInput
     campaigns?: CampaignCreateNestedManyWithoutStoreInput
+    integrations?: CompanyIntegrationCreateNestedManyWithoutStoreInput
   }
 
   export type StoreUncheckedCreateWithoutTerminalsInput = {
@@ -25708,6 +30493,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     license?: StoreLicenseUncheckedCreateNestedOneWithoutStoreInput
     campaigns?: CampaignUncheckedCreateNestedManyWithoutStoreInput
+    integrations?: CompanyIntegrationUncheckedCreateNestedManyWithoutStoreInput
   }
 
   export type StoreCreateOrConnectWithoutTerminalsInput = {
@@ -25732,6 +30518,7 @@ export namespace Prisma {
     medias?: MediaCreateNestedManyWithoutCompanyInput
     campaigns?: CampaignCreateNestedManyWithoutCompanyInput
     notifications?: NotificationCreateNestedManyWithoutCompanyInput
+    integrations?: CompanyIntegrationCreateNestedManyWithoutCompanyInput
   }
 
   export type CompanyUncheckedCreateWithoutTerminalsInput = {
@@ -25751,6 +30538,7 @@ export namespace Prisma {
     medias?: MediaUncheckedCreateNestedManyWithoutCompanyInput
     campaigns?: CampaignUncheckedCreateNestedManyWithoutCompanyInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutCompanyInput
+    integrations?: CompanyIntegrationUncheckedCreateNestedManyWithoutCompanyInput
   }
 
   export type CompanyCreateOrConnectWithoutTerminalsInput = {
@@ -25941,6 +30729,7 @@ export namespace Prisma {
     company?: CompanyUpdateOneRequiredWithoutStoresNestedInput
     license?: StoreLicenseUpdateOneWithoutStoreNestedInput
     campaigns?: CampaignUpdateManyWithoutStoreNestedInput
+    integrations?: CompanyIntegrationUpdateManyWithoutStoreNestedInput
   }
 
   export type StoreUncheckedUpdateWithoutTerminalsInput = {
@@ -25952,6 +30741,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     license?: StoreLicenseUncheckedUpdateOneWithoutStoreNestedInput
     campaigns?: CampaignUncheckedUpdateManyWithoutStoreNestedInput
+    integrations?: CompanyIntegrationUncheckedUpdateManyWithoutStoreNestedInput
   }
 
   export type CompanyUpsertWithoutTerminalsInput = {
@@ -25982,6 +30772,7 @@ export namespace Prisma {
     medias?: MediaUpdateManyWithoutCompanyNestedInput
     campaigns?: CampaignUpdateManyWithoutCompanyNestedInput
     notifications?: NotificationUpdateManyWithoutCompanyNestedInput
+    integrations?: CompanyIntegrationUpdateManyWithoutCompanyNestedInput
   }
 
   export type CompanyUncheckedUpdateWithoutTerminalsInput = {
@@ -26001,6 +30792,7 @@ export namespace Prisma {
     medias?: MediaUncheckedUpdateManyWithoutCompanyNestedInput
     campaigns?: CampaignUncheckedUpdateManyWithoutCompanyNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutCompanyNestedInput
+    integrations?: CompanyIntegrationUncheckedUpdateManyWithoutCompanyNestedInput
   }
 
   export type TerminalCredentialUpsertWithoutTerminalInput = {
@@ -26444,6 +31236,7 @@ export namespace Prisma {
     company: CompanyCreateNestedOneWithoutStoresInput
     terminals?: TerminalCreateNestedManyWithoutStoreInput
     campaigns?: CampaignCreateNestedManyWithoutStoreInput
+    integrations?: CompanyIntegrationCreateNestedManyWithoutStoreInput
   }
 
   export type StoreUncheckedCreateWithoutLicenseInput = {
@@ -26455,6 +31248,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     terminals?: TerminalUncheckedCreateNestedManyWithoutStoreInput
     campaigns?: CampaignUncheckedCreateNestedManyWithoutStoreInput
+    integrations?: CompanyIntegrationUncheckedCreateNestedManyWithoutStoreInput
   }
 
   export type StoreCreateOrConnectWithoutLicenseInput = {
@@ -26508,6 +31302,7 @@ export namespace Prisma {
     company?: CompanyUpdateOneRequiredWithoutStoresNestedInput
     terminals?: TerminalUpdateManyWithoutStoreNestedInput
     campaigns?: CampaignUpdateManyWithoutStoreNestedInput
+    integrations?: CompanyIntegrationUpdateManyWithoutStoreNestedInput
   }
 
   export type StoreUncheckedUpdateWithoutLicenseInput = {
@@ -26519,6 +31314,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     terminals?: TerminalUncheckedUpdateManyWithoutStoreNestedInput
     campaigns?: CampaignUncheckedUpdateManyWithoutStoreNestedInput
+    integrations?: CompanyIntegrationUncheckedUpdateManyWithoutStoreNestedInput
   }
 
   export type LicenseRenewalUpsertWithWhereUniqueWithoutStoreLicenseInput = {
@@ -26630,6 +31426,7 @@ export namespace Prisma {
     terminals?: TerminalCreateNestedManyWithoutCompanyInput
     medias?: MediaCreateNestedManyWithoutCompanyInput
     notifications?: NotificationCreateNestedManyWithoutCompanyInput
+    integrations?: CompanyIntegrationCreateNestedManyWithoutCompanyInput
   }
 
   export type CompanyUncheckedCreateWithoutCampaignsInput = {
@@ -26649,6 +31446,7 @@ export namespace Prisma {
     terminals?: TerminalUncheckedCreateNestedManyWithoutCompanyInput
     medias?: MediaUncheckedCreateNestedManyWithoutCompanyInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutCompanyInput
+    integrations?: CompanyIntegrationUncheckedCreateNestedManyWithoutCompanyInput
   }
 
   export type CompanyCreateOrConnectWithoutCampaignsInput = {
@@ -26665,6 +31463,7 @@ export namespace Prisma {
     company: CompanyCreateNestedOneWithoutStoresInput
     terminals?: TerminalCreateNestedManyWithoutStoreInput
     license?: StoreLicenseCreateNestedOneWithoutStoreInput
+    integrations?: CompanyIntegrationCreateNestedManyWithoutStoreInput
   }
 
   export type StoreUncheckedCreateWithoutCampaignsInput = {
@@ -26676,6 +31475,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     terminals?: TerminalUncheckedCreateNestedManyWithoutStoreInput
     license?: StoreLicenseUncheckedCreateNestedOneWithoutStoreInput
+    integrations?: CompanyIntegrationUncheckedCreateNestedManyWithoutStoreInput
   }
 
   export type StoreCreateOrConnectWithoutCampaignsInput = {
@@ -26792,6 +31592,7 @@ export namespace Prisma {
     terminals?: TerminalUpdateManyWithoutCompanyNestedInput
     medias?: MediaUpdateManyWithoutCompanyNestedInput
     notifications?: NotificationUpdateManyWithoutCompanyNestedInput
+    integrations?: CompanyIntegrationUpdateManyWithoutCompanyNestedInput
   }
 
   export type CompanyUncheckedUpdateWithoutCampaignsInput = {
@@ -26811,6 +31612,7 @@ export namespace Prisma {
     terminals?: TerminalUncheckedUpdateManyWithoutCompanyNestedInput
     medias?: MediaUncheckedUpdateManyWithoutCompanyNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutCompanyNestedInput
+    integrations?: CompanyIntegrationUncheckedUpdateManyWithoutCompanyNestedInput
   }
 
   export type StoreUpsertWithoutCampaignsInput = {
@@ -26833,6 +31635,7 @@ export namespace Prisma {
     company?: CompanyUpdateOneRequiredWithoutStoresNestedInput
     terminals?: TerminalUpdateManyWithoutStoreNestedInput
     license?: StoreLicenseUpdateOneWithoutStoreNestedInput
+    integrations?: CompanyIntegrationUpdateManyWithoutStoreNestedInput
   }
 
   export type StoreUncheckedUpdateWithoutCampaignsInput = {
@@ -26844,6 +31647,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     terminals?: TerminalUncheckedUpdateManyWithoutStoreNestedInput
     license?: StoreLicenseUncheckedUpdateOneWithoutStoreNestedInput
+    integrations?: CompanyIntegrationUncheckedUpdateManyWithoutStoreNestedInput
   }
 
   export type TerminalUpsertWithoutCampaignsInput = {
@@ -26938,6 +31742,7 @@ export namespace Prisma {
     terminals?: TerminalCreateNestedManyWithoutCompanyInput
     campaigns?: CampaignCreateNestedManyWithoutCompanyInput
     notifications?: NotificationCreateNestedManyWithoutCompanyInput
+    integrations?: CompanyIntegrationCreateNestedManyWithoutCompanyInput
   }
 
   export type CompanyUncheckedCreateWithoutMediasInput = {
@@ -26957,6 +31762,7 @@ export namespace Prisma {
     terminals?: TerminalUncheckedCreateNestedManyWithoutCompanyInput
     campaigns?: CampaignUncheckedCreateNestedManyWithoutCompanyInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutCompanyInput
+    integrations?: CompanyIntegrationUncheckedCreateNestedManyWithoutCompanyInput
   }
 
   export type CompanyCreateOrConnectWithoutMediasInput = {
@@ -27020,6 +31826,7 @@ export namespace Prisma {
     terminals?: TerminalUpdateManyWithoutCompanyNestedInput
     campaigns?: CampaignUpdateManyWithoutCompanyNestedInput
     notifications?: NotificationUpdateManyWithoutCompanyNestedInput
+    integrations?: CompanyIntegrationUpdateManyWithoutCompanyNestedInput
   }
 
   export type CompanyUncheckedUpdateWithoutMediasInput = {
@@ -27039,6 +31846,7 @@ export namespace Prisma {
     terminals?: TerminalUncheckedUpdateManyWithoutCompanyNestedInput
     campaigns?: CampaignUncheckedUpdateManyWithoutCompanyNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutCompanyNestedInput
+    integrations?: CompanyIntegrationUncheckedUpdateManyWithoutCompanyNestedInput
   }
 
   export type TerminalMediaUpsertWithWhereUniqueWithoutMediaInput = {
@@ -27537,6 +32345,302 @@ export namespace Prisma {
     campaigns?: CampaignUncheckedUpdateManyWithoutTerminalNestedInput
   }
 
+  export type CompanyIntegrationCreateWithoutIntegrationInput = {
+    id?: string
+    slug: string
+    isEnabled?: boolean
+    config?: JsonNullValueInput | InputJsonValue
+    features?: JsonNullValueInput | InputJsonValue
+    n8nWorkflowId?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    company: CompanyCreateNestedOneWithoutIntegrationsInput
+    store: StoreCreateNestedOneWithoutIntegrationsInput
+  }
+
+  export type CompanyIntegrationUncheckedCreateWithoutIntegrationInput = {
+    id?: string
+    slug: string
+    isEnabled?: boolean
+    config?: JsonNullValueInput | InputJsonValue
+    features?: JsonNullValueInput | InputJsonValue
+    n8nWorkflowId?: NullableJsonNullValueInput | InputJsonValue
+    companyId: string
+    storeId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CompanyIntegrationCreateOrConnectWithoutIntegrationInput = {
+    where: CompanyIntegrationWhereUniqueInput
+    create: XOR<CompanyIntegrationCreateWithoutIntegrationInput, CompanyIntegrationUncheckedCreateWithoutIntegrationInput>
+  }
+
+  export type CompanyIntegrationCreateManyIntegrationInputEnvelope = {
+    data: CompanyIntegrationCreateManyIntegrationInput | CompanyIntegrationCreateManyIntegrationInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type CompanyIntegrationUpsertWithWhereUniqueWithoutIntegrationInput = {
+    where: CompanyIntegrationWhereUniqueInput
+    update: XOR<CompanyIntegrationUpdateWithoutIntegrationInput, CompanyIntegrationUncheckedUpdateWithoutIntegrationInput>
+    create: XOR<CompanyIntegrationCreateWithoutIntegrationInput, CompanyIntegrationUncheckedCreateWithoutIntegrationInput>
+  }
+
+  export type CompanyIntegrationUpdateWithWhereUniqueWithoutIntegrationInput = {
+    where: CompanyIntegrationWhereUniqueInput
+    data: XOR<CompanyIntegrationUpdateWithoutIntegrationInput, CompanyIntegrationUncheckedUpdateWithoutIntegrationInput>
+  }
+
+  export type CompanyIntegrationUpdateManyWithWhereWithoutIntegrationInput = {
+    where: CompanyIntegrationScalarWhereInput
+    data: XOR<CompanyIntegrationUpdateManyMutationInput, CompanyIntegrationUncheckedUpdateManyWithoutIntegrationInput>
+  }
+
+  export type CompanyCreateWithoutIntegrationsInput = {
+    id?: string
+    name: string
+    legalName: string
+    cnpj: string
+    email: string
+    slug: string
+    conta: string
+    type?: string
+    status: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    users?: UserCreateNestedManyWithoutCompanyInput
+    stores?: StoreCreateNestedManyWithoutCompanyInput
+    terminals?: TerminalCreateNestedManyWithoutCompanyInput
+    medias?: MediaCreateNestedManyWithoutCompanyInput
+    campaigns?: CampaignCreateNestedManyWithoutCompanyInput
+    notifications?: NotificationCreateNestedManyWithoutCompanyInput
+  }
+
+  export type CompanyUncheckedCreateWithoutIntegrationsInput = {
+    id?: string
+    name: string
+    legalName: string
+    cnpj: string
+    email: string
+    slug: string
+    conta: string
+    type?: string
+    status: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    users?: UserUncheckedCreateNestedManyWithoutCompanyInput
+    stores?: StoreUncheckedCreateNestedManyWithoutCompanyInput
+    terminals?: TerminalUncheckedCreateNestedManyWithoutCompanyInput
+    medias?: MediaUncheckedCreateNestedManyWithoutCompanyInput
+    campaigns?: CampaignUncheckedCreateNestedManyWithoutCompanyInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutCompanyInput
+  }
+
+  export type CompanyCreateOrConnectWithoutIntegrationsInput = {
+    where: CompanyWhereUniqueInput
+    create: XOR<CompanyCreateWithoutIntegrationsInput, CompanyUncheckedCreateWithoutIntegrationsInput>
+  }
+
+  export type StoreCreateWithoutIntegrationsInput = {
+    id?: string
+    name: string
+    address?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    company: CompanyCreateNestedOneWithoutStoresInput
+    terminals?: TerminalCreateNestedManyWithoutStoreInput
+    license?: StoreLicenseCreateNestedOneWithoutStoreInput
+    campaigns?: CampaignCreateNestedManyWithoutStoreInput
+  }
+
+  export type StoreUncheckedCreateWithoutIntegrationsInput = {
+    id?: string
+    name: string
+    address?: string | null
+    companyId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    terminals?: TerminalUncheckedCreateNestedManyWithoutStoreInput
+    license?: StoreLicenseUncheckedCreateNestedOneWithoutStoreInput
+    campaigns?: CampaignUncheckedCreateNestedManyWithoutStoreInput
+  }
+
+  export type StoreCreateOrConnectWithoutIntegrationsInput = {
+    where: StoreWhereUniqueInput
+    create: XOR<StoreCreateWithoutIntegrationsInput, StoreUncheckedCreateWithoutIntegrationsInput>
+  }
+
+  export type IntegrationCreateWithoutCompanyIntegrationsInput = {
+    id?: string
+    slug: string
+    name: string
+    category: string
+    description: string
+    logoLetters?: string
+    logoColor?: string
+    isActive?: boolean
+    fields?: JsonNullValueInput | InputJsonValue
+    features?: JsonNullValueInput | InputJsonValue
+    n8nApiUrl?: string | null
+    n8nApiKey?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type IntegrationUncheckedCreateWithoutCompanyIntegrationsInput = {
+    id?: string
+    slug: string
+    name: string
+    category: string
+    description: string
+    logoLetters?: string
+    logoColor?: string
+    isActive?: boolean
+    fields?: JsonNullValueInput | InputJsonValue
+    features?: JsonNullValueInput | InputJsonValue
+    n8nApiUrl?: string | null
+    n8nApiKey?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type IntegrationCreateOrConnectWithoutCompanyIntegrationsInput = {
+    where: IntegrationWhereUniqueInput
+    create: XOR<IntegrationCreateWithoutCompanyIntegrationsInput, IntegrationUncheckedCreateWithoutCompanyIntegrationsInput>
+  }
+
+  export type CompanyUpsertWithoutIntegrationsInput = {
+    update: XOR<CompanyUpdateWithoutIntegrationsInput, CompanyUncheckedUpdateWithoutIntegrationsInput>
+    create: XOR<CompanyCreateWithoutIntegrationsInput, CompanyUncheckedCreateWithoutIntegrationsInput>
+    where?: CompanyWhereInput
+  }
+
+  export type CompanyUpdateToOneWithWhereWithoutIntegrationsInput = {
+    where?: CompanyWhereInput
+    data: XOR<CompanyUpdateWithoutIntegrationsInput, CompanyUncheckedUpdateWithoutIntegrationsInput>
+  }
+
+  export type CompanyUpdateWithoutIntegrationsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    legalName?: StringFieldUpdateOperationsInput | string
+    cnpj?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    conta?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    users?: UserUpdateManyWithoutCompanyNestedInput
+    stores?: StoreUpdateManyWithoutCompanyNestedInput
+    terminals?: TerminalUpdateManyWithoutCompanyNestedInput
+    medias?: MediaUpdateManyWithoutCompanyNestedInput
+    campaigns?: CampaignUpdateManyWithoutCompanyNestedInput
+    notifications?: NotificationUpdateManyWithoutCompanyNestedInput
+  }
+
+  export type CompanyUncheckedUpdateWithoutIntegrationsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    legalName?: StringFieldUpdateOperationsInput | string
+    cnpj?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    conta?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    users?: UserUncheckedUpdateManyWithoutCompanyNestedInput
+    stores?: StoreUncheckedUpdateManyWithoutCompanyNestedInput
+    terminals?: TerminalUncheckedUpdateManyWithoutCompanyNestedInput
+    medias?: MediaUncheckedUpdateManyWithoutCompanyNestedInput
+    campaigns?: CampaignUncheckedUpdateManyWithoutCompanyNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutCompanyNestedInput
+  }
+
+  export type StoreUpsertWithoutIntegrationsInput = {
+    update: XOR<StoreUpdateWithoutIntegrationsInput, StoreUncheckedUpdateWithoutIntegrationsInput>
+    create: XOR<StoreCreateWithoutIntegrationsInput, StoreUncheckedCreateWithoutIntegrationsInput>
+    where?: StoreWhereInput
+  }
+
+  export type StoreUpdateToOneWithWhereWithoutIntegrationsInput = {
+    where?: StoreWhereInput
+    data: XOR<StoreUpdateWithoutIntegrationsInput, StoreUncheckedUpdateWithoutIntegrationsInput>
+  }
+
+  export type StoreUpdateWithoutIntegrationsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    company?: CompanyUpdateOneRequiredWithoutStoresNestedInput
+    terminals?: TerminalUpdateManyWithoutStoreNestedInput
+    license?: StoreLicenseUpdateOneWithoutStoreNestedInput
+    campaigns?: CampaignUpdateManyWithoutStoreNestedInput
+  }
+
+  export type StoreUncheckedUpdateWithoutIntegrationsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    companyId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    terminals?: TerminalUncheckedUpdateManyWithoutStoreNestedInput
+    license?: StoreLicenseUncheckedUpdateOneWithoutStoreNestedInput
+    campaigns?: CampaignUncheckedUpdateManyWithoutStoreNestedInput
+  }
+
+  export type IntegrationUpsertWithoutCompanyIntegrationsInput = {
+    update: XOR<IntegrationUpdateWithoutCompanyIntegrationsInput, IntegrationUncheckedUpdateWithoutCompanyIntegrationsInput>
+    create: XOR<IntegrationCreateWithoutCompanyIntegrationsInput, IntegrationUncheckedCreateWithoutCompanyIntegrationsInput>
+    where?: IntegrationWhereInput
+  }
+
+  export type IntegrationUpdateToOneWithWhereWithoutCompanyIntegrationsInput = {
+    where?: IntegrationWhereInput
+    data: XOR<IntegrationUpdateWithoutCompanyIntegrationsInput, IntegrationUncheckedUpdateWithoutCompanyIntegrationsInput>
+  }
+
+  export type IntegrationUpdateWithoutCompanyIntegrationsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    category?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    logoLetters?: StringFieldUpdateOperationsInput | string
+    logoColor?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    fields?: JsonNullValueInput | InputJsonValue
+    features?: JsonNullValueInput | InputJsonValue
+    n8nApiUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    n8nApiKey?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type IntegrationUncheckedUpdateWithoutCompanyIntegrationsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    category?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    logoLetters?: StringFieldUpdateOperationsInput | string
+    logoColor?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    fields?: JsonNullValueInput | InputJsonValue
+    features?: JsonNullValueInput | InputJsonValue
+    n8nApiUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    n8nApiKey?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type CompanyCreateWithoutNotificationsInput = {
     id?: string
     name: string
@@ -27554,6 +32658,7 @@ export namespace Prisma {
     terminals?: TerminalCreateNestedManyWithoutCompanyInput
     medias?: MediaCreateNestedManyWithoutCompanyInput
     campaigns?: CampaignCreateNestedManyWithoutCompanyInput
+    integrations?: CompanyIntegrationCreateNestedManyWithoutCompanyInput
   }
 
   export type CompanyUncheckedCreateWithoutNotificationsInput = {
@@ -27573,6 +32678,7 @@ export namespace Prisma {
     terminals?: TerminalUncheckedCreateNestedManyWithoutCompanyInput
     medias?: MediaUncheckedCreateNestedManyWithoutCompanyInput
     campaigns?: CampaignUncheckedCreateNestedManyWithoutCompanyInput
+    integrations?: CompanyIntegrationUncheckedCreateNestedManyWithoutCompanyInput
   }
 
   export type CompanyCreateOrConnectWithoutNotificationsInput = {
@@ -27608,6 +32714,7 @@ export namespace Prisma {
     terminals?: TerminalUpdateManyWithoutCompanyNestedInput
     medias?: MediaUpdateManyWithoutCompanyNestedInput
     campaigns?: CampaignUpdateManyWithoutCompanyNestedInput
+    integrations?: CompanyIntegrationUpdateManyWithoutCompanyNestedInput
   }
 
   export type CompanyUncheckedUpdateWithoutNotificationsInput = {
@@ -27627,6 +32734,7 @@ export namespace Prisma {
     terminals?: TerminalUncheckedUpdateManyWithoutCompanyNestedInput
     medias?: MediaUncheckedUpdateManyWithoutCompanyNestedInput
     campaigns?: CampaignUncheckedUpdateManyWithoutCompanyNestedInput
+    integrations?: CompanyIntegrationUncheckedUpdateManyWithoutCompanyNestedInput
   }
 
   export type UserCreateManyCompanyInput = {
@@ -27704,6 +32812,19 @@ export namespace Prisma {
     createdAt?: Date | string
   }
 
+  export type CompanyIntegrationCreateManyCompanyInput = {
+    id?: string
+    slug: string
+    isEnabled?: boolean
+    config?: JsonNullValueInput | InputJsonValue
+    features?: JsonNullValueInput | InputJsonValue
+    n8nWorkflowId?: NullableJsonNullValueInput | InputJsonValue
+    storeId: string
+    integrationId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
   export type UserUpdateWithoutCompanyInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
@@ -27748,6 +32869,7 @@ export namespace Prisma {
     terminals?: TerminalUpdateManyWithoutStoreNestedInput
     license?: StoreLicenseUpdateOneWithoutStoreNestedInput
     campaigns?: CampaignUpdateManyWithoutStoreNestedInput
+    integrations?: CompanyIntegrationUpdateManyWithoutStoreNestedInput
   }
 
   export type StoreUncheckedUpdateWithoutCompanyInput = {
@@ -27759,6 +32881,7 @@ export namespace Prisma {
     terminals?: TerminalUncheckedUpdateManyWithoutStoreNestedInput
     license?: StoreLicenseUncheckedUpdateOneWithoutStoreNestedInput
     campaigns?: CampaignUncheckedUpdateManyWithoutStoreNestedInput
+    integrations?: CompanyIntegrationUncheckedUpdateManyWithoutStoreNestedInput
   }
 
   export type StoreUncheckedUpdateManyWithoutCompanyInput = {
@@ -27953,6 +33076,45 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type CompanyIntegrationUpdateWithoutCompanyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    isEnabled?: BoolFieldUpdateOperationsInput | boolean
+    config?: JsonNullValueInput | InputJsonValue
+    features?: JsonNullValueInput | InputJsonValue
+    n8nWorkflowId?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    store?: StoreUpdateOneRequiredWithoutIntegrationsNestedInput
+    integration?: IntegrationUpdateOneWithoutCompanyIntegrationsNestedInput
+  }
+
+  export type CompanyIntegrationUncheckedUpdateWithoutCompanyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    isEnabled?: BoolFieldUpdateOperationsInput | boolean
+    config?: JsonNullValueInput | InputJsonValue
+    features?: JsonNullValueInput | InputJsonValue
+    n8nWorkflowId?: NullableJsonNullValueInput | InputJsonValue
+    storeId?: StringFieldUpdateOperationsInput | string
+    integrationId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CompanyIntegrationUncheckedUpdateManyWithoutCompanyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    isEnabled?: BoolFieldUpdateOperationsInput | boolean
+    config?: JsonNullValueInput | InputJsonValue
+    features?: JsonNullValueInput | InputJsonValue
+    n8nWorkflowId?: NullableJsonNullValueInput | InputJsonValue
+    storeId?: StringFieldUpdateOperationsInput | string
+    integrationId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type TerminalActivationCreateManyActivatedByUserInput = {
     id?: string
     activatedAt?: Date | string
@@ -28015,6 +33177,19 @@ export namespace Prisma {
     isActive?: boolean
     companyId: string
     terminalId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CompanyIntegrationCreateManyStoreInput = {
+    id?: string
+    slug: string
+    isEnabled?: boolean
+    config?: JsonNullValueInput | InputJsonValue
+    features?: JsonNullValueInput | InputJsonValue
+    n8nWorkflowId?: NullableJsonNullValueInput | InputJsonValue
+    companyId: string
+    integrationId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -28119,6 +33294,45 @@ export namespace Prisma {
     isActive?: BoolFieldUpdateOperationsInput | boolean
     companyId?: StringFieldUpdateOperationsInput | string
     terminalId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CompanyIntegrationUpdateWithoutStoreInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    isEnabled?: BoolFieldUpdateOperationsInput | boolean
+    config?: JsonNullValueInput | InputJsonValue
+    features?: JsonNullValueInput | InputJsonValue
+    n8nWorkflowId?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    company?: CompanyUpdateOneRequiredWithoutIntegrationsNestedInput
+    integration?: IntegrationUpdateOneWithoutCompanyIntegrationsNestedInput
+  }
+
+  export type CompanyIntegrationUncheckedUpdateWithoutStoreInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    isEnabled?: BoolFieldUpdateOperationsInput | boolean
+    config?: JsonNullValueInput | InputJsonValue
+    features?: JsonNullValueInput | InputJsonValue
+    n8nWorkflowId?: NullableJsonNullValueInput | InputJsonValue
+    companyId?: StringFieldUpdateOperationsInput | string
+    integrationId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CompanyIntegrationUncheckedUpdateManyWithoutStoreInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    isEnabled?: BoolFieldUpdateOperationsInput | boolean
+    config?: JsonNullValueInput | InputJsonValue
+    features?: JsonNullValueInput | InputJsonValue
+    n8nWorkflowId?: NullableJsonNullValueInput | InputJsonValue
+    companyId?: StringFieldUpdateOperationsInput | string
+    integrationId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -28403,6 +33617,58 @@ export namespace Prisma {
     endsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     terminalId?: StringFieldUpdateOperationsInput | string
     campaignId?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type CompanyIntegrationCreateManyIntegrationInput = {
+    id?: string
+    slug: string
+    isEnabled?: boolean
+    config?: JsonNullValueInput | InputJsonValue
+    features?: JsonNullValueInput | InputJsonValue
+    n8nWorkflowId?: NullableJsonNullValueInput | InputJsonValue
+    companyId: string
+    storeId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CompanyIntegrationUpdateWithoutIntegrationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    isEnabled?: BoolFieldUpdateOperationsInput | boolean
+    config?: JsonNullValueInput | InputJsonValue
+    features?: JsonNullValueInput | InputJsonValue
+    n8nWorkflowId?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    company?: CompanyUpdateOneRequiredWithoutIntegrationsNestedInput
+    store?: StoreUpdateOneRequiredWithoutIntegrationsNestedInput
+  }
+
+  export type CompanyIntegrationUncheckedUpdateWithoutIntegrationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    isEnabled?: BoolFieldUpdateOperationsInput | boolean
+    config?: JsonNullValueInput | InputJsonValue
+    features?: JsonNullValueInput | InputJsonValue
+    n8nWorkflowId?: NullableJsonNullValueInput | InputJsonValue
+    companyId?: StringFieldUpdateOperationsInput | string
+    storeId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CompanyIntegrationUncheckedUpdateManyWithoutIntegrationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    isEnabled?: BoolFieldUpdateOperationsInput | boolean
+    config?: JsonNullValueInput | InputJsonValue
+    features?: JsonNullValueInput | InputJsonValue
+    n8nWorkflowId?: NullableJsonNullValueInput | InputJsonValue
+    companyId?: StringFieldUpdateOperationsInput | string
+    storeId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
 

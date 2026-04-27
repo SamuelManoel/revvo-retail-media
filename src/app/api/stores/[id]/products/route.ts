@@ -48,7 +48,7 @@ export async function POST(req: NextRequest, { params }: Params) {
 
   try {
     const body = await req.json();
-    const { ean, produto, preco1, preco2, preco3, codigoProduto } = body;
+    const { ean, produto, preco1, preco2, preco3, codigoProduto, imageUrl } = body;
 
     if (!ean || !produto || preco1 === undefined) {
       return NextResponse.json(
@@ -64,6 +64,7 @@ export async function POST(req: NextRequest, { params }: Params) {
       preco2: preco2 !== undefined ? Number(preco2) : null,
       preco3: preco3 !== undefined ? Number(preco3) : null,
       codigoProduto: codigoProduto ?? null,
+      imageUrl: imageUrl ?? null,
     });
 
     return NextResponse.json(product, { status: created ? 201 : 200 });

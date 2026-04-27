@@ -1964,6 +1964,81 @@ Envia a carga gerada para todos os terminais cadastrados. Exige `lastSync` preen
 
 ---
 
+## 🧪 Testing
+
+### Configuração
+
+<Container>
+
+**Framework:** Vitest 4.x + `@vitest/coverage-v8`
+
+**Scripts disponíveis:**
+```bash
+npm test               # executa todos os testes uma vez
+npm run test:watch     # modo watch (re-executa ao salvar)
+npm run test:coverage  # gera relatório de cobertura em /coverage
+```
+
+**Arquivos de configuração:**
+- `vitest.config.ts` — alias `@/*`, ambiente Node, include `src/**/*.test.ts`
+- `src/__tests__/setup.ts` — silencia `console.error` durante os testes
+
+**Padrão de mock obrigatório:** sempre usar `vi.hoisted()` para variáveis referenciadas dentro de factories `vi.mock()`. Mock do `pg.Pool` deve usar `class { query = mockFn }` (não arrow function).
+
+</Container>
+
+### Resultado Atual
+
+<Container>
+
+**156 testes — 11 arquivos — 100% passando** *(atualizado em 2026-04-23)*
+
+</Container>
+
+### Arquivos de Teste
+
+<Container>
+
+**Testes Unitários de Lib**
+
+| Arquivo | Módulo | O que cobre |
+|---------|--------|-------------|
+| `src/lib/__tests__/terminal-auth.test.ts` | `terminal-auth.ts` | `generateActivationCode` (charset, 8 chars, sem 0/O/I/1), `generateTerminalToken`, `verifyTerminalToken` (token inválido, tipo errado, storeId null), `getTerminalFromRequest` (sem header, REVOKED, token diferente, fail-closed se DB cair) |
+| `src/lib/__tests__/license.test.ts` | `license.ts` | `checkLicenseAvailable` (sem licença, status suspended/expired, data expirada, limite atingido, último slot disponível), `incrementLicenseUsed`, `decrementLicenseUsed` (mín 0, sem licença) |
+| `src/lib/__tests__/revoke-license.test.ts` | `revoke-license.ts` | Transação atômica de revogação, isolamento de tenant, master override, terminal inativo, credencial nula, sem ativações, licenseFreed, decremento de slot |
+| `src/lib/__tests__/tenant-db.test.ts` | `tenant-db.ts` | `getTenantSchema` (remoção de hífens, prefixo), `listProducts` (paginação, limit 100, pages, schema, filtro ILIKE), `getProductByEan`, `upsertProduct` (ON CONFLICT, created true/false, campos nulos), `deleteProduct`, `deleteAllProducts` |
+| `src/lib/__tests__/auth.test.ts` | `auth.ts` | `MASTER_COMPANY_SLUG`, `createSession` (cookie flags, JWT 3 partes), `getSession` (cookie ausente, token inválido, payload correto, chave errada, isMaster), `destroySession` |
+
+**Testes de Rotas API (com mocks)**
+
+| Arquivo | Rota | O que cobre |
+|---------|------|-------------|
+| `src/app/api/auth/__tests__/login.test.ts` | `POST /api/auth/login` | 400 campos ausentes, 401 conta/usuário/senha, 403 empresa inativa/usuário inativo, isMaster por slug, password nunca exposta no response |
+| `src/app/api/terminal/__tests__/activate.test.ts` | `POST /api/terminal/activate` | 400/404/403/422, licença (suspended/expired/limite), sem storeId, uppercase do código, JWT 3 partes, upsert de credencial com ACTIVE, transação atômica |
+| `src/app/api/terminal/__tests__/auth.test.ts` | `POST /api/terminal/auth` | 400/404/403, isActive=false, isBlocked, licença (nula/suspended/expirada), sem storeId não verifica licença, token JWT válido, upsert credencial, uppercase |
+| `src/app/api/admin/terminals/__tests__/revoke.test.ts` | `POST /api/admin/terminals/[id]/revoke` | 401 sem sessão, 404/403/422, resposta com newActivationCode e licenseFreed, repasse correto de userId/companyId/isMaster |
+| `src/app/api/stores/__tests__/products.test.ts` | `GET/POST/DELETE /api/stores/[id]/products` | 401 sem sessão, 404 loja/outra empresa, master override, paginação, busca q, 201 vs 200 (upsert), 400 campos obrigatórios, DELETE com contagem |
+| `src/middleware.test.ts` | `middleware.ts` | Rotas públicas (/_next, /login, /api/auth/*, /api/terminal/*), redirecionamento sem cookie, cookie inválido, rotas master-only (403 API / redirect página), master sem restrição |
+
+</Container>
+
+### Cobertura por Regra de Negócio
+
+<Container>
+
+| Regra de Negócio | Testes |
+|-----------------|--------|
+| **RN/RSP-001** Multi-tenancy | `products.test.ts` (loja de outra empresa → 404), `revoke.test.ts` (403 para outro tenant), `revoke-license.test.ts` (master override) |
+| **RN/RSP-002** Autenticação Dupla | `auth.test.ts` (createSession, getSession, isMaster), `terminal-auth.test.ts` (verifyTerminalToken, getTerminalFromRequest, fail-closed) |
+| **RN/RSP-003** Controle de Licenças | `license.test.ts` (todas as condições 6.3), `activate.test.ts` (422 para cada cenário), `auth.test.ts` (re-auth bloqueia com licença expirada) |
+| **RN/RSP-004** Ciclo de Vida Terminal | `terminal-auth.test.ts` (generateActivationCode sem 0/O/I/1), `activate.test.ts` (404/403), `revoke-license.test.ts` (novo código após revogação) |
+| **RN/RSP-005** Revogação Atômica | `revoke-license.test.ts` (4 operações na transação, sem credencial/ativação, decremento de slot) |
+| **RN/RSP-008** Upsert de Produtos | `products.test.ts` (201 criação, 200 atualização, campos obrigatórios, preco2/preco3 null) |
+
+</Container>
+
+---
+
 ## 📋 Todo List
 
 ### 🚨 Technical Improvements
@@ -1989,10 +2064,10 @@ Envia a carga gerada para todos os terminais cadastrados. Exige `lastSync` preen
 - [ ] Criar relatório de produtos mais consultados por terminal/loja
 
 ### 🧪 Tests
-- [ ] Escrever testes unitários para `revokeTerminalLicense` com todos os cenários de falha
+- [x] Escrever testes unitários para `revokeTerminalLicense` com todos os cenários de falha *(concluído 2026-04-23)*
+- [x] Testar comportamento fail-closed quando banco está indisponível na validação do Bearer *(concluído 2026-04-23)*
 - [ ] Implementar testes de integração para o fluxo completo de ativação → consulta → revogação
 - [ ] Adicionar testes de carga para `GET /api/terminal/product/{ean}` (endpoint crítico de produção)
-- [ ] Testar comportamento fail-closed quando banco está indisponível na validação do Bearer
 - [ ] Testar race condition em ativação simultânea com licença no limite
 
 ### 🚀 New Features
