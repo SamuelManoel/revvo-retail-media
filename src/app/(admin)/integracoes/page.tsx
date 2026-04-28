@@ -498,10 +498,10 @@ export default function IntegracoesPage() {
                                       const ts = localLastSync[feat.key] ?? feat.lastSyncAt;
                                       return ts ? (
                                         <span className="text-[10px] text-muted">
-                                          Última sync: {new Date(ts).toLocaleString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' })}
+                                          Última sync forçada: {new Date(ts).toLocaleString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' })}
                                         </span>
                                       ) : (
-                                        <span className="text-[10px] text-muted">Nunca sincronizado</span>
+                                        <span className="text-[10px] text-muted">Nunca sincronizado de forma forçada</span>
                                       );
                                     })()}
                                     <button

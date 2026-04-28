@@ -73,8 +73,21 @@ export async function POST(req: NextRequest, { params }: Params) {
         endsAt: endsAt ? new Date(endsAt) : null,
         campaignId: campaignId || null,
       },
-      include: { media: true, campaign: { select: { id: true, name: true } } },
+      include: { media: true, terminal: { select: { id: true, name: true } }, campaign: { select: { id: true, name: true } } },
     });
+
+    // Audit log when media is linked to a campaign
+    if (campaignId) {
+      await prisma.campaignLog.create({
+        data: {
+          campaignId,
+          action:      'media_added',
+          description: `Mídia "${terminalMedia.media.fileName}" adicionada no terminal "${terminalMedia.terminal.name}"`,
+          userId:      session.userId,
+          userName:    session.name,
+        },
+      });
+    }
 
     return NextResponse.json(terminalMedia, { status: 201 });
   } catch (error) {

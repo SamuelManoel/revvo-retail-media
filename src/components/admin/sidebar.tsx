@@ -91,9 +91,9 @@ const mainNav: NavItem[] = [
       </svg>
     ),
   }, 
-  { 
-    href: "/midias", 
-    label: "Mídias",
+  {
+    href: "/campanhas",
+    label: "Campanhas",
     icon: (
       <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24">
         <path d="M2 12C2 7.28595 2 4.92893 3.46447 3.46447C4.92893 2 7.28595 2 12 2C16.714 2 19.0711 2 20.5355 3.46447C22 4.92893 22 7.28595 22 12C22 16.714 22 19.0711 20.5355 20.5355C19.0711 22 16.714 22 12 22C7.28595 22 4.92893 22 3.46447 20.5355C2 19.0711 2 16.714 2 12Z" stroke="currentColor" strokeWidth="1.5" />
@@ -111,6 +111,16 @@ const mainNav: NavItem[] = [
         <path d="M17 13a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1h-1a1 1 0 0 1-1-1v-1Z" stroke="currentColor" strokeWidth="1.5"/>
         <path d="M10.5 7a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1h-1a1 1 0 0 1-1-1V7Z" stroke="currentColor" strokeWidth="1.5"/>
         <path d="M7 13.5h3.5M13.5 13.5H17M12 8v5.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+      </svg>
+    ),
+  },
+  {
+    href: "/admin/notificacoes",
+    label: "Notificações",
+    icon: (
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24">
+        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+        <path d="M13.73 21a2 2 0 0 1-3.46 0" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
       </svg>
     ),
   },
@@ -246,6 +256,7 @@ export function Sidebar({
   const visibleMainNav = mainNav.filter((item) => {
     if (item.href === "/empresas") return user?.isMaster;
     if (item.href === "/licencas") return user?.isMaster;
+    if (item.href === "/admin/notificacoes") return user?.isMaster;
     if (item.href === "/admin/integracoes") return user?.isMaster;
     return true;
   });

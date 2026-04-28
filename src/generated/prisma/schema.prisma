@@ -186,12 +186,31 @@ model Campaign {
   terminalId String?
   terminal   Terminal? @relation(fields: [terminalId], references: [id], onDelete: SetNull)
 
+  thumbnail String? // emoji character chosen by user
+
   terminalMedias TerminalMedia[]
+  logs           CampaignLog[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   @@map("campaigns")
+}
+
+model CampaignLog {
+  id          String @id @default(uuid())
+  action      String // "created" | "updated" | "media_added" | "media_removed" | "deleted"
+  description String
+  userId      String
+  userName    String
+  diff        Json? // { field: { from: any, to: any } }
+
+  campaignId String
+  campaign   Campaign @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@map("campaign_logs")
 }
 
 model Media {

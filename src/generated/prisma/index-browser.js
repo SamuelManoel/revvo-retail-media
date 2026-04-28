@@ -224,8 +224,20 @@ exports.Prisma.CampaignScalarFieldEnum = {
   companyId: 'companyId',
   storeId: 'storeId',
   terminalId: 'terminalId',
+  thumbnail: 'thumbnail',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
+};
+
+exports.Prisma.CampaignLogScalarFieldEnum = {
+  id: 'id',
+  action: 'action',
+  description: 'description',
+  userId: 'userId',
+  userName: 'userName',
+  diff: 'diff',
+  campaignId: 'campaignId',
+  createdAt: 'createdAt'
 };
 
 exports.Prisma.MediaScalarFieldEnum = {
@@ -369,6 +381,7 @@ exports.Prisma.ModelName = {
   StoreLicense: 'StoreLicense',
   LicenseRenewal: 'LicenseRenewal',
   Campaign: 'Campaign',
+  CampaignLog: 'CampaignLog',
   Media: 'Media',
   TerminalMedia: 'TerminalMedia',
   TerminalHeartbeat: 'TerminalHeartbeat',

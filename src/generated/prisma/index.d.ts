@@ -59,6 +59,11 @@ export type LicenseRenewal = $Result.DefaultSelection<Prisma.$LicenseRenewalPayl
  */
 export type Campaign = $Result.DefaultSelection<Prisma.$CampaignPayload>
 /**
+ * Model CampaignLog
+ * 
+ */
+export type CampaignLog = $Result.DefaultSelection<Prisma.$CampaignLogPayload>
+/**
  * Model Media
  * 
  */
@@ -314,6 +319,16 @@ export class PrismaClient<
     * ```
     */
   get campaign(): Prisma.CampaignDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.campaignLog`: Exposes CRUD operations for the **CampaignLog** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more CampaignLogs
+    * const campaignLogs = await prisma.campaignLog.findMany()
+    * ```
+    */
+  get campaignLog(): Prisma.CampaignLogDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.media`: Exposes CRUD operations for the **Media** model.
@@ -847,6 +862,7 @@ export namespace Prisma {
     StoreLicense: 'StoreLicense',
     LicenseRenewal: 'LicenseRenewal',
     Campaign: 'Campaign',
+    CampaignLog: 'CampaignLog',
     Media: 'Media',
     TerminalMedia: 'TerminalMedia',
     TerminalHeartbeat: 'TerminalHeartbeat',
@@ -871,7 +887,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "company" | "user" | "store" | "terminal" | "terminalCredential" | "terminalActivation" | "storeLicense" | "licenseRenewal" | "campaign" | "media" | "terminalMedia" | "terminalHeartbeat" | "terminalEvent" | "configuration" | "integration" | "integrationCategory" | "companyIntegration" | "notification"
+      modelProps: "company" | "user" | "store" | "terminal" | "terminalCredential" | "terminalActivation" | "storeLicense" | "licenseRenewal" | "campaign" | "campaignLog" | "media" | "terminalMedia" | "terminalHeartbeat" | "terminalEvent" | "configuration" | "integration" | "integrationCategory" | "companyIntegration" | "notification"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1538,6 +1554,80 @@ export namespace Prisma {
           count: {
             args: Prisma.CampaignCountArgs<ExtArgs>
             result: $Utils.Optional<CampaignCountAggregateOutputType> | number
+          }
+        }
+      }
+      CampaignLog: {
+        payload: Prisma.$CampaignLogPayload<ExtArgs>
+        fields: Prisma.CampaignLogFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.CampaignLogFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CampaignLogPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.CampaignLogFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CampaignLogPayload>
+          }
+          findFirst: {
+            args: Prisma.CampaignLogFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CampaignLogPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.CampaignLogFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CampaignLogPayload>
+          }
+          findMany: {
+            args: Prisma.CampaignLogFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CampaignLogPayload>[]
+          }
+          create: {
+            args: Prisma.CampaignLogCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CampaignLogPayload>
+          }
+          createMany: {
+            args: Prisma.CampaignLogCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.CampaignLogCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CampaignLogPayload>[]
+          }
+          delete: {
+            args: Prisma.CampaignLogDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CampaignLogPayload>
+          }
+          update: {
+            args: Prisma.CampaignLogUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CampaignLogPayload>
+          }
+          deleteMany: {
+            args: Prisma.CampaignLogDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.CampaignLogUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.CampaignLogUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CampaignLogPayload>[]
+          }
+          upsert: {
+            args: Prisma.CampaignLogUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CampaignLogPayload>
+          }
+          aggregate: {
+            args: Prisma.CampaignLogAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateCampaignLog>
+          }
+          groupBy: {
+            args: Prisma.CampaignLogGroupByArgs<ExtArgs>
+            result: $Utils.Optional<CampaignLogGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.CampaignLogCountArgs<ExtArgs>
+            result: $Utils.Optional<CampaignLogCountAggregateOutputType> | number
           }
         }
       }
@@ -2324,6 +2414,7 @@ export namespace Prisma {
     storeLicense?: StoreLicenseOmit
     licenseRenewal?: LicenseRenewalOmit
     campaign?: CampaignOmit
+    campaignLog?: CampaignLogOmit
     media?: MediaOmit
     terminalMedia?: TerminalMediaOmit
     terminalHeartbeat?: TerminalHeartbeatOmit
@@ -2677,10 +2768,12 @@ export namespace Prisma {
 
   export type CampaignCountOutputType = {
     terminalMedias: number
+    logs: number
   }
 
   export type CampaignCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     terminalMedias?: boolean | CampaignCountOutputTypeCountTerminalMediasArgs
+    logs?: boolean | CampaignCountOutputTypeCountLogsArgs
   }
 
   // Custom InputTypes
@@ -2699,6 +2792,13 @@ export namespace Prisma {
    */
   export type CampaignCountOutputTypeCountTerminalMediasArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: TerminalMediaWhereInput
+  }
+
+  /**
+   * CampaignCountOutputType without action
+   */
+  export type CampaignCountOutputTypeCountLogsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CampaignLogWhereInput
   }
 
 
@@ -12334,6 +12434,7 @@ export namespace Prisma {
     companyId: string | null
     storeId: string | null
     terminalId: string | null
+    thumbnail: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -12347,6 +12448,7 @@ export namespace Prisma {
     companyId: string | null
     storeId: string | null
     terminalId: string | null
+    thumbnail: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -12360,6 +12462,7 @@ export namespace Prisma {
     companyId: number
     storeId: number
     terminalId: number
+    thumbnail: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -12375,6 +12478,7 @@ export namespace Prisma {
     companyId?: true
     storeId?: true
     terminalId?: true
+    thumbnail?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -12388,6 +12492,7 @@ export namespace Prisma {
     companyId?: true
     storeId?: true
     terminalId?: true
+    thumbnail?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -12401,6 +12506,7 @@ export namespace Prisma {
     companyId?: true
     storeId?: true
     terminalId?: true
+    thumbnail?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -12487,6 +12593,7 @@ export namespace Prisma {
     companyId: string
     storeId: string | null
     terminalId: string | null
+    thumbnail: string | null
     createdAt: Date
     updatedAt: Date
     _count: CampaignCountAggregateOutputType | null
@@ -12517,12 +12624,14 @@ export namespace Prisma {
     companyId?: boolean
     storeId?: boolean
     terminalId?: boolean
+    thumbnail?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     company?: boolean | CompanyDefaultArgs<ExtArgs>
     store?: boolean | Campaign$storeArgs<ExtArgs>
     terminal?: boolean | Campaign$terminalArgs<ExtArgs>
     terminalMedias?: boolean | Campaign$terminalMediasArgs<ExtArgs>
+    logs?: boolean | Campaign$logsArgs<ExtArgs>
     _count?: boolean | CampaignCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["campaign"]>
 
@@ -12535,6 +12644,7 @@ export namespace Prisma {
     companyId?: boolean
     storeId?: boolean
     terminalId?: boolean
+    thumbnail?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     company?: boolean | CompanyDefaultArgs<ExtArgs>
@@ -12551,6 +12661,7 @@ export namespace Prisma {
     companyId?: boolean
     storeId?: boolean
     terminalId?: boolean
+    thumbnail?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     company?: boolean | CompanyDefaultArgs<ExtArgs>
@@ -12567,16 +12678,18 @@ export namespace Prisma {
     companyId?: boolean
     storeId?: boolean
     terminalId?: boolean
+    thumbnail?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type CampaignOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "startsAt" | "endsAt" | "isActive" | "companyId" | "storeId" | "terminalId" | "createdAt" | "updatedAt", ExtArgs["result"]["campaign"]>
+  export type CampaignOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "startsAt" | "endsAt" | "isActive" | "companyId" | "storeId" | "terminalId" | "thumbnail" | "createdAt" | "updatedAt", ExtArgs["result"]["campaign"]>
   export type CampaignInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     company?: boolean | CompanyDefaultArgs<ExtArgs>
     store?: boolean | Campaign$storeArgs<ExtArgs>
     terminal?: boolean | Campaign$terminalArgs<ExtArgs>
     terminalMedias?: boolean | Campaign$terminalMediasArgs<ExtArgs>
+    logs?: boolean | Campaign$logsArgs<ExtArgs>
     _count?: boolean | CampaignCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type CampaignIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -12597,6 +12710,7 @@ export namespace Prisma {
       store: Prisma.$StorePayload<ExtArgs> | null
       terminal: Prisma.$TerminalPayload<ExtArgs> | null
       terminalMedias: Prisma.$TerminalMediaPayload<ExtArgs>[]
+      logs: Prisma.$CampaignLogPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -12607,6 +12721,7 @@ export namespace Prisma {
       companyId: string
       storeId: string | null
       terminalId: string | null
+      thumbnail: string | null
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["campaign"]>
@@ -13007,6 +13122,7 @@ export namespace Prisma {
     store<T extends Campaign$storeArgs<ExtArgs> = {}>(args?: Subset<T, Campaign$storeArgs<ExtArgs>>): Prisma__StoreClient<$Result.GetResult<Prisma.$StorePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     terminal<T extends Campaign$terminalArgs<ExtArgs> = {}>(args?: Subset<T, Campaign$terminalArgs<ExtArgs>>): Prisma__TerminalClient<$Result.GetResult<Prisma.$TerminalPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     terminalMedias<T extends Campaign$terminalMediasArgs<ExtArgs> = {}>(args?: Subset<T, Campaign$terminalMediasArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TerminalMediaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    logs<T extends Campaign$logsArgs<ExtArgs> = {}>(args?: Subset<T, Campaign$logsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CampaignLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -13044,6 +13160,7 @@ export namespace Prisma {
     readonly companyId: FieldRef<"Campaign", 'String'>
     readonly storeId: FieldRef<"Campaign", 'String'>
     readonly terminalId: FieldRef<"Campaign", 'String'>
+    readonly thumbnail: FieldRef<"Campaign", 'String'>
     readonly createdAt: FieldRef<"Campaign", 'DateTime'>
     readonly updatedAt: FieldRef<"Campaign", 'DateTime'>
   }
@@ -13509,6 +13626,30 @@ export namespace Prisma {
   }
 
   /**
+   * Campaign.logs
+   */
+  export type Campaign$logsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CampaignLog
+     */
+    select?: CampaignLogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CampaignLog
+     */
+    omit?: CampaignLogOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CampaignLogInclude<ExtArgs> | null
+    where?: CampaignLogWhereInput
+    orderBy?: CampaignLogOrderByWithRelationInput | CampaignLogOrderByWithRelationInput[]
+    cursor?: CampaignLogWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: CampaignLogScalarFieldEnum | CampaignLogScalarFieldEnum[]
+  }
+
+  /**
    * Campaign without action
    */
   export type CampaignDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -13524,6 +13665,1104 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: CampaignInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model CampaignLog
+   */
+
+  export type AggregateCampaignLog = {
+    _count: CampaignLogCountAggregateOutputType | null
+    _min: CampaignLogMinAggregateOutputType | null
+    _max: CampaignLogMaxAggregateOutputType | null
+  }
+
+  export type CampaignLogMinAggregateOutputType = {
+    id: string | null
+    action: string | null
+    description: string | null
+    userId: string | null
+    userName: string | null
+    campaignId: string | null
+    createdAt: Date | null
+  }
+
+  export type CampaignLogMaxAggregateOutputType = {
+    id: string | null
+    action: string | null
+    description: string | null
+    userId: string | null
+    userName: string | null
+    campaignId: string | null
+    createdAt: Date | null
+  }
+
+  export type CampaignLogCountAggregateOutputType = {
+    id: number
+    action: number
+    description: number
+    userId: number
+    userName: number
+    diff: number
+    campaignId: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type CampaignLogMinAggregateInputType = {
+    id?: true
+    action?: true
+    description?: true
+    userId?: true
+    userName?: true
+    campaignId?: true
+    createdAt?: true
+  }
+
+  export type CampaignLogMaxAggregateInputType = {
+    id?: true
+    action?: true
+    description?: true
+    userId?: true
+    userName?: true
+    campaignId?: true
+    createdAt?: true
+  }
+
+  export type CampaignLogCountAggregateInputType = {
+    id?: true
+    action?: true
+    description?: true
+    userId?: true
+    userName?: true
+    diff?: true
+    campaignId?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type CampaignLogAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which CampaignLog to aggregate.
+     */
+    where?: CampaignLogWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CampaignLogs to fetch.
+     */
+    orderBy?: CampaignLogOrderByWithRelationInput | CampaignLogOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: CampaignLogWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CampaignLogs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CampaignLogs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned CampaignLogs
+    **/
+    _count?: true | CampaignLogCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: CampaignLogMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: CampaignLogMaxAggregateInputType
+  }
+
+  export type GetCampaignLogAggregateType<T extends CampaignLogAggregateArgs> = {
+        [P in keyof T & keyof AggregateCampaignLog]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateCampaignLog[P]>
+      : GetScalarType<T[P], AggregateCampaignLog[P]>
+  }
+
+
+
+
+  export type CampaignLogGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CampaignLogWhereInput
+    orderBy?: CampaignLogOrderByWithAggregationInput | CampaignLogOrderByWithAggregationInput[]
+    by: CampaignLogScalarFieldEnum[] | CampaignLogScalarFieldEnum
+    having?: CampaignLogScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: CampaignLogCountAggregateInputType | true
+    _min?: CampaignLogMinAggregateInputType
+    _max?: CampaignLogMaxAggregateInputType
+  }
+
+  export type CampaignLogGroupByOutputType = {
+    id: string
+    action: string
+    description: string
+    userId: string
+    userName: string
+    diff: JsonValue | null
+    campaignId: string
+    createdAt: Date
+    _count: CampaignLogCountAggregateOutputType | null
+    _min: CampaignLogMinAggregateOutputType | null
+    _max: CampaignLogMaxAggregateOutputType | null
+  }
+
+  type GetCampaignLogGroupByPayload<T extends CampaignLogGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<CampaignLogGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof CampaignLogGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], CampaignLogGroupByOutputType[P]>
+            : GetScalarType<T[P], CampaignLogGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type CampaignLogSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    action?: boolean
+    description?: boolean
+    userId?: boolean
+    userName?: boolean
+    diff?: boolean
+    campaignId?: boolean
+    createdAt?: boolean
+    campaign?: boolean | CampaignDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["campaignLog"]>
+
+  export type CampaignLogSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    action?: boolean
+    description?: boolean
+    userId?: boolean
+    userName?: boolean
+    diff?: boolean
+    campaignId?: boolean
+    createdAt?: boolean
+    campaign?: boolean | CampaignDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["campaignLog"]>
+
+  export type CampaignLogSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    action?: boolean
+    description?: boolean
+    userId?: boolean
+    userName?: boolean
+    diff?: boolean
+    campaignId?: boolean
+    createdAt?: boolean
+    campaign?: boolean | CampaignDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["campaignLog"]>
+
+  export type CampaignLogSelectScalar = {
+    id?: boolean
+    action?: boolean
+    description?: boolean
+    userId?: boolean
+    userName?: boolean
+    diff?: boolean
+    campaignId?: boolean
+    createdAt?: boolean
+  }
+
+  export type CampaignLogOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "action" | "description" | "userId" | "userName" | "diff" | "campaignId" | "createdAt", ExtArgs["result"]["campaignLog"]>
+  export type CampaignLogInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    campaign?: boolean | CampaignDefaultArgs<ExtArgs>
+  }
+  export type CampaignLogIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    campaign?: boolean | CampaignDefaultArgs<ExtArgs>
+  }
+  export type CampaignLogIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    campaign?: boolean | CampaignDefaultArgs<ExtArgs>
+  }
+
+  export type $CampaignLogPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "CampaignLog"
+    objects: {
+      campaign: Prisma.$CampaignPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      action: string
+      description: string
+      userId: string
+      userName: string
+      diff: Prisma.JsonValue | null
+      campaignId: string
+      createdAt: Date
+    }, ExtArgs["result"]["campaignLog"]>
+    composites: {}
+  }
+
+  type CampaignLogGetPayload<S extends boolean | null | undefined | CampaignLogDefaultArgs> = $Result.GetResult<Prisma.$CampaignLogPayload, S>
+
+  type CampaignLogCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<CampaignLogFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: CampaignLogCountAggregateInputType | true
+    }
+
+  export interface CampaignLogDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['CampaignLog'], meta: { name: 'CampaignLog' } }
+    /**
+     * Find zero or one CampaignLog that matches the filter.
+     * @param {CampaignLogFindUniqueArgs} args - Arguments to find a CampaignLog
+     * @example
+     * // Get one CampaignLog
+     * const campaignLog = await prisma.campaignLog.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends CampaignLogFindUniqueArgs>(args: SelectSubset<T, CampaignLogFindUniqueArgs<ExtArgs>>): Prisma__CampaignLogClient<$Result.GetResult<Prisma.$CampaignLogPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one CampaignLog that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {CampaignLogFindUniqueOrThrowArgs} args - Arguments to find a CampaignLog
+     * @example
+     * // Get one CampaignLog
+     * const campaignLog = await prisma.campaignLog.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends CampaignLogFindUniqueOrThrowArgs>(args: SelectSubset<T, CampaignLogFindUniqueOrThrowArgs<ExtArgs>>): Prisma__CampaignLogClient<$Result.GetResult<Prisma.$CampaignLogPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first CampaignLog that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CampaignLogFindFirstArgs} args - Arguments to find a CampaignLog
+     * @example
+     * // Get one CampaignLog
+     * const campaignLog = await prisma.campaignLog.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends CampaignLogFindFirstArgs>(args?: SelectSubset<T, CampaignLogFindFirstArgs<ExtArgs>>): Prisma__CampaignLogClient<$Result.GetResult<Prisma.$CampaignLogPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first CampaignLog that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CampaignLogFindFirstOrThrowArgs} args - Arguments to find a CampaignLog
+     * @example
+     * // Get one CampaignLog
+     * const campaignLog = await prisma.campaignLog.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends CampaignLogFindFirstOrThrowArgs>(args?: SelectSubset<T, CampaignLogFindFirstOrThrowArgs<ExtArgs>>): Prisma__CampaignLogClient<$Result.GetResult<Prisma.$CampaignLogPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more CampaignLogs that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CampaignLogFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all CampaignLogs
+     * const campaignLogs = await prisma.campaignLog.findMany()
+     * 
+     * // Get first 10 CampaignLogs
+     * const campaignLogs = await prisma.campaignLog.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const campaignLogWithIdOnly = await prisma.campaignLog.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends CampaignLogFindManyArgs>(args?: SelectSubset<T, CampaignLogFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CampaignLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a CampaignLog.
+     * @param {CampaignLogCreateArgs} args - Arguments to create a CampaignLog.
+     * @example
+     * // Create one CampaignLog
+     * const CampaignLog = await prisma.campaignLog.create({
+     *   data: {
+     *     // ... data to create a CampaignLog
+     *   }
+     * })
+     * 
+     */
+    create<T extends CampaignLogCreateArgs>(args: SelectSubset<T, CampaignLogCreateArgs<ExtArgs>>): Prisma__CampaignLogClient<$Result.GetResult<Prisma.$CampaignLogPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many CampaignLogs.
+     * @param {CampaignLogCreateManyArgs} args - Arguments to create many CampaignLogs.
+     * @example
+     * // Create many CampaignLogs
+     * const campaignLog = await prisma.campaignLog.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends CampaignLogCreateManyArgs>(args?: SelectSubset<T, CampaignLogCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many CampaignLogs and returns the data saved in the database.
+     * @param {CampaignLogCreateManyAndReturnArgs} args - Arguments to create many CampaignLogs.
+     * @example
+     * // Create many CampaignLogs
+     * const campaignLog = await prisma.campaignLog.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many CampaignLogs and only return the `id`
+     * const campaignLogWithIdOnly = await prisma.campaignLog.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends CampaignLogCreateManyAndReturnArgs>(args?: SelectSubset<T, CampaignLogCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CampaignLogPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a CampaignLog.
+     * @param {CampaignLogDeleteArgs} args - Arguments to delete one CampaignLog.
+     * @example
+     * // Delete one CampaignLog
+     * const CampaignLog = await prisma.campaignLog.delete({
+     *   where: {
+     *     // ... filter to delete one CampaignLog
+     *   }
+     * })
+     * 
+     */
+    delete<T extends CampaignLogDeleteArgs>(args: SelectSubset<T, CampaignLogDeleteArgs<ExtArgs>>): Prisma__CampaignLogClient<$Result.GetResult<Prisma.$CampaignLogPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one CampaignLog.
+     * @param {CampaignLogUpdateArgs} args - Arguments to update one CampaignLog.
+     * @example
+     * // Update one CampaignLog
+     * const campaignLog = await prisma.campaignLog.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends CampaignLogUpdateArgs>(args: SelectSubset<T, CampaignLogUpdateArgs<ExtArgs>>): Prisma__CampaignLogClient<$Result.GetResult<Prisma.$CampaignLogPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more CampaignLogs.
+     * @param {CampaignLogDeleteManyArgs} args - Arguments to filter CampaignLogs to delete.
+     * @example
+     * // Delete a few CampaignLogs
+     * const { count } = await prisma.campaignLog.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends CampaignLogDeleteManyArgs>(args?: SelectSubset<T, CampaignLogDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more CampaignLogs.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CampaignLogUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many CampaignLogs
+     * const campaignLog = await prisma.campaignLog.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends CampaignLogUpdateManyArgs>(args: SelectSubset<T, CampaignLogUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more CampaignLogs and returns the data updated in the database.
+     * @param {CampaignLogUpdateManyAndReturnArgs} args - Arguments to update many CampaignLogs.
+     * @example
+     * // Update many CampaignLogs
+     * const campaignLog = await prisma.campaignLog.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more CampaignLogs and only return the `id`
+     * const campaignLogWithIdOnly = await prisma.campaignLog.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends CampaignLogUpdateManyAndReturnArgs>(args: SelectSubset<T, CampaignLogUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CampaignLogPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one CampaignLog.
+     * @param {CampaignLogUpsertArgs} args - Arguments to update or create a CampaignLog.
+     * @example
+     * // Update or create a CampaignLog
+     * const campaignLog = await prisma.campaignLog.upsert({
+     *   create: {
+     *     // ... data to create a CampaignLog
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the CampaignLog we want to update
+     *   }
+     * })
+     */
+    upsert<T extends CampaignLogUpsertArgs>(args: SelectSubset<T, CampaignLogUpsertArgs<ExtArgs>>): Prisma__CampaignLogClient<$Result.GetResult<Prisma.$CampaignLogPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of CampaignLogs.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CampaignLogCountArgs} args - Arguments to filter CampaignLogs to count.
+     * @example
+     * // Count the number of CampaignLogs
+     * const count = await prisma.campaignLog.count({
+     *   where: {
+     *     // ... the filter for the CampaignLogs we want to count
+     *   }
+     * })
+    **/
+    count<T extends CampaignLogCountArgs>(
+      args?: Subset<T, CampaignLogCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], CampaignLogCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a CampaignLog.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CampaignLogAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends CampaignLogAggregateArgs>(args: Subset<T, CampaignLogAggregateArgs>): Prisma.PrismaPromise<GetCampaignLogAggregateType<T>>
+
+    /**
+     * Group by CampaignLog.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CampaignLogGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends CampaignLogGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: CampaignLogGroupByArgs['orderBy'] }
+        : { orderBy?: CampaignLogGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, CampaignLogGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetCampaignLogGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the CampaignLog model
+   */
+  readonly fields: CampaignLogFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for CampaignLog.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__CampaignLogClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    campaign<T extends CampaignDefaultArgs<ExtArgs> = {}>(args?: Subset<T, CampaignDefaultArgs<ExtArgs>>): Prisma__CampaignClient<$Result.GetResult<Prisma.$CampaignPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the CampaignLog model
+   */
+  interface CampaignLogFieldRefs {
+    readonly id: FieldRef<"CampaignLog", 'String'>
+    readonly action: FieldRef<"CampaignLog", 'String'>
+    readonly description: FieldRef<"CampaignLog", 'String'>
+    readonly userId: FieldRef<"CampaignLog", 'String'>
+    readonly userName: FieldRef<"CampaignLog", 'String'>
+    readonly diff: FieldRef<"CampaignLog", 'Json'>
+    readonly campaignId: FieldRef<"CampaignLog", 'String'>
+    readonly createdAt: FieldRef<"CampaignLog", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * CampaignLog findUnique
+   */
+  export type CampaignLogFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CampaignLog
+     */
+    select?: CampaignLogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CampaignLog
+     */
+    omit?: CampaignLogOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CampaignLogInclude<ExtArgs> | null
+    /**
+     * Filter, which CampaignLog to fetch.
+     */
+    where: CampaignLogWhereUniqueInput
+  }
+
+  /**
+   * CampaignLog findUniqueOrThrow
+   */
+  export type CampaignLogFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CampaignLog
+     */
+    select?: CampaignLogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CampaignLog
+     */
+    omit?: CampaignLogOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CampaignLogInclude<ExtArgs> | null
+    /**
+     * Filter, which CampaignLog to fetch.
+     */
+    where: CampaignLogWhereUniqueInput
+  }
+
+  /**
+   * CampaignLog findFirst
+   */
+  export type CampaignLogFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CampaignLog
+     */
+    select?: CampaignLogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CampaignLog
+     */
+    omit?: CampaignLogOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CampaignLogInclude<ExtArgs> | null
+    /**
+     * Filter, which CampaignLog to fetch.
+     */
+    where?: CampaignLogWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CampaignLogs to fetch.
+     */
+    orderBy?: CampaignLogOrderByWithRelationInput | CampaignLogOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for CampaignLogs.
+     */
+    cursor?: CampaignLogWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CampaignLogs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CampaignLogs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of CampaignLogs.
+     */
+    distinct?: CampaignLogScalarFieldEnum | CampaignLogScalarFieldEnum[]
+  }
+
+  /**
+   * CampaignLog findFirstOrThrow
+   */
+  export type CampaignLogFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CampaignLog
+     */
+    select?: CampaignLogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CampaignLog
+     */
+    omit?: CampaignLogOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CampaignLogInclude<ExtArgs> | null
+    /**
+     * Filter, which CampaignLog to fetch.
+     */
+    where?: CampaignLogWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CampaignLogs to fetch.
+     */
+    orderBy?: CampaignLogOrderByWithRelationInput | CampaignLogOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for CampaignLogs.
+     */
+    cursor?: CampaignLogWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CampaignLogs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CampaignLogs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of CampaignLogs.
+     */
+    distinct?: CampaignLogScalarFieldEnum | CampaignLogScalarFieldEnum[]
+  }
+
+  /**
+   * CampaignLog findMany
+   */
+  export type CampaignLogFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CampaignLog
+     */
+    select?: CampaignLogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CampaignLog
+     */
+    omit?: CampaignLogOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CampaignLogInclude<ExtArgs> | null
+    /**
+     * Filter, which CampaignLogs to fetch.
+     */
+    where?: CampaignLogWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CampaignLogs to fetch.
+     */
+    orderBy?: CampaignLogOrderByWithRelationInput | CampaignLogOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing CampaignLogs.
+     */
+    cursor?: CampaignLogWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CampaignLogs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CampaignLogs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of CampaignLogs.
+     */
+    distinct?: CampaignLogScalarFieldEnum | CampaignLogScalarFieldEnum[]
+  }
+
+  /**
+   * CampaignLog create
+   */
+  export type CampaignLogCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CampaignLog
+     */
+    select?: CampaignLogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CampaignLog
+     */
+    omit?: CampaignLogOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CampaignLogInclude<ExtArgs> | null
+    /**
+     * The data needed to create a CampaignLog.
+     */
+    data: XOR<CampaignLogCreateInput, CampaignLogUncheckedCreateInput>
+  }
+
+  /**
+   * CampaignLog createMany
+   */
+  export type CampaignLogCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many CampaignLogs.
+     */
+    data: CampaignLogCreateManyInput | CampaignLogCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * CampaignLog createManyAndReturn
+   */
+  export type CampaignLogCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CampaignLog
+     */
+    select?: CampaignLogSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the CampaignLog
+     */
+    omit?: CampaignLogOmit<ExtArgs> | null
+    /**
+     * The data used to create many CampaignLogs.
+     */
+    data: CampaignLogCreateManyInput | CampaignLogCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CampaignLogIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * CampaignLog update
+   */
+  export type CampaignLogUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CampaignLog
+     */
+    select?: CampaignLogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CampaignLog
+     */
+    omit?: CampaignLogOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CampaignLogInclude<ExtArgs> | null
+    /**
+     * The data needed to update a CampaignLog.
+     */
+    data: XOR<CampaignLogUpdateInput, CampaignLogUncheckedUpdateInput>
+    /**
+     * Choose, which CampaignLog to update.
+     */
+    where: CampaignLogWhereUniqueInput
+  }
+
+  /**
+   * CampaignLog updateMany
+   */
+  export type CampaignLogUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update CampaignLogs.
+     */
+    data: XOR<CampaignLogUpdateManyMutationInput, CampaignLogUncheckedUpdateManyInput>
+    /**
+     * Filter which CampaignLogs to update
+     */
+    where?: CampaignLogWhereInput
+    /**
+     * Limit how many CampaignLogs to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * CampaignLog updateManyAndReturn
+   */
+  export type CampaignLogUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CampaignLog
+     */
+    select?: CampaignLogSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the CampaignLog
+     */
+    omit?: CampaignLogOmit<ExtArgs> | null
+    /**
+     * The data used to update CampaignLogs.
+     */
+    data: XOR<CampaignLogUpdateManyMutationInput, CampaignLogUncheckedUpdateManyInput>
+    /**
+     * Filter which CampaignLogs to update
+     */
+    where?: CampaignLogWhereInput
+    /**
+     * Limit how many CampaignLogs to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CampaignLogIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * CampaignLog upsert
+   */
+  export type CampaignLogUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CampaignLog
+     */
+    select?: CampaignLogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CampaignLog
+     */
+    omit?: CampaignLogOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CampaignLogInclude<ExtArgs> | null
+    /**
+     * The filter to search for the CampaignLog to update in case it exists.
+     */
+    where: CampaignLogWhereUniqueInput
+    /**
+     * In case the CampaignLog found by the `where` argument doesn't exist, create a new CampaignLog with this data.
+     */
+    create: XOR<CampaignLogCreateInput, CampaignLogUncheckedCreateInput>
+    /**
+     * In case the CampaignLog was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<CampaignLogUpdateInput, CampaignLogUncheckedUpdateInput>
+  }
+
+  /**
+   * CampaignLog delete
+   */
+  export type CampaignLogDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CampaignLog
+     */
+    select?: CampaignLogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CampaignLog
+     */
+    omit?: CampaignLogOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CampaignLogInclude<ExtArgs> | null
+    /**
+     * Filter which CampaignLog to delete.
+     */
+    where: CampaignLogWhereUniqueInput
+  }
+
+  /**
+   * CampaignLog deleteMany
+   */
+  export type CampaignLogDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which CampaignLogs to delete
+     */
+    where?: CampaignLogWhereInput
+    /**
+     * Limit how many CampaignLogs to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * CampaignLog without action
+   */
+  export type CampaignLogDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CampaignLog
+     */
+    select?: CampaignLogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CampaignLog
+     */
+    omit?: CampaignLogOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CampaignLogInclude<ExtArgs> | null
   }
 
 
@@ -23702,11 +24941,26 @@ export namespace Prisma {
     companyId: 'companyId',
     storeId: 'storeId',
     terminalId: 'terminalId',
+    thumbnail: 'thumbnail',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
 
   export type CampaignScalarFieldEnum = (typeof CampaignScalarFieldEnum)[keyof typeof CampaignScalarFieldEnum]
+
+
+  export const CampaignLogScalarFieldEnum: {
+    id: 'id',
+    action: 'action',
+    description: 'description',
+    userId: 'userId',
+    userName: 'userName',
+    diff: 'diff',
+    campaignId: 'campaignId',
+    createdAt: 'createdAt'
+  };
+
+  export type CampaignLogScalarFieldEnum = (typeof CampaignLogScalarFieldEnum)[keyof typeof CampaignLogScalarFieldEnum]
 
 
   export const MediaScalarFieldEnum: {
@@ -24641,12 +25895,14 @@ export namespace Prisma {
     companyId?: StringFilter<"Campaign"> | string
     storeId?: StringNullableFilter<"Campaign"> | string | null
     terminalId?: StringNullableFilter<"Campaign"> | string | null
+    thumbnail?: StringNullableFilter<"Campaign"> | string | null
     createdAt?: DateTimeFilter<"Campaign"> | Date | string
     updatedAt?: DateTimeFilter<"Campaign"> | Date | string
     company?: XOR<CompanyScalarRelationFilter, CompanyWhereInput>
     store?: XOR<StoreNullableScalarRelationFilter, StoreWhereInput> | null
     terminal?: XOR<TerminalNullableScalarRelationFilter, TerminalWhereInput> | null
     terminalMedias?: TerminalMediaListRelationFilter
+    logs?: CampaignLogListRelationFilter
   }
 
   export type CampaignOrderByWithRelationInput = {
@@ -24658,12 +25914,14 @@ export namespace Prisma {
     companyId?: SortOrder
     storeId?: SortOrderInput | SortOrder
     terminalId?: SortOrderInput | SortOrder
+    thumbnail?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     company?: CompanyOrderByWithRelationInput
     store?: StoreOrderByWithRelationInput
     terminal?: TerminalOrderByWithRelationInput
     terminalMedias?: TerminalMediaOrderByRelationAggregateInput
+    logs?: CampaignLogOrderByRelationAggregateInput
   }
 
   export type CampaignWhereUniqueInput = Prisma.AtLeast<{
@@ -24678,12 +25936,14 @@ export namespace Prisma {
     companyId?: StringFilter<"Campaign"> | string
     storeId?: StringNullableFilter<"Campaign"> | string | null
     terminalId?: StringNullableFilter<"Campaign"> | string | null
+    thumbnail?: StringNullableFilter<"Campaign"> | string | null
     createdAt?: DateTimeFilter<"Campaign"> | Date | string
     updatedAt?: DateTimeFilter<"Campaign"> | Date | string
     company?: XOR<CompanyScalarRelationFilter, CompanyWhereInput>
     store?: XOR<StoreNullableScalarRelationFilter, StoreWhereInput> | null
     terminal?: XOR<TerminalNullableScalarRelationFilter, TerminalWhereInput> | null
     terminalMedias?: TerminalMediaListRelationFilter
+    logs?: CampaignLogListRelationFilter
   }, "id">
 
   export type CampaignOrderByWithAggregationInput = {
@@ -24695,6 +25955,7 @@ export namespace Prisma {
     companyId?: SortOrder
     storeId?: SortOrderInput | SortOrder
     terminalId?: SortOrderInput | SortOrder
+    thumbnail?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: CampaignCountOrderByAggregateInput
@@ -24714,8 +25975,79 @@ export namespace Prisma {
     companyId?: StringWithAggregatesFilter<"Campaign"> | string
     storeId?: StringNullableWithAggregatesFilter<"Campaign"> | string | null
     terminalId?: StringNullableWithAggregatesFilter<"Campaign"> | string | null
+    thumbnail?: StringNullableWithAggregatesFilter<"Campaign"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Campaign"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Campaign"> | Date | string
+  }
+
+  export type CampaignLogWhereInput = {
+    AND?: CampaignLogWhereInput | CampaignLogWhereInput[]
+    OR?: CampaignLogWhereInput[]
+    NOT?: CampaignLogWhereInput | CampaignLogWhereInput[]
+    id?: StringFilter<"CampaignLog"> | string
+    action?: StringFilter<"CampaignLog"> | string
+    description?: StringFilter<"CampaignLog"> | string
+    userId?: StringFilter<"CampaignLog"> | string
+    userName?: StringFilter<"CampaignLog"> | string
+    diff?: JsonNullableFilter<"CampaignLog">
+    campaignId?: StringFilter<"CampaignLog"> | string
+    createdAt?: DateTimeFilter<"CampaignLog"> | Date | string
+    campaign?: XOR<CampaignScalarRelationFilter, CampaignWhereInput>
+  }
+
+  export type CampaignLogOrderByWithRelationInput = {
+    id?: SortOrder
+    action?: SortOrder
+    description?: SortOrder
+    userId?: SortOrder
+    userName?: SortOrder
+    diff?: SortOrderInput | SortOrder
+    campaignId?: SortOrder
+    createdAt?: SortOrder
+    campaign?: CampaignOrderByWithRelationInput
+  }
+
+  export type CampaignLogWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: CampaignLogWhereInput | CampaignLogWhereInput[]
+    OR?: CampaignLogWhereInput[]
+    NOT?: CampaignLogWhereInput | CampaignLogWhereInput[]
+    action?: StringFilter<"CampaignLog"> | string
+    description?: StringFilter<"CampaignLog"> | string
+    userId?: StringFilter<"CampaignLog"> | string
+    userName?: StringFilter<"CampaignLog"> | string
+    diff?: JsonNullableFilter<"CampaignLog">
+    campaignId?: StringFilter<"CampaignLog"> | string
+    createdAt?: DateTimeFilter<"CampaignLog"> | Date | string
+    campaign?: XOR<CampaignScalarRelationFilter, CampaignWhereInput>
+  }, "id">
+
+  export type CampaignLogOrderByWithAggregationInput = {
+    id?: SortOrder
+    action?: SortOrder
+    description?: SortOrder
+    userId?: SortOrder
+    userName?: SortOrder
+    diff?: SortOrderInput | SortOrder
+    campaignId?: SortOrder
+    createdAt?: SortOrder
+    _count?: CampaignLogCountOrderByAggregateInput
+    _max?: CampaignLogMaxOrderByAggregateInput
+    _min?: CampaignLogMinOrderByAggregateInput
+  }
+
+  export type CampaignLogScalarWhereWithAggregatesInput = {
+    AND?: CampaignLogScalarWhereWithAggregatesInput | CampaignLogScalarWhereWithAggregatesInput[]
+    OR?: CampaignLogScalarWhereWithAggregatesInput[]
+    NOT?: CampaignLogScalarWhereWithAggregatesInput | CampaignLogScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"CampaignLog"> | string
+    action?: StringWithAggregatesFilter<"CampaignLog"> | string
+    description?: StringWithAggregatesFilter<"CampaignLog"> | string
+    userId?: StringWithAggregatesFilter<"CampaignLog"> | string
+    userName?: StringWithAggregatesFilter<"CampaignLog"> | string
+    diff?: JsonNullableWithAggregatesFilter<"CampaignLog">
+    campaignId?: StringWithAggregatesFilter<"CampaignLog"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"CampaignLog"> | Date | string
   }
 
   export type MediaWhereInput = {
@@ -26108,12 +27440,14 @@ export namespace Prisma {
     startsAt: Date | string
     endsAt: Date | string
     isActive?: boolean
+    thumbnail?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     company: CompanyCreateNestedOneWithoutCampaignsInput
     store?: StoreCreateNestedOneWithoutCampaignsInput
     terminal?: TerminalCreateNestedOneWithoutCampaignsInput
     terminalMedias?: TerminalMediaCreateNestedManyWithoutCampaignInput
+    logs?: CampaignLogCreateNestedManyWithoutCampaignInput
   }
 
   export type CampaignUncheckedCreateInput = {
@@ -26125,9 +27459,11 @@ export namespace Prisma {
     companyId: string
     storeId?: string | null
     terminalId?: string | null
+    thumbnail?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     terminalMedias?: TerminalMediaUncheckedCreateNestedManyWithoutCampaignInput
+    logs?: CampaignLogUncheckedCreateNestedManyWithoutCampaignInput
   }
 
   export type CampaignUpdateInput = {
@@ -26136,12 +27472,14 @@ export namespace Prisma {
     startsAt?: DateTimeFieldUpdateOperationsInput | Date | string
     endsAt?: DateTimeFieldUpdateOperationsInput | Date | string
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    thumbnail?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     company?: CompanyUpdateOneRequiredWithoutCampaignsNestedInput
     store?: StoreUpdateOneWithoutCampaignsNestedInput
     terminal?: TerminalUpdateOneWithoutCampaignsNestedInput
     terminalMedias?: TerminalMediaUpdateManyWithoutCampaignNestedInput
+    logs?: CampaignLogUpdateManyWithoutCampaignNestedInput
   }
 
   export type CampaignUncheckedUpdateInput = {
@@ -26153,9 +27491,11 @@ export namespace Prisma {
     companyId?: StringFieldUpdateOperationsInput | string
     storeId?: NullableStringFieldUpdateOperationsInput | string | null
     terminalId?: NullableStringFieldUpdateOperationsInput | string | null
+    thumbnail?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     terminalMedias?: TerminalMediaUncheckedUpdateManyWithoutCampaignNestedInput
+    logs?: CampaignLogUncheckedUpdateManyWithoutCampaignNestedInput
   }
 
   export type CampaignCreateManyInput = {
@@ -26167,6 +27507,7 @@ export namespace Prisma {
     companyId: string
     storeId?: string | null
     terminalId?: string | null
+    thumbnail?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -26177,6 +27518,7 @@ export namespace Prisma {
     startsAt?: DateTimeFieldUpdateOperationsInput | Date | string
     endsAt?: DateTimeFieldUpdateOperationsInput | Date | string
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    thumbnail?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -26190,8 +27532,85 @@ export namespace Prisma {
     companyId?: StringFieldUpdateOperationsInput | string
     storeId?: NullableStringFieldUpdateOperationsInput | string | null
     terminalId?: NullableStringFieldUpdateOperationsInput | string | null
+    thumbnail?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CampaignLogCreateInput = {
+    id?: string
+    action: string
+    description: string
+    userId: string
+    userName: string
+    diff?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    campaign: CampaignCreateNestedOneWithoutLogsInput
+  }
+
+  export type CampaignLogUncheckedCreateInput = {
+    id?: string
+    action: string
+    description: string
+    userId: string
+    userName: string
+    diff?: NullableJsonNullValueInput | InputJsonValue
+    campaignId: string
+    createdAt?: Date | string
+  }
+
+  export type CampaignLogUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    action?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    userName?: StringFieldUpdateOperationsInput | string
+    diff?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    campaign?: CampaignUpdateOneRequiredWithoutLogsNestedInput
+  }
+
+  export type CampaignLogUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    action?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    userName?: StringFieldUpdateOperationsInput | string
+    diff?: NullableJsonNullValueInput | InputJsonValue
+    campaignId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CampaignLogCreateManyInput = {
+    id?: string
+    action: string
+    description: string
+    userId: string
+    userName: string
+    diff?: NullableJsonNullValueInput | InputJsonValue
+    campaignId: string
+    createdAt?: Date | string
+  }
+
+  export type CampaignLogUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    action?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    userName?: StringFieldUpdateOperationsInput | string
+    diff?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CampaignLogUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    action?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    userName?: StringFieldUpdateOperationsInput | string
+    diff?: NullableJsonNullValueInput | InputJsonValue
+    campaignId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type MediaCreateInput = {
@@ -27526,6 +28945,16 @@ export namespace Prisma {
     isNot?: TerminalWhereInput | null
   }
 
+  export type CampaignLogListRelationFilter = {
+    every?: CampaignLogWhereInput
+    some?: CampaignLogWhereInput
+    none?: CampaignLogWhereInput
+  }
+
+  export type CampaignLogOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
   export type CampaignCountOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
@@ -27535,6 +28964,7 @@ export namespace Prisma {
     companyId?: SortOrder
     storeId?: SortOrder
     terminalId?: SortOrder
+    thumbnail?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -27548,6 +28978,7 @@ export namespace Prisma {
     companyId?: SortOrder
     storeId?: SortOrder
     terminalId?: SortOrder
+    thumbnail?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -27561,8 +28992,94 @@ export namespace Prisma {
     companyId?: SortOrder
     storeId?: SortOrder
     terminalId?: SortOrder
+    thumbnail?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+  }
+  export type JsonNullableFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<JsonNullableFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonNullableFilterBase<$PrismaModel>>, 'path'>>,
+        Required<JsonNullableFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<JsonNullableFilterBase<$PrismaModel>>, 'path'>>
+
+  export type JsonNullableFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+  }
+
+  export type CampaignScalarRelationFilter = {
+    is?: CampaignWhereInput
+    isNot?: CampaignWhereInput
+  }
+
+  export type CampaignLogCountOrderByAggregateInput = {
+    id?: SortOrder
+    action?: SortOrder
+    description?: SortOrder
+    userId?: SortOrder
+    userName?: SortOrder
+    diff?: SortOrder
+    campaignId?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type CampaignLogMaxOrderByAggregateInput = {
+    id?: SortOrder
+    action?: SortOrder
+    description?: SortOrder
+    userId?: SortOrder
+    userName?: SortOrder
+    campaignId?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type CampaignLogMinOrderByAggregateInput = {
+    id?: SortOrder
+    action?: SortOrder
+    description?: SortOrder
+    userId?: SortOrder
+    userName?: SortOrder
+    campaignId?: SortOrder
+    createdAt?: SortOrder
+  }
+  export type JsonNullableWithAggregatesFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>, 'path'>>,
+        Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>, 'path'>>
+
+  export type JsonNullableWithAggregatesFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedJsonNullableFilter<$PrismaModel>
+    _max?: NestedJsonNullableFilter<$PrismaModel>
   }
 
   export type CompanyNullableScalarRelationFilter = {
@@ -27699,29 +29216,6 @@ export namespace Prisma {
     terminalId?: SortOrder
     createdAt?: SortOrder
   }
-  export type JsonNullableFilter<$PrismaModel = never> =
-    | PatchUndefined<
-        Either<Required<JsonNullableFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonNullableFilterBase<$PrismaModel>>, 'path'>>,
-        Required<JsonNullableFilterBase<$PrismaModel>>
-      >
-    | OptionalFlat<Omit<Required<JsonNullableFilterBase<$PrismaModel>>, 'path'>>
-
-  export type JsonNullableFilterBase<$PrismaModel = never> = {
-    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
-    path?: string[]
-    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
-    string_contains?: string | StringFieldRefInput<$PrismaModel>
-    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
-    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
-    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
-  }
 
   export type TerminalEventCountOrderByAggregateInput = {
     id?: SortOrder
@@ -27743,32 +29237,6 @@ export namespace Prisma {
     type?: SortOrder
     terminalId?: SortOrder
     createdAt?: SortOrder
-  }
-  export type JsonNullableWithAggregatesFilter<$PrismaModel = never> =
-    | PatchUndefined<
-        Either<Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>, 'path'>>,
-        Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>
-      >
-    | OptionalFlat<Omit<Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>, 'path'>>
-
-  export type JsonNullableWithAggregatesFilterBase<$PrismaModel = never> = {
-    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
-    path?: string[]
-    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
-    string_contains?: string | StringFieldRefInput<$PrismaModel>
-    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
-    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
-    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedJsonNullableFilter<$PrismaModel>
-    _max?: NestedJsonNullableFilter<$PrismaModel>
   }
 
   export type ConfigurationCountOrderByAggregateInput = {
@@ -28966,11 +30434,25 @@ export namespace Prisma {
     connect?: TerminalMediaWhereUniqueInput | TerminalMediaWhereUniqueInput[]
   }
 
+  export type CampaignLogCreateNestedManyWithoutCampaignInput = {
+    create?: XOR<CampaignLogCreateWithoutCampaignInput, CampaignLogUncheckedCreateWithoutCampaignInput> | CampaignLogCreateWithoutCampaignInput[] | CampaignLogUncheckedCreateWithoutCampaignInput[]
+    connectOrCreate?: CampaignLogCreateOrConnectWithoutCampaignInput | CampaignLogCreateOrConnectWithoutCampaignInput[]
+    createMany?: CampaignLogCreateManyCampaignInputEnvelope
+    connect?: CampaignLogWhereUniqueInput | CampaignLogWhereUniqueInput[]
+  }
+
   export type TerminalMediaUncheckedCreateNestedManyWithoutCampaignInput = {
     create?: XOR<TerminalMediaCreateWithoutCampaignInput, TerminalMediaUncheckedCreateWithoutCampaignInput> | TerminalMediaCreateWithoutCampaignInput[] | TerminalMediaUncheckedCreateWithoutCampaignInput[]
     connectOrCreate?: TerminalMediaCreateOrConnectWithoutCampaignInput | TerminalMediaCreateOrConnectWithoutCampaignInput[]
     createMany?: TerminalMediaCreateManyCampaignInputEnvelope
     connect?: TerminalMediaWhereUniqueInput | TerminalMediaWhereUniqueInput[]
+  }
+
+  export type CampaignLogUncheckedCreateNestedManyWithoutCampaignInput = {
+    create?: XOR<CampaignLogCreateWithoutCampaignInput, CampaignLogUncheckedCreateWithoutCampaignInput> | CampaignLogCreateWithoutCampaignInput[] | CampaignLogUncheckedCreateWithoutCampaignInput[]
+    connectOrCreate?: CampaignLogCreateOrConnectWithoutCampaignInput | CampaignLogCreateOrConnectWithoutCampaignInput[]
+    createMany?: CampaignLogCreateManyCampaignInputEnvelope
+    connect?: CampaignLogWhereUniqueInput | CampaignLogWhereUniqueInput[]
   }
 
   export type CompanyUpdateOneRequiredWithoutCampaignsNestedInput = {
@@ -29015,6 +30497,20 @@ export namespace Prisma {
     deleteMany?: TerminalMediaScalarWhereInput | TerminalMediaScalarWhereInput[]
   }
 
+  export type CampaignLogUpdateManyWithoutCampaignNestedInput = {
+    create?: XOR<CampaignLogCreateWithoutCampaignInput, CampaignLogUncheckedCreateWithoutCampaignInput> | CampaignLogCreateWithoutCampaignInput[] | CampaignLogUncheckedCreateWithoutCampaignInput[]
+    connectOrCreate?: CampaignLogCreateOrConnectWithoutCampaignInput | CampaignLogCreateOrConnectWithoutCampaignInput[]
+    upsert?: CampaignLogUpsertWithWhereUniqueWithoutCampaignInput | CampaignLogUpsertWithWhereUniqueWithoutCampaignInput[]
+    createMany?: CampaignLogCreateManyCampaignInputEnvelope
+    set?: CampaignLogWhereUniqueInput | CampaignLogWhereUniqueInput[]
+    disconnect?: CampaignLogWhereUniqueInput | CampaignLogWhereUniqueInput[]
+    delete?: CampaignLogWhereUniqueInput | CampaignLogWhereUniqueInput[]
+    connect?: CampaignLogWhereUniqueInput | CampaignLogWhereUniqueInput[]
+    update?: CampaignLogUpdateWithWhereUniqueWithoutCampaignInput | CampaignLogUpdateWithWhereUniqueWithoutCampaignInput[]
+    updateMany?: CampaignLogUpdateManyWithWhereWithoutCampaignInput | CampaignLogUpdateManyWithWhereWithoutCampaignInput[]
+    deleteMany?: CampaignLogScalarWhereInput | CampaignLogScalarWhereInput[]
+  }
+
   export type TerminalMediaUncheckedUpdateManyWithoutCampaignNestedInput = {
     create?: XOR<TerminalMediaCreateWithoutCampaignInput, TerminalMediaUncheckedCreateWithoutCampaignInput> | TerminalMediaCreateWithoutCampaignInput[] | TerminalMediaUncheckedCreateWithoutCampaignInput[]
     connectOrCreate?: TerminalMediaCreateOrConnectWithoutCampaignInput | TerminalMediaCreateOrConnectWithoutCampaignInput[]
@@ -29027,6 +30523,34 @@ export namespace Prisma {
     update?: TerminalMediaUpdateWithWhereUniqueWithoutCampaignInput | TerminalMediaUpdateWithWhereUniqueWithoutCampaignInput[]
     updateMany?: TerminalMediaUpdateManyWithWhereWithoutCampaignInput | TerminalMediaUpdateManyWithWhereWithoutCampaignInput[]
     deleteMany?: TerminalMediaScalarWhereInput | TerminalMediaScalarWhereInput[]
+  }
+
+  export type CampaignLogUncheckedUpdateManyWithoutCampaignNestedInput = {
+    create?: XOR<CampaignLogCreateWithoutCampaignInput, CampaignLogUncheckedCreateWithoutCampaignInput> | CampaignLogCreateWithoutCampaignInput[] | CampaignLogUncheckedCreateWithoutCampaignInput[]
+    connectOrCreate?: CampaignLogCreateOrConnectWithoutCampaignInput | CampaignLogCreateOrConnectWithoutCampaignInput[]
+    upsert?: CampaignLogUpsertWithWhereUniqueWithoutCampaignInput | CampaignLogUpsertWithWhereUniqueWithoutCampaignInput[]
+    createMany?: CampaignLogCreateManyCampaignInputEnvelope
+    set?: CampaignLogWhereUniqueInput | CampaignLogWhereUniqueInput[]
+    disconnect?: CampaignLogWhereUniqueInput | CampaignLogWhereUniqueInput[]
+    delete?: CampaignLogWhereUniqueInput | CampaignLogWhereUniqueInput[]
+    connect?: CampaignLogWhereUniqueInput | CampaignLogWhereUniqueInput[]
+    update?: CampaignLogUpdateWithWhereUniqueWithoutCampaignInput | CampaignLogUpdateWithWhereUniqueWithoutCampaignInput[]
+    updateMany?: CampaignLogUpdateManyWithWhereWithoutCampaignInput | CampaignLogUpdateManyWithWhereWithoutCampaignInput[]
+    deleteMany?: CampaignLogScalarWhereInput | CampaignLogScalarWhereInput[]
+  }
+
+  export type CampaignCreateNestedOneWithoutLogsInput = {
+    create?: XOR<CampaignCreateWithoutLogsInput, CampaignUncheckedCreateWithoutLogsInput>
+    connectOrCreate?: CampaignCreateOrConnectWithoutLogsInput
+    connect?: CampaignWhereUniqueInput
+  }
+
+  export type CampaignUpdateOneRequiredWithoutLogsNestedInput = {
+    create?: XOR<CampaignCreateWithoutLogsInput, CampaignUncheckedCreateWithoutLogsInput>
+    connectOrCreate?: CampaignCreateOrConnectWithoutLogsInput
+    upsert?: CampaignUpsertWithoutLogsInput
+    connect?: CampaignWhereUniqueInput
+    update?: XOR<XOR<CampaignUpdateToOneWithWhereWithoutLogsInput, CampaignUpdateWithoutLogsInput>, CampaignUncheckedUpdateWithoutLogsInput>
   }
 
   export type CompanyCreateNestedOneWithoutMediasInput = {
@@ -29653,11 +31177,13 @@ export namespace Prisma {
     startsAt: Date | string
     endsAt: Date | string
     isActive?: boolean
+    thumbnail?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     store?: StoreCreateNestedOneWithoutCampaignsInput
     terminal?: TerminalCreateNestedOneWithoutCampaignsInput
     terminalMedias?: TerminalMediaCreateNestedManyWithoutCampaignInput
+    logs?: CampaignLogCreateNestedManyWithoutCampaignInput
   }
 
   export type CampaignUncheckedCreateWithoutCompanyInput = {
@@ -29668,9 +31194,11 @@ export namespace Prisma {
     isActive?: boolean
     storeId?: string | null
     terminalId?: string | null
+    thumbnail?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     terminalMedias?: TerminalMediaUncheckedCreateNestedManyWithoutCampaignInput
+    logs?: CampaignLogUncheckedCreateNestedManyWithoutCampaignInput
   }
 
   export type CampaignCreateOrConnectWithoutCompanyInput = {
@@ -29912,6 +31440,7 @@ export namespace Prisma {
     companyId?: StringFilter<"Campaign"> | string
     storeId?: StringNullableFilter<"Campaign"> | string | null
     terminalId?: StringNullableFilter<"Campaign"> | string | null
+    thumbnail?: StringNullableFilter<"Campaign"> | string | null
     createdAt?: DateTimeFilter<"Campaign"> | Date | string
     updatedAt?: DateTimeFilter<"Campaign"> | Date | string
   }
@@ -30272,11 +31801,13 @@ export namespace Prisma {
     startsAt: Date | string
     endsAt: Date | string
     isActive?: boolean
+    thumbnail?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     company: CompanyCreateNestedOneWithoutCampaignsInput
     terminal?: TerminalCreateNestedOneWithoutCampaignsInput
     terminalMedias?: TerminalMediaCreateNestedManyWithoutCampaignInput
+    logs?: CampaignLogCreateNestedManyWithoutCampaignInput
   }
 
   export type CampaignUncheckedCreateWithoutStoreInput = {
@@ -30287,9 +31818,11 @@ export namespace Prisma {
     isActive?: boolean
     companyId: string
     terminalId?: string | null
+    thumbnail?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     terminalMedias?: TerminalMediaUncheckedCreateNestedManyWithoutCampaignInput
+    logs?: CampaignLogUncheckedCreateNestedManyWithoutCampaignInput
   }
 
   export type CampaignCreateOrConnectWithoutStoreInput = {
@@ -30679,11 +32212,13 @@ export namespace Prisma {
     startsAt: Date | string
     endsAt: Date | string
     isActive?: boolean
+    thumbnail?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     company: CompanyCreateNestedOneWithoutCampaignsInput
     store?: StoreCreateNestedOneWithoutCampaignsInput
     terminalMedias?: TerminalMediaCreateNestedManyWithoutCampaignInput
+    logs?: CampaignLogCreateNestedManyWithoutCampaignInput
   }
 
   export type CampaignUncheckedCreateWithoutTerminalInput = {
@@ -30694,9 +32229,11 @@ export namespace Prisma {
     isActive?: boolean
     companyId: string
     storeId?: string | null
+    thumbnail?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     terminalMedias?: TerminalMediaUncheckedCreateNestedManyWithoutCampaignInput
+    logs?: CampaignLogUncheckedCreateNestedManyWithoutCampaignInput
   }
 
   export type CampaignCreateOrConnectWithoutTerminalInput = {
@@ -31564,6 +33101,36 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type CampaignLogCreateWithoutCampaignInput = {
+    id?: string
+    action: string
+    description: string
+    userId: string
+    userName: string
+    diff?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+  }
+
+  export type CampaignLogUncheckedCreateWithoutCampaignInput = {
+    id?: string
+    action: string
+    description: string
+    userId: string
+    userName: string
+    diff?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+  }
+
+  export type CampaignLogCreateOrConnectWithoutCampaignInput = {
+    where: CampaignLogWhereUniqueInput
+    create: XOR<CampaignLogCreateWithoutCampaignInput, CampaignLogUncheckedCreateWithoutCampaignInput>
+  }
+
+  export type CampaignLogCreateManyCampaignInputEnvelope = {
+    data: CampaignLogCreateManyCampaignInput | CampaignLogCreateManyCampaignInput[]
+    skipDuplicates?: boolean
+  }
+
   export type CompanyUpsertWithoutCampaignsInput = {
     update: XOR<CompanyUpdateWithoutCampaignsInput, CompanyUncheckedUpdateWithoutCampaignsInput>
     create: XOR<CompanyCreateWithoutCampaignsInput, CompanyUncheckedCreateWithoutCampaignsInput>
@@ -31723,6 +33290,112 @@ export namespace Prisma {
   export type TerminalMediaUpdateManyWithWhereWithoutCampaignInput = {
     where: TerminalMediaScalarWhereInput
     data: XOR<TerminalMediaUpdateManyMutationInput, TerminalMediaUncheckedUpdateManyWithoutCampaignInput>
+  }
+
+  export type CampaignLogUpsertWithWhereUniqueWithoutCampaignInput = {
+    where: CampaignLogWhereUniqueInput
+    update: XOR<CampaignLogUpdateWithoutCampaignInput, CampaignLogUncheckedUpdateWithoutCampaignInput>
+    create: XOR<CampaignLogCreateWithoutCampaignInput, CampaignLogUncheckedCreateWithoutCampaignInput>
+  }
+
+  export type CampaignLogUpdateWithWhereUniqueWithoutCampaignInput = {
+    where: CampaignLogWhereUniqueInput
+    data: XOR<CampaignLogUpdateWithoutCampaignInput, CampaignLogUncheckedUpdateWithoutCampaignInput>
+  }
+
+  export type CampaignLogUpdateManyWithWhereWithoutCampaignInput = {
+    where: CampaignLogScalarWhereInput
+    data: XOR<CampaignLogUpdateManyMutationInput, CampaignLogUncheckedUpdateManyWithoutCampaignInput>
+  }
+
+  export type CampaignLogScalarWhereInput = {
+    AND?: CampaignLogScalarWhereInput | CampaignLogScalarWhereInput[]
+    OR?: CampaignLogScalarWhereInput[]
+    NOT?: CampaignLogScalarWhereInput | CampaignLogScalarWhereInput[]
+    id?: StringFilter<"CampaignLog"> | string
+    action?: StringFilter<"CampaignLog"> | string
+    description?: StringFilter<"CampaignLog"> | string
+    userId?: StringFilter<"CampaignLog"> | string
+    userName?: StringFilter<"CampaignLog"> | string
+    diff?: JsonNullableFilter<"CampaignLog">
+    campaignId?: StringFilter<"CampaignLog"> | string
+    createdAt?: DateTimeFilter<"CampaignLog"> | Date | string
+  }
+
+  export type CampaignCreateWithoutLogsInput = {
+    id?: string
+    name: string
+    startsAt: Date | string
+    endsAt: Date | string
+    isActive?: boolean
+    thumbnail?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    company: CompanyCreateNestedOneWithoutCampaignsInput
+    store?: StoreCreateNestedOneWithoutCampaignsInput
+    terminal?: TerminalCreateNestedOneWithoutCampaignsInput
+    terminalMedias?: TerminalMediaCreateNestedManyWithoutCampaignInput
+  }
+
+  export type CampaignUncheckedCreateWithoutLogsInput = {
+    id?: string
+    name: string
+    startsAt: Date | string
+    endsAt: Date | string
+    isActive?: boolean
+    companyId: string
+    storeId?: string | null
+    terminalId?: string | null
+    thumbnail?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    terminalMedias?: TerminalMediaUncheckedCreateNestedManyWithoutCampaignInput
+  }
+
+  export type CampaignCreateOrConnectWithoutLogsInput = {
+    where: CampaignWhereUniqueInput
+    create: XOR<CampaignCreateWithoutLogsInput, CampaignUncheckedCreateWithoutLogsInput>
+  }
+
+  export type CampaignUpsertWithoutLogsInput = {
+    update: XOR<CampaignUpdateWithoutLogsInput, CampaignUncheckedUpdateWithoutLogsInput>
+    create: XOR<CampaignCreateWithoutLogsInput, CampaignUncheckedCreateWithoutLogsInput>
+    where?: CampaignWhereInput
+  }
+
+  export type CampaignUpdateToOneWithWhereWithoutLogsInput = {
+    where?: CampaignWhereInput
+    data: XOR<CampaignUpdateWithoutLogsInput, CampaignUncheckedUpdateWithoutLogsInput>
+  }
+
+  export type CampaignUpdateWithoutLogsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    startsAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    endsAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    thumbnail?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    company?: CompanyUpdateOneRequiredWithoutCampaignsNestedInput
+    store?: StoreUpdateOneWithoutCampaignsNestedInput
+    terminal?: TerminalUpdateOneWithoutCampaignsNestedInput
+    terminalMedias?: TerminalMediaUpdateManyWithoutCampaignNestedInput
+  }
+
+  export type CampaignUncheckedUpdateWithoutLogsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    startsAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    endsAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    companyId?: StringFieldUpdateOperationsInput | string
+    storeId?: NullableStringFieldUpdateOperationsInput | string | null
+    terminalId?: NullableStringFieldUpdateOperationsInput | string | null
+    thumbnail?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    terminalMedias?: TerminalMediaUncheckedUpdateManyWithoutCampaignNestedInput
   }
 
   export type CompanyCreateWithoutMediasInput = {
@@ -31959,11 +33632,13 @@ export namespace Prisma {
     startsAt: Date | string
     endsAt: Date | string
     isActive?: boolean
+    thumbnail?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     company: CompanyCreateNestedOneWithoutCampaignsInput
     store?: StoreCreateNestedOneWithoutCampaignsInput
     terminal?: TerminalCreateNestedOneWithoutCampaignsInput
+    logs?: CampaignLogCreateNestedManyWithoutCampaignInput
   }
 
   export type CampaignUncheckedCreateWithoutTerminalMediasInput = {
@@ -31975,8 +33650,10 @@ export namespace Prisma {
     companyId: string
     storeId?: string | null
     terminalId?: string | null
+    thumbnail?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    logs?: CampaignLogUncheckedCreateNestedManyWithoutCampaignInput
   }
 
   export type CampaignCreateOrConnectWithoutTerminalMediasInput = {
@@ -32101,11 +33778,13 @@ export namespace Prisma {
     startsAt?: DateTimeFieldUpdateOperationsInput | Date | string
     endsAt?: DateTimeFieldUpdateOperationsInput | Date | string
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    thumbnail?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     company?: CompanyUpdateOneRequiredWithoutCampaignsNestedInput
     store?: StoreUpdateOneWithoutCampaignsNestedInput
     terminal?: TerminalUpdateOneWithoutCampaignsNestedInput
+    logs?: CampaignLogUpdateManyWithoutCampaignNestedInput
   }
 
   export type CampaignUncheckedUpdateWithoutTerminalMediasInput = {
@@ -32117,8 +33796,10 @@ export namespace Prisma {
     companyId?: StringFieldUpdateOperationsInput | string
     storeId?: NullableStringFieldUpdateOperationsInput | string | null
     terminalId?: NullableStringFieldUpdateOperationsInput | string | null
+    thumbnail?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    logs?: CampaignLogUncheckedUpdateManyWithoutCampaignNestedInput
   }
 
   export type TerminalCreateWithoutHeartbeatsInput = {
@@ -32796,6 +34477,7 @@ export namespace Prisma {
     isActive?: boolean
     storeId?: string | null
     terminalId?: string | null
+    thumbnail?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -33008,11 +34690,13 @@ export namespace Prisma {
     startsAt?: DateTimeFieldUpdateOperationsInput | Date | string
     endsAt?: DateTimeFieldUpdateOperationsInput | Date | string
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    thumbnail?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     store?: StoreUpdateOneWithoutCampaignsNestedInput
     terminal?: TerminalUpdateOneWithoutCampaignsNestedInput
     terminalMedias?: TerminalMediaUpdateManyWithoutCampaignNestedInput
+    logs?: CampaignLogUpdateManyWithoutCampaignNestedInput
   }
 
   export type CampaignUncheckedUpdateWithoutCompanyInput = {
@@ -33023,9 +34707,11 @@ export namespace Prisma {
     isActive?: BoolFieldUpdateOperationsInput | boolean
     storeId?: NullableStringFieldUpdateOperationsInput | string | null
     terminalId?: NullableStringFieldUpdateOperationsInput | string | null
+    thumbnail?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     terminalMedias?: TerminalMediaUncheckedUpdateManyWithoutCampaignNestedInput
+    logs?: CampaignLogUncheckedUpdateManyWithoutCampaignNestedInput
   }
 
   export type CampaignUncheckedUpdateManyWithoutCompanyInput = {
@@ -33036,6 +34722,7 @@ export namespace Prisma {
     isActive?: BoolFieldUpdateOperationsInput | boolean
     storeId?: NullableStringFieldUpdateOperationsInput | string | null
     terminalId?: NullableStringFieldUpdateOperationsInput | string | null
+    thumbnail?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -33177,6 +34864,7 @@ export namespace Prisma {
     isActive?: boolean
     companyId: string
     terminalId?: string | null
+    thumbnail?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -33266,11 +34954,13 @@ export namespace Prisma {
     startsAt?: DateTimeFieldUpdateOperationsInput | Date | string
     endsAt?: DateTimeFieldUpdateOperationsInput | Date | string
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    thumbnail?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     company?: CompanyUpdateOneRequiredWithoutCampaignsNestedInput
     terminal?: TerminalUpdateOneWithoutCampaignsNestedInput
     terminalMedias?: TerminalMediaUpdateManyWithoutCampaignNestedInput
+    logs?: CampaignLogUpdateManyWithoutCampaignNestedInput
   }
 
   export type CampaignUncheckedUpdateWithoutStoreInput = {
@@ -33281,9 +34971,11 @@ export namespace Prisma {
     isActive?: BoolFieldUpdateOperationsInput | boolean
     companyId?: StringFieldUpdateOperationsInput | string
     terminalId?: NullableStringFieldUpdateOperationsInput | string | null
+    thumbnail?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     terminalMedias?: TerminalMediaUncheckedUpdateManyWithoutCampaignNestedInput
+    logs?: CampaignLogUncheckedUpdateManyWithoutCampaignNestedInput
   }
 
   export type CampaignUncheckedUpdateManyWithoutStoreInput = {
@@ -33294,6 +34986,7 @@ export namespace Prisma {
     isActive?: BoolFieldUpdateOperationsInput | boolean
     companyId?: StringFieldUpdateOperationsInput | string
     terminalId?: NullableStringFieldUpdateOperationsInput | string | null
+    thumbnail?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -33377,6 +35070,7 @@ export namespace Prisma {
     isActive?: boolean
     companyId: string
     storeId?: string | null
+    thumbnail?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -33483,11 +35177,13 @@ export namespace Prisma {
     startsAt?: DateTimeFieldUpdateOperationsInput | Date | string
     endsAt?: DateTimeFieldUpdateOperationsInput | Date | string
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    thumbnail?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     company?: CompanyUpdateOneRequiredWithoutCampaignsNestedInput
     store?: StoreUpdateOneWithoutCampaignsNestedInput
     terminalMedias?: TerminalMediaUpdateManyWithoutCampaignNestedInput
+    logs?: CampaignLogUpdateManyWithoutCampaignNestedInput
   }
 
   export type CampaignUncheckedUpdateWithoutTerminalInput = {
@@ -33498,9 +35194,11 @@ export namespace Prisma {
     isActive?: BoolFieldUpdateOperationsInput | boolean
     companyId?: StringFieldUpdateOperationsInput | string
     storeId?: NullableStringFieldUpdateOperationsInput | string | null
+    thumbnail?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     terminalMedias?: TerminalMediaUncheckedUpdateManyWithoutCampaignNestedInput
+    logs?: CampaignLogUncheckedUpdateManyWithoutCampaignNestedInput
   }
 
   export type CampaignUncheckedUpdateManyWithoutTerminalInput = {
@@ -33511,6 +35209,7 @@ export namespace Prisma {
     isActive?: BoolFieldUpdateOperationsInput | boolean
     companyId?: StringFieldUpdateOperationsInput | string
     storeId?: NullableStringFieldUpdateOperationsInput | string | null
+    thumbnail?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -33556,6 +35255,16 @@ export namespace Prisma {
     mediaId: string
   }
 
+  export type CampaignLogCreateManyCampaignInput = {
+    id?: string
+    action: string
+    description: string
+    userId: string
+    userName: string
+    diff?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+  }
+
   export type TerminalMediaUpdateWithoutCampaignInput = {
     id?: StringFieldUpdateOperationsInput | string
     order?: IntFieldUpdateOperationsInput | number
@@ -33581,6 +35290,36 @@ export namespace Prisma {
     endsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     terminalId?: StringFieldUpdateOperationsInput | string
     mediaId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type CampaignLogUpdateWithoutCampaignInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    action?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    userName?: StringFieldUpdateOperationsInput | string
+    diff?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CampaignLogUncheckedUpdateWithoutCampaignInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    action?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    userName?: StringFieldUpdateOperationsInput | string
+    diff?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CampaignLogUncheckedUpdateManyWithoutCampaignInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    action?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    userName?: StringFieldUpdateOperationsInput | string
+    diff?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type TerminalMediaCreateManyMediaInput = {

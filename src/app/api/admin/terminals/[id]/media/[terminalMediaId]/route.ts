@@ -54,9 +54,24 @@ export async function DELETE(_req: NextRequest, { params }: Params) {
   const tm = await resolveTM(id, terminalMediaId, session.companyId, session.isMaster);
   if (!tm) return NextResponse.json({ message: 'Vínculo não encontrado' }, { status: 404 });
 
-  const mediaId = tm.mediaId;
+  const mediaId     = tm.mediaId;
+  const campaignId  = tm.campaignId;
+  const terminalName = (await prisma.terminal.findUnique({ where: { id }, select: { name: true } }))?.name ?? id;
 
   await prisma.terminalMedia.delete({ where: { id: terminalMediaId } });
+
+  // Audit log when media was linked to a campaign
+  if (campaignId) {
+    await prisma.campaignLog.create({
+      data: {
+        campaignId,
+        action:      'media_removed',
+        description: `Mídia "${tm.media.fileName}" removida do terminal "${terminalName}"`,
+        userId:      session.userId,
+        userName:    session.name,
+      },
+    });
+  }
 
   // Apaga a mídia do DB e do storage se não estiver vinculada a nenhum outro terminal
   const remaining = await prisma.terminalMedia.count({ where: { mediaId } });
