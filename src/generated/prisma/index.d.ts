@@ -84,6 +84,11 @@ export type TerminalHeartbeat = $Result.DefaultSelection<Prisma.$TerminalHeartbe
  */
 export type TerminalEvent = $Result.DefaultSelection<Prisma.$TerminalEventPayload>
 /**
+ * Model ActivationCodeHistory
+ * 
+ */
+export type ActivationCodeHistory = $Result.DefaultSelection<Prisma.$ActivationCodeHistoryPayload>
+/**
  * Model Configuration
  * 
  */
@@ -108,6 +113,11 @@ export type CompanyIntegration = $Result.DefaultSelection<Prisma.$CompanyIntegra
  * 
  */
 export type Notification = $Result.DefaultSelection<Prisma.$NotificationPayload>
+/**
+ * Model TerminalLayout
+ * 
+ */
+export type TerminalLayout = $Result.DefaultSelection<Prisma.$TerminalLayoutPayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -371,6 +381,16 @@ export class PrismaClient<
   get terminalEvent(): Prisma.TerminalEventDelegate<ExtArgs, ClientOptions>;
 
   /**
+   * `prisma.activationCodeHistory`: Exposes CRUD operations for the **ActivationCodeHistory** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more ActivationCodeHistories
+    * const activationCodeHistories = await prisma.activationCodeHistory.findMany()
+    * ```
+    */
+  get activationCodeHistory(): Prisma.ActivationCodeHistoryDelegate<ExtArgs, ClientOptions>;
+
+  /**
    * `prisma.configuration`: Exposes CRUD operations for the **Configuration** model.
     * Example usage:
     * ```ts
@@ -419,6 +439,16 @@ export class PrismaClient<
     * ```
     */
   get notification(): Prisma.NotificationDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.terminalLayout`: Exposes CRUD operations for the **TerminalLayout** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more TerminalLayouts
+    * const terminalLayouts = await prisma.terminalLayout.findMany()
+    * ```
+    */
+  get terminalLayout(): Prisma.TerminalLayoutDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -867,11 +897,13 @@ export namespace Prisma {
     TerminalMedia: 'TerminalMedia',
     TerminalHeartbeat: 'TerminalHeartbeat',
     TerminalEvent: 'TerminalEvent',
+    ActivationCodeHistory: 'ActivationCodeHistory',
     Configuration: 'Configuration',
     Integration: 'Integration',
     IntegrationCategory: 'IntegrationCategory',
     CompanyIntegration: 'CompanyIntegration',
-    Notification: 'Notification'
+    Notification: 'Notification',
+    TerminalLayout: 'TerminalLayout'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -887,7 +919,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "company" | "user" | "store" | "terminal" | "terminalCredential" | "terminalActivation" | "storeLicense" | "licenseRenewal" | "campaign" | "campaignLog" | "media" | "terminalMedia" | "terminalHeartbeat" | "terminalEvent" | "configuration" | "integration" | "integrationCategory" | "companyIntegration" | "notification"
+      modelProps: "company" | "user" | "store" | "terminal" | "terminalCredential" | "terminalActivation" | "storeLicense" | "licenseRenewal" | "campaign" | "campaignLog" | "media" | "terminalMedia" | "terminalHeartbeat" | "terminalEvent" | "activationCodeHistory" | "configuration" | "integration" | "integrationCategory" | "companyIntegration" | "notification" | "terminalLayout"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1927,6 +1959,80 @@ export namespace Prisma {
           }
         }
       }
+      ActivationCodeHistory: {
+        payload: Prisma.$ActivationCodeHistoryPayload<ExtArgs>
+        fields: Prisma.ActivationCodeHistoryFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ActivationCodeHistoryFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ActivationCodeHistoryPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ActivationCodeHistoryFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ActivationCodeHistoryPayload>
+          }
+          findFirst: {
+            args: Prisma.ActivationCodeHistoryFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ActivationCodeHistoryPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ActivationCodeHistoryFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ActivationCodeHistoryPayload>
+          }
+          findMany: {
+            args: Prisma.ActivationCodeHistoryFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ActivationCodeHistoryPayload>[]
+          }
+          create: {
+            args: Prisma.ActivationCodeHistoryCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ActivationCodeHistoryPayload>
+          }
+          createMany: {
+            args: Prisma.ActivationCodeHistoryCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.ActivationCodeHistoryCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ActivationCodeHistoryPayload>[]
+          }
+          delete: {
+            args: Prisma.ActivationCodeHistoryDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ActivationCodeHistoryPayload>
+          }
+          update: {
+            args: Prisma.ActivationCodeHistoryUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ActivationCodeHistoryPayload>
+          }
+          deleteMany: {
+            args: Prisma.ActivationCodeHistoryDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ActivationCodeHistoryUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.ActivationCodeHistoryUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ActivationCodeHistoryPayload>[]
+          }
+          upsert: {
+            args: Prisma.ActivationCodeHistoryUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ActivationCodeHistoryPayload>
+          }
+          aggregate: {
+            args: Prisma.ActivationCodeHistoryAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateActivationCodeHistory>
+          }
+          groupBy: {
+            args: Prisma.ActivationCodeHistoryGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ActivationCodeHistoryGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ActivationCodeHistoryCountArgs<ExtArgs>
+            result: $Utils.Optional<ActivationCodeHistoryCountAggregateOutputType> | number
+          }
+        }
+      }
       Configuration: {
         payload: Prisma.$ConfigurationPayload<ExtArgs>
         fields: Prisma.ConfigurationFieldRefs
@@ -2297,6 +2403,80 @@ export namespace Prisma {
           }
         }
       }
+      TerminalLayout: {
+        payload: Prisma.$TerminalLayoutPayload<ExtArgs>
+        fields: Prisma.TerminalLayoutFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.TerminalLayoutFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TerminalLayoutPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.TerminalLayoutFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TerminalLayoutPayload>
+          }
+          findFirst: {
+            args: Prisma.TerminalLayoutFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TerminalLayoutPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.TerminalLayoutFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TerminalLayoutPayload>
+          }
+          findMany: {
+            args: Prisma.TerminalLayoutFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TerminalLayoutPayload>[]
+          }
+          create: {
+            args: Prisma.TerminalLayoutCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TerminalLayoutPayload>
+          }
+          createMany: {
+            args: Prisma.TerminalLayoutCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.TerminalLayoutCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TerminalLayoutPayload>[]
+          }
+          delete: {
+            args: Prisma.TerminalLayoutDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TerminalLayoutPayload>
+          }
+          update: {
+            args: Prisma.TerminalLayoutUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TerminalLayoutPayload>
+          }
+          deleteMany: {
+            args: Prisma.TerminalLayoutDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.TerminalLayoutUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.TerminalLayoutUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TerminalLayoutPayload>[]
+          }
+          upsert: {
+            args: Prisma.TerminalLayoutUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TerminalLayoutPayload>
+          }
+          aggregate: {
+            args: Prisma.TerminalLayoutAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateTerminalLayout>
+          }
+          groupBy: {
+            args: Prisma.TerminalLayoutGroupByArgs<ExtArgs>
+            result: $Utils.Optional<TerminalLayoutGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.TerminalLayoutCountArgs<ExtArgs>
+            result: $Utils.Optional<TerminalLayoutCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -2419,11 +2599,13 @@ export namespace Prisma {
     terminalMedia?: TerminalMediaOmit
     terminalHeartbeat?: TerminalHeartbeatOmit
     terminalEvent?: TerminalEventOmit
+    activationCodeHistory?: ActivationCodeHistoryOmit
     configuration?: ConfigurationOmit
     integration?: IntegrationOmit
     integrationCategory?: IntegrationCategoryOmit
     companyIntegration?: CompanyIntegrationOmit
     notification?: NotificationOmit
+    terminalLayout?: TerminalLayoutOmit
   }
 
   /* Types for Logging */
@@ -2623,12 +2805,14 @@ export namespace Prisma {
     terminals: number
     campaigns: number
     integrations: number
+    medias: number
   }
 
   export type StoreCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     terminals?: boolean | StoreCountOutputTypeCountTerminalsArgs
     campaigns?: boolean | StoreCountOutputTypeCountCampaignsArgs
     integrations?: boolean | StoreCountOutputTypeCountIntegrationsArgs
+    medias?: boolean | StoreCountOutputTypeCountMediasArgs
   }
 
   // Custom InputTypes
@@ -2663,6 +2847,13 @@ export namespace Prisma {
     where?: CompanyIntegrationWhereInput
   }
 
+  /**
+   * StoreCountOutputType without action
+   */
+  export type StoreCountOutputTypeCountMediasArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: MediaWhereInput
+  }
+
 
   /**
    * Count Type TerminalCountOutputType
@@ -2674,6 +2865,7 @@ export namespace Prisma {
     heartbeats: number
     events: number
     campaigns: number
+    activationCodeHistory: number
   }
 
   export type TerminalCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2682,6 +2874,7 @@ export namespace Prisma {
     heartbeats?: boolean | TerminalCountOutputTypeCountHeartbeatsArgs
     events?: boolean | TerminalCountOutputTypeCountEventsArgs
     campaigns?: boolean | TerminalCountOutputTypeCountCampaignsArgs
+    activationCodeHistory?: boolean | TerminalCountOutputTypeCountActivationCodeHistoryArgs
   }
 
   // Custom InputTypes
@@ -2728,6 +2921,13 @@ export namespace Prisma {
    */
   export type TerminalCountOutputTypeCountCampaignsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: CampaignWhereInput
+  }
+
+  /**
+   * TerminalCountOutputType without action
+   */
+  export type TerminalCountOutputTypeCountActivationCodeHistoryArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ActivationCodeHistoryWhereInput
   }
 
 
@@ -2861,6 +3061,37 @@ export namespace Prisma {
    */
   export type IntegrationCountOutputTypeCountCompanyIntegrationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: CompanyIntegrationWhereInput
+  }
+
+
+  /**
+   * Count Type TerminalLayoutCountOutputType
+   */
+
+  export type TerminalLayoutCountOutputType = {
+    stores: number
+  }
+
+  export type TerminalLayoutCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    stores?: boolean | TerminalLayoutCountOutputTypeCountStoresArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * TerminalLayoutCountOutputType without action
+   */
+  export type TerminalLayoutCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TerminalLayoutCountOutputType
+     */
+    select?: TerminalLayoutCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * TerminalLayoutCountOutputType without action
+   */
+  export type TerminalLayoutCountOutputTypeCountStoresArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: StoreWhereInput
   }
 
 
@@ -5349,6 +5580,7 @@ export namespace Prisma {
     name: string | null
     address: string | null
     companyId: string | null
+    terminalLayoutId: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -5358,6 +5590,7 @@ export namespace Prisma {
     name: string | null
     address: string | null
     companyId: string | null
+    terminalLayoutId: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -5367,6 +5600,7 @@ export namespace Prisma {
     name: number
     address: number
     companyId: number
+    terminalLayoutId: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -5378,6 +5612,7 @@ export namespace Prisma {
     name?: true
     address?: true
     companyId?: true
+    terminalLayoutId?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -5387,6 +5622,7 @@ export namespace Prisma {
     name?: true
     address?: true
     companyId?: true
+    terminalLayoutId?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -5396,6 +5632,7 @@ export namespace Prisma {
     name?: true
     address?: true
     companyId?: true
+    terminalLayoutId?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -5478,6 +5715,7 @@ export namespace Prisma {
     name: string
     address: string | null
     companyId: string
+    terminalLayoutId: string | null
     createdAt: Date
     updatedAt: Date
     _count: StoreCountAggregateOutputType | null
@@ -5504,13 +5742,16 @@ export namespace Prisma {
     name?: boolean
     address?: boolean
     companyId?: boolean
+    terminalLayoutId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     company?: boolean | CompanyDefaultArgs<ExtArgs>
+    terminalLayout?: boolean | Store$terminalLayoutArgs<ExtArgs>
     terminals?: boolean | Store$terminalsArgs<ExtArgs>
     license?: boolean | Store$licenseArgs<ExtArgs>
     campaigns?: boolean | Store$campaignsArgs<ExtArgs>
     integrations?: boolean | Store$integrationsArgs<ExtArgs>
+    medias?: boolean | Store$mediasArgs<ExtArgs>
     _count?: boolean | StoreCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["store"]>
 
@@ -5519,9 +5760,11 @@ export namespace Prisma {
     name?: boolean
     address?: boolean
     companyId?: boolean
+    terminalLayoutId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     company?: boolean | CompanyDefaultArgs<ExtArgs>
+    terminalLayout?: boolean | Store$terminalLayoutArgs<ExtArgs>
   }, ExtArgs["result"]["store"]>
 
   export type StoreSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -5529,9 +5772,11 @@ export namespace Prisma {
     name?: boolean
     address?: boolean
     companyId?: boolean
+    terminalLayoutId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     company?: boolean | CompanyDefaultArgs<ExtArgs>
+    terminalLayout?: boolean | Store$terminalLayoutArgs<ExtArgs>
   }, ExtArgs["result"]["store"]>
 
   export type StoreSelectScalar = {
@@ -5539,40 +5784,48 @@ export namespace Prisma {
     name?: boolean
     address?: boolean
     companyId?: boolean
+    terminalLayoutId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type StoreOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "address" | "companyId" | "createdAt" | "updatedAt", ExtArgs["result"]["store"]>
+  export type StoreOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "address" | "companyId" | "terminalLayoutId" | "createdAt" | "updatedAt", ExtArgs["result"]["store"]>
   export type StoreInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     company?: boolean | CompanyDefaultArgs<ExtArgs>
+    terminalLayout?: boolean | Store$terminalLayoutArgs<ExtArgs>
     terminals?: boolean | Store$terminalsArgs<ExtArgs>
     license?: boolean | Store$licenseArgs<ExtArgs>
     campaigns?: boolean | Store$campaignsArgs<ExtArgs>
     integrations?: boolean | Store$integrationsArgs<ExtArgs>
+    medias?: boolean | Store$mediasArgs<ExtArgs>
     _count?: boolean | StoreCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type StoreIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     company?: boolean | CompanyDefaultArgs<ExtArgs>
+    terminalLayout?: boolean | Store$terminalLayoutArgs<ExtArgs>
   }
   export type StoreIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     company?: boolean | CompanyDefaultArgs<ExtArgs>
+    terminalLayout?: boolean | Store$terminalLayoutArgs<ExtArgs>
   }
 
   export type $StorePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Store"
     objects: {
       company: Prisma.$CompanyPayload<ExtArgs>
+      terminalLayout: Prisma.$TerminalLayoutPayload<ExtArgs> | null
       terminals: Prisma.$TerminalPayload<ExtArgs>[]
       license: Prisma.$StoreLicensePayload<ExtArgs> | null
       campaigns: Prisma.$CampaignPayload<ExtArgs>[]
       integrations: Prisma.$CompanyIntegrationPayload<ExtArgs>[]
+      medias: Prisma.$MediaPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
       name: string
       address: string | null
       companyId: string
+      terminalLayoutId: string | null
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["store"]>
@@ -5970,10 +6223,12 @@ export namespace Prisma {
   export interface Prisma__StoreClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     company<T extends CompanyDefaultArgs<ExtArgs> = {}>(args?: Subset<T, CompanyDefaultArgs<ExtArgs>>): Prisma__CompanyClient<$Result.GetResult<Prisma.$CompanyPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    terminalLayout<T extends Store$terminalLayoutArgs<ExtArgs> = {}>(args?: Subset<T, Store$terminalLayoutArgs<ExtArgs>>): Prisma__TerminalLayoutClient<$Result.GetResult<Prisma.$TerminalLayoutPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     terminals<T extends Store$terminalsArgs<ExtArgs> = {}>(args?: Subset<T, Store$terminalsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TerminalPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     license<T extends Store$licenseArgs<ExtArgs> = {}>(args?: Subset<T, Store$licenseArgs<ExtArgs>>): Prisma__StoreLicenseClient<$Result.GetResult<Prisma.$StoreLicensePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     campaigns<T extends Store$campaignsArgs<ExtArgs> = {}>(args?: Subset<T, Store$campaignsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CampaignPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     integrations<T extends Store$integrationsArgs<ExtArgs> = {}>(args?: Subset<T, Store$integrationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CompanyIntegrationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    medias<T extends Store$mediasArgs<ExtArgs> = {}>(args?: Subset<T, Store$mediasArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MediaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -6007,6 +6262,7 @@ export namespace Prisma {
     readonly name: FieldRef<"Store", 'String'>
     readonly address: FieldRef<"Store", 'String'>
     readonly companyId: FieldRef<"Store", 'String'>
+    readonly terminalLayoutId: FieldRef<"Store", 'String'>
     readonly createdAt: FieldRef<"Store", 'DateTime'>
     readonly updatedAt: FieldRef<"Store", 'DateTime'>
   }
@@ -6410,6 +6666,25 @@ export namespace Prisma {
   }
 
   /**
+   * Store.terminalLayout
+   */
+  export type Store$terminalLayoutArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TerminalLayout
+     */
+    select?: TerminalLayoutSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TerminalLayout
+     */
+    omit?: TerminalLayoutOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TerminalLayoutInclude<ExtArgs> | null
+    where?: TerminalLayoutWhereInput
+  }
+
+  /**
    * Store.terminals
    */
   export type Store$terminalsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -6498,6 +6773,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: CompanyIntegrationScalarFieldEnum | CompanyIntegrationScalarFieldEnum[]
+  }
+
+  /**
+   * Store.medias
+   */
+  export type Store$mediasArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Media
+     */
+    select?: MediaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Media
+     */
+    omit?: MediaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MediaInclude<ExtArgs> | null
+    where?: MediaWhereInput
+    orderBy?: MediaOrderByWithRelationInput | MediaOrderByWithRelationInput[]
+    cursor?: MediaWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: MediaScalarFieldEnum | MediaScalarFieldEnum[]
   }
 
   /**
@@ -6779,6 +7078,7 @@ export namespace Prisma {
     heartbeats?: boolean | Terminal$heartbeatsArgs<ExtArgs>
     events?: boolean | Terminal$eventsArgs<ExtArgs>
     campaigns?: boolean | Terminal$campaignsArgs<ExtArgs>
+    activationCodeHistory?: boolean | Terminal$activationCodeHistoryArgs<ExtArgs>
     _count?: boolean | TerminalCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["terminal"]>
 
@@ -6853,6 +7153,7 @@ export namespace Prisma {
     heartbeats?: boolean | Terminal$heartbeatsArgs<ExtArgs>
     events?: boolean | Terminal$eventsArgs<ExtArgs>
     campaigns?: boolean | Terminal$campaignsArgs<ExtArgs>
+    activationCodeHistory?: boolean | Terminal$activationCodeHistoryArgs<ExtArgs>
     _count?: boolean | TerminalCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type TerminalIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -6875,6 +7176,7 @@ export namespace Prisma {
       heartbeats: Prisma.$TerminalHeartbeatPayload<ExtArgs>[]
       events: Prisma.$TerminalEventPayload<ExtArgs>[]
       campaigns: Prisma.$CampaignPayload<ExtArgs>[]
+      activationCodeHistory: Prisma.$ActivationCodeHistoryPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -7295,6 +7597,7 @@ export namespace Prisma {
     heartbeats<T extends Terminal$heartbeatsArgs<ExtArgs> = {}>(args?: Subset<T, Terminal$heartbeatsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TerminalHeartbeatPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     events<T extends Terminal$eventsArgs<ExtArgs> = {}>(args?: Subset<T, Terminal$eventsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TerminalEventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     campaigns<T extends Terminal$campaignsArgs<ExtArgs> = {}>(args?: Subset<T, Terminal$campaignsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CampaignPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    activationCodeHistory<T extends Terminal$activationCodeHistoryArgs<ExtArgs> = {}>(args?: Subset<T, Terminal$activationCodeHistoryArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ActivationCodeHistoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -7896,6 +8199,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: CampaignScalarFieldEnum | CampaignScalarFieldEnum[]
+  }
+
+  /**
+   * Terminal.activationCodeHistory
+   */
+  export type Terminal$activationCodeHistoryArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ActivationCodeHistory
+     */
+    select?: ActivationCodeHistorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ActivationCodeHistory
+     */
+    omit?: ActivationCodeHistoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ActivationCodeHistoryInclude<ExtArgs> | null
+    where?: ActivationCodeHistoryWhereInput
+    orderBy?: ActivationCodeHistoryOrderByWithRelationInput | ActivationCodeHistoryOrderByWithRelationInput[]
+    cursor?: ActivationCodeHistoryWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ActivationCodeHistoryScalarFieldEnum | ActivationCodeHistoryScalarFieldEnum[]
   }
 
   /**
@@ -14797,6 +15124,7 @@ export namespace Prisma {
     size: number | null
     type: string | null
     companyId: string | null
+    storeId: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -14812,6 +15140,7 @@ export namespace Prisma {
     size: number | null
     type: string | null
     companyId: string | null
+    storeId: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -14827,6 +15156,7 @@ export namespace Prisma {
     size: number
     type: number
     companyId: number
+    storeId: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -14852,6 +15182,7 @@ export namespace Prisma {
     size?: true
     type?: true
     companyId?: true
+    storeId?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -14867,6 +15198,7 @@ export namespace Prisma {
     size?: true
     type?: true
     companyId?: true
+    storeId?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -14882,6 +15214,7 @@ export namespace Prisma {
     size?: true
     type?: true
     companyId?: true
+    storeId?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -14984,6 +15317,7 @@ export namespace Prisma {
     size: number
     type: string
     companyId: string | null
+    storeId: string | null
     createdAt: Date
     updatedAt: Date
     _count: MediaCountAggregateOutputType | null
@@ -15018,9 +15352,11 @@ export namespace Prisma {
     size?: boolean
     type?: boolean
     companyId?: boolean
+    storeId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     company?: boolean | Media$companyArgs<ExtArgs>
+    store?: boolean | Media$storeArgs<ExtArgs>
     terminalMedias?: boolean | Media$terminalMediasArgs<ExtArgs>
     _count?: boolean | MediaCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["media"]>
@@ -15036,9 +15372,11 @@ export namespace Prisma {
     size?: boolean
     type?: boolean
     companyId?: boolean
+    storeId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     company?: boolean | Media$companyArgs<ExtArgs>
+    store?: boolean | Media$storeArgs<ExtArgs>
   }, ExtArgs["result"]["media"]>
 
   export type MediaSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -15052,9 +15390,11 @@ export namespace Prisma {
     size?: boolean
     type?: boolean
     companyId?: boolean
+    storeId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     company?: boolean | Media$companyArgs<ExtArgs>
+    store?: boolean | Media$storeArgs<ExtArgs>
   }, ExtArgs["result"]["media"]>
 
   export type MediaSelectScalar = {
@@ -15068,27 +15408,32 @@ export namespace Prisma {
     size?: boolean
     type?: boolean
     companyId?: boolean
+    storeId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type MediaOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "bucket" | "path" | "url" | "fileName" | "originalName" | "mimeType" | "size" | "type" | "companyId" | "createdAt" | "updatedAt", ExtArgs["result"]["media"]>
+  export type MediaOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "bucket" | "path" | "url" | "fileName" | "originalName" | "mimeType" | "size" | "type" | "companyId" | "storeId" | "createdAt" | "updatedAt", ExtArgs["result"]["media"]>
   export type MediaInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     company?: boolean | Media$companyArgs<ExtArgs>
+    store?: boolean | Media$storeArgs<ExtArgs>
     terminalMedias?: boolean | Media$terminalMediasArgs<ExtArgs>
     _count?: boolean | MediaCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type MediaIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     company?: boolean | Media$companyArgs<ExtArgs>
+    store?: boolean | Media$storeArgs<ExtArgs>
   }
   export type MediaIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     company?: boolean | Media$companyArgs<ExtArgs>
+    store?: boolean | Media$storeArgs<ExtArgs>
   }
 
   export type $MediaPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Media"
     objects: {
       company: Prisma.$CompanyPayload<ExtArgs> | null
+      store: Prisma.$StorePayload<ExtArgs> | null
       terminalMedias: Prisma.$TerminalMediaPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
@@ -15102,6 +15447,7 @@ export namespace Prisma {
       size: number
       type: string
       companyId: string | null
+      storeId: string | null
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["media"]>
@@ -15499,6 +15845,7 @@ export namespace Prisma {
   export interface Prisma__MediaClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     company<T extends Media$companyArgs<ExtArgs> = {}>(args?: Subset<T, Media$companyArgs<ExtArgs>>): Prisma__CompanyClient<$Result.GetResult<Prisma.$CompanyPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    store<T extends Media$storeArgs<ExtArgs> = {}>(args?: Subset<T, Media$storeArgs<ExtArgs>>): Prisma__StoreClient<$Result.GetResult<Prisma.$StorePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     terminalMedias<T extends Media$terminalMediasArgs<ExtArgs> = {}>(args?: Subset<T, Media$terminalMediasArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TerminalMediaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -15539,6 +15886,7 @@ export namespace Prisma {
     readonly size: FieldRef<"Media", 'Int'>
     readonly type: FieldRef<"Media", 'String'>
     readonly companyId: FieldRef<"Media", 'String'>
+    readonly storeId: FieldRef<"Media", 'String'>
     readonly createdAt: FieldRef<"Media", 'DateTime'>
     readonly updatedAt: FieldRef<"Media", 'DateTime'>
   }
@@ -15961,6 +16309,25 @@ export namespace Prisma {
   }
 
   /**
+   * Media.store
+   */
+  export type Media$storeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Store
+     */
+    select?: StoreSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Store
+     */
+    omit?: StoreOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StoreInclude<ExtArgs> | null
+    where?: StoreWhereInput
+  }
+
+  /**
    * Media.terminalMedias
    */
   export type Media$terminalMediasArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -16017,15 +16384,18 @@ export namespace Prisma {
 
   export type TerminalMediaAvgAggregateOutputType = {
     order: number | null
+    duration: number | null
   }
 
   export type TerminalMediaSumAggregateOutputType = {
     order: number | null
+    duration: number | null
   }
 
   export type TerminalMediaMinAggregateOutputType = {
     id: string | null
     order: number | null
+    duration: number | null
     startsAt: Date | null
     endsAt: Date | null
     terminalId: string | null
@@ -16036,6 +16406,7 @@ export namespace Prisma {
   export type TerminalMediaMaxAggregateOutputType = {
     id: string | null
     order: number | null
+    duration: number | null
     startsAt: Date | null
     endsAt: Date | null
     terminalId: string | null
@@ -16046,6 +16417,7 @@ export namespace Prisma {
   export type TerminalMediaCountAggregateOutputType = {
     id: number
     order: number
+    duration: number
     startsAt: number
     endsAt: number
     terminalId: number
@@ -16057,15 +16429,18 @@ export namespace Prisma {
 
   export type TerminalMediaAvgAggregateInputType = {
     order?: true
+    duration?: true
   }
 
   export type TerminalMediaSumAggregateInputType = {
     order?: true
+    duration?: true
   }
 
   export type TerminalMediaMinAggregateInputType = {
     id?: true
     order?: true
+    duration?: true
     startsAt?: true
     endsAt?: true
     terminalId?: true
@@ -16076,6 +16451,7 @@ export namespace Prisma {
   export type TerminalMediaMaxAggregateInputType = {
     id?: true
     order?: true
+    duration?: true
     startsAt?: true
     endsAt?: true
     terminalId?: true
@@ -16086,6 +16462,7 @@ export namespace Prisma {
   export type TerminalMediaCountAggregateInputType = {
     id?: true
     order?: true
+    duration?: true
     startsAt?: true
     endsAt?: true
     terminalId?: true
@@ -16183,6 +16560,7 @@ export namespace Prisma {
   export type TerminalMediaGroupByOutputType = {
     id: string
     order: number
+    duration: number | null
     startsAt: Date | null
     endsAt: Date | null
     terminalId: string
@@ -16212,6 +16590,7 @@ export namespace Prisma {
   export type TerminalMediaSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     order?: boolean
+    duration?: boolean
     startsAt?: boolean
     endsAt?: boolean
     terminalId?: boolean
@@ -16225,6 +16604,7 @@ export namespace Prisma {
   export type TerminalMediaSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     order?: boolean
+    duration?: boolean
     startsAt?: boolean
     endsAt?: boolean
     terminalId?: boolean
@@ -16238,6 +16618,7 @@ export namespace Prisma {
   export type TerminalMediaSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     order?: boolean
+    duration?: boolean
     startsAt?: boolean
     endsAt?: boolean
     terminalId?: boolean
@@ -16251,6 +16632,7 @@ export namespace Prisma {
   export type TerminalMediaSelectScalar = {
     id?: boolean
     order?: boolean
+    duration?: boolean
     startsAt?: boolean
     endsAt?: boolean
     terminalId?: boolean
@@ -16258,7 +16640,7 @@ export namespace Prisma {
     campaignId?: boolean
   }
 
-  export type TerminalMediaOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "order" | "startsAt" | "endsAt" | "terminalId" | "mediaId" | "campaignId", ExtArgs["result"]["terminalMedia"]>
+  export type TerminalMediaOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "order" | "duration" | "startsAt" | "endsAt" | "terminalId" | "mediaId" | "campaignId", ExtArgs["result"]["terminalMedia"]>
   export type TerminalMediaInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     terminal?: boolean | TerminalDefaultArgs<ExtArgs>
     media?: boolean | MediaDefaultArgs<ExtArgs>
@@ -16285,6 +16667,7 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       id: string
       order: number
+      duration: number | null
       startsAt: Date | null
       endsAt: Date | null
       terminalId: string
@@ -16718,6 +17101,7 @@ export namespace Prisma {
   interface TerminalMediaFieldRefs {
     readonly id: FieldRef<"TerminalMedia", 'String'>
     readonly order: FieldRef<"TerminalMedia", 'Int'>
+    readonly duration: FieldRef<"TerminalMedia", 'Int'>
     readonly startsAt: FieldRef<"TerminalMedia", 'DateTime'>
     readonly endsAt: FieldRef<"TerminalMedia", 'DateTime'>
     readonly terminalId: FieldRef<"TerminalMedia", 'String'>
@@ -19280,6 +19664,1056 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: TerminalEventInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model ActivationCodeHistory
+   */
+
+  export type AggregateActivationCodeHistory = {
+    _count: ActivationCodeHistoryCountAggregateOutputType | null
+    _min: ActivationCodeHistoryMinAggregateOutputType | null
+    _max: ActivationCodeHistoryMaxAggregateOutputType | null
+  }
+
+  export type ActivationCodeHistoryMinAggregateOutputType = {
+    id: string | null
+    code: string | null
+    terminalId: string | null
+    createdAt: Date | null
+  }
+
+  export type ActivationCodeHistoryMaxAggregateOutputType = {
+    id: string | null
+    code: string | null
+    terminalId: string | null
+    createdAt: Date | null
+  }
+
+  export type ActivationCodeHistoryCountAggregateOutputType = {
+    id: number
+    code: number
+    terminalId: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type ActivationCodeHistoryMinAggregateInputType = {
+    id?: true
+    code?: true
+    terminalId?: true
+    createdAt?: true
+  }
+
+  export type ActivationCodeHistoryMaxAggregateInputType = {
+    id?: true
+    code?: true
+    terminalId?: true
+    createdAt?: true
+  }
+
+  export type ActivationCodeHistoryCountAggregateInputType = {
+    id?: true
+    code?: true
+    terminalId?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type ActivationCodeHistoryAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ActivationCodeHistory to aggregate.
+     */
+    where?: ActivationCodeHistoryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ActivationCodeHistories to fetch.
+     */
+    orderBy?: ActivationCodeHistoryOrderByWithRelationInput | ActivationCodeHistoryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ActivationCodeHistoryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ActivationCodeHistories from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ActivationCodeHistories.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned ActivationCodeHistories
+    **/
+    _count?: true | ActivationCodeHistoryCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ActivationCodeHistoryMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ActivationCodeHistoryMaxAggregateInputType
+  }
+
+  export type GetActivationCodeHistoryAggregateType<T extends ActivationCodeHistoryAggregateArgs> = {
+        [P in keyof T & keyof AggregateActivationCodeHistory]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateActivationCodeHistory[P]>
+      : GetScalarType<T[P], AggregateActivationCodeHistory[P]>
+  }
+
+
+
+
+  export type ActivationCodeHistoryGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ActivationCodeHistoryWhereInput
+    orderBy?: ActivationCodeHistoryOrderByWithAggregationInput | ActivationCodeHistoryOrderByWithAggregationInput[]
+    by: ActivationCodeHistoryScalarFieldEnum[] | ActivationCodeHistoryScalarFieldEnum
+    having?: ActivationCodeHistoryScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ActivationCodeHistoryCountAggregateInputType | true
+    _min?: ActivationCodeHistoryMinAggregateInputType
+    _max?: ActivationCodeHistoryMaxAggregateInputType
+  }
+
+  export type ActivationCodeHistoryGroupByOutputType = {
+    id: string
+    code: string
+    terminalId: string
+    createdAt: Date
+    _count: ActivationCodeHistoryCountAggregateOutputType | null
+    _min: ActivationCodeHistoryMinAggregateOutputType | null
+    _max: ActivationCodeHistoryMaxAggregateOutputType | null
+  }
+
+  type GetActivationCodeHistoryGroupByPayload<T extends ActivationCodeHistoryGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ActivationCodeHistoryGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ActivationCodeHistoryGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ActivationCodeHistoryGroupByOutputType[P]>
+            : GetScalarType<T[P], ActivationCodeHistoryGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ActivationCodeHistorySelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    code?: boolean
+    terminalId?: boolean
+    createdAt?: boolean
+    terminal?: boolean | TerminalDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["activationCodeHistory"]>
+
+  export type ActivationCodeHistorySelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    code?: boolean
+    terminalId?: boolean
+    createdAt?: boolean
+    terminal?: boolean | TerminalDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["activationCodeHistory"]>
+
+  export type ActivationCodeHistorySelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    code?: boolean
+    terminalId?: boolean
+    createdAt?: boolean
+    terminal?: boolean | TerminalDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["activationCodeHistory"]>
+
+  export type ActivationCodeHistorySelectScalar = {
+    id?: boolean
+    code?: boolean
+    terminalId?: boolean
+    createdAt?: boolean
+  }
+
+  export type ActivationCodeHistoryOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "code" | "terminalId" | "createdAt", ExtArgs["result"]["activationCodeHistory"]>
+  export type ActivationCodeHistoryInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    terminal?: boolean | TerminalDefaultArgs<ExtArgs>
+  }
+  export type ActivationCodeHistoryIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    terminal?: boolean | TerminalDefaultArgs<ExtArgs>
+  }
+  export type ActivationCodeHistoryIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    terminal?: boolean | TerminalDefaultArgs<ExtArgs>
+  }
+
+  export type $ActivationCodeHistoryPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "ActivationCodeHistory"
+    objects: {
+      terminal: Prisma.$TerminalPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      code: string
+      terminalId: string
+      createdAt: Date
+    }, ExtArgs["result"]["activationCodeHistory"]>
+    composites: {}
+  }
+
+  type ActivationCodeHistoryGetPayload<S extends boolean | null | undefined | ActivationCodeHistoryDefaultArgs> = $Result.GetResult<Prisma.$ActivationCodeHistoryPayload, S>
+
+  type ActivationCodeHistoryCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ActivationCodeHistoryFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: ActivationCodeHistoryCountAggregateInputType | true
+    }
+
+  export interface ActivationCodeHistoryDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ActivationCodeHistory'], meta: { name: 'ActivationCodeHistory' } }
+    /**
+     * Find zero or one ActivationCodeHistory that matches the filter.
+     * @param {ActivationCodeHistoryFindUniqueArgs} args - Arguments to find a ActivationCodeHistory
+     * @example
+     * // Get one ActivationCodeHistory
+     * const activationCodeHistory = await prisma.activationCodeHistory.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ActivationCodeHistoryFindUniqueArgs>(args: SelectSubset<T, ActivationCodeHistoryFindUniqueArgs<ExtArgs>>): Prisma__ActivationCodeHistoryClient<$Result.GetResult<Prisma.$ActivationCodeHistoryPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one ActivationCodeHistory that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {ActivationCodeHistoryFindUniqueOrThrowArgs} args - Arguments to find a ActivationCodeHistory
+     * @example
+     * // Get one ActivationCodeHistory
+     * const activationCodeHistory = await prisma.activationCodeHistory.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ActivationCodeHistoryFindUniqueOrThrowArgs>(args: SelectSubset<T, ActivationCodeHistoryFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ActivationCodeHistoryClient<$Result.GetResult<Prisma.$ActivationCodeHistoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ActivationCodeHistory that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ActivationCodeHistoryFindFirstArgs} args - Arguments to find a ActivationCodeHistory
+     * @example
+     * // Get one ActivationCodeHistory
+     * const activationCodeHistory = await prisma.activationCodeHistory.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ActivationCodeHistoryFindFirstArgs>(args?: SelectSubset<T, ActivationCodeHistoryFindFirstArgs<ExtArgs>>): Prisma__ActivationCodeHistoryClient<$Result.GetResult<Prisma.$ActivationCodeHistoryPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ActivationCodeHistory that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ActivationCodeHistoryFindFirstOrThrowArgs} args - Arguments to find a ActivationCodeHistory
+     * @example
+     * // Get one ActivationCodeHistory
+     * const activationCodeHistory = await prisma.activationCodeHistory.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ActivationCodeHistoryFindFirstOrThrowArgs>(args?: SelectSubset<T, ActivationCodeHistoryFindFirstOrThrowArgs<ExtArgs>>): Prisma__ActivationCodeHistoryClient<$Result.GetResult<Prisma.$ActivationCodeHistoryPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more ActivationCodeHistories that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ActivationCodeHistoryFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all ActivationCodeHistories
+     * const activationCodeHistories = await prisma.activationCodeHistory.findMany()
+     * 
+     * // Get first 10 ActivationCodeHistories
+     * const activationCodeHistories = await prisma.activationCodeHistory.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const activationCodeHistoryWithIdOnly = await prisma.activationCodeHistory.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ActivationCodeHistoryFindManyArgs>(args?: SelectSubset<T, ActivationCodeHistoryFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ActivationCodeHistoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a ActivationCodeHistory.
+     * @param {ActivationCodeHistoryCreateArgs} args - Arguments to create a ActivationCodeHistory.
+     * @example
+     * // Create one ActivationCodeHistory
+     * const ActivationCodeHistory = await prisma.activationCodeHistory.create({
+     *   data: {
+     *     // ... data to create a ActivationCodeHistory
+     *   }
+     * })
+     * 
+     */
+    create<T extends ActivationCodeHistoryCreateArgs>(args: SelectSubset<T, ActivationCodeHistoryCreateArgs<ExtArgs>>): Prisma__ActivationCodeHistoryClient<$Result.GetResult<Prisma.$ActivationCodeHistoryPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many ActivationCodeHistories.
+     * @param {ActivationCodeHistoryCreateManyArgs} args - Arguments to create many ActivationCodeHistories.
+     * @example
+     * // Create many ActivationCodeHistories
+     * const activationCodeHistory = await prisma.activationCodeHistory.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ActivationCodeHistoryCreateManyArgs>(args?: SelectSubset<T, ActivationCodeHistoryCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many ActivationCodeHistories and returns the data saved in the database.
+     * @param {ActivationCodeHistoryCreateManyAndReturnArgs} args - Arguments to create many ActivationCodeHistories.
+     * @example
+     * // Create many ActivationCodeHistories
+     * const activationCodeHistory = await prisma.activationCodeHistory.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many ActivationCodeHistories and only return the `id`
+     * const activationCodeHistoryWithIdOnly = await prisma.activationCodeHistory.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends ActivationCodeHistoryCreateManyAndReturnArgs>(args?: SelectSubset<T, ActivationCodeHistoryCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ActivationCodeHistoryPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a ActivationCodeHistory.
+     * @param {ActivationCodeHistoryDeleteArgs} args - Arguments to delete one ActivationCodeHistory.
+     * @example
+     * // Delete one ActivationCodeHistory
+     * const ActivationCodeHistory = await prisma.activationCodeHistory.delete({
+     *   where: {
+     *     // ... filter to delete one ActivationCodeHistory
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ActivationCodeHistoryDeleteArgs>(args: SelectSubset<T, ActivationCodeHistoryDeleteArgs<ExtArgs>>): Prisma__ActivationCodeHistoryClient<$Result.GetResult<Prisma.$ActivationCodeHistoryPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one ActivationCodeHistory.
+     * @param {ActivationCodeHistoryUpdateArgs} args - Arguments to update one ActivationCodeHistory.
+     * @example
+     * // Update one ActivationCodeHistory
+     * const activationCodeHistory = await prisma.activationCodeHistory.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ActivationCodeHistoryUpdateArgs>(args: SelectSubset<T, ActivationCodeHistoryUpdateArgs<ExtArgs>>): Prisma__ActivationCodeHistoryClient<$Result.GetResult<Prisma.$ActivationCodeHistoryPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more ActivationCodeHistories.
+     * @param {ActivationCodeHistoryDeleteManyArgs} args - Arguments to filter ActivationCodeHistories to delete.
+     * @example
+     * // Delete a few ActivationCodeHistories
+     * const { count } = await prisma.activationCodeHistory.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ActivationCodeHistoryDeleteManyArgs>(args?: SelectSubset<T, ActivationCodeHistoryDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ActivationCodeHistories.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ActivationCodeHistoryUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many ActivationCodeHistories
+     * const activationCodeHistory = await prisma.activationCodeHistory.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ActivationCodeHistoryUpdateManyArgs>(args: SelectSubset<T, ActivationCodeHistoryUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ActivationCodeHistories and returns the data updated in the database.
+     * @param {ActivationCodeHistoryUpdateManyAndReturnArgs} args - Arguments to update many ActivationCodeHistories.
+     * @example
+     * // Update many ActivationCodeHistories
+     * const activationCodeHistory = await prisma.activationCodeHistory.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more ActivationCodeHistories and only return the `id`
+     * const activationCodeHistoryWithIdOnly = await prisma.activationCodeHistory.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends ActivationCodeHistoryUpdateManyAndReturnArgs>(args: SelectSubset<T, ActivationCodeHistoryUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ActivationCodeHistoryPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one ActivationCodeHistory.
+     * @param {ActivationCodeHistoryUpsertArgs} args - Arguments to update or create a ActivationCodeHistory.
+     * @example
+     * // Update or create a ActivationCodeHistory
+     * const activationCodeHistory = await prisma.activationCodeHistory.upsert({
+     *   create: {
+     *     // ... data to create a ActivationCodeHistory
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the ActivationCodeHistory we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ActivationCodeHistoryUpsertArgs>(args: SelectSubset<T, ActivationCodeHistoryUpsertArgs<ExtArgs>>): Prisma__ActivationCodeHistoryClient<$Result.GetResult<Prisma.$ActivationCodeHistoryPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of ActivationCodeHistories.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ActivationCodeHistoryCountArgs} args - Arguments to filter ActivationCodeHistories to count.
+     * @example
+     * // Count the number of ActivationCodeHistories
+     * const count = await prisma.activationCodeHistory.count({
+     *   where: {
+     *     // ... the filter for the ActivationCodeHistories we want to count
+     *   }
+     * })
+    **/
+    count<T extends ActivationCodeHistoryCountArgs>(
+      args?: Subset<T, ActivationCodeHistoryCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ActivationCodeHistoryCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a ActivationCodeHistory.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ActivationCodeHistoryAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ActivationCodeHistoryAggregateArgs>(args: Subset<T, ActivationCodeHistoryAggregateArgs>): Prisma.PrismaPromise<GetActivationCodeHistoryAggregateType<T>>
+
+    /**
+     * Group by ActivationCodeHistory.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ActivationCodeHistoryGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ActivationCodeHistoryGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ActivationCodeHistoryGroupByArgs['orderBy'] }
+        : { orderBy?: ActivationCodeHistoryGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ActivationCodeHistoryGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetActivationCodeHistoryGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the ActivationCodeHistory model
+   */
+  readonly fields: ActivationCodeHistoryFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for ActivationCodeHistory.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ActivationCodeHistoryClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    terminal<T extends TerminalDefaultArgs<ExtArgs> = {}>(args?: Subset<T, TerminalDefaultArgs<ExtArgs>>): Prisma__TerminalClient<$Result.GetResult<Prisma.$TerminalPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the ActivationCodeHistory model
+   */
+  interface ActivationCodeHistoryFieldRefs {
+    readonly id: FieldRef<"ActivationCodeHistory", 'String'>
+    readonly code: FieldRef<"ActivationCodeHistory", 'String'>
+    readonly terminalId: FieldRef<"ActivationCodeHistory", 'String'>
+    readonly createdAt: FieldRef<"ActivationCodeHistory", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * ActivationCodeHistory findUnique
+   */
+  export type ActivationCodeHistoryFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ActivationCodeHistory
+     */
+    select?: ActivationCodeHistorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ActivationCodeHistory
+     */
+    omit?: ActivationCodeHistoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ActivationCodeHistoryInclude<ExtArgs> | null
+    /**
+     * Filter, which ActivationCodeHistory to fetch.
+     */
+    where: ActivationCodeHistoryWhereUniqueInput
+  }
+
+  /**
+   * ActivationCodeHistory findUniqueOrThrow
+   */
+  export type ActivationCodeHistoryFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ActivationCodeHistory
+     */
+    select?: ActivationCodeHistorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ActivationCodeHistory
+     */
+    omit?: ActivationCodeHistoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ActivationCodeHistoryInclude<ExtArgs> | null
+    /**
+     * Filter, which ActivationCodeHistory to fetch.
+     */
+    where: ActivationCodeHistoryWhereUniqueInput
+  }
+
+  /**
+   * ActivationCodeHistory findFirst
+   */
+  export type ActivationCodeHistoryFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ActivationCodeHistory
+     */
+    select?: ActivationCodeHistorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ActivationCodeHistory
+     */
+    omit?: ActivationCodeHistoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ActivationCodeHistoryInclude<ExtArgs> | null
+    /**
+     * Filter, which ActivationCodeHistory to fetch.
+     */
+    where?: ActivationCodeHistoryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ActivationCodeHistories to fetch.
+     */
+    orderBy?: ActivationCodeHistoryOrderByWithRelationInput | ActivationCodeHistoryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ActivationCodeHistories.
+     */
+    cursor?: ActivationCodeHistoryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ActivationCodeHistories from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ActivationCodeHistories.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ActivationCodeHistories.
+     */
+    distinct?: ActivationCodeHistoryScalarFieldEnum | ActivationCodeHistoryScalarFieldEnum[]
+  }
+
+  /**
+   * ActivationCodeHistory findFirstOrThrow
+   */
+  export type ActivationCodeHistoryFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ActivationCodeHistory
+     */
+    select?: ActivationCodeHistorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ActivationCodeHistory
+     */
+    omit?: ActivationCodeHistoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ActivationCodeHistoryInclude<ExtArgs> | null
+    /**
+     * Filter, which ActivationCodeHistory to fetch.
+     */
+    where?: ActivationCodeHistoryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ActivationCodeHistories to fetch.
+     */
+    orderBy?: ActivationCodeHistoryOrderByWithRelationInput | ActivationCodeHistoryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ActivationCodeHistories.
+     */
+    cursor?: ActivationCodeHistoryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ActivationCodeHistories from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ActivationCodeHistories.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ActivationCodeHistories.
+     */
+    distinct?: ActivationCodeHistoryScalarFieldEnum | ActivationCodeHistoryScalarFieldEnum[]
+  }
+
+  /**
+   * ActivationCodeHistory findMany
+   */
+  export type ActivationCodeHistoryFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ActivationCodeHistory
+     */
+    select?: ActivationCodeHistorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ActivationCodeHistory
+     */
+    omit?: ActivationCodeHistoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ActivationCodeHistoryInclude<ExtArgs> | null
+    /**
+     * Filter, which ActivationCodeHistories to fetch.
+     */
+    where?: ActivationCodeHistoryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ActivationCodeHistories to fetch.
+     */
+    orderBy?: ActivationCodeHistoryOrderByWithRelationInput | ActivationCodeHistoryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing ActivationCodeHistories.
+     */
+    cursor?: ActivationCodeHistoryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ActivationCodeHistories from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ActivationCodeHistories.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ActivationCodeHistories.
+     */
+    distinct?: ActivationCodeHistoryScalarFieldEnum | ActivationCodeHistoryScalarFieldEnum[]
+  }
+
+  /**
+   * ActivationCodeHistory create
+   */
+  export type ActivationCodeHistoryCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ActivationCodeHistory
+     */
+    select?: ActivationCodeHistorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ActivationCodeHistory
+     */
+    omit?: ActivationCodeHistoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ActivationCodeHistoryInclude<ExtArgs> | null
+    /**
+     * The data needed to create a ActivationCodeHistory.
+     */
+    data: XOR<ActivationCodeHistoryCreateInput, ActivationCodeHistoryUncheckedCreateInput>
+  }
+
+  /**
+   * ActivationCodeHistory createMany
+   */
+  export type ActivationCodeHistoryCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many ActivationCodeHistories.
+     */
+    data: ActivationCodeHistoryCreateManyInput | ActivationCodeHistoryCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ActivationCodeHistory createManyAndReturn
+   */
+  export type ActivationCodeHistoryCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ActivationCodeHistory
+     */
+    select?: ActivationCodeHistorySelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ActivationCodeHistory
+     */
+    omit?: ActivationCodeHistoryOmit<ExtArgs> | null
+    /**
+     * The data used to create many ActivationCodeHistories.
+     */
+    data: ActivationCodeHistoryCreateManyInput | ActivationCodeHistoryCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ActivationCodeHistoryIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * ActivationCodeHistory update
+   */
+  export type ActivationCodeHistoryUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ActivationCodeHistory
+     */
+    select?: ActivationCodeHistorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ActivationCodeHistory
+     */
+    omit?: ActivationCodeHistoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ActivationCodeHistoryInclude<ExtArgs> | null
+    /**
+     * The data needed to update a ActivationCodeHistory.
+     */
+    data: XOR<ActivationCodeHistoryUpdateInput, ActivationCodeHistoryUncheckedUpdateInput>
+    /**
+     * Choose, which ActivationCodeHistory to update.
+     */
+    where: ActivationCodeHistoryWhereUniqueInput
+  }
+
+  /**
+   * ActivationCodeHistory updateMany
+   */
+  export type ActivationCodeHistoryUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update ActivationCodeHistories.
+     */
+    data: XOR<ActivationCodeHistoryUpdateManyMutationInput, ActivationCodeHistoryUncheckedUpdateManyInput>
+    /**
+     * Filter which ActivationCodeHistories to update
+     */
+    where?: ActivationCodeHistoryWhereInput
+    /**
+     * Limit how many ActivationCodeHistories to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * ActivationCodeHistory updateManyAndReturn
+   */
+  export type ActivationCodeHistoryUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ActivationCodeHistory
+     */
+    select?: ActivationCodeHistorySelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ActivationCodeHistory
+     */
+    omit?: ActivationCodeHistoryOmit<ExtArgs> | null
+    /**
+     * The data used to update ActivationCodeHistories.
+     */
+    data: XOR<ActivationCodeHistoryUpdateManyMutationInput, ActivationCodeHistoryUncheckedUpdateManyInput>
+    /**
+     * Filter which ActivationCodeHistories to update
+     */
+    where?: ActivationCodeHistoryWhereInput
+    /**
+     * Limit how many ActivationCodeHistories to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ActivationCodeHistoryIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * ActivationCodeHistory upsert
+   */
+  export type ActivationCodeHistoryUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ActivationCodeHistory
+     */
+    select?: ActivationCodeHistorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ActivationCodeHistory
+     */
+    omit?: ActivationCodeHistoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ActivationCodeHistoryInclude<ExtArgs> | null
+    /**
+     * The filter to search for the ActivationCodeHistory to update in case it exists.
+     */
+    where: ActivationCodeHistoryWhereUniqueInput
+    /**
+     * In case the ActivationCodeHistory found by the `where` argument doesn't exist, create a new ActivationCodeHistory with this data.
+     */
+    create: XOR<ActivationCodeHistoryCreateInput, ActivationCodeHistoryUncheckedCreateInput>
+    /**
+     * In case the ActivationCodeHistory was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ActivationCodeHistoryUpdateInput, ActivationCodeHistoryUncheckedUpdateInput>
+  }
+
+  /**
+   * ActivationCodeHistory delete
+   */
+  export type ActivationCodeHistoryDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ActivationCodeHistory
+     */
+    select?: ActivationCodeHistorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ActivationCodeHistory
+     */
+    omit?: ActivationCodeHistoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ActivationCodeHistoryInclude<ExtArgs> | null
+    /**
+     * Filter which ActivationCodeHistory to delete.
+     */
+    where: ActivationCodeHistoryWhereUniqueInput
+  }
+
+  /**
+   * ActivationCodeHistory deleteMany
+   */
+  export type ActivationCodeHistoryDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ActivationCodeHistories to delete
+     */
+    where?: ActivationCodeHistoryWhereInput
+    /**
+     * Limit how many ActivationCodeHistories to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * ActivationCodeHistory without action
+   */
+  export type ActivationCodeHistoryDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ActivationCodeHistory
+     */
+    select?: ActivationCodeHistorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ActivationCodeHistory
+     */
+    omit?: ActivationCodeHistoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ActivationCodeHistoryInclude<ExtArgs> | null
   }
 
 
@@ -24800,6 +26234,1172 @@ export namespace Prisma {
 
 
   /**
+   * Model TerminalLayout
+   */
+
+  export type AggregateTerminalLayout = {
+    _count: TerminalLayoutCountAggregateOutputType | null
+    _min: TerminalLayoutMinAggregateOutputType | null
+    _max: TerminalLayoutMaxAggregateOutputType | null
+  }
+
+  export type TerminalLayoutMinAggregateOutputType = {
+    id: string | null
+    slug: string | null
+    name: string | null
+    description: string | null
+    configFound: string | null
+    configNotFound: string | null
+    configIdle: string | null
+    isPublic: boolean | null
+    isActive: boolean | null
+    thumbnailUrl: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type TerminalLayoutMaxAggregateOutputType = {
+    id: string | null
+    slug: string | null
+    name: string | null
+    description: string | null
+    configFound: string | null
+    configNotFound: string | null
+    configIdle: string | null
+    isPublic: boolean | null
+    isActive: boolean | null
+    thumbnailUrl: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type TerminalLayoutCountAggregateOutputType = {
+    id: number
+    slug: number
+    name: number
+    description: number
+    configFound: number
+    configNotFound: number
+    configIdle: number
+    isPublic: number
+    isActive: number
+    thumbnailUrl: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type TerminalLayoutMinAggregateInputType = {
+    id?: true
+    slug?: true
+    name?: true
+    description?: true
+    configFound?: true
+    configNotFound?: true
+    configIdle?: true
+    isPublic?: true
+    isActive?: true
+    thumbnailUrl?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type TerminalLayoutMaxAggregateInputType = {
+    id?: true
+    slug?: true
+    name?: true
+    description?: true
+    configFound?: true
+    configNotFound?: true
+    configIdle?: true
+    isPublic?: true
+    isActive?: true
+    thumbnailUrl?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type TerminalLayoutCountAggregateInputType = {
+    id?: true
+    slug?: true
+    name?: true
+    description?: true
+    configFound?: true
+    configNotFound?: true
+    configIdle?: true
+    isPublic?: true
+    isActive?: true
+    thumbnailUrl?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type TerminalLayoutAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which TerminalLayout to aggregate.
+     */
+    where?: TerminalLayoutWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TerminalLayouts to fetch.
+     */
+    orderBy?: TerminalLayoutOrderByWithRelationInput | TerminalLayoutOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: TerminalLayoutWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TerminalLayouts from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TerminalLayouts.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned TerminalLayouts
+    **/
+    _count?: true | TerminalLayoutCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: TerminalLayoutMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: TerminalLayoutMaxAggregateInputType
+  }
+
+  export type GetTerminalLayoutAggregateType<T extends TerminalLayoutAggregateArgs> = {
+        [P in keyof T & keyof AggregateTerminalLayout]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateTerminalLayout[P]>
+      : GetScalarType<T[P], AggregateTerminalLayout[P]>
+  }
+
+
+
+
+  export type TerminalLayoutGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TerminalLayoutWhereInput
+    orderBy?: TerminalLayoutOrderByWithAggregationInput | TerminalLayoutOrderByWithAggregationInput[]
+    by: TerminalLayoutScalarFieldEnum[] | TerminalLayoutScalarFieldEnum
+    having?: TerminalLayoutScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: TerminalLayoutCountAggregateInputType | true
+    _min?: TerminalLayoutMinAggregateInputType
+    _max?: TerminalLayoutMaxAggregateInputType
+  }
+
+  export type TerminalLayoutGroupByOutputType = {
+    id: string
+    slug: string | null
+    name: string
+    description: string | null
+    configFound: string
+    configNotFound: string
+    configIdle: string
+    isPublic: boolean
+    isActive: boolean
+    thumbnailUrl: string | null
+    createdAt: Date
+    updatedAt: Date
+    _count: TerminalLayoutCountAggregateOutputType | null
+    _min: TerminalLayoutMinAggregateOutputType | null
+    _max: TerminalLayoutMaxAggregateOutputType | null
+  }
+
+  type GetTerminalLayoutGroupByPayload<T extends TerminalLayoutGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<TerminalLayoutGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof TerminalLayoutGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], TerminalLayoutGroupByOutputType[P]>
+            : GetScalarType<T[P], TerminalLayoutGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type TerminalLayoutSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    slug?: boolean
+    name?: boolean
+    description?: boolean
+    configFound?: boolean
+    configNotFound?: boolean
+    configIdle?: boolean
+    isPublic?: boolean
+    isActive?: boolean
+    thumbnailUrl?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    stores?: boolean | TerminalLayout$storesArgs<ExtArgs>
+    _count?: boolean | TerminalLayoutCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["terminalLayout"]>
+
+  export type TerminalLayoutSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    slug?: boolean
+    name?: boolean
+    description?: boolean
+    configFound?: boolean
+    configNotFound?: boolean
+    configIdle?: boolean
+    isPublic?: boolean
+    isActive?: boolean
+    thumbnailUrl?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["terminalLayout"]>
+
+  export type TerminalLayoutSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    slug?: boolean
+    name?: boolean
+    description?: boolean
+    configFound?: boolean
+    configNotFound?: boolean
+    configIdle?: boolean
+    isPublic?: boolean
+    isActive?: boolean
+    thumbnailUrl?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["terminalLayout"]>
+
+  export type TerminalLayoutSelectScalar = {
+    id?: boolean
+    slug?: boolean
+    name?: boolean
+    description?: boolean
+    configFound?: boolean
+    configNotFound?: boolean
+    configIdle?: boolean
+    isPublic?: boolean
+    isActive?: boolean
+    thumbnailUrl?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type TerminalLayoutOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "slug" | "name" | "description" | "configFound" | "configNotFound" | "configIdle" | "isPublic" | "isActive" | "thumbnailUrl" | "createdAt" | "updatedAt", ExtArgs["result"]["terminalLayout"]>
+  export type TerminalLayoutInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    stores?: boolean | TerminalLayout$storesArgs<ExtArgs>
+    _count?: boolean | TerminalLayoutCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type TerminalLayoutIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type TerminalLayoutIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+
+  export type $TerminalLayoutPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "TerminalLayout"
+    objects: {
+      stores: Prisma.$StorePayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      slug: string | null
+      name: string
+      description: string | null
+      configFound: string
+      configNotFound: string
+      configIdle: string
+      isPublic: boolean
+      isActive: boolean
+      thumbnailUrl: string | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["terminalLayout"]>
+    composites: {}
+  }
+
+  type TerminalLayoutGetPayload<S extends boolean | null | undefined | TerminalLayoutDefaultArgs> = $Result.GetResult<Prisma.$TerminalLayoutPayload, S>
+
+  type TerminalLayoutCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<TerminalLayoutFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: TerminalLayoutCountAggregateInputType | true
+    }
+
+  export interface TerminalLayoutDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['TerminalLayout'], meta: { name: 'TerminalLayout' } }
+    /**
+     * Find zero or one TerminalLayout that matches the filter.
+     * @param {TerminalLayoutFindUniqueArgs} args - Arguments to find a TerminalLayout
+     * @example
+     * // Get one TerminalLayout
+     * const terminalLayout = await prisma.terminalLayout.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends TerminalLayoutFindUniqueArgs>(args: SelectSubset<T, TerminalLayoutFindUniqueArgs<ExtArgs>>): Prisma__TerminalLayoutClient<$Result.GetResult<Prisma.$TerminalLayoutPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one TerminalLayout that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {TerminalLayoutFindUniqueOrThrowArgs} args - Arguments to find a TerminalLayout
+     * @example
+     * // Get one TerminalLayout
+     * const terminalLayout = await prisma.terminalLayout.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends TerminalLayoutFindUniqueOrThrowArgs>(args: SelectSubset<T, TerminalLayoutFindUniqueOrThrowArgs<ExtArgs>>): Prisma__TerminalLayoutClient<$Result.GetResult<Prisma.$TerminalLayoutPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first TerminalLayout that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TerminalLayoutFindFirstArgs} args - Arguments to find a TerminalLayout
+     * @example
+     * // Get one TerminalLayout
+     * const terminalLayout = await prisma.terminalLayout.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends TerminalLayoutFindFirstArgs>(args?: SelectSubset<T, TerminalLayoutFindFirstArgs<ExtArgs>>): Prisma__TerminalLayoutClient<$Result.GetResult<Prisma.$TerminalLayoutPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first TerminalLayout that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TerminalLayoutFindFirstOrThrowArgs} args - Arguments to find a TerminalLayout
+     * @example
+     * // Get one TerminalLayout
+     * const terminalLayout = await prisma.terminalLayout.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends TerminalLayoutFindFirstOrThrowArgs>(args?: SelectSubset<T, TerminalLayoutFindFirstOrThrowArgs<ExtArgs>>): Prisma__TerminalLayoutClient<$Result.GetResult<Prisma.$TerminalLayoutPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more TerminalLayouts that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TerminalLayoutFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all TerminalLayouts
+     * const terminalLayouts = await prisma.terminalLayout.findMany()
+     * 
+     * // Get first 10 TerminalLayouts
+     * const terminalLayouts = await prisma.terminalLayout.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const terminalLayoutWithIdOnly = await prisma.terminalLayout.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends TerminalLayoutFindManyArgs>(args?: SelectSubset<T, TerminalLayoutFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TerminalLayoutPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a TerminalLayout.
+     * @param {TerminalLayoutCreateArgs} args - Arguments to create a TerminalLayout.
+     * @example
+     * // Create one TerminalLayout
+     * const TerminalLayout = await prisma.terminalLayout.create({
+     *   data: {
+     *     // ... data to create a TerminalLayout
+     *   }
+     * })
+     * 
+     */
+    create<T extends TerminalLayoutCreateArgs>(args: SelectSubset<T, TerminalLayoutCreateArgs<ExtArgs>>): Prisma__TerminalLayoutClient<$Result.GetResult<Prisma.$TerminalLayoutPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many TerminalLayouts.
+     * @param {TerminalLayoutCreateManyArgs} args - Arguments to create many TerminalLayouts.
+     * @example
+     * // Create many TerminalLayouts
+     * const terminalLayout = await prisma.terminalLayout.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends TerminalLayoutCreateManyArgs>(args?: SelectSubset<T, TerminalLayoutCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many TerminalLayouts and returns the data saved in the database.
+     * @param {TerminalLayoutCreateManyAndReturnArgs} args - Arguments to create many TerminalLayouts.
+     * @example
+     * // Create many TerminalLayouts
+     * const terminalLayout = await prisma.terminalLayout.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many TerminalLayouts and only return the `id`
+     * const terminalLayoutWithIdOnly = await prisma.terminalLayout.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends TerminalLayoutCreateManyAndReturnArgs>(args?: SelectSubset<T, TerminalLayoutCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TerminalLayoutPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a TerminalLayout.
+     * @param {TerminalLayoutDeleteArgs} args - Arguments to delete one TerminalLayout.
+     * @example
+     * // Delete one TerminalLayout
+     * const TerminalLayout = await prisma.terminalLayout.delete({
+     *   where: {
+     *     // ... filter to delete one TerminalLayout
+     *   }
+     * })
+     * 
+     */
+    delete<T extends TerminalLayoutDeleteArgs>(args: SelectSubset<T, TerminalLayoutDeleteArgs<ExtArgs>>): Prisma__TerminalLayoutClient<$Result.GetResult<Prisma.$TerminalLayoutPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one TerminalLayout.
+     * @param {TerminalLayoutUpdateArgs} args - Arguments to update one TerminalLayout.
+     * @example
+     * // Update one TerminalLayout
+     * const terminalLayout = await prisma.terminalLayout.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends TerminalLayoutUpdateArgs>(args: SelectSubset<T, TerminalLayoutUpdateArgs<ExtArgs>>): Prisma__TerminalLayoutClient<$Result.GetResult<Prisma.$TerminalLayoutPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more TerminalLayouts.
+     * @param {TerminalLayoutDeleteManyArgs} args - Arguments to filter TerminalLayouts to delete.
+     * @example
+     * // Delete a few TerminalLayouts
+     * const { count } = await prisma.terminalLayout.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends TerminalLayoutDeleteManyArgs>(args?: SelectSubset<T, TerminalLayoutDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more TerminalLayouts.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TerminalLayoutUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many TerminalLayouts
+     * const terminalLayout = await prisma.terminalLayout.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends TerminalLayoutUpdateManyArgs>(args: SelectSubset<T, TerminalLayoutUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more TerminalLayouts and returns the data updated in the database.
+     * @param {TerminalLayoutUpdateManyAndReturnArgs} args - Arguments to update many TerminalLayouts.
+     * @example
+     * // Update many TerminalLayouts
+     * const terminalLayout = await prisma.terminalLayout.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more TerminalLayouts and only return the `id`
+     * const terminalLayoutWithIdOnly = await prisma.terminalLayout.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends TerminalLayoutUpdateManyAndReturnArgs>(args: SelectSubset<T, TerminalLayoutUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TerminalLayoutPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one TerminalLayout.
+     * @param {TerminalLayoutUpsertArgs} args - Arguments to update or create a TerminalLayout.
+     * @example
+     * // Update or create a TerminalLayout
+     * const terminalLayout = await prisma.terminalLayout.upsert({
+     *   create: {
+     *     // ... data to create a TerminalLayout
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the TerminalLayout we want to update
+     *   }
+     * })
+     */
+    upsert<T extends TerminalLayoutUpsertArgs>(args: SelectSubset<T, TerminalLayoutUpsertArgs<ExtArgs>>): Prisma__TerminalLayoutClient<$Result.GetResult<Prisma.$TerminalLayoutPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of TerminalLayouts.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TerminalLayoutCountArgs} args - Arguments to filter TerminalLayouts to count.
+     * @example
+     * // Count the number of TerminalLayouts
+     * const count = await prisma.terminalLayout.count({
+     *   where: {
+     *     // ... the filter for the TerminalLayouts we want to count
+     *   }
+     * })
+    **/
+    count<T extends TerminalLayoutCountArgs>(
+      args?: Subset<T, TerminalLayoutCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], TerminalLayoutCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a TerminalLayout.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TerminalLayoutAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends TerminalLayoutAggregateArgs>(args: Subset<T, TerminalLayoutAggregateArgs>): Prisma.PrismaPromise<GetTerminalLayoutAggregateType<T>>
+
+    /**
+     * Group by TerminalLayout.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TerminalLayoutGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends TerminalLayoutGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: TerminalLayoutGroupByArgs['orderBy'] }
+        : { orderBy?: TerminalLayoutGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, TerminalLayoutGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetTerminalLayoutGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the TerminalLayout model
+   */
+  readonly fields: TerminalLayoutFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for TerminalLayout.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__TerminalLayoutClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    stores<T extends TerminalLayout$storesArgs<ExtArgs> = {}>(args?: Subset<T, TerminalLayout$storesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$StorePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the TerminalLayout model
+   */
+  interface TerminalLayoutFieldRefs {
+    readonly id: FieldRef<"TerminalLayout", 'String'>
+    readonly slug: FieldRef<"TerminalLayout", 'String'>
+    readonly name: FieldRef<"TerminalLayout", 'String'>
+    readonly description: FieldRef<"TerminalLayout", 'String'>
+    readonly configFound: FieldRef<"TerminalLayout", 'String'>
+    readonly configNotFound: FieldRef<"TerminalLayout", 'String'>
+    readonly configIdle: FieldRef<"TerminalLayout", 'String'>
+    readonly isPublic: FieldRef<"TerminalLayout", 'Boolean'>
+    readonly isActive: FieldRef<"TerminalLayout", 'Boolean'>
+    readonly thumbnailUrl: FieldRef<"TerminalLayout", 'String'>
+    readonly createdAt: FieldRef<"TerminalLayout", 'DateTime'>
+    readonly updatedAt: FieldRef<"TerminalLayout", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * TerminalLayout findUnique
+   */
+  export type TerminalLayoutFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TerminalLayout
+     */
+    select?: TerminalLayoutSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TerminalLayout
+     */
+    omit?: TerminalLayoutOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TerminalLayoutInclude<ExtArgs> | null
+    /**
+     * Filter, which TerminalLayout to fetch.
+     */
+    where: TerminalLayoutWhereUniqueInput
+  }
+
+  /**
+   * TerminalLayout findUniqueOrThrow
+   */
+  export type TerminalLayoutFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TerminalLayout
+     */
+    select?: TerminalLayoutSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TerminalLayout
+     */
+    omit?: TerminalLayoutOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TerminalLayoutInclude<ExtArgs> | null
+    /**
+     * Filter, which TerminalLayout to fetch.
+     */
+    where: TerminalLayoutWhereUniqueInput
+  }
+
+  /**
+   * TerminalLayout findFirst
+   */
+  export type TerminalLayoutFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TerminalLayout
+     */
+    select?: TerminalLayoutSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TerminalLayout
+     */
+    omit?: TerminalLayoutOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TerminalLayoutInclude<ExtArgs> | null
+    /**
+     * Filter, which TerminalLayout to fetch.
+     */
+    where?: TerminalLayoutWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TerminalLayouts to fetch.
+     */
+    orderBy?: TerminalLayoutOrderByWithRelationInput | TerminalLayoutOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for TerminalLayouts.
+     */
+    cursor?: TerminalLayoutWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TerminalLayouts from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TerminalLayouts.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of TerminalLayouts.
+     */
+    distinct?: TerminalLayoutScalarFieldEnum | TerminalLayoutScalarFieldEnum[]
+  }
+
+  /**
+   * TerminalLayout findFirstOrThrow
+   */
+  export type TerminalLayoutFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TerminalLayout
+     */
+    select?: TerminalLayoutSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TerminalLayout
+     */
+    omit?: TerminalLayoutOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TerminalLayoutInclude<ExtArgs> | null
+    /**
+     * Filter, which TerminalLayout to fetch.
+     */
+    where?: TerminalLayoutWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TerminalLayouts to fetch.
+     */
+    orderBy?: TerminalLayoutOrderByWithRelationInput | TerminalLayoutOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for TerminalLayouts.
+     */
+    cursor?: TerminalLayoutWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TerminalLayouts from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TerminalLayouts.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of TerminalLayouts.
+     */
+    distinct?: TerminalLayoutScalarFieldEnum | TerminalLayoutScalarFieldEnum[]
+  }
+
+  /**
+   * TerminalLayout findMany
+   */
+  export type TerminalLayoutFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TerminalLayout
+     */
+    select?: TerminalLayoutSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TerminalLayout
+     */
+    omit?: TerminalLayoutOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TerminalLayoutInclude<ExtArgs> | null
+    /**
+     * Filter, which TerminalLayouts to fetch.
+     */
+    where?: TerminalLayoutWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TerminalLayouts to fetch.
+     */
+    orderBy?: TerminalLayoutOrderByWithRelationInput | TerminalLayoutOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing TerminalLayouts.
+     */
+    cursor?: TerminalLayoutWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TerminalLayouts from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TerminalLayouts.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of TerminalLayouts.
+     */
+    distinct?: TerminalLayoutScalarFieldEnum | TerminalLayoutScalarFieldEnum[]
+  }
+
+  /**
+   * TerminalLayout create
+   */
+  export type TerminalLayoutCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TerminalLayout
+     */
+    select?: TerminalLayoutSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TerminalLayout
+     */
+    omit?: TerminalLayoutOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TerminalLayoutInclude<ExtArgs> | null
+    /**
+     * The data needed to create a TerminalLayout.
+     */
+    data: XOR<TerminalLayoutCreateInput, TerminalLayoutUncheckedCreateInput>
+  }
+
+  /**
+   * TerminalLayout createMany
+   */
+  export type TerminalLayoutCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many TerminalLayouts.
+     */
+    data: TerminalLayoutCreateManyInput | TerminalLayoutCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * TerminalLayout createManyAndReturn
+   */
+  export type TerminalLayoutCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TerminalLayout
+     */
+    select?: TerminalLayoutSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the TerminalLayout
+     */
+    omit?: TerminalLayoutOmit<ExtArgs> | null
+    /**
+     * The data used to create many TerminalLayouts.
+     */
+    data: TerminalLayoutCreateManyInput | TerminalLayoutCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * TerminalLayout update
+   */
+  export type TerminalLayoutUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TerminalLayout
+     */
+    select?: TerminalLayoutSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TerminalLayout
+     */
+    omit?: TerminalLayoutOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TerminalLayoutInclude<ExtArgs> | null
+    /**
+     * The data needed to update a TerminalLayout.
+     */
+    data: XOR<TerminalLayoutUpdateInput, TerminalLayoutUncheckedUpdateInput>
+    /**
+     * Choose, which TerminalLayout to update.
+     */
+    where: TerminalLayoutWhereUniqueInput
+  }
+
+  /**
+   * TerminalLayout updateMany
+   */
+  export type TerminalLayoutUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update TerminalLayouts.
+     */
+    data: XOR<TerminalLayoutUpdateManyMutationInput, TerminalLayoutUncheckedUpdateManyInput>
+    /**
+     * Filter which TerminalLayouts to update
+     */
+    where?: TerminalLayoutWhereInput
+    /**
+     * Limit how many TerminalLayouts to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * TerminalLayout updateManyAndReturn
+   */
+  export type TerminalLayoutUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TerminalLayout
+     */
+    select?: TerminalLayoutSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the TerminalLayout
+     */
+    omit?: TerminalLayoutOmit<ExtArgs> | null
+    /**
+     * The data used to update TerminalLayouts.
+     */
+    data: XOR<TerminalLayoutUpdateManyMutationInput, TerminalLayoutUncheckedUpdateManyInput>
+    /**
+     * Filter which TerminalLayouts to update
+     */
+    where?: TerminalLayoutWhereInput
+    /**
+     * Limit how many TerminalLayouts to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * TerminalLayout upsert
+   */
+  export type TerminalLayoutUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TerminalLayout
+     */
+    select?: TerminalLayoutSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TerminalLayout
+     */
+    omit?: TerminalLayoutOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TerminalLayoutInclude<ExtArgs> | null
+    /**
+     * The filter to search for the TerminalLayout to update in case it exists.
+     */
+    where: TerminalLayoutWhereUniqueInput
+    /**
+     * In case the TerminalLayout found by the `where` argument doesn't exist, create a new TerminalLayout with this data.
+     */
+    create: XOR<TerminalLayoutCreateInput, TerminalLayoutUncheckedCreateInput>
+    /**
+     * In case the TerminalLayout was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<TerminalLayoutUpdateInput, TerminalLayoutUncheckedUpdateInput>
+  }
+
+  /**
+   * TerminalLayout delete
+   */
+  export type TerminalLayoutDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TerminalLayout
+     */
+    select?: TerminalLayoutSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TerminalLayout
+     */
+    omit?: TerminalLayoutOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TerminalLayoutInclude<ExtArgs> | null
+    /**
+     * Filter which TerminalLayout to delete.
+     */
+    where: TerminalLayoutWhereUniqueInput
+  }
+
+  /**
+   * TerminalLayout deleteMany
+   */
+  export type TerminalLayoutDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which TerminalLayouts to delete
+     */
+    where?: TerminalLayoutWhereInput
+    /**
+     * Limit how many TerminalLayouts to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * TerminalLayout.stores
+   */
+  export type TerminalLayout$storesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Store
+     */
+    select?: StoreSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Store
+     */
+    omit?: StoreOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StoreInclude<ExtArgs> | null
+    where?: StoreWhereInput
+    orderBy?: StoreOrderByWithRelationInput | StoreOrderByWithRelationInput[]
+    cursor?: StoreWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: StoreScalarFieldEnum | StoreScalarFieldEnum[]
+  }
+
+  /**
+   * TerminalLayout without action
+   */
+  export type TerminalLayoutDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TerminalLayout
+     */
+    select?: TerminalLayoutSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TerminalLayout
+     */
+    omit?: TerminalLayoutOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TerminalLayoutInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -24850,6 +27450,7 @@ export namespace Prisma {
     name: 'name',
     address: 'address',
     companyId: 'companyId',
+    terminalLayoutId: 'terminalLayoutId',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -24974,6 +27575,7 @@ export namespace Prisma {
     size: 'size',
     type: 'type',
     companyId: 'companyId',
+    storeId: 'storeId',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -24984,6 +27586,7 @@ export namespace Prisma {
   export const TerminalMediaScalarFieldEnum: {
     id: 'id',
     order: 'order',
+    duration: 'duration',
     startsAt: 'startsAt',
     endsAt: 'endsAt',
     terminalId: 'terminalId',
@@ -25014,6 +27617,16 @@ export namespace Prisma {
   };
 
   export type TerminalEventScalarFieldEnum = (typeof TerminalEventScalarFieldEnum)[keyof typeof TerminalEventScalarFieldEnum]
+
+
+  export const ActivationCodeHistoryScalarFieldEnum: {
+    id: 'id',
+    code: 'code',
+    terminalId: 'terminalId',
+    createdAt: 'createdAt'
+  };
+
+  export type ActivationCodeHistoryScalarFieldEnum = (typeof ActivationCodeHistoryScalarFieldEnum)[keyof typeof ActivationCodeHistoryScalarFieldEnum]
 
 
   export const ConfigurationScalarFieldEnum: {
@@ -25088,6 +27701,24 @@ export namespace Prisma {
   };
 
   export type NotificationScalarFieldEnum = (typeof NotificationScalarFieldEnum)[keyof typeof NotificationScalarFieldEnum]
+
+
+  export const TerminalLayoutScalarFieldEnum: {
+    id: 'id',
+    slug: 'slug',
+    name: 'name',
+    description: 'description',
+    configFound: 'configFound',
+    configNotFound: 'configNotFound',
+    configIdle: 'configIdle',
+    isPublic: 'isPublic',
+    isActive: 'isActive',
+    thumbnailUrl: 'thumbnailUrl',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type TerminalLayoutScalarFieldEnum = (typeof TerminalLayoutScalarFieldEnum)[keyof typeof TerminalLayoutScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -25413,13 +28044,16 @@ export namespace Prisma {
     name?: StringFilter<"Store"> | string
     address?: StringNullableFilter<"Store"> | string | null
     companyId?: StringFilter<"Store"> | string
+    terminalLayoutId?: StringNullableFilter<"Store"> | string | null
     createdAt?: DateTimeFilter<"Store"> | Date | string
     updatedAt?: DateTimeFilter<"Store"> | Date | string
     company?: XOR<CompanyScalarRelationFilter, CompanyWhereInput>
+    terminalLayout?: XOR<TerminalLayoutNullableScalarRelationFilter, TerminalLayoutWhereInput> | null
     terminals?: TerminalListRelationFilter
     license?: XOR<StoreLicenseNullableScalarRelationFilter, StoreLicenseWhereInput> | null
     campaigns?: CampaignListRelationFilter
     integrations?: CompanyIntegrationListRelationFilter
+    medias?: MediaListRelationFilter
   }
 
   export type StoreOrderByWithRelationInput = {
@@ -25427,13 +28061,16 @@ export namespace Prisma {
     name?: SortOrder
     address?: SortOrderInput | SortOrder
     companyId?: SortOrder
+    terminalLayoutId?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     company?: CompanyOrderByWithRelationInput
+    terminalLayout?: TerminalLayoutOrderByWithRelationInput
     terminals?: TerminalOrderByRelationAggregateInput
     license?: StoreLicenseOrderByWithRelationInput
     campaigns?: CampaignOrderByRelationAggregateInput
     integrations?: CompanyIntegrationOrderByRelationAggregateInput
+    medias?: MediaOrderByRelationAggregateInput
   }
 
   export type StoreWhereUniqueInput = Prisma.AtLeast<{
@@ -25444,13 +28081,16 @@ export namespace Prisma {
     name?: StringFilter<"Store"> | string
     address?: StringNullableFilter<"Store"> | string | null
     companyId?: StringFilter<"Store"> | string
+    terminalLayoutId?: StringNullableFilter<"Store"> | string | null
     createdAt?: DateTimeFilter<"Store"> | Date | string
     updatedAt?: DateTimeFilter<"Store"> | Date | string
     company?: XOR<CompanyScalarRelationFilter, CompanyWhereInput>
+    terminalLayout?: XOR<TerminalLayoutNullableScalarRelationFilter, TerminalLayoutWhereInput> | null
     terminals?: TerminalListRelationFilter
     license?: XOR<StoreLicenseNullableScalarRelationFilter, StoreLicenseWhereInput> | null
     campaigns?: CampaignListRelationFilter
     integrations?: CompanyIntegrationListRelationFilter
+    medias?: MediaListRelationFilter
   }, "id">
 
   export type StoreOrderByWithAggregationInput = {
@@ -25458,6 +28098,7 @@ export namespace Prisma {
     name?: SortOrder
     address?: SortOrderInput | SortOrder
     companyId?: SortOrder
+    terminalLayoutId?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: StoreCountOrderByAggregateInput
@@ -25473,6 +28114,7 @@ export namespace Prisma {
     name?: StringWithAggregatesFilter<"Store"> | string
     address?: StringNullableWithAggregatesFilter<"Store"> | string | null
     companyId?: StringWithAggregatesFilter<"Store"> | string
+    terminalLayoutId?: StringNullableWithAggregatesFilter<"Store"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Store"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Store"> | Date | string
   }
@@ -25505,6 +28147,7 @@ export namespace Prisma {
     heartbeats?: TerminalHeartbeatListRelationFilter
     events?: TerminalEventListRelationFilter
     campaigns?: CampaignListRelationFilter
+    activationCodeHistory?: ActivationCodeHistoryListRelationFilter
   }
 
   export type TerminalOrderByWithRelationInput = {
@@ -25532,6 +28175,7 @@ export namespace Prisma {
     heartbeats?: TerminalHeartbeatOrderByRelationAggregateInput
     events?: TerminalEventOrderByRelationAggregateInput
     campaigns?: CampaignOrderByRelationAggregateInput
+    activationCodeHistory?: ActivationCodeHistoryOrderByRelationAggregateInput
   }
 
   export type TerminalWhereUniqueInput = Prisma.AtLeast<{
@@ -25562,6 +28206,7 @@ export namespace Prisma {
     heartbeats?: TerminalHeartbeatListRelationFilter
     events?: TerminalEventListRelationFilter
     campaigns?: CampaignListRelationFilter
+    activationCodeHistory?: ActivationCodeHistoryListRelationFilter
   }, "id" | "ip" | "activationCode">
 
   export type TerminalOrderByWithAggregationInput = {
@@ -26064,9 +28709,11 @@ export namespace Prisma {
     size?: IntFilter<"Media"> | number
     type?: StringFilter<"Media"> | string
     companyId?: StringNullableFilter<"Media"> | string | null
+    storeId?: StringNullableFilter<"Media"> | string | null
     createdAt?: DateTimeFilter<"Media"> | Date | string
     updatedAt?: DateTimeFilter<"Media"> | Date | string
     company?: XOR<CompanyNullableScalarRelationFilter, CompanyWhereInput> | null
+    store?: XOR<StoreNullableScalarRelationFilter, StoreWhereInput> | null
     terminalMedias?: TerminalMediaListRelationFilter
   }
 
@@ -26081,9 +28728,11 @@ export namespace Prisma {
     size?: SortOrder
     type?: SortOrder
     companyId?: SortOrderInput | SortOrder
+    storeId?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     company?: CompanyOrderByWithRelationInput
+    store?: StoreOrderByWithRelationInput
     terminalMedias?: TerminalMediaOrderByRelationAggregateInput
   }
 
@@ -26101,9 +28750,11 @@ export namespace Prisma {
     size?: IntFilter<"Media"> | number
     type?: StringFilter<"Media"> | string
     companyId?: StringNullableFilter<"Media"> | string | null
+    storeId?: StringNullableFilter<"Media"> | string | null
     createdAt?: DateTimeFilter<"Media"> | Date | string
     updatedAt?: DateTimeFilter<"Media"> | Date | string
     company?: XOR<CompanyNullableScalarRelationFilter, CompanyWhereInput> | null
+    store?: XOR<StoreNullableScalarRelationFilter, StoreWhereInput> | null
     terminalMedias?: TerminalMediaListRelationFilter
   }, "id" | "path">
 
@@ -26118,6 +28769,7 @@ export namespace Prisma {
     size?: SortOrder
     type?: SortOrder
     companyId?: SortOrderInput | SortOrder
+    storeId?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: MediaCountOrderByAggregateInput
@@ -26141,6 +28793,7 @@ export namespace Prisma {
     size?: IntWithAggregatesFilter<"Media"> | number
     type?: StringWithAggregatesFilter<"Media"> | string
     companyId?: StringNullableWithAggregatesFilter<"Media"> | string | null
+    storeId?: StringNullableWithAggregatesFilter<"Media"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Media"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Media"> | Date | string
   }
@@ -26151,6 +28804,7 @@ export namespace Prisma {
     NOT?: TerminalMediaWhereInput | TerminalMediaWhereInput[]
     id?: StringFilter<"TerminalMedia"> | string
     order?: IntFilter<"TerminalMedia"> | number
+    duration?: IntNullableFilter<"TerminalMedia"> | number | null
     startsAt?: DateTimeNullableFilter<"TerminalMedia"> | Date | string | null
     endsAt?: DateTimeNullableFilter<"TerminalMedia"> | Date | string | null
     terminalId?: StringFilter<"TerminalMedia"> | string
@@ -26164,6 +28818,7 @@ export namespace Prisma {
   export type TerminalMediaOrderByWithRelationInput = {
     id?: SortOrder
     order?: SortOrder
+    duration?: SortOrderInput | SortOrder
     startsAt?: SortOrderInput | SortOrder
     endsAt?: SortOrderInput | SortOrder
     terminalId?: SortOrder
@@ -26176,11 +28831,12 @@ export namespace Prisma {
 
   export type TerminalMediaWhereUniqueInput = Prisma.AtLeast<{
     id?: string
-    terminalId_mediaId?: TerminalMediaTerminalIdMediaIdCompoundUniqueInput
+    terminalId_mediaId_campaignId?: TerminalMediaTerminalIdMediaIdCampaignIdCompoundUniqueInput
     AND?: TerminalMediaWhereInput | TerminalMediaWhereInput[]
     OR?: TerminalMediaWhereInput[]
     NOT?: TerminalMediaWhereInput | TerminalMediaWhereInput[]
     order?: IntFilter<"TerminalMedia"> | number
+    duration?: IntNullableFilter<"TerminalMedia"> | number | null
     startsAt?: DateTimeNullableFilter<"TerminalMedia"> | Date | string | null
     endsAt?: DateTimeNullableFilter<"TerminalMedia"> | Date | string | null
     terminalId?: StringFilter<"TerminalMedia"> | string
@@ -26189,11 +28845,12 @@ export namespace Prisma {
     terminal?: XOR<TerminalScalarRelationFilter, TerminalWhereInput>
     media?: XOR<MediaScalarRelationFilter, MediaWhereInput>
     campaign?: XOR<CampaignNullableScalarRelationFilter, CampaignWhereInput> | null
-  }, "id" | "terminalId_mediaId">
+  }, "id" | "terminalId_mediaId_campaignId">
 
   export type TerminalMediaOrderByWithAggregationInput = {
     id?: SortOrder
     order?: SortOrder
+    duration?: SortOrderInput | SortOrder
     startsAt?: SortOrderInput | SortOrder
     endsAt?: SortOrderInput | SortOrder
     terminalId?: SortOrder
@@ -26212,6 +28869,7 @@ export namespace Prisma {
     NOT?: TerminalMediaScalarWhereWithAggregatesInput | TerminalMediaScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"TerminalMedia"> | string
     order?: IntWithAggregatesFilter<"TerminalMedia"> | number
+    duration?: IntNullableWithAggregatesFilter<"TerminalMedia"> | number | null
     startsAt?: DateTimeNullableWithAggregatesFilter<"TerminalMedia"> | Date | string | null
     endsAt?: DateTimeNullableWithAggregatesFilter<"TerminalMedia"> | Date | string | null
     terminalId?: StringWithAggregatesFilter<"TerminalMedia"> | string
@@ -26327,6 +28985,56 @@ export namespace Prisma {
     payload?: JsonNullableWithAggregatesFilter<"TerminalEvent">
     terminalId?: StringWithAggregatesFilter<"TerminalEvent"> | string
     createdAt?: DateTimeWithAggregatesFilter<"TerminalEvent"> | Date | string
+  }
+
+  export type ActivationCodeHistoryWhereInput = {
+    AND?: ActivationCodeHistoryWhereInput | ActivationCodeHistoryWhereInput[]
+    OR?: ActivationCodeHistoryWhereInput[]
+    NOT?: ActivationCodeHistoryWhereInput | ActivationCodeHistoryWhereInput[]
+    id?: StringFilter<"ActivationCodeHistory"> | string
+    code?: StringFilter<"ActivationCodeHistory"> | string
+    terminalId?: StringFilter<"ActivationCodeHistory"> | string
+    createdAt?: DateTimeFilter<"ActivationCodeHistory"> | Date | string
+    terminal?: XOR<TerminalScalarRelationFilter, TerminalWhereInput>
+  }
+
+  export type ActivationCodeHistoryOrderByWithRelationInput = {
+    id?: SortOrder
+    code?: SortOrder
+    terminalId?: SortOrder
+    createdAt?: SortOrder
+    terminal?: TerminalOrderByWithRelationInput
+  }
+
+  export type ActivationCodeHistoryWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    code?: string
+    AND?: ActivationCodeHistoryWhereInput | ActivationCodeHistoryWhereInput[]
+    OR?: ActivationCodeHistoryWhereInput[]
+    NOT?: ActivationCodeHistoryWhereInput | ActivationCodeHistoryWhereInput[]
+    terminalId?: StringFilter<"ActivationCodeHistory"> | string
+    createdAt?: DateTimeFilter<"ActivationCodeHistory"> | Date | string
+    terminal?: XOR<TerminalScalarRelationFilter, TerminalWhereInput>
+  }, "id" | "code">
+
+  export type ActivationCodeHistoryOrderByWithAggregationInput = {
+    id?: SortOrder
+    code?: SortOrder
+    terminalId?: SortOrder
+    createdAt?: SortOrder
+    _count?: ActivationCodeHistoryCountOrderByAggregateInput
+    _max?: ActivationCodeHistoryMaxOrderByAggregateInput
+    _min?: ActivationCodeHistoryMinOrderByAggregateInput
+  }
+
+  export type ActivationCodeHistoryScalarWhereWithAggregatesInput = {
+    AND?: ActivationCodeHistoryScalarWhereWithAggregatesInput | ActivationCodeHistoryScalarWhereWithAggregatesInput[]
+    OR?: ActivationCodeHistoryScalarWhereWithAggregatesInput[]
+    NOT?: ActivationCodeHistoryScalarWhereWithAggregatesInput | ActivationCodeHistoryScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"ActivationCodeHistory"> | string
+    code?: StringWithAggregatesFilter<"ActivationCodeHistory"> | string
+    terminalId?: StringWithAggregatesFilter<"ActivationCodeHistory"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"ActivationCodeHistory"> | Date | string
   }
 
   export type ConfigurationWhereInput = {
@@ -26702,6 +29410,96 @@ export namespace Prisma {
     createdAt?: DateTimeWithAggregatesFilter<"Notification"> | Date | string
   }
 
+  export type TerminalLayoutWhereInput = {
+    AND?: TerminalLayoutWhereInput | TerminalLayoutWhereInput[]
+    OR?: TerminalLayoutWhereInput[]
+    NOT?: TerminalLayoutWhereInput | TerminalLayoutWhereInput[]
+    id?: StringFilter<"TerminalLayout"> | string
+    slug?: StringNullableFilter<"TerminalLayout"> | string | null
+    name?: StringFilter<"TerminalLayout"> | string
+    description?: StringNullableFilter<"TerminalLayout"> | string | null
+    configFound?: StringFilter<"TerminalLayout"> | string
+    configNotFound?: StringFilter<"TerminalLayout"> | string
+    configIdle?: StringFilter<"TerminalLayout"> | string
+    isPublic?: BoolFilter<"TerminalLayout"> | boolean
+    isActive?: BoolFilter<"TerminalLayout"> | boolean
+    thumbnailUrl?: StringNullableFilter<"TerminalLayout"> | string | null
+    createdAt?: DateTimeFilter<"TerminalLayout"> | Date | string
+    updatedAt?: DateTimeFilter<"TerminalLayout"> | Date | string
+    stores?: StoreListRelationFilter
+  }
+
+  export type TerminalLayoutOrderByWithRelationInput = {
+    id?: SortOrder
+    slug?: SortOrderInput | SortOrder
+    name?: SortOrder
+    description?: SortOrderInput | SortOrder
+    configFound?: SortOrder
+    configNotFound?: SortOrder
+    configIdle?: SortOrder
+    isPublic?: SortOrder
+    isActive?: SortOrder
+    thumbnailUrl?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    stores?: StoreOrderByRelationAggregateInput
+  }
+
+  export type TerminalLayoutWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    slug?: string
+    AND?: TerminalLayoutWhereInput | TerminalLayoutWhereInput[]
+    OR?: TerminalLayoutWhereInput[]
+    NOT?: TerminalLayoutWhereInput | TerminalLayoutWhereInput[]
+    name?: StringFilter<"TerminalLayout"> | string
+    description?: StringNullableFilter<"TerminalLayout"> | string | null
+    configFound?: StringFilter<"TerminalLayout"> | string
+    configNotFound?: StringFilter<"TerminalLayout"> | string
+    configIdle?: StringFilter<"TerminalLayout"> | string
+    isPublic?: BoolFilter<"TerminalLayout"> | boolean
+    isActive?: BoolFilter<"TerminalLayout"> | boolean
+    thumbnailUrl?: StringNullableFilter<"TerminalLayout"> | string | null
+    createdAt?: DateTimeFilter<"TerminalLayout"> | Date | string
+    updatedAt?: DateTimeFilter<"TerminalLayout"> | Date | string
+    stores?: StoreListRelationFilter
+  }, "id" | "slug">
+
+  export type TerminalLayoutOrderByWithAggregationInput = {
+    id?: SortOrder
+    slug?: SortOrderInput | SortOrder
+    name?: SortOrder
+    description?: SortOrderInput | SortOrder
+    configFound?: SortOrder
+    configNotFound?: SortOrder
+    configIdle?: SortOrder
+    isPublic?: SortOrder
+    isActive?: SortOrder
+    thumbnailUrl?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: TerminalLayoutCountOrderByAggregateInput
+    _max?: TerminalLayoutMaxOrderByAggregateInput
+    _min?: TerminalLayoutMinOrderByAggregateInput
+  }
+
+  export type TerminalLayoutScalarWhereWithAggregatesInput = {
+    AND?: TerminalLayoutScalarWhereWithAggregatesInput | TerminalLayoutScalarWhereWithAggregatesInput[]
+    OR?: TerminalLayoutScalarWhereWithAggregatesInput[]
+    NOT?: TerminalLayoutScalarWhereWithAggregatesInput | TerminalLayoutScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"TerminalLayout"> | string
+    slug?: StringNullableWithAggregatesFilter<"TerminalLayout"> | string | null
+    name?: StringWithAggregatesFilter<"TerminalLayout"> | string
+    description?: StringNullableWithAggregatesFilter<"TerminalLayout"> | string | null
+    configFound?: StringWithAggregatesFilter<"TerminalLayout"> | string
+    configNotFound?: StringWithAggregatesFilter<"TerminalLayout"> | string
+    configIdle?: StringWithAggregatesFilter<"TerminalLayout"> | string
+    isPublic?: BoolWithAggregatesFilter<"TerminalLayout"> | boolean
+    isActive?: BoolWithAggregatesFilter<"TerminalLayout"> | boolean
+    thumbnailUrl?: StringNullableWithAggregatesFilter<"TerminalLayout"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"TerminalLayout"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"TerminalLayout"> | Date | string
+  }
+
   export type CompanyCreateInput = {
     id?: string
     name: string
@@ -26922,10 +29720,12 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     company: CompanyCreateNestedOneWithoutStoresInput
+    terminalLayout?: TerminalLayoutCreateNestedOneWithoutStoresInput
     terminals?: TerminalCreateNestedManyWithoutStoreInput
     license?: StoreLicenseCreateNestedOneWithoutStoreInput
     campaigns?: CampaignCreateNestedManyWithoutStoreInput
     integrations?: CompanyIntegrationCreateNestedManyWithoutStoreInput
+    medias?: MediaCreateNestedManyWithoutStoreInput
   }
 
   export type StoreUncheckedCreateInput = {
@@ -26933,12 +29733,14 @@ export namespace Prisma {
     name: string
     address?: string | null
     companyId: string
+    terminalLayoutId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     terminals?: TerminalUncheckedCreateNestedManyWithoutStoreInput
     license?: StoreLicenseUncheckedCreateNestedOneWithoutStoreInput
     campaigns?: CampaignUncheckedCreateNestedManyWithoutStoreInput
     integrations?: CompanyIntegrationUncheckedCreateNestedManyWithoutStoreInput
+    medias?: MediaUncheckedCreateNestedManyWithoutStoreInput
   }
 
   export type StoreUpdateInput = {
@@ -26948,10 +29750,12 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     company?: CompanyUpdateOneRequiredWithoutStoresNestedInput
+    terminalLayout?: TerminalLayoutUpdateOneWithoutStoresNestedInput
     terminals?: TerminalUpdateManyWithoutStoreNestedInput
     license?: StoreLicenseUpdateOneWithoutStoreNestedInput
     campaigns?: CampaignUpdateManyWithoutStoreNestedInput
     integrations?: CompanyIntegrationUpdateManyWithoutStoreNestedInput
+    medias?: MediaUpdateManyWithoutStoreNestedInput
   }
 
   export type StoreUncheckedUpdateInput = {
@@ -26959,12 +29763,14 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     address?: NullableStringFieldUpdateOperationsInput | string | null
     companyId?: StringFieldUpdateOperationsInput | string
+    terminalLayoutId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     terminals?: TerminalUncheckedUpdateManyWithoutStoreNestedInput
     license?: StoreLicenseUncheckedUpdateOneWithoutStoreNestedInput
     campaigns?: CampaignUncheckedUpdateManyWithoutStoreNestedInput
     integrations?: CompanyIntegrationUncheckedUpdateManyWithoutStoreNestedInput
+    medias?: MediaUncheckedUpdateManyWithoutStoreNestedInput
   }
 
   export type StoreCreateManyInput = {
@@ -26972,6 +29778,7 @@ export namespace Prisma {
     name: string
     address?: string | null
     companyId: string
+    terminalLayoutId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -26989,6 +29796,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     address?: NullableStringFieldUpdateOperationsInput | string | null
     companyId?: StringFieldUpdateOperationsInput | string
+    terminalLayoutId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -27016,6 +29824,7 @@ export namespace Prisma {
     heartbeats?: TerminalHeartbeatCreateNestedManyWithoutTerminalInput
     events?: TerminalEventCreateNestedManyWithoutTerminalInput
     campaigns?: CampaignCreateNestedManyWithoutTerminalInput
+    activationCodeHistory?: ActivationCodeHistoryCreateNestedManyWithoutTerminalInput
   }
 
   export type TerminalUncheckedCreateInput = {
@@ -27041,6 +29850,7 @@ export namespace Prisma {
     heartbeats?: TerminalHeartbeatUncheckedCreateNestedManyWithoutTerminalInput
     events?: TerminalEventUncheckedCreateNestedManyWithoutTerminalInput
     campaigns?: CampaignUncheckedCreateNestedManyWithoutTerminalInput
+    activationCodeHistory?: ActivationCodeHistoryUncheckedCreateNestedManyWithoutTerminalInput
   }
 
   export type TerminalUpdateInput = {
@@ -27066,6 +29876,7 @@ export namespace Prisma {
     heartbeats?: TerminalHeartbeatUpdateManyWithoutTerminalNestedInput
     events?: TerminalEventUpdateManyWithoutTerminalNestedInput
     campaigns?: CampaignUpdateManyWithoutTerminalNestedInput
+    activationCodeHistory?: ActivationCodeHistoryUpdateManyWithoutTerminalNestedInput
   }
 
   export type TerminalUncheckedUpdateInput = {
@@ -27091,6 +29902,7 @@ export namespace Prisma {
     heartbeats?: TerminalHeartbeatUncheckedUpdateManyWithoutTerminalNestedInput
     events?: TerminalEventUncheckedUpdateManyWithoutTerminalNestedInput
     campaigns?: CampaignUncheckedUpdateManyWithoutTerminalNestedInput
+    activationCodeHistory?: ActivationCodeHistoryUncheckedUpdateManyWithoutTerminalNestedInput
   }
 
   export type TerminalCreateManyInput = {
@@ -27626,6 +30438,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     company?: CompanyCreateNestedOneWithoutMediasInput
+    store?: StoreCreateNestedOneWithoutMediasInput
     terminalMedias?: TerminalMediaCreateNestedManyWithoutMediaInput
   }
 
@@ -27640,6 +30453,7 @@ export namespace Prisma {
     size: number
     type: string
     companyId?: string | null
+    storeId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     terminalMedias?: TerminalMediaUncheckedCreateNestedManyWithoutMediaInput
@@ -27658,6 +30472,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     company?: CompanyUpdateOneWithoutMediasNestedInput
+    store?: StoreUpdateOneWithoutMediasNestedInput
     terminalMedias?: TerminalMediaUpdateManyWithoutMediaNestedInput
   }
 
@@ -27672,6 +30487,7 @@ export namespace Prisma {
     size?: IntFieldUpdateOperationsInput | number
     type?: StringFieldUpdateOperationsInput | string
     companyId?: NullableStringFieldUpdateOperationsInput | string | null
+    storeId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     terminalMedias?: TerminalMediaUncheckedUpdateManyWithoutMediaNestedInput
@@ -27688,6 +30504,7 @@ export namespace Prisma {
     size: number
     type: string
     companyId?: string | null
+    storeId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -27717,6 +30534,7 @@ export namespace Prisma {
     size?: IntFieldUpdateOperationsInput | number
     type?: StringFieldUpdateOperationsInput | string
     companyId?: NullableStringFieldUpdateOperationsInput | string | null
+    storeId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -27724,6 +30542,7 @@ export namespace Prisma {
   export type TerminalMediaCreateInput = {
     id?: string
     order?: number
+    duration?: number | null
     startsAt?: Date | string | null
     endsAt?: Date | string | null
     terminal: TerminalCreateNestedOneWithoutTerminalMediasInput
@@ -27734,6 +30553,7 @@ export namespace Prisma {
   export type TerminalMediaUncheckedCreateInput = {
     id?: string
     order?: number
+    duration?: number | null
     startsAt?: Date | string | null
     endsAt?: Date | string | null
     terminalId: string
@@ -27744,6 +30564,7 @@ export namespace Prisma {
   export type TerminalMediaUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     order?: IntFieldUpdateOperationsInput | number
+    duration?: NullableIntFieldUpdateOperationsInput | number | null
     startsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     endsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     terminal?: TerminalUpdateOneRequiredWithoutTerminalMediasNestedInput
@@ -27754,6 +30575,7 @@ export namespace Prisma {
   export type TerminalMediaUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     order?: IntFieldUpdateOperationsInput | number
+    duration?: NullableIntFieldUpdateOperationsInput | number | null
     startsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     endsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     terminalId?: StringFieldUpdateOperationsInput | string
@@ -27764,6 +30586,7 @@ export namespace Prisma {
   export type TerminalMediaCreateManyInput = {
     id?: string
     order?: number
+    duration?: number | null
     startsAt?: Date | string | null
     endsAt?: Date | string | null
     terminalId: string
@@ -27774,6 +30597,7 @@ export namespace Prisma {
   export type TerminalMediaUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     order?: IntFieldUpdateOperationsInput | number
+    duration?: NullableIntFieldUpdateOperationsInput | number | null
     startsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     endsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
@@ -27781,6 +30605,7 @@ export namespace Prisma {
   export type TerminalMediaUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     order?: IntFieldUpdateOperationsInput | number
+    duration?: NullableIntFieldUpdateOperationsInput | number | null
     startsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     endsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     terminalId?: StringFieldUpdateOperationsInput | string
@@ -27894,6 +30719,54 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     type?: StringFieldUpdateOperationsInput | string
     payload?: NullableJsonNullValueInput | InputJsonValue
+    terminalId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ActivationCodeHistoryCreateInput = {
+    id?: string
+    code: string
+    createdAt?: Date | string
+    terminal: TerminalCreateNestedOneWithoutActivationCodeHistoryInput
+  }
+
+  export type ActivationCodeHistoryUncheckedCreateInput = {
+    id?: string
+    code: string
+    terminalId: string
+    createdAt?: Date | string
+  }
+
+  export type ActivationCodeHistoryUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    code?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    terminal?: TerminalUpdateOneRequiredWithoutActivationCodeHistoryNestedInput
+  }
+
+  export type ActivationCodeHistoryUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    code?: StringFieldUpdateOperationsInput | string
+    terminalId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ActivationCodeHistoryCreateManyInput = {
+    id?: string
+    code: string
+    terminalId: string
+    createdAt?: Date | string
+  }
+
+  export type ActivationCodeHistoryUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    code?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ActivationCodeHistoryUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    code?: StringFieldUpdateOperationsInput | string
     terminalId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -28311,6 +31184,115 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type TerminalLayoutCreateInput = {
+    id?: string
+    slug?: string | null
+    name: string
+    description?: string | null
+    configFound?: string
+    configNotFound?: string
+    configIdle?: string
+    isPublic?: boolean
+    isActive?: boolean
+    thumbnailUrl?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    stores?: StoreCreateNestedManyWithoutTerminalLayoutInput
+  }
+
+  export type TerminalLayoutUncheckedCreateInput = {
+    id?: string
+    slug?: string | null
+    name: string
+    description?: string | null
+    configFound?: string
+    configNotFound?: string
+    configIdle?: string
+    isPublic?: boolean
+    isActive?: boolean
+    thumbnailUrl?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    stores?: StoreUncheckedCreateNestedManyWithoutTerminalLayoutInput
+  }
+
+  export type TerminalLayoutUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    slug?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    configFound?: StringFieldUpdateOperationsInput | string
+    configNotFound?: StringFieldUpdateOperationsInput | string
+    configIdle?: StringFieldUpdateOperationsInput | string
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    thumbnailUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    stores?: StoreUpdateManyWithoutTerminalLayoutNestedInput
+  }
+
+  export type TerminalLayoutUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    slug?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    configFound?: StringFieldUpdateOperationsInput | string
+    configNotFound?: StringFieldUpdateOperationsInput | string
+    configIdle?: StringFieldUpdateOperationsInput | string
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    thumbnailUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    stores?: StoreUncheckedUpdateManyWithoutTerminalLayoutNestedInput
+  }
+
+  export type TerminalLayoutCreateManyInput = {
+    id?: string
+    slug?: string | null
+    name: string
+    description?: string | null
+    configFound?: string
+    configNotFound?: string
+    configIdle?: string
+    isPublic?: boolean
+    isActive?: boolean
+    thumbnailUrl?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type TerminalLayoutUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    slug?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    configFound?: StringFieldUpdateOperationsInput | string
+    configNotFound?: StringFieldUpdateOperationsInput | string
+    configIdle?: StringFieldUpdateOperationsInput | string
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    thumbnailUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TerminalLayoutUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    slug?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    configFound?: StringFieldUpdateOperationsInput | string
+    configNotFound?: StringFieldUpdateOperationsInput | string
+    configIdle?: StringFieldUpdateOperationsInput | string
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    thumbnailUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -28565,6 +31547,11 @@ export namespace Prisma {
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
+  export type TerminalLayoutNullableScalarRelationFilter = {
+    is?: TerminalLayoutWhereInput | null
+    isNot?: TerminalLayoutWhereInput | null
+  }
+
   export type StoreLicenseNullableScalarRelationFilter = {
     is?: StoreLicenseWhereInput | null
     isNot?: StoreLicenseWhereInput | null
@@ -28580,6 +31567,7 @@ export namespace Prisma {
     name?: SortOrder
     address?: SortOrder
     companyId?: SortOrder
+    terminalLayoutId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -28589,6 +31577,7 @@ export namespace Prisma {
     name?: SortOrder
     address?: SortOrder
     companyId?: SortOrder
+    terminalLayoutId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -28598,6 +31587,7 @@ export namespace Prisma {
     name?: SortOrder
     address?: SortOrder
     companyId?: SortOrder
+    terminalLayoutId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -28659,6 +31649,12 @@ export namespace Prisma {
     none?: TerminalEventWhereInput
   }
 
+  export type ActivationCodeHistoryListRelationFilter = {
+    every?: ActivationCodeHistoryWhereInput
+    some?: ActivationCodeHistoryWhereInput
+    none?: ActivationCodeHistoryWhereInput
+  }
+
   export type TerminalMediaOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
@@ -28668,6 +31664,10 @@ export namespace Prisma {
   }
 
   export type TerminalEventOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type ActivationCodeHistoryOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -29098,6 +32098,7 @@ export namespace Prisma {
     size?: SortOrder
     type?: SortOrder
     companyId?: SortOrder
+    storeId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -29117,6 +32118,7 @@ export namespace Prisma {
     size?: SortOrder
     type?: SortOrder
     companyId?: SortOrder
+    storeId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -29132,12 +32134,24 @@ export namespace Prisma {
     size?: SortOrder
     type?: SortOrder
     companyId?: SortOrder
+    storeId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
 
   export type MediaSumOrderByAggregateInput = {
     size?: SortOrder
+  }
+
+  export type IntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
   }
 
   export type MediaScalarRelationFilter = {
@@ -29150,14 +32164,16 @@ export namespace Prisma {
     isNot?: CampaignWhereInput | null
   }
 
-  export type TerminalMediaTerminalIdMediaIdCompoundUniqueInput = {
+  export type TerminalMediaTerminalIdMediaIdCampaignIdCompoundUniqueInput = {
     terminalId: string
     mediaId: string
+    campaignId: string
   }
 
   export type TerminalMediaCountOrderByAggregateInput = {
     id?: SortOrder
     order?: SortOrder
+    duration?: SortOrder
     startsAt?: SortOrder
     endsAt?: SortOrder
     terminalId?: SortOrder
@@ -29167,11 +32183,13 @@ export namespace Prisma {
 
   export type TerminalMediaAvgOrderByAggregateInput = {
     order?: SortOrder
+    duration?: SortOrder
   }
 
   export type TerminalMediaMaxOrderByAggregateInput = {
     id?: SortOrder
     order?: SortOrder
+    duration?: SortOrder
     startsAt?: SortOrder
     endsAt?: SortOrder
     terminalId?: SortOrder
@@ -29182,6 +32200,7 @@ export namespace Prisma {
   export type TerminalMediaMinOrderByAggregateInput = {
     id?: SortOrder
     order?: SortOrder
+    duration?: SortOrder
     startsAt?: SortOrder
     endsAt?: SortOrder
     terminalId?: SortOrder
@@ -29191,6 +32210,23 @@ export namespace Prisma {
 
   export type TerminalMediaSumOrderByAggregateInput = {
     order?: SortOrder
+    duration?: SortOrder
+  }
+
+  export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedIntNullableFilter<$PrismaModel>
+    _max?: NestedIntNullableFilter<$PrismaModel>
   }
 
   export type TerminalHeartbeatCountOrderByAggregateInput = {
@@ -29235,6 +32271,27 @@ export namespace Prisma {
   export type TerminalEventMinOrderByAggregateInput = {
     id?: SortOrder
     type?: SortOrder
+    terminalId?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type ActivationCodeHistoryCountOrderByAggregateInput = {
+    id?: SortOrder
+    code?: SortOrder
+    terminalId?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type ActivationCodeHistoryMaxOrderByAggregateInput = {
+    id?: SortOrder
+    code?: SortOrder
+    terminalId?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type ActivationCodeHistoryMinOrderByAggregateInput = {
+    id?: SortOrder
+    code?: SortOrder
     terminalId?: SortOrder
     createdAt?: SortOrder
   }
@@ -29471,6 +32528,51 @@ export namespace Prisma {
     readAt?: SortOrder
     companyId?: SortOrder
     createdAt?: SortOrder
+  }
+
+  export type TerminalLayoutCountOrderByAggregateInput = {
+    id?: SortOrder
+    slug?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    configFound?: SortOrder
+    configNotFound?: SortOrder
+    configIdle?: SortOrder
+    isPublic?: SortOrder
+    isActive?: SortOrder
+    thumbnailUrl?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type TerminalLayoutMaxOrderByAggregateInput = {
+    id?: SortOrder
+    slug?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    configFound?: SortOrder
+    configNotFound?: SortOrder
+    configIdle?: SortOrder
+    isPublic?: SortOrder
+    isActive?: SortOrder
+    thumbnailUrl?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type TerminalLayoutMinOrderByAggregateInput = {
+    id?: SortOrder
+    slug?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    configFound?: SortOrder
+    configNotFound?: SortOrder
+    configIdle?: SortOrder
+    isPublic?: SortOrder
+    isActive?: SortOrder
+    thumbnailUrl?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
   }
 
   export type UserCreateNestedManyWithoutCompanyInput = {
@@ -29841,6 +32943,12 @@ export namespace Prisma {
     connect?: CompanyWhereUniqueInput
   }
 
+  export type TerminalLayoutCreateNestedOneWithoutStoresInput = {
+    create?: XOR<TerminalLayoutCreateWithoutStoresInput, TerminalLayoutUncheckedCreateWithoutStoresInput>
+    connectOrCreate?: TerminalLayoutCreateOrConnectWithoutStoresInput
+    connect?: TerminalLayoutWhereUniqueInput
+  }
+
   export type TerminalCreateNestedManyWithoutStoreInput = {
     create?: XOR<TerminalCreateWithoutStoreInput, TerminalUncheckedCreateWithoutStoreInput> | TerminalCreateWithoutStoreInput[] | TerminalUncheckedCreateWithoutStoreInput[]
     connectOrCreate?: TerminalCreateOrConnectWithoutStoreInput | TerminalCreateOrConnectWithoutStoreInput[]
@@ -29866,6 +32974,13 @@ export namespace Prisma {
     connectOrCreate?: CompanyIntegrationCreateOrConnectWithoutStoreInput | CompanyIntegrationCreateOrConnectWithoutStoreInput[]
     createMany?: CompanyIntegrationCreateManyStoreInputEnvelope
     connect?: CompanyIntegrationWhereUniqueInput | CompanyIntegrationWhereUniqueInput[]
+  }
+
+  export type MediaCreateNestedManyWithoutStoreInput = {
+    create?: XOR<MediaCreateWithoutStoreInput, MediaUncheckedCreateWithoutStoreInput> | MediaCreateWithoutStoreInput[] | MediaUncheckedCreateWithoutStoreInput[]
+    connectOrCreate?: MediaCreateOrConnectWithoutStoreInput | MediaCreateOrConnectWithoutStoreInput[]
+    createMany?: MediaCreateManyStoreInputEnvelope
+    connect?: MediaWhereUniqueInput | MediaWhereUniqueInput[]
   }
 
   export type TerminalUncheckedCreateNestedManyWithoutStoreInput = {
@@ -29895,6 +33010,13 @@ export namespace Prisma {
     connect?: CompanyIntegrationWhereUniqueInput | CompanyIntegrationWhereUniqueInput[]
   }
 
+  export type MediaUncheckedCreateNestedManyWithoutStoreInput = {
+    create?: XOR<MediaCreateWithoutStoreInput, MediaUncheckedCreateWithoutStoreInput> | MediaCreateWithoutStoreInput[] | MediaUncheckedCreateWithoutStoreInput[]
+    connectOrCreate?: MediaCreateOrConnectWithoutStoreInput | MediaCreateOrConnectWithoutStoreInput[]
+    createMany?: MediaCreateManyStoreInputEnvelope
+    connect?: MediaWhereUniqueInput | MediaWhereUniqueInput[]
+  }
+
   export type NullableStringFieldUpdateOperationsInput = {
     set?: string | null
   }
@@ -29905,6 +33027,16 @@ export namespace Prisma {
     upsert?: CompanyUpsertWithoutStoresInput
     connect?: CompanyWhereUniqueInput
     update?: XOR<XOR<CompanyUpdateToOneWithWhereWithoutStoresInput, CompanyUpdateWithoutStoresInput>, CompanyUncheckedUpdateWithoutStoresInput>
+  }
+
+  export type TerminalLayoutUpdateOneWithoutStoresNestedInput = {
+    create?: XOR<TerminalLayoutCreateWithoutStoresInput, TerminalLayoutUncheckedCreateWithoutStoresInput>
+    connectOrCreate?: TerminalLayoutCreateOrConnectWithoutStoresInput
+    upsert?: TerminalLayoutUpsertWithoutStoresInput
+    disconnect?: TerminalLayoutWhereInput | boolean
+    delete?: TerminalLayoutWhereInput | boolean
+    connect?: TerminalLayoutWhereUniqueInput
+    update?: XOR<XOR<TerminalLayoutUpdateToOneWithWhereWithoutStoresInput, TerminalLayoutUpdateWithoutStoresInput>, TerminalLayoutUncheckedUpdateWithoutStoresInput>
   }
 
   export type TerminalUpdateManyWithoutStoreNestedInput = {
@@ -29959,6 +33091,20 @@ export namespace Prisma {
     deleteMany?: CompanyIntegrationScalarWhereInput | CompanyIntegrationScalarWhereInput[]
   }
 
+  export type MediaUpdateManyWithoutStoreNestedInput = {
+    create?: XOR<MediaCreateWithoutStoreInput, MediaUncheckedCreateWithoutStoreInput> | MediaCreateWithoutStoreInput[] | MediaUncheckedCreateWithoutStoreInput[]
+    connectOrCreate?: MediaCreateOrConnectWithoutStoreInput | MediaCreateOrConnectWithoutStoreInput[]
+    upsert?: MediaUpsertWithWhereUniqueWithoutStoreInput | MediaUpsertWithWhereUniqueWithoutStoreInput[]
+    createMany?: MediaCreateManyStoreInputEnvelope
+    set?: MediaWhereUniqueInput | MediaWhereUniqueInput[]
+    disconnect?: MediaWhereUniqueInput | MediaWhereUniqueInput[]
+    delete?: MediaWhereUniqueInput | MediaWhereUniqueInput[]
+    connect?: MediaWhereUniqueInput | MediaWhereUniqueInput[]
+    update?: MediaUpdateWithWhereUniqueWithoutStoreInput | MediaUpdateWithWhereUniqueWithoutStoreInput[]
+    updateMany?: MediaUpdateManyWithWhereWithoutStoreInput | MediaUpdateManyWithWhereWithoutStoreInput[]
+    deleteMany?: MediaScalarWhereInput | MediaScalarWhereInput[]
+  }
+
   export type TerminalUncheckedUpdateManyWithoutStoreNestedInput = {
     create?: XOR<TerminalCreateWithoutStoreInput, TerminalUncheckedCreateWithoutStoreInput> | TerminalCreateWithoutStoreInput[] | TerminalUncheckedCreateWithoutStoreInput[]
     connectOrCreate?: TerminalCreateOrConnectWithoutStoreInput | TerminalCreateOrConnectWithoutStoreInput[]
@@ -30009,6 +33155,20 @@ export namespace Prisma {
     update?: CompanyIntegrationUpdateWithWhereUniqueWithoutStoreInput | CompanyIntegrationUpdateWithWhereUniqueWithoutStoreInput[]
     updateMany?: CompanyIntegrationUpdateManyWithWhereWithoutStoreInput | CompanyIntegrationUpdateManyWithWhereWithoutStoreInput[]
     deleteMany?: CompanyIntegrationScalarWhereInput | CompanyIntegrationScalarWhereInput[]
+  }
+
+  export type MediaUncheckedUpdateManyWithoutStoreNestedInput = {
+    create?: XOR<MediaCreateWithoutStoreInput, MediaUncheckedCreateWithoutStoreInput> | MediaCreateWithoutStoreInput[] | MediaUncheckedCreateWithoutStoreInput[]
+    connectOrCreate?: MediaCreateOrConnectWithoutStoreInput | MediaCreateOrConnectWithoutStoreInput[]
+    upsert?: MediaUpsertWithWhereUniqueWithoutStoreInput | MediaUpsertWithWhereUniqueWithoutStoreInput[]
+    createMany?: MediaCreateManyStoreInputEnvelope
+    set?: MediaWhereUniqueInput | MediaWhereUniqueInput[]
+    disconnect?: MediaWhereUniqueInput | MediaWhereUniqueInput[]
+    delete?: MediaWhereUniqueInput | MediaWhereUniqueInput[]
+    connect?: MediaWhereUniqueInput | MediaWhereUniqueInput[]
+    update?: MediaUpdateWithWhereUniqueWithoutStoreInput | MediaUpdateWithWhereUniqueWithoutStoreInput[]
+    updateMany?: MediaUpdateManyWithWhereWithoutStoreInput | MediaUpdateManyWithWhereWithoutStoreInput[]
+    deleteMany?: MediaScalarWhereInput | MediaScalarWhereInput[]
   }
 
   export type StoreCreateNestedOneWithoutTerminalsInput = {
@@ -30064,6 +33224,13 @@ export namespace Prisma {
     connect?: CampaignWhereUniqueInput | CampaignWhereUniqueInput[]
   }
 
+  export type ActivationCodeHistoryCreateNestedManyWithoutTerminalInput = {
+    create?: XOR<ActivationCodeHistoryCreateWithoutTerminalInput, ActivationCodeHistoryUncheckedCreateWithoutTerminalInput> | ActivationCodeHistoryCreateWithoutTerminalInput[] | ActivationCodeHistoryUncheckedCreateWithoutTerminalInput[]
+    connectOrCreate?: ActivationCodeHistoryCreateOrConnectWithoutTerminalInput | ActivationCodeHistoryCreateOrConnectWithoutTerminalInput[]
+    createMany?: ActivationCodeHistoryCreateManyTerminalInputEnvelope
+    connect?: ActivationCodeHistoryWhereUniqueInput | ActivationCodeHistoryWhereUniqueInput[]
+  }
+
   export type TerminalCredentialUncheckedCreateNestedOneWithoutTerminalInput = {
     create?: XOR<TerminalCredentialCreateWithoutTerminalInput, TerminalCredentialUncheckedCreateWithoutTerminalInput>
     connectOrCreate?: TerminalCredentialCreateOrConnectWithoutTerminalInput
@@ -30103,6 +33270,13 @@ export namespace Prisma {
     connectOrCreate?: CampaignCreateOrConnectWithoutTerminalInput | CampaignCreateOrConnectWithoutTerminalInput[]
     createMany?: CampaignCreateManyTerminalInputEnvelope
     connect?: CampaignWhereUniqueInput | CampaignWhereUniqueInput[]
+  }
+
+  export type ActivationCodeHistoryUncheckedCreateNestedManyWithoutTerminalInput = {
+    create?: XOR<ActivationCodeHistoryCreateWithoutTerminalInput, ActivationCodeHistoryUncheckedCreateWithoutTerminalInput> | ActivationCodeHistoryCreateWithoutTerminalInput[] | ActivationCodeHistoryUncheckedCreateWithoutTerminalInput[]
+    connectOrCreate?: ActivationCodeHistoryCreateOrConnectWithoutTerminalInput | ActivationCodeHistoryCreateOrConnectWithoutTerminalInput[]
+    createMany?: ActivationCodeHistoryCreateManyTerminalInputEnvelope
+    connect?: ActivationCodeHistoryWhereUniqueInput | ActivationCodeHistoryWhereUniqueInput[]
   }
 
   export type NullableDateTimeFieldUpdateOperationsInput = {
@@ -30207,6 +33381,20 @@ export namespace Prisma {
     deleteMany?: CampaignScalarWhereInput | CampaignScalarWhereInput[]
   }
 
+  export type ActivationCodeHistoryUpdateManyWithoutTerminalNestedInput = {
+    create?: XOR<ActivationCodeHistoryCreateWithoutTerminalInput, ActivationCodeHistoryUncheckedCreateWithoutTerminalInput> | ActivationCodeHistoryCreateWithoutTerminalInput[] | ActivationCodeHistoryUncheckedCreateWithoutTerminalInput[]
+    connectOrCreate?: ActivationCodeHistoryCreateOrConnectWithoutTerminalInput | ActivationCodeHistoryCreateOrConnectWithoutTerminalInput[]
+    upsert?: ActivationCodeHistoryUpsertWithWhereUniqueWithoutTerminalInput | ActivationCodeHistoryUpsertWithWhereUniqueWithoutTerminalInput[]
+    createMany?: ActivationCodeHistoryCreateManyTerminalInputEnvelope
+    set?: ActivationCodeHistoryWhereUniqueInput | ActivationCodeHistoryWhereUniqueInput[]
+    disconnect?: ActivationCodeHistoryWhereUniqueInput | ActivationCodeHistoryWhereUniqueInput[]
+    delete?: ActivationCodeHistoryWhereUniqueInput | ActivationCodeHistoryWhereUniqueInput[]
+    connect?: ActivationCodeHistoryWhereUniqueInput | ActivationCodeHistoryWhereUniqueInput[]
+    update?: ActivationCodeHistoryUpdateWithWhereUniqueWithoutTerminalInput | ActivationCodeHistoryUpdateWithWhereUniqueWithoutTerminalInput[]
+    updateMany?: ActivationCodeHistoryUpdateManyWithWhereWithoutTerminalInput | ActivationCodeHistoryUpdateManyWithWhereWithoutTerminalInput[]
+    deleteMany?: ActivationCodeHistoryScalarWhereInput | ActivationCodeHistoryScalarWhereInput[]
+  }
+
   export type TerminalCredentialUncheckedUpdateOneWithoutTerminalNestedInput = {
     create?: XOR<TerminalCredentialCreateWithoutTerminalInput, TerminalCredentialUncheckedCreateWithoutTerminalInput>
     connectOrCreate?: TerminalCredentialCreateOrConnectWithoutTerminalInput
@@ -30285,6 +33473,20 @@ export namespace Prisma {
     update?: CampaignUpdateWithWhereUniqueWithoutTerminalInput | CampaignUpdateWithWhereUniqueWithoutTerminalInput[]
     updateMany?: CampaignUpdateManyWithWhereWithoutTerminalInput | CampaignUpdateManyWithWhereWithoutTerminalInput[]
     deleteMany?: CampaignScalarWhereInput | CampaignScalarWhereInput[]
+  }
+
+  export type ActivationCodeHistoryUncheckedUpdateManyWithoutTerminalNestedInput = {
+    create?: XOR<ActivationCodeHistoryCreateWithoutTerminalInput, ActivationCodeHistoryUncheckedCreateWithoutTerminalInput> | ActivationCodeHistoryCreateWithoutTerminalInput[] | ActivationCodeHistoryUncheckedCreateWithoutTerminalInput[]
+    connectOrCreate?: ActivationCodeHistoryCreateOrConnectWithoutTerminalInput | ActivationCodeHistoryCreateOrConnectWithoutTerminalInput[]
+    upsert?: ActivationCodeHistoryUpsertWithWhereUniqueWithoutTerminalInput | ActivationCodeHistoryUpsertWithWhereUniqueWithoutTerminalInput[]
+    createMany?: ActivationCodeHistoryCreateManyTerminalInputEnvelope
+    set?: ActivationCodeHistoryWhereUniqueInput | ActivationCodeHistoryWhereUniqueInput[]
+    disconnect?: ActivationCodeHistoryWhereUniqueInput | ActivationCodeHistoryWhereUniqueInput[]
+    delete?: ActivationCodeHistoryWhereUniqueInput | ActivationCodeHistoryWhereUniqueInput[]
+    connect?: ActivationCodeHistoryWhereUniqueInput | ActivationCodeHistoryWhereUniqueInput[]
+    update?: ActivationCodeHistoryUpdateWithWhereUniqueWithoutTerminalInput | ActivationCodeHistoryUpdateWithWhereUniqueWithoutTerminalInput[]
+    updateMany?: ActivationCodeHistoryUpdateManyWithWhereWithoutTerminalInput | ActivationCodeHistoryUpdateManyWithWhereWithoutTerminalInput[]
+    deleteMany?: ActivationCodeHistoryScalarWhereInput | ActivationCodeHistoryScalarWhereInput[]
   }
 
   export type TerminalCreateNestedOneWithoutCredentialInput = {
@@ -30559,6 +33761,12 @@ export namespace Prisma {
     connect?: CompanyWhereUniqueInput
   }
 
+  export type StoreCreateNestedOneWithoutMediasInput = {
+    create?: XOR<StoreCreateWithoutMediasInput, StoreUncheckedCreateWithoutMediasInput>
+    connectOrCreate?: StoreCreateOrConnectWithoutMediasInput
+    connect?: StoreWhereUniqueInput
+  }
+
   export type TerminalMediaCreateNestedManyWithoutMediaInput = {
     create?: XOR<TerminalMediaCreateWithoutMediaInput, TerminalMediaUncheckedCreateWithoutMediaInput> | TerminalMediaCreateWithoutMediaInput[] | TerminalMediaUncheckedCreateWithoutMediaInput[]
     connectOrCreate?: TerminalMediaCreateOrConnectWithoutMediaInput | TerminalMediaCreateOrConnectWithoutMediaInput[]
@@ -30581,6 +33789,16 @@ export namespace Prisma {
     delete?: CompanyWhereInput | boolean
     connect?: CompanyWhereUniqueInput
     update?: XOR<XOR<CompanyUpdateToOneWithWhereWithoutMediasInput, CompanyUpdateWithoutMediasInput>, CompanyUncheckedUpdateWithoutMediasInput>
+  }
+
+  export type StoreUpdateOneWithoutMediasNestedInput = {
+    create?: XOR<StoreCreateWithoutMediasInput, StoreUncheckedCreateWithoutMediasInput>
+    connectOrCreate?: StoreCreateOrConnectWithoutMediasInput
+    upsert?: StoreUpsertWithoutMediasInput
+    disconnect?: StoreWhereInput | boolean
+    delete?: StoreWhereInput | boolean
+    connect?: StoreWhereUniqueInput
+    update?: XOR<XOR<StoreUpdateToOneWithWhereWithoutMediasInput, StoreUpdateWithoutMediasInput>, StoreUncheckedUpdateWithoutMediasInput>
   }
 
   export type TerminalMediaUpdateManyWithoutMediaNestedInput = {
@@ -30627,6 +33845,14 @@ export namespace Prisma {
     create?: XOR<CampaignCreateWithoutTerminalMediasInput, CampaignUncheckedCreateWithoutTerminalMediasInput>
     connectOrCreate?: CampaignCreateOrConnectWithoutTerminalMediasInput
     connect?: CampaignWhereUniqueInput
+  }
+
+  export type NullableIntFieldUpdateOperationsInput = {
+    set?: number | null
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
   }
 
   export type TerminalUpdateOneRequiredWithoutTerminalMediasNestedInput = {
@@ -30681,6 +33907,20 @@ export namespace Prisma {
     upsert?: TerminalUpsertWithoutEventsInput
     connect?: TerminalWhereUniqueInput
     update?: XOR<XOR<TerminalUpdateToOneWithWhereWithoutEventsInput, TerminalUpdateWithoutEventsInput>, TerminalUncheckedUpdateWithoutEventsInput>
+  }
+
+  export type TerminalCreateNestedOneWithoutActivationCodeHistoryInput = {
+    create?: XOR<TerminalCreateWithoutActivationCodeHistoryInput, TerminalUncheckedCreateWithoutActivationCodeHistoryInput>
+    connectOrCreate?: TerminalCreateOrConnectWithoutActivationCodeHistoryInput
+    connect?: TerminalWhereUniqueInput
+  }
+
+  export type TerminalUpdateOneRequiredWithoutActivationCodeHistoryNestedInput = {
+    create?: XOR<TerminalCreateWithoutActivationCodeHistoryInput, TerminalUncheckedCreateWithoutActivationCodeHistoryInput>
+    connectOrCreate?: TerminalCreateOrConnectWithoutActivationCodeHistoryInput
+    upsert?: TerminalUpsertWithoutActivationCodeHistoryInput
+    connect?: TerminalWhereUniqueInput
+    update?: XOR<XOR<TerminalUpdateToOneWithWhereWithoutActivationCodeHistoryInput, TerminalUpdateWithoutActivationCodeHistoryInput>, TerminalUncheckedUpdateWithoutActivationCodeHistoryInput>
   }
 
   export type CompanyIntegrationCreateNestedManyWithoutIntegrationInput = {
@@ -30783,6 +34023,48 @@ export namespace Prisma {
     delete?: CompanyWhereInput | boolean
     connect?: CompanyWhereUniqueInput
     update?: XOR<XOR<CompanyUpdateToOneWithWhereWithoutNotificationsInput, CompanyUpdateWithoutNotificationsInput>, CompanyUncheckedUpdateWithoutNotificationsInput>
+  }
+
+  export type StoreCreateNestedManyWithoutTerminalLayoutInput = {
+    create?: XOR<StoreCreateWithoutTerminalLayoutInput, StoreUncheckedCreateWithoutTerminalLayoutInput> | StoreCreateWithoutTerminalLayoutInput[] | StoreUncheckedCreateWithoutTerminalLayoutInput[]
+    connectOrCreate?: StoreCreateOrConnectWithoutTerminalLayoutInput | StoreCreateOrConnectWithoutTerminalLayoutInput[]
+    createMany?: StoreCreateManyTerminalLayoutInputEnvelope
+    connect?: StoreWhereUniqueInput | StoreWhereUniqueInput[]
+  }
+
+  export type StoreUncheckedCreateNestedManyWithoutTerminalLayoutInput = {
+    create?: XOR<StoreCreateWithoutTerminalLayoutInput, StoreUncheckedCreateWithoutTerminalLayoutInput> | StoreCreateWithoutTerminalLayoutInput[] | StoreUncheckedCreateWithoutTerminalLayoutInput[]
+    connectOrCreate?: StoreCreateOrConnectWithoutTerminalLayoutInput | StoreCreateOrConnectWithoutTerminalLayoutInput[]
+    createMany?: StoreCreateManyTerminalLayoutInputEnvelope
+    connect?: StoreWhereUniqueInput | StoreWhereUniqueInput[]
+  }
+
+  export type StoreUpdateManyWithoutTerminalLayoutNestedInput = {
+    create?: XOR<StoreCreateWithoutTerminalLayoutInput, StoreUncheckedCreateWithoutTerminalLayoutInput> | StoreCreateWithoutTerminalLayoutInput[] | StoreUncheckedCreateWithoutTerminalLayoutInput[]
+    connectOrCreate?: StoreCreateOrConnectWithoutTerminalLayoutInput | StoreCreateOrConnectWithoutTerminalLayoutInput[]
+    upsert?: StoreUpsertWithWhereUniqueWithoutTerminalLayoutInput | StoreUpsertWithWhereUniqueWithoutTerminalLayoutInput[]
+    createMany?: StoreCreateManyTerminalLayoutInputEnvelope
+    set?: StoreWhereUniqueInput | StoreWhereUniqueInput[]
+    disconnect?: StoreWhereUniqueInput | StoreWhereUniqueInput[]
+    delete?: StoreWhereUniqueInput | StoreWhereUniqueInput[]
+    connect?: StoreWhereUniqueInput | StoreWhereUniqueInput[]
+    update?: StoreUpdateWithWhereUniqueWithoutTerminalLayoutInput | StoreUpdateWithWhereUniqueWithoutTerminalLayoutInput[]
+    updateMany?: StoreUpdateManyWithWhereWithoutTerminalLayoutInput | StoreUpdateManyWithWhereWithoutTerminalLayoutInput[]
+    deleteMany?: StoreScalarWhereInput | StoreScalarWhereInput[]
+  }
+
+  export type StoreUncheckedUpdateManyWithoutTerminalLayoutNestedInput = {
+    create?: XOR<StoreCreateWithoutTerminalLayoutInput, StoreUncheckedCreateWithoutTerminalLayoutInput> | StoreCreateWithoutTerminalLayoutInput[] | StoreUncheckedCreateWithoutTerminalLayoutInput[]
+    connectOrCreate?: StoreCreateOrConnectWithoutTerminalLayoutInput | StoreCreateOrConnectWithoutTerminalLayoutInput[]
+    upsert?: StoreUpsertWithWhereUniqueWithoutTerminalLayoutInput | StoreUpsertWithWhereUniqueWithoutTerminalLayoutInput[]
+    createMany?: StoreCreateManyTerminalLayoutInputEnvelope
+    set?: StoreWhereUniqueInput | StoreWhereUniqueInput[]
+    disconnect?: StoreWhereUniqueInput | StoreWhereUniqueInput[]
+    delete?: StoreWhereUniqueInput | StoreWhereUniqueInput[]
+    connect?: StoreWhereUniqueInput | StoreWhereUniqueInput[]
+    update?: StoreUpdateWithWhereUniqueWithoutTerminalLayoutInput | StoreUpdateWithWhereUniqueWithoutTerminalLayoutInput[]
+    updateMany?: StoreUpdateManyWithWhereWithoutTerminalLayoutInput | StoreUpdateManyWithWhereWithoutTerminalLayoutInput[]
+    deleteMany?: StoreScalarWhereInput | StoreScalarWhereInput[]
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -30981,6 +34263,33 @@ export namespace Prisma {
     gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
     not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
   }
+
+  export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedIntNullableFilter<$PrismaModel>
+    _max?: NestedIntNullableFilter<$PrismaModel>
+  }
+
+  export type NestedFloatNullableFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
+  }
   export type NestedJsonFilter<$PrismaModel = never> =
     | PatchUndefined<
         Either<Required<NestedJsonFilterBase<$PrismaModel>>, Exclude<keyof Required<NestedJsonFilterBase<$PrismaModel>>, 'path'>>,
@@ -31045,22 +34354,26 @@ export namespace Prisma {
     address?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    terminalLayout?: TerminalLayoutCreateNestedOneWithoutStoresInput
     terminals?: TerminalCreateNestedManyWithoutStoreInput
     license?: StoreLicenseCreateNestedOneWithoutStoreInput
     campaigns?: CampaignCreateNestedManyWithoutStoreInput
     integrations?: CompanyIntegrationCreateNestedManyWithoutStoreInput
+    medias?: MediaCreateNestedManyWithoutStoreInput
   }
 
   export type StoreUncheckedCreateWithoutCompanyInput = {
     id?: string
     name: string
     address?: string | null
+    terminalLayoutId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     terminals?: TerminalUncheckedCreateNestedManyWithoutStoreInput
     license?: StoreLicenseUncheckedCreateNestedOneWithoutStoreInput
     campaigns?: CampaignUncheckedCreateNestedManyWithoutStoreInput
     integrations?: CompanyIntegrationUncheckedCreateNestedManyWithoutStoreInput
+    medias?: MediaUncheckedCreateNestedManyWithoutStoreInput
   }
 
   export type StoreCreateOrConnectWithoutCompanyInput = {
@@ -31095,6 +34408,7 @@ export namespace Prisma {
     heartbeats?: TerminalHeartbeatCreateNestedManyWithoutTerminalInput
     events?: TerminalEventCreateNestedManyWithoutTerminalInput
     campaigns?: CampaignCreateNestedManyWithoutTerminalInput
+    activationCodeHistory?: ActivationCodeHistoryCreateNestedManyWithoutTerminalInput
   }
 
   export type TerminalUncheckedCreateWithoutCompanyInput = {
@@ -31119,6 +34433,7 @@ export namespace Prisma {
     heartbeats?: TerminalHeartbeatUncheckedCreateNestedManyWithoutTerminalInput
     events?: TerminalEventUncheckedCreateNestedManyWithoutTerminalInput
     campaigns?: CampaignUncheckedCreateNestedManyWithoutTerminalInput
+    activationCodeHistory?: ActivationCodeHistoryUncheckedCreateNestedManyWithoutTerminalInput
   }
 
   export type TerminalCreateOrConnectWithoutCompanyInput = {
@@ -31143,6 +34458,7 @@ export namespace Prisma {
     type: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    store?: StoreCreateNestedOneWithoutMediasInput
     terminalMedias?: TerminalMediaCreateNestedManyWithoutMediaInput
   }
 
@@ -31156,6 +34472,7 @@ export namespace Prisma {
     mimeType: string
     size: number
     type: string
+    storeId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     terminalMedias?: TerminalMediaUncheckedCreateNestedManyWithoutMediaInput
@@ -31336,6 +34653,7 @@ export namespace Prisma {
     name?: StringFilter<"Store"> | string
     address?: StringNullableFilter<"Store"> | string | null
     companyId?: StringFilter<"Store"> | string
+    terminalLayoutId?: StringNullableFilter<"Store"> | string | null
     createdAt?: DateTimeFilter<"Store"> | Date | string
     updatedAt?: DateTimeFilter<"Store"> | Date | string
   }
@@ -31408,6 +34726,7 @@ export namespace Prisma {
     size?: IntFilter<"Media"> | number
     type?: StringFilter<"Media"> | string
     companyId?: StringNullableFilter<"Media"> | string | null
+    storeId?: StringNullableFilter<"Media"> | string | null
     createdAt?: DateTimeFilter<"Media"> | Date | string
     updatedAt?: DateTimeFilter<"Media"> | Date | string
   }
@@ -31708,6 +35027,41 @@ export namespace Prisma {
     create: XOR<CompanyCreateWithoutStoresInput, CompanyUncheckedCreateWithoutStoresInput>
   }
 
+  export type TerminalLayoutCreateWithoutStoresInput = {
+    id?: string
+    slug?: string | null
+    name: string
+    description?: string | null
+    configFound?: string
+    configNotFound?: string
+    configIdle?: string
+    isPublic?: boolean
+    isActive?: boolean
+    thumbnailUrl?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type TerminalLayoutUncheckedCreateWithoutStoresInput = {
+    id?: string
+    slug?: string | null
+    name: string
+    description?: string | null
+    configFound?: string
+    configNotFound?: string
+    configIdle?: string
+    isPublic?: boolean
+    isActive?: boolean
+    thumbnailUrl?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type TerminalLayoutCreateOrConnectWithoutStoresInput = {
+    where: TerminalLayoutWhereUniqueInput
+    create: XOR<TerminalLayoutCreateWithoutStoresInput, TerminalLayoutUncheckedCreateWithoutStoresInput>
+  }
+
   export type TerminalCreateWithoutStoreInput = {
     id?: string
     name: string
@@ -31730,6 +35084,7 @@ export namespace Prisma {
     heartbeats?: TerminalHeartbeatCreateNestedManyWithoutTerminalInput
     events?: TerminalEventCreateNestedManyWithoutTerminalInput
     campaigns?: CampaignCreateNestedManyWithoutTerminalInput
+    activationCodeHistory?: ActivationCodeHistoryCreateNestedManyWithoutTerminalInput
   }
 
   export type TerminalUncheckedCreateWithoutStoreInput = {
@@ -31754,6 +35109,7 @@ export namespace Prisma {
     heartbeats?: TerminalHeartbeatUncheckedCreateNestedManyWithoutTerminalInput
     events?: TerminalEventUncheckedCreateNestedManyWithoutTerminalInput
     campaigns?: CampaignUncheckedCreateNestedManyWithoutTerminalInput
+    activationCodeHistory?: ActivationCodeHistoryUncheckedCreateNestedManyWithoutTerminalInput
   }
 
   export type TerminalCreateOrConnectWithoutStoreInput = {
@@ -31871,6 +35227,48 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type MediaCreateWithoutStoreInput = {
+    id?: string
+    bucket: string
+    path: string
+    url?: string | null
+    fileName: string
+    originalName?: string | null
+    mimeType: string
+    size: number
+    type: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    company?: CompanyCreateNestedOneWithoutMediasInput
+    terminalMedias?: TerminalMediaCreateNestedManyWithoutMediaInput
+  }
+
+  export type MediaUncheckedCreateWithoutStoreInput = {
+    id?: string
+    bucket: string
+    path: string
+    url?: string | null
+    fileName: string
+    originalName?: string | null
+    mimeType: string
+    size: number
+    type: string
+    companyId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    terminalMedias?: TerminalMediaUncheckedCreateNestedManyWithoutMediaInput
+  }
+
+  export type MediaCreateOrConnectWithoutStoreInput = {
+    where: MediaWhereUniqueInput
+    create: XOR<MediaCreateWithoutStoreInput, MediaUncheckedCreateWithoutStoreInput>
+  }
+
+  export type MediaCreateManyStoreInputEnvelope = {
+    data: MediaCreateManyStoreInput | MediaCreateManyStoreInput[]
+    skipDuplicates?: boolean
+  }
+
   export type CompanyUpsertWithoutStoresInput = {
     update: XOR<CompanyUpdateWithoutStoresInput, CompanyUncheckedUpdateWithoutStoresInput>
     create: XOR<CompanyCreateWithoutStoresInput, CompanyUncheckedCreateWithoutStoresInput>
@@ -31920,6 +35318,47 @@ export namespace Prisma {
     campaigns?: CampaignUncheckedUpdateManyWithoutCompanyNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutCompanyNestedInput
     integrations?: CompanyIntegrationUncheckedUpdateManyWithoutCompanyNestedInput
+  }
+
+  export type TerminalLayoutUpsertWithoutStoresInput = {
+    update: XOR<TerminalLayoutUpdateWithoutStoresInput, TerminalLayoutUncheckedUpdateWithoutStoresInput>
+    create: XOR<TerminalLayoutCreateWithoutStoresInput, TerminalLayoutUncheckedCreateWithoutStoresInput>
+    where?: TerminalLayoutWhereInput
+  }
+
+  export type TerminalLayoutUpdateToOneWithWhereWithoutStoresInput = {
+    where?: TerminalLayoutWhereInput
+    data: XOR<TerminalLayoutUpdateWithoutStoresInput, TerminalLayoutUncheckedUpdateWithoutStoresInput>
+  }
+
+  export type TerminalLayoutUpdateWithoutStoresInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    slug?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    configFound?: StringFieldUpdateOperationsInput | string
+    configNotFound?: StringFieldUpdateOperationsInput | string
+    configIdle?: StringFieldUpdateOperationsInput | string
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    thumbnailUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TerminalLayoutUncheckedUpdateWithoutStoresInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    slug?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    configFound?: StringFieldUpdateOperationsInput | string
+    configNotFound?: StringFieldUpdateOperationsInput | string
+    configIdle?: StringFieldUpdateOperationsInput | string
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    thumbnailUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type TerminalUpsertWithWhereUniqueWithoutStoreInput = {
@@ -32005,6 +35444,22 @@ export namespace Prisma {
     data: XOR<CompanyIntegrationUpdateManyMutationInput, CompanyIntegrationUncheckedUpdateManyWithoutStoreInput>
   }
 
+  export type MediaUpsertWithWhereUniqueWithoutStoreInput = {
+    where: MediaWhereUniqueInput
+    update: XOR<MediaUpdateWithoutStoreInput, MediaUncheckedUpdateWithoutStoreInput>
+    create: XOR<MediaCreateWithoutStoreInput, MediaUncheckedCreateWithoutStoreInput>
+  }
+
+  export type MediaUpdateWithWhereUniqueWithoutStoreInput = {
+    where: MediaWhereUniqueInput
+    data: XOR<MediaUpdateWithoutStoreInput, MediaUncheckedUpdateWithoutStoreInput>
+  }
+
+  export type MediaUpdateManyWithWhereWithoutStoreInput = {
+    where: MediaScalarWhereInput
+    data: XOR<MediaUpdateManyMutationInput, MediaUncheckedUpdateManyWithoutStoreInput>
+  }
+
   export type StoreCreateWithoutTerminalsInput = {
     id?: string
     name: string
@@ -32012,9 +35467,11 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     company: CompanyCreateNestedOneWithoutStoresInput
+    terminalLayout?: TerminalLayoutCreateNestedOneWithoutStoresInput
     license?: StoreLicenseCreateNestedOneWithoutStoreInput
     campaigns?: CampaignCreateNestedManyWithoutStoreInput
     integrations?: CompanyIntegrationCreateNestedManyWithoutStoreInput
+    medias?: MediaCreateNestedManyWithoutStoreInput
   }
 
   export type StoreUncheckedCreateWithoutTerminalsInput = {
@@ -32022,11 +35479,13 @@ export namespace Prisma {
     name: string
     address?: string | null
     companyId: string
+    terminalLayoutId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     license?: StoreLicenseUncheckedCreateNestedOneWithoutStoreInput
     campaigns?: CampaignUncheckedCreateNestedManyWithoutStoreInput
     integrations?: CompanyIntegrationUncheckedCreateNestedManyWithoutStoreInput
+    medias?: MediaUncheckedCreateNestedManyWithoutStoreInput
   }
 
   export type StoreCreateOrConnectWithoutTerminalsInput = {
@@ -32133,6 +35592,7 @@ export namespace Prisma {
   export type TerminalMediaCreateWithoutTerminalInput = {
     id?: string
     order?: number
+    duration?: number | null
     startsAt?: Date | string | null
     endsAt?: Date | string | null
     media: MediaCreateNestedOneWithoutTerminalMediasInput
@@ -32142,6 +35602,7 @@ export namespace Prisma {
   export type TerminalMediaUncheckedCreateWithoutTerminalInput = {
     id?: string
     order?: number
+    duration?: number | null
     startsAt?: Date | string | null
     endsAt?: Date | string | null
     mediaId: string
@@ -32246,6 +35707,28 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type ActivationCodeHistoryCreateWithoutTerminalInput = {
+    id?: string
+    code: string
+    createdAt?: Date | string
+  }
+
+  export type ActivationCodeHistoryUncheckedCreateWithoutTerminalInput = {
+    id?: string
+    code: string
+    createdAt?: Date | string
+  }
+
+  export type ActivationCodeHistoryCreateOrConnectWithoutTerminalInput = {
+    where: ActivationCodeHistoryWhereUniqueInput
+    create: XOR<ActivationCodeHistoryCreateWithoutTerminalInput, ActivationCodeHistoryUncheckedCreateWithoutTerminalInput>
+  }
+
+  export type ActivationCodeHistoryCreateManyTerminalInputEnvelope = {
+    data: ActivationCodeHistoryCreateManyTerminalInput | ActivationCodeHistoryCreateManyTerminalInput[]
+    skipDuplicates?: boolean
+  }
+
   export type StoreUpsertWithoutTerminalsInput = {
     update: XOR<StoreUpdateWithoutTerminalsInput, StoreUncheckedUpdateWithoutTerminalsInput>
     create: XOR<StoreCreateWithoutTerminalsInput, StoreUncheckedCreateWithoutTerminalsInput>
@@ -32264,9 +35747,11 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     company?: CompanyUpdateOneRequiredWithoutStoresNestedInput
+    terminalLayout?: TerminalLayoutUpdateOneWithoutStoresNestedInput
     license?: StoreLicenseUpdateOneWithoutStoreNestedInput
     campaigns?: CampaignUpdateManyWithoutStoreNestedInput
     integrations?: CompanyIntegrationUpdateManyWithoutStoreNestedInput
+    medias?: MediaUpdateManyWithoutStoreNestedInput
   }
 
   export type StoreUncheckedUpdateWithoutTerminalsInput = {
@@ -32274,11 +35759,13 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     address?: NullableStringFieldUpdateOperationsInput | string | null
     companyId?: StringFieldUpdateOperationsInput | string
+    terminalLayoutId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     license?: StoreLicenseUncheckedUpdateOneWithoutStoreNestedInput
     campaigns?: CampaignUncheckedUpdateManyWithoutStoreNestedInput
     integrations?: CompanyIntegrationUncheckedUpdateManyWithoutStoreNestedInput
+    medias?: MediaUncheckedUpdateManyWithoutStoreNestedInput
   }
 
   export type CompanyUpsertWithoutTerminalsInput = {
@@ -32399,6 +35886,7 @@ export namespace Prisma {
     NOT?: TerminalMediaScalarWhereInput | TerminalMediaScalarWhereInput[]
     id?: StringFilter<"TerminalMedia"> | string
     order?: IntFilter<"TerminalMedia"> | number
+    duration?: IntNullableFilter<"TerminalMedia"> | number | null
     startsAt?: DateTimeNullableFilter<"TerminalMedia"> | Date | string | null
     endsAt?: DateTimeNullableFilter<"TerminalMedia"> | Date | string | null
     terminalId?: StringFilter<"TerminalMedia"> | string
@@ -32476,6 +35964,32 @@ export namespace Prisma {
     data: XOR<CampaignUpdateManyMutationInput, CampaignUncheckedUpdateManyWithoutTerminalInput>
   }
 
+  export type ActivationCodeHistoryUpsertWithWhereUniqueWithoutTerminalInput = {
+    where: ActivationCodeHistoryWhereUniqueInput
+    update: XOR<ActivationCodeHistoryUpdateWithoutTerminalInput, ActivationCodeHistoryUncheckedUpdateWithoutTerminalInput>
+    create: XOR<ActivationCodeHistoryCreateWithoutTerminalInput, ActivationCodeHistoryUncheckedCreateWithoutTerminalInput>
+  }
+
+  export type ActivationCodeHistoryUpdateWithWhereUniqueWithoutTerminalInput = {
+    where: ActivationCodeHistoryWhereUniqueInput
+    data: XOR<ActivationCodeHistoryUpdateWithoutTerminalInput, ActivationCodeHistoryUncheckedUpdateWithoutTerminalInput>
+  }
+
+  export type ActivationCodeHistoryUpdateManyWithWhereWithoutTerminalInput = {
+    where: ActivationCodeHistoryScalarWhereInput
+    data: XOR<ActivationCodeHistoryUpdateManyMutationInput, ActivationCodeHistoryUncheckedUpdateManyWithoutTerminalInput>
+  }
+
+  export type ActivationCodeHistoryScalarWhereInput = {
+    AND?: ActivationCodeHistoryScalarWhereInput | ActivationCodeHistoryScalarWhereInput[]
+    OR?: ActivationCodeHistoryScalarWhereInput[]
+    NOT?: ActivationCodeHistoryScalarWhereInput | ActivationCodeHistoryScalarWhereInput[]
+    id?: StringFilter<"ActivationCodeHistory"> | string
+    code?: StringFilter<"ActivationCodeHistory"> | string
+    terminalId?: StringFilter<"ActivationCodeHistory"> | string
+    createdAt?: DateTimeFilter<"ActivationCodeHistory"> | Date | string
+  }
+
   export type TerminalCreateWithoutCredentialInput = {
     id?: string
     name: string
@@ -32498,6 +36012,7 @@ export namespace Prisma {
     heartbeats?: TerminalHeartbeatCreateNestedManyWithoutTerminalInput
     events?: TerminalEventCreateNestedManyWithoutTerminalInput
     campaigns?: CampaignCreateNestedManyWithoutTerminalInput
+    activationCodeHistory?: ActivationCodeHistoryCreateNestedManyWithoutTerminalInput
   }
 
   export type TerminalUncheckedCreateWithoutCredentialInput = {
@@ -32522,6 +36037,7 @@ export namespace Prisma {
     heartbeats?: TerminalHeartbeatUncheckedCreateNestedManyWithoutTerminalInput
     events?: TerminalEventUncheckedCreateNestedManyWithoutTerminalInput
     campaigns?: CampaignUncheckedCreateNestedManyWithoutTerminalInput
+    activationCodeHistory?: ActivationCodeHistoryUncheckedCreateNestedManyWithoutTerminalInput
   }
 
   export type TerminalCreateOrConnectWithoutCredentialInput = {
@@ -32562,6 +36078,7 @@ export namespace Prisma {
     heartbeats?: TerminalHeartbeatUpdateManyWithoutTerminalNestedInput
     events?: TerminalEventUpdateManyWithoutTerminalNestedInput
     campaigns?: CampaignUpdateManyWithoutTerminalNestedInput
+    activationCodeHistory?: ActivationCodeHistoryUpdateManyWithoutTerminalNestedInput
   }
 
   export type TerminalUncheckedUpdateWithoutCredentialInput = {
@@ -32586,6 +36103,7 @@ export namespace Prisma {
     heartbeats?: TerminalHeartbeatUncheckedUpdateManyWithoutTerminalNestedInput
     events?: TerminalEventUncheckedUpdateManyWithoutTerminalNestedInput
     campaigns?: CampaignUncheckedUpdateManyWithoutTerminalNestedInput
+    activationCodeHistory?: ActivationCodeHistoryUncheckedUpdateManyWithoutTerminalNestedInput
   }
 
   export type TerminalCreateWithoutActivationsInput = {
@@ -32610,6 +36128,7 @@ export namespace Prisma {
     heartbeats?: TerminalHeartbeatCreateNestedManyWithoutTerminalInput
     events?: TerminalEventCreateNestedManyWithoutTerminalInput
     campaigns?: CampaignCreateNestedManyWithoutTerminalInput
+    activationCodeHistory?: ActivationCodeHistoryCreateNestedManyWithoutTerminalInput
   }
 
   export type TerminalUncheckedCreateWithoutActivationsInput = {
@@ -32634,6 +36153,7 @@ export namespace Prisma {
     heartbeats?: TerminalHeartbeatUncheckedCreateNestedManyWithoutTerminalInput
     events?: TerminalEventUncheckedCreateNestedManyWithoutTerminalInput
     campaigns?: CampaignUncheckedCreateNestedManyWithoutTerminalInput
+    activationCodeHistory?: ActivationCodeHistoryUncheckedCreateNestedManyWithoutTerminalInput
   }
 
   export type TerminalCreateOrConnectWithoutActivationsInput = {
@@ -32703,6 +36223,7 @@ export namespace Prisma {
     heartbeats?: TerminalHeartbeatUpdateManyWithoutTerminalNestedInput
     events?: TerminalEventUpdateManyWithoutTerminalNestedInput
     campaigns?: CampaignUpdateManyWithoutTerminalNestedInput
+    activationCodeHistory?: ActivationCodeHistoryUpdateManyWithoutTerminalNestedInput
   }
 
   export type TerminalUncheckedUpdateWithoutActivationsInput = {
@@ -32727,6 +36248,7 @@ export namespace Prisma {
     heartbeats?: TerminalHeartbeatUncheckedUpdateManyWithoutTerminalNestedInput
     events?: TerminalEventUncheckedUpdateManyWithoutTerminalNestedInput
     campaigns?: CampaignUncheckedUpdateManyWithoutTerminalNestedInput
+    activationCodeHistory?: ActivationCodeHistoryUncheckedUpdateManyWithoutTerminalNestedInput
   }
 
   export type UserUpsertWithoutTerminalActivationsInput = {
@@ -32771,9 +36293,11 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     company: CompanyCreateNestedOneWithoutStoresInput
+    terminalLayout?: TerminalLayoutCreateNestedOneWithoutStoresInput
     terminals?: TerminalCreateNestedManyWithoutStoreInput
     campaigns?: CampaignCreateNestedManyWithoutStoreInput
     integrations?: CompanyIntegrationCreateNestedManyWithoutStoreInput
+    medias?: MediaCreateNestedManyWithoutStoreInput
   }
 
   export type StoreUncheckedCreateWithoutLicenseInput = {
@@ -32781,11 +36305,13 @@ export namespace Prisma {
     name: string
     address?: string | null
     companyId: string
+    terminalLayoutId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     terminals?: TerminalUncheckedCreateNestedManyWithoutStoreInput
     campaigns?: CampaignUncheckedCreateNestedManyWithoutStoreInput
     integrations?: CompanyIntegrationUncheckedCreateNestedManyWithoutStoreInput
+    medias?: MediaUncheckedCreateNestedManyWithoutStoreInput
   }
 
   export type StoreCreateOrConnectWithoutLicenseInput = {
@@ -32837,9 +36363,11 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     company?: CompanyUpdateOneRequiredWithoutStoresNestedInput
+    terminalLayout?: TerminalLayoutUpdateOneWithoutStoresNestedInput
     terminals?: TerminalUpdateManyWithoutStoreNestedInput
     campaigns?: CampaignUpdateManyWithoutStoreNestedInput
     integrations?: CompanyIntegrationUpdateManyWithoutStoreNestedInput
+    medias?: MediaUpdateManyWithoutStoreNestedInput
   }
 
   export type StoreUncheckedUpdateWithoutLicenseInput = {
@@ -32847,11 +36375,13 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     address?: NullableStringFieldUpdateOperationsInput | string | null
     companyId?: StringFieldUpdateOperationsInput | string
+    terminalLayoutId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     terminals?: TerminalUncheckedUpdateManyWithoutStoreNestedInput
     campaigns?: CampaignUncheckedUpdateManyWithoutStoreNestedInput
     integrations?: CompanyIntegrationUncheckedUpdateManyWithoutStoreNestedInput
+    medias?: MediaUncheckedUpdateManyWithoutStoreNestedInput
   }
 
   export type LicenseRenewalUpsertWithWhereUniqueWithoutStoreLicenseInput = {
@@ -32998,9 +36528,11 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     company: CompanyCreateNestedOneWithoutStoresInput
+    terminalLayout?: TerminalLayoutCreateNestedOneWithoutStoresInput
     terminals?: TerminalCreateNestedManyWithoutStoreInput
     license?: StoreLicenseCreateNestedOneWithoutStoreInput
     integrations?: CompanyIntegrationCreateNestedManyWithoutStoreInput
+    medias?: MediaCreateNestedManyWithoutStoreInput
   }
 
   export type StoreUncheckedCreateWithoutCampaignsInput = {
@@ -33008,11 +36540,13 @@ export namespace Prisma {
     name: string
     address?: string | null
     companyId: string
+    terminalLayoutId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     terminals?: TerminalUncheckedCreateNestedManyWithoutStoreInput
     license?: StoreLicenseUncheckedCreateNestedOneWithoutStoreInput
     integrations?: CompanyIntegrationUncheckedCreateNestedManyWithoutStoreInput
+    medias?: MediaUncheckedCreateNestedManyWithoutStoreInput
   }
 
   export type StoreCreateOrConnectWithoutCampaignsInput = {
@@ -33042,6 +36576,7 @@ export namespace Prisma {
     terminalMedias?: TerminalMediaCreateNestedManyWithoutTerminalInput
     heartbeats?: TerminalHeartbeatCreateNestedManyWithoutTerminalInput
     events?: TerminalEventCreateNestedManyWithoutTerminalInput
+    activationCodeHistory?: ActivationCodeHistoryCreateNestedManyWithoutTerminalInput
   }
 
   export type TerminalUncheckedCreateWithoutCampaignsInput = {
@@ -33066,6 +36601,7 @@ export namespace Prisma {
     terminalMedias?: TerminalMediaUncheckedCreateNestedManyWithoutTerminalInput
     heartbeats?: TerminalHeartbeatUncheckedCreateNestedManyWithoutTerminalInput
     events?: TerminalEventUncheckedCreateNestedManyWithoutTerminalInput
+    activationCodeHistory?: ActivationCodeHistoryUncheckedCreateNestedManyWithoutTerminalInput
   }
 
   export type TerminalCreateOrConnectWithoutCampaignsInput = {
@@ -33076,6 +36612,7 @@ export namespace Prisma {
   export type TerminalMediaCreateWithoutCampaignInput = {
     id?: string
     order?: number
+    duration?: number | null
     startsAt?: Date | string | null
     endsAt?: Date | string | null
     terminal: TerminalCreateNestedOneWithoutTerminalMediasInput
@@ -33085,6 +36622,7 @@ export namespace Prisma {
   export type TerminalMediaUncheckedCreateWithoutCampaignInput = {
     id?: string
     order?: number
+    duration?: number | null
     startsAt?: Date | string | null
     endsAt?: Date | string | null
     terminalId: string
@@ -33200,9 +36738,11 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     company?: CompanyUpdateOneRequiredWithoutStoresNestedInput
+    terminalLayout?: TerminalLayoutUpdateOneWithoutStoresNestedInput
     terminals?: TerminalUpdateManyWithoutStoreNestedInput
     license?: StoreLicenseUpdateOneWithoutStoreNestedInput
     integrations?: CompanyIntegrationUpdateManyWithoutStoreNestedInput
+    medias?: MediaUpdateManyWithoutStoreNestedInput
   }
 
   export type StoreUncheckedUpdateWithoutCampaignsInput = {
@@ -33210,11 +36750,13 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     address?: NullableStringFieldUpdateOperationsInput | string | null
     companyId?: StringFieldUpdateOperationsInput | string
+    terminalLayoutId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     terminals?: TerminalUncheckedUpdateManyWithoutStoreNestedInput
     license?: StoreLicenseUncheckedUpdateOneWithoutStoreNestedInput
     integrations?: CompanyIntegrationUncheckedUpdateManyWithoutStoreNestedInput
+    medias?: MediaUncheckedUpdateManyWithoutStoreNestedInput
   }
 
   export type TerminalUpsertWithoutCampaignsInput = {
@@ -33250,6 +36792,7 @@ export namespace Prisma {
     terminalMedias?: TerminalMediaUpdateManyWithoutTerminalNestedInput
     heartbeats?: TerminalHeartbeatUpdateManyWithoutTerminalNestedInput
     events?: TerminalEventUpdateManyWithoutTerminalNestedInput
+    activationCodeHistory?: ActivationCodeHistoryUpdateManyWithoutTerminalNestedInput
   }
 
   export type TerminalUncheckedUpdateWithoutCampaignsInput = {
@@ -33274,6 +36817,7 @@ export namespace Prisma {
     terminalMedias?: TerminalMediaUncheckedUpdateManyWithoutTerminalNestedInput
     heartbeats?: TerminalHeartbeatUncheckedUpdateManyWithoutTerminalNestedInput
     events?: TerminalEventUncheckedUpdateManyWithoutTerminalNestedInput
+    activationCodeHistory?: ActivationCodeHistoryUncheckedUpdateManyWithoutTerminalNestedInput
   }
 
   export type TerminalMediaUpsertWithWhereUniqueWithoutCampaignInput = {
@@ -33443,9 +36987,43 @@ export namespace Prisma {
     create: XOR<CompanyCreateWithoutMediasInput, CompanyUncheckedCreateWithoutMediasInput>
   }
 
+  export type StoreCreateWithoutMediasInput = {
+    id?: string
+    name: string
+    address?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    company: CompanyCreateNestedOneWithoutStoresInput
+    terminalLayout?: TerminalLayoutCreateNestedOneWithoutStoresInput
+    terminals?: TerminalCreateNestedManyWithoutStoreInput
+    license?: StoreLicenseCreateNestedOneWithoutStoreInput
+    campaigns?: CampaignCreateNestedManyWithoutStoreInput
+    integrations?: CompanyIntegrationCreateNestedManyWithoutStoreInput
+  }
+
+  export type StoreUncheckedCreateWithoutMediasInput = {
+    id?: string
+    name: string
+    address?: string | null
+    companyId: string
+    terminalLayoutId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    terminals?: TerminalUncheckedCreateNestedManyWithoutStoreInput
+    license?: StoreLicenseUncheckedCreateNestedOneWithoutStoreInput
+    campaigns?: CampaignUncheckedCreateNestedManyWithoutStoreInput
+    integrations?: CompanyIntegrationUncheckedCreateNestedManyWithoutStoreInput
+  }
+
+  export type StoreCreateOrConnectWithoutMediasInput = {
+    where: StoreWhereUniqueInput
+    create: XOR<StoreCreateWithoutMediasInput, StoreUncheckedCreateWithoutMediasInput>
+  }
+
   export type TerminalMediaCreateWithoutMediaInput = {
     id?: string
     order?: number
+    duration?: number | null
     startsAt?: Date | string | null
     endsAt?: Date | string | null
     terminal: TerminalCreateNestedOneWithoutTerminalMediasInput
@@ -33455,6 +37033,7 @@ export namespace Prisma {
   export type TerminalMediaUncheckedCreateWithoutMediaInput = {
     id?: string
     order?: number
+    duration?: number | null
     startsAt?: Date | string | null
     endsAt?: Date | string | null
     terminalId: string
@@ -33522,6 +37101,45 @@ export namespace Prisma {
     integrations?: CompanyIntegrationUncheckedUpdateManyWithoutCompanyNestedInput
   }
 
+  export type StoreUpsertWithoutMediasInput = {
+    update: XOR<StoreUpdateWithoutMediasInput, StoreUncheckedUpdateWithoutMediasInput>
+    create: XOR<StoreCreateWithoutMediasInput, StoreUncheckedCreateWithoutMediasInput>
+    where?: StoreWhereInput
+  }
+
+  export type StoreUpdateToOneWithWhereWithoutMediasInput = {
+    where?: StoreWhereInput
+    data: XOR<StoreUpdateWithoutMediasInput, StoreUncheckedUpdateWithoutMediasInput>
+  }
+
+  export type StoreUpdateWithoutMediasInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    company?: CompanyUpdateOneRequiredWithoutStoresNestedInput
+    terminalLayout?: TerminalLayoutUpdateOneWithoutStoresNestedInput
+    terminals?: TerminalUpdateManyWithoutStoreNestedInput
+    license?: StoreLicenseUpdateOneWithoutStoreNestedInput
+    campaigns?: CampaignUpdateManyWithoutStoreNestedInput
+    integrations?: CompanyIntegrationUpdateManyWithoutStoreNestedInput
+  }
+
+  export type StoreUncheckedUpdateWithoutMediasInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    companyId?: StringFieldUpdateOperationsInput | string
+    terminalLayoutId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    terminals?: TerminalUncheckedUpdateManyWithoutStoreNestedInput
+    license?: StoreLicenseUncheckedUpdateOneWithoutStoreNestedInput
+    campaigns?: CampaignUncheckedUpdateManyWithoutStoreNestedInput
+    integrations?: CompanyIntegrationUncheckedUpdateManyWithoutStoreNestedInput
+  }
+
   export type TerminalMediaUpsertWithWhereUniqueWithoutMediaInput = {
     where: TerminalMediaWhereUniqueInput
     update: XOR<TerminalMediaUpdateWithoutMediaInput, TerminalMediaUncheckedUpdateWithoutMediaInput>
@@ -33560,6 +37178,7 @@ export namespace Prisma {
     heartbeats?: TerminalHeartbeatCreateNestedManyWithoutTerminalInput
     events?: TerminalEventCreateNestedManyWithoutTerminalInput
     campaigns?: CampaignCreateNestedManyWithoutTerminalInput
+    activationCodeHistory?: ActivationCodeHistoryCreateNestedManyWithoutTerminalInput
   }
 
   export type TerminalUncheckedCreateWithoutTerminalMediasInput = {
@@ -33584,6 +37203,7 @@ export namespace Prisma {
     heartbeats?: TerminalHeartbeatUncheckedCreateNestedManyWithoutTerminalInput
     events?: TerminalEventUncheckedCreateNestedManyWithoutTerminalInput
     campaigns?: CampaignUncheckedCreateNestedManyWithoutTerminalInput
+    activationCodeHistory?: ActivationCodeHistoryUncheckedCreateNestedManyWithoutTerminalInput
   }
 
   export type TerminalCreateOrConnectWithoutTerminalMediasInput = {
@@ -33604,6 +37224,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     company?: CompanyCreateNestedOneWithoutMediasInput
+    store?: StoreCreateNestedOneWithoutMediasInput
   }
 
   export type MediaUncheckedCreateWithoutTerminalMediasInput = {
@@ -33617,6 +37238,7 @@ export namespace Prisma {
     size: number
     type: string
     companyId?: string | null
+    storeId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -33694,6 +37316,7 @@ export namespace Prisma {
     heartbeats?: TerminalHeartbeatUpdateManyWithoutTerminalNestedInput
     events?: TerminalEventUpdateManyWithoutTerminalNestedInput
     campaigns?: CampaignUpdateManyWithoutTerminalNestedInput
+    activationCodeHistory?: ActivationCodeHistoryUpdateManyWithoutTerminalNestedInput
   }
 
   export type TerminalUncheckedUpdateWithoutTerminalMediasInput = {
@@ -33718,6 +37341,7 @@ export namespace Prisma {
     heartbeats?: TerminalHeartbeatUncheckedUpdateManyWithoutTerminalNestedInput
     events?: TerminalEventUncheckedUpdateManyWithoutTerminalNestedInput
     campaigns?: CampaignUncheckedUpdateManyWithoutTerminalNestedInput
+    activationCodeHistory?: ActivationCodeHistoryUncheckedUpdateManyWithoutTerminalNestedInput
   }
 
   export type MediaUpsertWithoutTerminalMediasInput = {
@@ -33744,6 +37368,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     company?: CompanyUpdateOneWithoutMediasNestedInput
+    store?: StoreUpdateOneWithoutMediasNestedInput
   }
 
   export type MediaUncheckedUpdateWithoutTerminalMediasInput = {
@@ -33757,6 +37382,7 @@ export namespace Prisma {
     size?: IntFieldUpdateOperationsInput | number
     type?: StringFieldUpdateOperationsInput | string
     companyId?: NullableStringFieldUpdateOperationsInput | string | null
+    storeId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -33824,6 +37450,7 @@ export namespace Prisma {
     terminalMedias?: TerminalMediaCreateNestedManyWithoutTerminalInput
     events?: TerminalEventCreateNestedManyWithoutTerminalInput
     campaigns?: CampaignCreateNestedManyWithoutTerminalInput
+    activationCodeHistory?: ActivationCodeHistoryCreateNestedManyWithoutTerminalInput
   }
 
   export type TerminalUncheckedCreateWithoutHeartbeatsInput = {
@@ -33848,6 +37475,7 @@ export namespace Prisma {
     terminalMedias?: TerminalMediaUncheckedCreateNestedManyWithoutTerminalInput
     events?: TerminalEventUncheckedCreateNestedManyWithoutTerminalInput
     campaigns?: CampaignUncheckedCreateNestedManyWithoutTerminalInput
+    activationCodeHistory?: ActivationCodeHistoryUncheckedCreateNestedManyWithoutTerminalInput
   }
 
   export type TerminalCreateOrConnectWithoutHeartbeatsInput = {
@@ -33888,6 +37516,7 @@ export namespace Prisma {
     terminalMedias?: TerminalMediaUpdateManyWithoutTerminalNestedInput
     events?: TerminalEventUpdateManyWithoutTerminalNestedInput
     campaigns?: CampaignUpdateManyWithoutTerminalNestedInput
+    activationCodeHistory?: ActivationCodeHistoryUpdateManyWithoutTerminalNestedInput
   }
 
   export type TerminalUncheckedUpdateWithoutHeartbeatsInput = {
@@ -33912,6 +37541,7 @@ export namespace Prisma {
     terminalMedias?: TerminalMediaUncheckedUpdateManyWithoutTerminalNestedInput
     events?: TerminalEventUncheckedUpdateManyWithoutTerminalNestedInput
     campaigns?: CampaignUncheckedUpdateManyWithoutTerminalNestedInput
+    activationCodeHistory?: ActivationCodeHistoryUncheckedUpdateManyWithoutTerminalNestedInput
   }
 
   export type TerminalCreateWithoutEventsInput = {
@@ -33936,6 +37566,7 @@ export namespace Prisma {
     terminalMedias?: TerminalMediaCreateNestedManyWithoutTerminalInput
     heartbeats?: TerminalHeartbeatCreateNestedManyWithoutTerminalInput
     campaigns?: CampaignCreateNestedManyWithoutTerminalInput
+    activationCodeHistory?: ActivationCodeHistoryCreateNestedManyWithoutTerminalInput
   }
 
   export type TerminalUncheckedCreateWithoutEventsInput = {
@@ -33960,6 +37591,7 @@ export namespace Prisma {
     terminalMedias?: TerminalMediaUncheckedCreateNestedManyWithoutTerminalInput
     heartbeats?: TerminalHeartbeatUncheckedCreateNestedManyWithoutTerminalInput
     campaigns?: CampaignUncheckedCreateNestedManyWithoutTerminalInput
+    activationCodeHistory?: ActivationCodeHistoryUncheckedCreateNestedManyWithoutTerminalInput
   }
 
   export type TerminalCreateOrConnectWithoutEventsInput = {
@@ -34000,6 +37632,7 @@ export namespace Prisma {
     terminalMedias?: TerminalMediaUpdateManyWithoutTerminalNestedInput
     heartbeats?: TerminalHeartbeatUpdateManyWithoutTerminalNestedInput
     campaigns?: CampaignUpdateManyWithoutTerminalNestedInput
+    activationCodeHistory?: ActivationCodeHistoryUpdateManyWithoutTerminalNestedInput
   }
 
   export type TerminalUncheckedUpdateWithoutEventsInput = {
@@ -34023,6 +37656,123 @@ export namespace Prisma {
     activations?: TerminalActivationUncheckedUpdateManyWithoutTerminalNestedInput
     terminalMedias?: TerminalMediaUncheckedUpdateManyWithoutTerminalNestedInput
     heartbeats?: TerminalHeartbeatUncheckedUpdateManyWithoutTerminalNestedInput
+    campaigns?: CampaignUncheckedUpdateManyWithoutTerminalNestedInput
+    activationCodeHistory?: ActivationCodeHistoryUncheckedUpdateManyWithoutTerminalNestedInput
+  }
+
+  export type TerminalCreateWithoutActivationCodeHistoryInput = {
+    id?: string
+    name: string
+    ip?: string | null
+    location: string
+    isPriceChecker?: boolean
+    isMediaDisplay?: boolean
+    isActive?: boolean
+    isBlocked?: boolean
+    activationCode?: string | null
+    lastSeenAt?: Date | string | null
+    revokedAt?: Date | string | null
+    revokedBy?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    store?: StoreCreateNestedOneWithoutTerminalsInput
+    company: CompanyCreateNestedOneWithoutTerminalsInput
+    credential?: TerminalCredentialCreateNestedOneWithoutTerminalInput
+    activations?: TerminalActivationCreateNestedManyWithoutTerminalInput
+    terminalMedias?: TerminalMediaCreateNestedManyWithoutTerminalInput
+    heartbeats?: TerminalHeartbeatCreateNestedManyWithoutTerminalInput
+    events?: TerminalEventCreateNestedManyWithoutTerminalInput
+    campaigns?: CampaignCreateNestedManyWithoutTerminalInput
+  }
+
+  export type TerminalUncheckedCreateWithoutActivationCodeHistoryInput = {
+    id?: string
+    name: string
+    ip?: string | null
+    location: string
+    isPriceChecker?: boolean
+    isMediaDisplay?: boolean
+    isActive?: boolean
+    isBlocked?: boolean
+    activationCode?: string | null
+    lastSeenAt?: Date | string | null
+    revokedAt?: Date | string | null
+    revokedBy?: string | null
+    storeId?: string | null
+    companyId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    credential?: TerminalCredentialUncheckedCreateNestedOneWithoutTerminalInput
+    activations?: TerminalActivationUncheckedCreateNestedManyWithoutTerminalInput
+    terminalMedias?: TerminalMediaUncheckedCreateNestedManyWithoutTerminalInput
+    heartbeats?: TerminalHeartbeatUncheckedCreateNestedManyWithoutTerminalInput
+    events?: TerminalEventUncheckedCreateNestedManyWithoutTerminalInput
+    campaigns?: CampaignUncheckedCreateNestedManyWithoutTerminalInput
+  }
+
+  export type TerminalCreateOrConnectWithoutActivationCodeHistoryInput = {
+    where: TerminalWhereUniqueInput
+    create: XOR<TerminalCreateWithoutActivationCodeHistoryInput, TerminalUncheckedCreateWithoutActivationCodeHistoryInput>
+  }
+
+  export type TerminalUpsertWithoutActivationCodeHistoryInput = {
+    update: XOR<TerminalUpdateWithoutActivationCodeHistoryInput, TerminalUncheckedUpdateWithoutActivationCodeHistoryInput>
+    create: XOR<TerminalCreateWithoutActivationCodeHistoryInput, TerminalUncheckedCreateWithoutActivationCodeHistoryInput>
+    where?: TerminalWhereInput
+  }
+
+  export type TerminalUpdateToOneWithWhereWithoutActivationCodeHistoryInput = {
+    where?: TerminalWhereInput
+    data: XOR<TerminalUpdateWithoutActivationCodeHistoryInput, TerminalUncheckedUpdateWithoutActivationCodeHistoryInput>
+  }
+
+  export type TerminalUpdateWithoutActivationCodeHistoryInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    ip?: NullableStringFieldUpdateOperationsInput | string | null
+    location?: StringFieldUpdateOperationsInput | string
+    isPriceChecker?: BoolFieldUpdateOperationsInput | boolean
+    isMediaDisplay?: BoolFieldUpdateOperationsInput | boolean
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    isBlocked?: BoolFieldUpdateOperationsInput | boolean
+    activationCode?: NullableStringFieldUpdateOperationsInput | string | null
+    lastSeenAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    revokedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    revokedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    store?: StoreUpdateOneWithoutTerminalsNestedInput
+    company?: CompanyUpdateOneRequiredWithoutTerminalsNestedInput
+    credential?: TerminalCredentialUpdateOneWithoutTerminalNestedInput
+    activations?: TerminalActivationUpdateManyWithoutTerminalNestedInput
+    terminalMedias?: TerminalMediaUpdateManyWithoutTerminalNestedInput
+    heartbeats?: TerminalHeartbeatUpdateManyWithoutTerminalNestedInput
+    events?: TerminalEventUpdateManyWithoutTerminalNestedInput
+    campaigns?: CampaignUpdateManyWithoutTerminalNestedInput
+  }
+
+  export type TerminalUncheckedUpdateWithoutActivationCodeHistoryInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    ip?: NullableStringFieldUpdateOperationsInput | string | null
+    location?: StringFieldUpdateOperationsInput | string
+    isPriceChecker?: BoolFieldUpdateOperationsInput | boolean
+    isMediaDisplay?: BoolFieldUpdateOperationsInput | boolean
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    isBlocked?: BoolFieldUpdateOperationsInput | boolean
+    activationCode?: NullableStringFieldUpdateOperationsInput | string | null
+    lastSeenAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    revokedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    revokedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    storeId?: NullableStringFieldUpdateOperationsInput | string | null
+    companyId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    credential?: TerminalCredentialUncheckedUpdateOneWithoutTerminalNestedInput
+    activations?: TerminalActivationUncheckedUpdateManyWithoutTerminalNestedInput
+    terminalMedias?: TerminalMediaUncheckedUpdateManyWithoutTerminalNestedInput
+    heartbeats?: TerminalHeartbeatUncheckedUpdateManyWithoutTerminalNestedInput
+    events?: TerminalEventUncheckedUpdateManyWithoutTerminalNestedInput
     campaigns?: CampaignUncheckedUpdateManyWithoutTerminalNestedInput
   }
 
@@ -34130,9 +37880,11 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     company: CompanyCreateNestedOneWithoutStoresInput
+    terminalLayout?: TerminalLayoutCreateNestedOneWithoutStoresInput
     terminals?: TerminalCreateNestedManyWithoutStoreInput
     license?: StoreLicenseCreateNestedOneWithoutStoreInput
     campaigns?: CampaignCreateNestedManyWithoutStoreInput
+    medias?: MediaCreateNestedManyWithoutStoreInput
   }
 
   export type StoreUncheckedCreateWithoutIntegrationsInput = {
@@ -34140,11 +37892,13 @@ export namespace Prisma {
     name: string
     address?: string | null
     companyId: string
+    terminalLayoutId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     terminals?: TerminalUncheckedCreateNestedManyWithoutStoreInput
     license?: StoreLicenseUncheckedCreateNestedOneWithoutStoreInput
     campaigns?: CampaignUncheckedCreateNestedManyWithoutStoreInput
+    medias?: MediaUncheckedCreateNestedManyWithoutStoreInput
   }
 
   export type StoreCreateOrConnectWithoutIntegrationsInput = {
@@ -34260,9 +38014,11 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     company?: CompanyUpdateOneRequiredWithoutStoresNestedInput
+    terminalLayout?: TerminalLayoutUpdateOneWithoutStoresNestedInput
     terminals?: TerminalUpdateManyWithoutStoreNestedInput
     license?: StoreLicenseUpdateOneWithoutStoreNestedInput
     campaigns?: CampaignUpdateManyWithoutStoreNestedInput
+    medias?: MediaUpdateManyWithoutStoreNestedInput
   }
 
   export type StoreUncheckedUpdateWithoutIntegrationsInput = {
@@ -34270,11 +38026,13 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     address?: NullableStringFieldUpdateOperationsInput | string | null
     companyId?: StringFieldUpdateOperationsInput | string
+    terminalLayoutId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     terminals?: TerminalUncheckedUpdateManyWithoutStoreNestedInput
     license?: StoreLicenseUncheckedUpdateOneWithoutStoreNestedInput
     campaigns?: CampaignUncheckedUpdateManyWithoutStoreNestedInput
+    medias?: MediaUncheckedUpdateManyWithoutStoreNestedInput
   }
 
   export type IntegrationUpsertWithoutCompanyIntegrationsInput = {
@@ -34418,6 +38176,60 @@ export namespace Prisma {
     integrations?: CompanyIntegrationUncheckedUpdateManyWithoutCompanyNestedInput
   }
 
+  export type StoreCreateWithoutTerminalLayoutInput = {
+    id?: string
+    name: string
+    address?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    company: CompanyCreateNestedOneWithoutStoresInput
+    terminals?: TerminalCreateNestedManyWithoutStoreInput
+    license?: StoreLicenseCreateNestedOneWithoutStoreInput
+    campaigns?: CampaignCreateNestedManyWithoutStoreInput
+    integrations?: CompanyIntegrationCreateNestedManyWithoutStoreInput
+    medias?: MediaCreateNestedManyWithoutStoreInput
+  }
+
+  export type StoreUncheckedCreateWithoutTerminalLayoutInput = {
+    id?: string
+    name: string
+    address?: string | null
+    companyId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    terminals?: TerminalUncheckedCreateNestedManyWithoutStoreInput
+    license?: StoreLicenseUncheckedCreateNestedOneWithoutStoreInput
+    campaigns?: CampaignUncheckedCreateNestedManyWithoutStoreInput
+    integrations?: CompanyIntegrationUncheckedCreateNestedManyWithoutStoreInput
+    medias?: MediaUncheckedCreateNestedManyWithoutStoreInput
+  }
+
+  export type StoreCreateOrConnectWithoutTerminalLayoutInput = {
+    where: StoreWhereUniqueInput
+    create: XOR<StoreCreateWithoutTerminalLayoutInput, StoreUncheckedCreateWithoutTerminalLayoutInput>
+  }
+
+  export type StoreCreateManyTerminalLayoutInputEnvelope = {
+    data: StoreCreateManyTerminalLayoutInput | StoreCreateManyTerminalLayoutInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type StoreUpsertWithWhereUniqueWithoutTerminalLayoutInput = {
+    where: StoreWhereUniqueInput
+    update: XOR<StoreUpdateWithoutTerminalLayoutInput, StoreUncheckedUpdateWithoutTerminalLayoutInput>
+    create: XOR<StoreCreateWithoutTerminalLayoutInput, StoreUncheckedCreateWithoutTerminalLayoutInput>
+  }
+
+  export type StoreUpdateWithWhereUniqueWithoutTerminalLayoutInput = {
+    where: StoreWhereUniqueInput
+    data: XOR<StoreUpdateWithoutTerminalLayoutInput, StoreUncheckedUpdateWithoutTerminalLayoutInput>
+  }
+
+  export type StoreUpdateManyWithWhereWithoutTerminalLayoutInput = {
+    where: StoreScalarWhereInput
+    data: XOR<StoreUpdateManyMutationInput, StoreUncheckedUpdateManyWithoutTerminalLayoutInput>
+  }
+
   export type UserCreateManyCompanyInput = {
     id?: string
     name: string
@@ -34433,6 +38245,7 @@ export namespace Prisma {
     id?: string
     name: string
     address?: string | null
+    terminalLayoutId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -34465,6 +38278,7 @@ export namespace Prisma {
     mimeType: string
     size: number
     type: string
+    storeId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -34548,28 +38362,33 @@ export namespace Prisma {
     address?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    terminalLayout?: TerminalLayoutUpdateOneWithoutStoresNestedInput
     terminals?: TerminalUpdateManyWithoutStoreNestedInput
     license?: StoreLicenseUpdateOneWithoutStoreNestedInput
     campaigns?: CampaignUpdateManyWithoutStoreNestedInput
     integrations?: CompanyIntegrationUpdateManyWithoutStoreNestedInput
+    medias?: MediaUpdateManyWithoutStoreNestedInput
   }
 
   export type StoreUncheckedUpdateWithoutCompanyInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     address?: NullableStringFieldUpdateOperationsInput | string | null
+    terminalLayoutId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     terminals?: TerminalUncheckedUpdateManyWithoutStoreNestedInput
     license?: StoreLicenseUncheckedUpdateOneWithoutStoreNestedInput
     campaigns?: CampaignUncheckedUpdateManyWithoutStoreNestedInput
     integrations?: CompanyIntegrationUncheckedUpdateManyWithoutStoreNestedInput
+    medias?: MediaUncheckedUpdateManyWithoutStoreNestedInput
   }
 
   export type StoreUncheckedUpdateManyWithoutCompanyInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     address?: NullableStringFieldUpdateOperationsInput | string | null
+    terminalLayoutId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -34596,6 +38415,7 @@ export namespace Prisma {
     heartbeats?: TerminalHeartbeatUpdateManyWithoutTerminalNestedInput
     events?: TerminalEventUpdateManyWithoutTerminalNestedInput
     campaigns?: CampaignUpdateManyWithoutTerminalNestedInput
+    activationCodeHistory?: ActivationCodeHistoryUpdateManyWithoutTerminalNestedInput
   }
 
   export type TerminalUncheckedUpdateWithoutCompanyInput = {
@@ -34620,6 +38440,7 @@ export namespace Prisma {
     heartbeats?: TerminalHeartbeatUncheckedUpdateManyWithoutTerminalNestedInput
     events?: TerminalEventUncheckedUpdateManyWithoutTerminalNestedInput
     campaigns?: CampaignUncheckedUpdateManyWithoutTerminalNestedInput
+    activationCodeHistory?: ActivationCodeHistoryUncheckedUpdateManyWithoutTerminalNestedInput
   }
 
   export type TerminalUncheckedUpdateManyWithoutCompanyInput = {
@@ -34652,6 +38473,7 @@ export namespace Prisma {
     type?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    store?: StoreUpdateOneWithoutMediasNestedInput
     terminalMedias?: TerminalMediaUpdateManyWithoutMediaNestedInput
   }
 
@@ -34665,6 +38487,7 @@ export namespace Prisma {
     mimeType?: StringFieldUpdateOperationsInput | string
     size?: IntFieldUpdateOperationsInput | number
     type?: StringFieldUpdateOperationsInput | string
+    storeId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     terminalMedias?: TerminalMediaUncheckedUpdateManyWithoutMediaNestedInput
@@ -34680,6 +38503,7 @@ export namespace Prisma {
     mimeType?: StringFieldUpdateOperationsInput | string
     size?: IntFieldUpdateOperationsInput | number
     type?: StringFieldUpdateOperationsInput | string
+    storeId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -34882,6 +38706,21 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
+  export type MediaCreateManyStoreInput = {
+    id?: string
+    bucket: string
+    path: string
+    url?: string | null
+    fileName: string
+    originalName?: string | null
+    mimeType: string
+    size: number
+    type: string
+    companyId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
   export type TerminalUpdateWithoutStoreInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
@@ -34904,6 +38743,7 @@ export namespace Prisma {
     heartbeats?: TerminalHeartbeatUpdateManyWithoutTerminalNestedInput
     events?: TerminalEventUpdateManyWithoutTerminalNestedInput
     campaigns?: CampaignUpdateManyWithoutTerminalNestedInput
+    activationCodeHistory?: ActivationCodeHistoryUpdateManyWithoutTerminalNestedInput
   }
 
   export type TerminalUncheckedUpdateWithoutStoreInput = {
@@ -34928,6 +38768,7 @@ export namespace Prisma {
     heartbeats?: TerminalHeartbeatUncheckedUpdateManyWithoutTerminalNestedInput
     events?: TerminalEventUncheckedUpdateManyWithoutTerminalNestedInput
     campaigns?: CampaignUncheckedUpdateManyWithoutTerminalNestedInput
+    activationCodeHistory?: ActivationCodeHistoryUncheckedUpdateManyWithoutTerminalNestedInput
   }
 
   export type TerminalUncheckedUpdateManyWithoutStoreInput = {
@@ -35030,6 +38871,53 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type MediaUpdateWithoutStoreInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    bucket?: StringFieldUpdateOperationsInput | string
+    path?: StringFieldUpdateOperationsInput | string
+    url?: NullableStringFieldUpdateOperationsInput | string | null
+    fileName?: StringFieldUpdateOperationsInput | string
+    originalName?: NullableStringFieldUpdateOperationsInput | string | null
+    mimeType?: StringFieldUpdateOperationsInput | string
+    size?: IntFieldUpdateOperationsInput | number
+    type?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    company?: CompanyUpdateOneWithoutMediasNestedInput
+    terminalMedias?: TerminalMediaUpdateManyWithoutMediaNestedInput
+  }
+
+  export type MediaUncheckedUpdateWithoutStoreInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    bucket?: StringFieldUpdateOperationsInput | string
+    path?: StringFieldUpdateOperationsInput | string
+    url?: NullableStringFieldUpdateOperationsInput | string | null
+    fileName?: StringFieldUpdateOperationsInput | string
+    originalName?: NullableStringFieldUpdateOperationsInput | string | null
+    mimeType?: StringFieldUpdateOperationsInput | string
+    size?: IntFieldUpdateOperationsInput | number
+    type?: StringFieldUpdateOperationsInput | string
+    companyId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    terminalMedias?: TerminalMediaUncheckedUpdateManyWithoutMediaNestedInput
+  }
+
+  export type MediaUncheckedUpdateManyWithoutStoreInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    bucket?: StringFieldUpdateOperationsInput | string
+    path?: StringFieldUpdateOperationsInput | string
+    url?: NullableStringFieldUpdateOperationsInput | string | null
+    fileName?: StringFieldUpdateOperationsInput | string
+    originalName?: NullableStringFieldUpdateOperationsInput | string | null
+    mimeType?: StringFieldUpdateOperationsInput | string
+    size?: IntFieldUpdateOperationsInput | number
+    type?: StringFieldUpdateOperationsInput | string
+    companyId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type TerminalActivationCreateManyTerminalInput = {
     id?: string
     activatedAt?: Date | string
@@ -35042,6 +38930,7 @@ export namespace Prisma {
   export type TerminalMediaCreateManyTerminalInput = {
     id?: string
     order?: number
+    duration?: number | null
     startsAt?: Date | string | null
     endsAt?: Date | string | null
     mediaId: string
@@ -35075,6 +38964,12 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
+  export type ActivationCodeHistoryCreateManyTerminalInput = {
+    id?: string
+    code: string
+    createdAt?: Date | string
+  }
+
   export type TerminalActivationUpdateWithoutTerminalInput = {
     id?: StringFieldUpdateOperationsInput | string
     activatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -35105,6 +39000,7 @@ export namespace Prisma {
   export type TerminalMediaUpdateWithoutTerminalInput = {
     id?: StringFieldUpdateOperationsInput | string
     order?: IntFieldUpdateOperationsInput | number
+    duration?: NullableIntFieldUpdateOperationsInput | number | null
     startsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     endsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     media?: MediaUpdateOneRequiredWithoutTerminalMediasNestedInput
@@ -35114,6 +39010,7 @@ export namespace Prisma {
   export type TerminalMediaUncheckedUpdateWithoutTerminalInput = {
     id?: StringFieldUpdateOperationsInput | string
     order?: IntFieldUpdateOperationsInput | number
+    duration?: NullableIntFieldUpdateOperationsInput | number | null
     startsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     endsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     mediaId?: StringFieldUpdateOperationsInput | string
@@ -35123,6 +39020,7 @@ export namespace Prisma {
   export type TerminalMediaUncheckedUpdateManyWithoutTerminalInput = {
     id?: StringFieldUpdateOperationsInput | string
     order?: IntFieldUpdateOperationsInput | number
+    duration?: NullableIntFieldUpdateOperationsInput | number | null
     startsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     endsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     mediaId?: StringFieldUpdateOperationsInput | string
@@ -35214,6 +39112,24 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type ActivationCodeHistoryUpdateWithoutTerminalInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    code?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ActivationCodeHistoryUncheckedUpdateWithoutTerminalInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    code?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ActivationCodeHistoryUncheckedUpdateManyWithoutTerminalInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    code?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type LicenseRenewalCreateManyStoreLicenseInput = {
     id?: string
     previousExpiresAt: Date | string
@@ -35249,6 +39165,7 @@ export namespace Prisma {
   export type TerminalMediaCreateManyCampaignInput = {
     id?: string
     order?: number
+    duration?: number | null
     startsAt?: Date | string | null
     endsAt?: Date | string | null
     terminalId: string
@@ -35268,6 +39185,7 @@ export namespace Prisma {
   export type TerminalMediaUpdateWithoutCampaignInput = {
     id?: StringFieldUpdateOperationsInput | string
     order?: IntFieldUpdateOperationsInput | number
+    duration?: NullableIntFieldUpdateOperationsInput | number | null
     startsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     endsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     terminal?: TerminalUpdateOneRequiredWithoutTerminalMediasNestedInput
@@ -35277,6 +39195,7 @@ export namespace Prisma {
   export type TerminalMediaUncheckedUpdateWithoutCampaignInput = {
     id?: StringFieldUpdateOperationsInput | string
     order?: IntFieldUpdateOperationsInput | number
+    duration?: NullableIntFieldUpdateOperationsInput | number | null
     startsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     endsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     terminalId?: StringFieldUpdateOperationsInput | string
@@ -35286,6 +39205,7 @@ export namespace Prisma {
   export type TerminalMediaUncheckedUpdateManyWithoutCampaignInput = {
     id?: StringFieldUpdateOperationsInput | string
     order?: IntFieldUpdateOperationsInput | number
+    duration?: NullableIntFieldUpdateOperationsInput | number | null
     startsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     endsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     terminalId?: StringFieldUpdateOperationsInput | string
@@ -35325,6 +39245,7 @@ export namespace Prisma {
   export type TerminalMediaCreateManyMediaInput = {
     id?: string
     order?: number
+    duration?: number | null
     startsAt?: Date | string | null
     endsAt?: Date | string | null
     terminalId: string
@@ -35334,6 +39255,7 @@ export namespace Prisma {
   export type TerminalMediaUpdateWithoutMediaInput = {
     id?: StringFieldUpdateOperationsInput | string
     order?: IntFieldUpdateOperationsInput | number
+    duration?: NullableIntFieldUpdateOperationsInput | number | null
     startsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     endsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     terminal?: TerminalUpdateOneRequiredWithoutTerminalMediasNestedInput
@@ -35343,6 +39265,7 @@ export namespace Prisma {
   export type TerminalMediaUncheckedUpdateWithoutMediaInput = {
     id?: StringFieldUpdateOperationsInput | string
     order?: IntFieldUpdateOperationsInput | number
+    duration?: NullableIntFieldUpdateOperationsInput | number | null
     startsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     endsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     terminalId?: StringFieldUpdateOperationsInput | string
@@ -35352,6 +39275,7 @@ export namespace Prisma {
   export type TerminalMediaUncheckedUpdateManyWithoutMediaInput = {
     id?: StringFieldUpdateOperationsInput | string
     order?: IntFieldUpdateOperationsInput | number
+    duration?: NullableIntFieldUpdateOperationsInput | number | null
     startsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     endsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     terminalId?: StringFieldUpdateOperationsInput | string
@@ -35406,6 +39330,52 @@ export namespace Prisma {
     n8nWorkflowId?: NullableJsonNullValueInput | InputJsonValue
     companyId?: StringFieldUpdateOperationsInput | string
     storeId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type StoreCreateManyTerminalLayoutInput = {
+    id?: string
+    name: string
+    address?: string | null
+    companyId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type StoreUpdateWithoutTerminalLayoutInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    company?: CompanyUpdateOneRequiredWithoutStoresNestedInput
+    terminals?: TerminalUpdateManyWithoutStoreNestedInput
+    license?: StoreLicenseUpdateOneWithoutStoreNestedInput
+    campaigns?: CampaignUpdateManyWithoutStoreNestedInput
+    integrations?: CompanyIntegrationUpdateManyWithoutStoreNestedInput
+    medias?: MediaUpdateManyWithoutStoreNestedInput
+  }
+
+  export type StoreUncheckedUpdateWithoutTerminalLayoutInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    companyId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    terminals?: TerminalUncheckedUpdateManyWithoutStoreNestedInput
+    license?: StoreLicenseUncheckedUpdateOneWithoutStoreNestedInput
+    campaigns?: CampaignUncheckedUpdateManyWithoutStoreNestedInput
+    integrations?: CompanyIntegrationUncheckedUpdateManyWithoutStoreNestedInput
+    medias?: MediaUncheckedUpdateManyWithoutStoreNestedInput
+  }
+
+  export type StoreUncheckedUpdateManyWithoutTerminalLayoutInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    companyId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }

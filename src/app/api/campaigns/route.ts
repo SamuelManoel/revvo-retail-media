@@ -9,7 +9,12 @@ const CAMPAIGN_INCLUDE = {
     orderBy: { order: 'asc' as const },
     include: {
       media:    { select: { id: true, url: true, fileName: true, mimeType: true, type: true, size: true } },
-      terminal: { select: { id: true, name: true } },
+      terminal: {
+        select: {
+          id: true, name: true, isPriceChecker: true,
+          store: { select: { terminalLayout: { select: { id: true, name: true } } } },
+        },
+      },
     },
   },
 };
@@ -53,6 +58,31 @@ export async function POST(req: NextRequest) {
     const storeWhere = session.isMaster ? { id: storeId } : { id: storeId, companyId };
     const store = await prisma.store.findFirst({ where: storeWhere, select: { id: true } });
     if (!store) return NextResponse.json({ message: 'Loja não encontrada' }, { status: 404 });
+  }
+
+  // Regra: um terminal não pode ter outra campanha ativa cujo período se sobreponha.
+  if (terminalId) {
+    const newStart = new Date(startsAt);
+    const newEnd   = new Date(endsAt);
+    const conflict = await prisma.campaign.findFirst({
+      where: {
+        terminalId,
+        isActive: true,
+        // Sobreposição: existing.startsAt <= newEnd && existing.endsAt >= newStart
+        startsAt: { lte: newEnd },
+        endsAt:   { gte: newStart },
+      },
+      select: { id: true, name: true, startsAt: true, endsAt: true },
+    });
+    if (conflict) {
+      const fmt = (d: Date) => d.toISOString().slice(0, 10);
+      return NextResponse.json(
+        {
+          message: `Já existe a campanha ativa "${conflict.name}" (${fmt(conflict.startsAt)} → ${fmt(conflict.endsAt)}) neste terminal. Desative-a ou ajuste as datas.`,
+        },
+        { status: 409 },
+      );
+    }
   }
 
   const campaign = await prisma.campaign.create({

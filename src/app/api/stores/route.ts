@@ -1,7 +1,22 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { getSession } from '@/lib/auth';
-import { createStoreSchema } from '@/lib/tenant-db';
+import { createStoreSchema, tenantId } from '@/lib/tenant-db';
+import { supabaseAdmin } from '@/lib/supabase-admin';
+import { buildStoreFolderKeepPath } from '@/lib/upload';
+
+async function ensureStorageFolder(storeId: string) {
+  const bucket = process.env.SUPABASE_STORAGE_BUCKET;
+  if (!bucket) return;
+  const path = buildStoreFolderKeepPath(tenantId(storeId));
+  // Sobe um placeholder vazio com upsert: a pasta passa a aparecer no Supabase Storage.
+  const { error } = await supabaseAdmin.storage
+    .from(bucket)
+    .upload(path, new Blob([''], { type: 'text/plain' }), { upsert: true });
+  if (error && error.message && !/already exists/i.test(error.message)) {
+    console.error('Erro ao inicializar pasta da loja no storage:', error);
+  }
+}
 
 export async function GET() {
   const session = await getSession();
@@ -64,6 +79,7 @@ export async function POST(req: NextRequest) {
     });
 
     await createStoreSchema(store.id);
+    await ensureStorageFolder(store.id);
 
     return NextResponse.json(store, { status: 201 });
   } catch (error) {

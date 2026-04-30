@@ -13,6 +13,7 @@ const INCLUDE = {
       startsAt: true, expiresAt: true, status: true,
     },
   },
+  terminalLayout: { select: { id: true, name: true, thumbnailUrl: true } },
   _count: { select: { terminals: true } },
 } as const;
 
@@ -42,12 +43,13 @@ export async function PATCH(req: NextRequest, { params }: Params) {
 
   try {
     const body = await req.json();
-    const { name, address } = body;
+    const { name, address, terminalLayoutId } = body;
     const updated = await prisma.store.update({
       where: { id },
       data: {
         ...(name !== undefined && { name }),
         ...(address !== undefined && { address }),
+        ...(terminalLayoutId !== undefined && { terminalLayoutId: terminalLayoutId || null }),
       },
       include: INCLUDE,
     });

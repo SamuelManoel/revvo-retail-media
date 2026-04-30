@@ -68,28 +68,29 @@ export async function POST(req: NextRequest) {
       if (ipTaken) return NextResponse.json({ message: 'Já existe um terminal com esse IP' }, { status: 409 });
     }
 
-    // Gerar código de ativação único
-    let activationCode: string;
-    let attempts = 0;
-    do {
-      activationCode = generateActivationCode();
-      const exists = await prisma.terminal.findUnique({ where: { activationCode } });
-      if (!exists) break;
-      attempts++;
-    } while (attempts < 5);
+    // Gerar código de ativação único (verifica Terminal + histórico)
+    const activationCode = await generateActivationCode();
 
-    const terminal = await prisma.terminal.create({
-      data: {
-        name,
-        ip: ip || null,
-        location,
-        storeId: storeId || null,
-        companyId,
-        isPriceChecker,
-        isMediaDisplay,
-        activationCode,
-      },
-      include: INCLUDE,
+    const terminal = await prisma.$transaction(async (tx) => {
+      const created = await tx.terminal.create({
+        data: {
+          name,
+          ip: ip || null,
+          location,
+          storeId: storeId || null,
+          companyId,
+          isPriceChecker,
+          isMediaDisplay,
+          activationCode,
+        },
+        include: INCLUDE,
+      });
+
+      await tx.activationCodeHistory.create({
+        data: { code: activationCode, terminalId: created.id },
+      });
+
+      return created;
     });
 
     // Licença é consumida apenas na ativação do dispositivo, não aqui.

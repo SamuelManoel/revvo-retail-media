@@ -151,6 +151,7 @@ exports.Prisma.StoreScalarFieldEnum = {
   name: 'name',
   address: 'address',
   companyId: 'companyId',
+  terminalLayoutId: 'terminalLayoutId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -251,6 +252,7 @@ exports.Prisma.MediaScalarFieldEnum = {
   size: 'size',
   type: 'type',
   companyId: 'companyId',
+  storeId: 'storeId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -258,6 +260,7 @@ exports.Prisma.MediaScalarFieldEnum = {
 exports.Prisma.TerminalMediaScalarFieldEnum = {
   id: 'id',
   order: 'order',
+  duration: 'duration',
   startsAt: 'startsAt',
   endsAt: 'endsAt',
   terminalId: 'terminalId',
@@ -277,6 +280,13 @@ exports.Prisma.TerminalEventScalarFieldEnum = {
   id: 'id',
   type: 'type',
   payload: 'payload',
+  terminalId: 'terminalId',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.ActivationCodeHistoryScalarFieldEnum = {
+  id: 'id',
+  code: 'code',
   terminalId: 'terminalId',
   createdAt: 'createdAt'
 };
@@ -340,6 +350,21 @@ exports.Prisma.NotificationScalarFieldEnum = {
   createdAt: 'createdAt'
 };
 
+exports.Prisma.TerminalLayoutScalarFieldEnum = {
+  id: 'id',
+  slug: 'slug',
+  name: 'name',
+  description: 'description',
+  configFound: 'configFound',
+  configNotFound: 'configNotFound',
+  configIdle: 'configIdle',
+  isPublic: 'isPublic',
+  isActive: 'isActive',
+  thumbnailUrl: 'thumbnailUrl',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -386,11 +411,13 @@ exports.Prisma.ModelName = {
   TerminalMedia: 'TerminalMedia',
   TerminalHeartbeat: 'TerminalHeartbeat',
   TerminalEvent: 'TerminalEvent',
+  ActivationCodeHistory: 'ActivationCodeHistory',
   Configuration: 'Configuration',
   Integration: 'Integration',
   IntegrationCategory: 'IntegrationCategory',
   CompanyIntegration: 'CompanyIntegration',
-  Notification: 'Notification'
+  Notification: 'Notification',
+  TerminalLayout: 'TerminalLayout'
 };
 
 /**

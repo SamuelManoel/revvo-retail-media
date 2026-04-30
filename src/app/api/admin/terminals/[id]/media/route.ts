@@ -46,7 +46,7 @@ export async function POST(req: NextRequest, { params }: Params) {
 
   try {
     const body = await req.json();
-    const { mediaId, startsAt, endsAt, campaignId } = body;
+    const { mediaId, startsAt, endsAt, campaignId, duration } = body;
 
     if (!mediaId) return NextResponse.json({ message: 'mediaId é obrigatório' }, { status: 400 });
 
@@ -64,11 +64,20 @@ export async function POST(req: NextRequest, { params }: Params) {
       select: { order: true },
     });
 
+    // Imagem usa duração (default 10s, range 3–300); vídeo toca o tempo do arquivo (null)
+    const isImage = media.type === 'image';
+    let resolvedDuration: number | null = null;
+    if (isImage) {
+      const raw = typeof duration === 'number' ? duration : 10;
+      resolvedDuration = Math.min(300, Math.max(3, Math.round(raw)));
+    }
+
     const terminalMedia = await prisma.terminalMedia.create({
       data: {
         terminalId: id,
         mediaId,
         order: (maxOrder?.order ?? -1) + 1,
+        duration: resolvedDuration,
         startsAt: startsAt ? new Date(startsAt) : null,
         endsAt: endsAt ? new Date(endsAt) : null,
         campaignId: campaignId || null,
@@ -93,7 +102,7 @@ export async function POST(req: NextRequest, { params }: Params) {
   } catch (error) {
     const e = error as { code?: string };
     if (e?.code === 'P2002') {
-      return NextResponse.json({ message: 'Mídia já vinculada a este terminal' }, { status: 409 });
+      return NextResponse.json({ message: 'Mídia já vinculada a este terminal nesta campanha' }, { status: 409 });
     }
     console.error('Erro ao vincular mídia:', error);
     return NextResponse.json({ message: 'Erro ao vincular mídia' }, { status: 500 });

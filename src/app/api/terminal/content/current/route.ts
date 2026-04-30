@@ -7,15 +7,51 @@ export async function GET(req: NextRequest) {
   if (!payload) return NextResponse.json({ message: 'Token inválido' }, { status: 401 });
 
   try {
-    const terminal = await prisma.terminal.findUnique({ where: { id: payload.sub } });
-    if (!terminal || terminal.isBlocked || !terminal.isMediaDisplay) {
-      return NextResponse.json({ medias: [] });
+    const terminal = await prisma.terminal.findUnique({
+      where: { id: payload.sub },
+      include: {
+        store: {
+          select: {
+            terminalLayout: {
+              select: {
+                id: true, name: true,
+                configFound: true, configNotFound: true, configIdle: true,
+                updatedAt: true,
+              },
+            },
+          },
+        },
+      },
+    });
+    if (!terminal || terminal.isBlocked) {
+      return NextResponse.json({ medias: [], priceCheckerLayout: null });
+    }
+
+    const priceCheckerLayout = terminal.isPriceChecker
+      ? (terminal.store?.terminalLayout ?? null)
+      : null;
+
+    if (!terminal.isMediaDisplay) {
+      return NextResponse.json({ medias: [], priceCheckerLayout });
     }
 
     const now = new Date();
 
+    // Filtra mídias avulsas (sem campanha) ou cuja campanha está ativa e dentro da janela.
     const terminalMedias = await prisma.terminalMedia.findMany({
-      where: { terminalId: payload.sub },
+      where: {
+        terminalId: payload.sub,
+        OR: [
+          { campaignId: null },
+          {
+            campaign: {
+              isActive: true,
+              startsAt: { lte: now },
+              endsAt: { gte: now },
+            },
+          },
+        ],
+      },
       orderBy: { order: 'asc' },
       include: { media: true },
     });
@@ -29,6 +65,7 @@ export async function GET(req: NextRequest) {
         return {
           terminalMediaId: tm.id,
           order: tm.order,
+          duration: tm.duration, // segundos para imagens; null para vídeos (toca até o fim)
           startsAt: tm.startsAt,
           endsAt: tm.endsAt,
           active,
@@ -42,6 +79,7 @@ export async function GET(req: NextRequest) {
           },
         };
       }),
+      priceCheckerLayout,
     });
   } catch (error) {
     console.error('Erro ao buscar conteúdo:', error);

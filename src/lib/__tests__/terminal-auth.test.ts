@@ -8,40 +8,76 @@ vi.mock('@/lib/prisma', () => ({
     terminalCredential: {
       findUnique: vi.fn(),
     },
+    terminal: {
+      findUnique: vi.fn(),
+    },
+    activationCodeHistory: {
+      findUnique: vi.fn(),
+    },
   },
 }));
 
 import { prisma } from '@/lib/prisma';
 const mockPrisma = prisma as unknown as {
   terminalCredential: { findUnique: ReturnType<typeof vi.fn> };
+  terminal: { findUnique: ReturnType<typeof vi.fn> };
+  activationCodeHistory: { findUnique: ReturnType<typeof vi.fn> };
 };
 
 // ── generateActivationCode ─────────────────────────────────────────────────
 describe('generateActivationCode', () => {
-  it('gera código com 8 caracteres', () => {
-    const code = generateActivationCode();
+  beforeEach(() => {
+    // Por padrão, nenhum código existe no banco nem no histórico
+    mockPrisma.terminal.findUnique.mockResolvedValue(null);
+    mockPrisma.activationCodeHistory.findUnique.mockResolvedValue(null);
+  });
+
+  it('gera código com 8 caracteres', async () => {
+    const code = await generateActivationCode();
     expect(code).toHaveLength(8);
   });
 
-  it('gera código apenas com caracteres permitidos (sem 0, O, I, 1)', () => {
+  it('gera código apenas com caracteres permitidos (sem 0, O, I, 1)', async () => {
     const ALLOWED = /^[ABCDEFGHJKLMNPQRSTUVWXYZ23456789]+$/;
     const FORBIDDEN = /[0OI1]/;
 
     for (let i = 0; i < 100; i++) {
-      const code = generateActivationCode();
+      const code = await generateActivationCode();
       expect(ALLOWED.test(code)).toBe(true);
       expect(FORBIDDEN.test(code)).toBe(false);
     }
   });
 
-  it('gera códigos variados (não é constante)', () => {
-    const codes = new Set(Array.from({ length: 20 }, () => generateActivationCode()));
+  it('gera códigos variados (não é constante)', async () => {
+    const codes = new Set<string>();
+    for (let i = 0; i < 20; i++) {
+      codes.add(await generateActivationCode());
+    }
     expect(codes.size).toBeGreaterThan(1);
   });
 
-  it('retorna somente letras maiúsculas e dígitos', () => {
-    const code = generateActivationCode();
+  it('retorna somente letras maiúsculas e dígitos', async () => {
+    const code = await generateActivationCode();
     expect(code).toMatch(/^[A-Z2-9]+$/);
+  });
+
+  it('rejeita código que já existe no histórico e tenta novamente', async () => {
+    vi.clearAllMocks();
+    // Primeira tentativa: código existe no histórico; segunda: livre
+    mockPrisma.activationCodeHistory.findUnique
+      .mockResolvedValueOnce({ id: 'exists' })
+      .mockResolvedValue(null);
+
+    const code = await generateActivationCode();
+    expect(code).toHaveLength(8);
+    // Deve ter tentado pelo menos 2 vezes (2 chamadas a terminal.findUnique + 2 a history)
+    expect(mockPrisma.terminal.findUnique.mock.calls.length).toBeGreaterThanOrEqual(2);
+  });
+
+  it('lança erro após 10 tentativas falhadas', async () => {
+    mockPrisma.terminal.findUnique.mockResolvedValue({ id: 'always-taken' });
+
+    await expect(generateActivationCode()).rejects.toThrow('10 tentativas');
   });
 });
 

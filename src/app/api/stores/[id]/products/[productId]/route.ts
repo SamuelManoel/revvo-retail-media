@@ -22,7 +22,7 @@ export async function PATCH(req: NextRequest, { params }: Params) {
 
   try {
     const body = await req.json();
-    const { ean, produto, preco1, preco2, preco3, codigoProduto, imageUrl } = body;
+    const { ean, produto, preco1, preco2, preco3, codigoProduto, imageUrl, status } = body;
 
     const updated = await updateProduct(id, productId, {
       ...(ean !== undefined && { ean }),
@@ -32,6 +32,7 @@ export async function PATCH(req: NextRequest, { params }: Params) {
       ...(preco3 !== undefined && { preco3: Number(preco3) }),
       ...(codigoProduto !== undefined && { codigoProduto }),
       ...(imageUrl !== undefined && { imageUrl }),
+      ...(status !== undefined && { status: Boolean(status) }),
     });
 
     if (!updated) return NextResponse.json({ message: 'Produto não encontrado' }, { status: 404 });

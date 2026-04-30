@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import Link from 'next/link';
 import { Button, Card, CardHeader } from '@heroui/react';
 
 type Config = {
@@ -43,6 +44,7 @@ function StatusBadge({ status }: { status: ActionStatus | null }) {
 export default function ConfiguracoesPage() {
   const [config, setConfig] = useState<Config | null>(null);
   const [loading, setLoading] = useState(true);
+  const [isMaster, setIsMaster] = useState(false);
   const [resetTime, setResetTime] = useState('');
   const [saving, setSaving] = useState(false);
   const [syncing, setSyncing] = useState(false);
@@ -50,6 +52,10 @@ export default function ConfiguracoesPage() {
   const [saveStatus, setSaveStatus] = useState<ActionStatus | null>(null);
   const [syncStatus, setSyncStatus] = useState<ActionStatus | null>(null);
   const [pushStatus, setPushStatus] = useState<ActionStatus | null>(null);
+
+  useEffect(() => {
+    fetch('/api/auth/me').then((r) => r.json()).then((d) => setIsMaster(!!d?.isMaster)).catch(() => {});
+  }, []);
 
   async function fetchConfig() {
     try {
@@ -241,6 +247,26 @@ export default function ConfiguracoesPage() {
           </div>
         </Card.Content>
       </Card>
+
+      {/* Layouts do terminal — somente master */}
+      {isMaster && (
+        <Card>
+          <CardHeader className="border-b border-border pb-4">
+            <h2 className="text-base font-semibold text-foreground">Layouts do Terminal</h2>
+          </CardHeader>
+          <Card.Content className="flex items-center justify-between gap-4 py-6">
+            <div>
+              <p className="text-sm font-medium text-foreground">Editor visual de layouts</p>
+              <p className="mt-0.5 text-xs text-muted">
+                Crie e edite os layouts (cores, fontes, blocos) usados pelos terminais Price Checker.
+              </p>
+            </div>
+            <Link href="/configuracoes/layouts-terminal">
+              <Button variant="primary" size="sm">Abrir editor</Button>
+            </Link>
+          </Card.Content>
+        </Card>
+      )}
     </div>
   );
 }

@@ -9,6 +9,7 @@ const {
   mockActivationUpdate,
   mockStoreLicenseFindUnique,
   mockStoreLicenseUpdate,
+  mockActivationCodeHistoryCreate,
 } = vi.hoisted(() => ({
   mockTerminalFindUnique: vi.fn(),
   mockTransaction: vi.fn(),
@@ -17,6 +18,7 @@ const {
   mockActivationUpdate: vi.fn(),
   mockStoreLicenseFindUnique: vi.fn(),
   mockStoreLicenseUpdate: vi.fn(),
+  mockActivationCodeHistoryCreate: vi.fn(),
 }));
 
 vi.mock('@/lib/prisma', () => ({
@@ -27,7 +29,7 @@ vi.mock('@/lib/prisma', () => ({
 }));
 
 vi.mock('@/lib/terminal-auth', () => ({
-  generateActivationCode: vi.fn().mockReturnValue('NEWCODE1'),
+  generateActivationCode: vi.fn().mockResolvedValue('NEWCODE1'),
 }));
 
 import { revokeTerminalLicense } from '../revoke-license';
@@ -67,13 +69,12 @@ describe('revokeTerminalLicense', () => {
           findUnique: mockStoreLicenseFindUnique,
           update: mockStoreLicenseUpdate,
         },
+        activationCodeHistory: { create: mockActivationCodeHistoryCreate },
       };
       return callback(tx);
     });
 
-    mockTerminalFindUnique
-      .mockResolvedValueOnce(makeTerminal())   // busca o terminal a revogar
-      .mockResolvedValueOnce(null);             // verifica se novo activationCode existe
+    mockTerminalFindUnique.mockResolvedValueOnce(makeTerminal());
 
     mockTerminalUpdate.mockResolvedValue({});
     mockCredentialUpdate.mockResolvedValue({});
@@ -100,9 +101,7 @@ describe('revokeTerminalLicense', () => {
 
   it('master pode revogar terminal de outra empresa', async () => {
     mockTerminalFindUnique.mockReset();
-    mockTerminalFindUnique
-      .mockResolvedValueOnce(makeTerminal({ companyId: 'outra-empresa' }))
-      .mockResolvedValueOnce(null);
+    mockTerminalFindUnique.mockResolvedValueOnce(makeTerminal({ companyId: 'outra-empresa' }));
     const result = await revokeTerminalLicense(TERMINAL_ID, USER_ID, COMPANY_ID, true);
     expect(result.ok).toBe(true);
   });
@@ -169,9 +168,7 @@ describe('revokeTerminalLicense', () => {
 
   it('licenseFreed=false quando terminal não tem storeId', async () => {
     mockTerminalFindUnique.mockReset();
-    mockTerminalFindUnique
-      .mockResolvedValueOnce(makeTerminal({ storeId: null }))
-      .mockResolvedValueOnce(null);
+    mockTerminalFindUnique.mockResolvedValueOnce(makeTerminal({ storeId: null }));
     const result = await revokeTerminalLicense(TERMINAL_ID, USER_ID, COMPANY_ID, false);
     expect(result.ok).toBe(true);
     if (result.ok) expect(result.licenseFreed).toBe(false);
@@ -195,18 +192,14 @@ describe('revokeTerminalLicense', () => {
 
   it('não atualiza credencial quando terminal não tem credential', async () => {
     mockTerminalFindUnique.mockReset();
-    mockTerminalFindUnique
-      .mockResolvedValueOnce(makeTerminal({ credential: null }))
-      .mockResolvedValueOnce(null);
+    mockTerminalFindUnique.mockResolvedValueOnce(makeTerminal({ credential: null }));
     await revokeTerminalLicense(TERMINAL_ID, USER_ID, COMPANY_ID, false);
     expect(mockCredentialUpdate).not.toHaveBeenCalled();
   });
 
   it('não atualiza ativação quando terminal não tem ativações', async () => {
     mockTerminalFindUnique.mockReset();
-    mockTerminalFindUnique
-      .mockResolvedValueOnce(makeTerminal({ activations: [] }))
-      .mockResolvedValueOnce(null);
+    mockTerminalFindUnique.mockResolvedValueOnce(makeTerminal({ activations: [] }));
     await revokeTerminalLicense(TERMINAL_ID, USER_ID, COMPANY_ID, false);
     expect(mockActivationUpdate).not.toHaveBeenCalled();
   });

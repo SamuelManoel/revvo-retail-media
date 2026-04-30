@@ -10,7 +10,16 @@ export async function GET(req: NextRequest) {
     const terminal = await prisma.terminal.findUnique({
       where: { id: payload.sub },
       include: {
-        store: { select: { id: true, name: true, address: true } },
+        store: {
+          select: {
+            id: true,
+            name: true,
+            address: true,
+            terminalLayout: {
+              select: { id: true, name: true, configFound: true, configNotFound: true, configIdle: true, updatedAt: true },
+            },
+          },
+        },
         company: { select: { id: true, name: true } },
       },
     });
@@ -20,6 +29,7 @@ export async function GET(req: NextRequest) {
     }
 
     const config = await prisma.configuration.findFirst();
+    const { terminalLayout, ...storeBase } = terminal.store ?? { terminalLayout: null };
 
     return NextResponse.json({
       terminal: {
@@ -29,11 +39,13 @@ export async function GET(req: NextRequest) {
         isPriceChecker: terminal.isPriceChecker,
         isMediaDisplay: terminal.isMediaDisplay,
       },
-      store: terminal.store,
+      store: terminal.store ? storeBase : null,
       company: terminal.company,
       config: { resetTime: config?.resetTime ?? 30 },
+      layout: terminalLayout ?? null,
       endpoints: {
         productByEan: '/api/terminal/product/{ean}',
+        layout: '/api/terminal/layout',
       },
     });
   } catch (error) {

@@ -13,10 +13,20 @@ export function getMediaType(mimeType: string) {
   throw new Error('Tipo de arquivo não suportado');
 }
 
-export function buildMediaPath(fileName: string) {
+export function buildMediaPath(fileName: string, opts?: { storeTenantId?: string | null }) {
   const now = new Date();
   const year = now.getFullYear();
   const month = String(now.getMonth() + 1).padStart(2, '0');
 
-  return `uploads/${year}/${month}/${Date.now()}-${fileName}`;
+  // Quando uma loja está selecionada, segrega os arquivos por tenant_id (storeId sem hífens).
+  // Sem loja → fica em "uploads/" (legacy/empresa).
+  const prefix = opts?.storeTenantId ? `stores/${opts.storeTenantId}` : '';
+  const base = prefix ? `${prefix}/uploads` : 'uploads';
+
+  return `${base}/${year}/${month}/${Date.now()}-${fileName}`;
+}
+
+/** Caminho para o placeholder que materializa a pasta da loja no Supabase Storage. */
+export function buildStoreFolderKeepPath(storeTenantId: string) {
+  return `stores/${storeTenantId}/.keep`;
 }

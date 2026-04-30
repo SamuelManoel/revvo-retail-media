@@ -20,7 +20,9 @@ export async function middleware(req: NextRequest) {
     pathname.startsWith('/api/auth/login') ||
     pathname.startsWith('/api/auth/logout') ||
     pathname.startsWith('/api/terminal/') ||
-    pathname === '/'
+    pathname === '/api/config' ||           // config global pública (lida pelo app sem auth)
+    pathname === '/' ||
+    pathname === '/login'
   ) {
     return NextResponse.next();
   }

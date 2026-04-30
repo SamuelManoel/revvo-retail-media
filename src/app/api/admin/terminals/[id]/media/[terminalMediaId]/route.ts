@@ -27,7 +27,23 @@ export async function PUT(req: NextRequest, { params }: Params) {
 
   try {
     const body = await req.json();
-    const { startsAt, endsAt, campaignId } = body;
+    const { startsAt, endsAt, campaignId, duration } = body;
+
+    // Vídeo nunca tem duração; imagem aceita 3–300s
+    let durationData: { duration: number | null } | undefined;
+    if (duration !== undefined) {
+      if (tm.media.type !== 'image') {
+        durationData = { duration: null };
+      } else if (duration === null) {
+        durationData = { duration: 10 };
+      } else {
+        const num = Number(duration);
+        if (!Number.isFinite(num)) {
+          return NextResponse.json({ message: 'Duração inválida' }, { status: 400 });
+        }
+        durationData = { duration: Math.min(300, Math.max(3, Math.round(num))) };
+      }
+    }
 
     const updated = await prisma.terminalMedia.update({
       where: { id: terminalMediaId },
@@ -35,9 +51,28 @@ export async function PUT(req: NextRequest, { params }: Params) {
         ...(startsAt !== undefined && { startsAt: startsAt ? new Date(startsAt) : null }),
         ...(endsAt !== undefined && { endsAt: endsAt ? new Date(endsAt) : null }),
         ...(campaignId !== undefined && { campaignId: campaignId || null }),
+        ...durationData,
       },
       include: { media: true, campaign: { select: { id: true, name: true } } },
     });
+
+    if (durationData && tm.campaignId && durationData.duration !== tm.duration) {
+      await prisma.campaignLog.create({
+        data: {
+          campaignId:  tm.campaignId,
+          action:      'updated',
+          description: `Duração de "${tm.media.fileName}" alterada de ${tm.duration ?? '—'}s para ${durationData.duration ?? '—'}s`,
+          userId:      session.userId,
+          userName:    session.name,
+          diff: {
+            'Duração (s)': {
+              from: tm.duration == null ? null : String(tm.duration),
+              to:   durationData.duration == null ? null : String(durationData.duration),
+            },
+          },
+        },
+      });
+    }
 
     return NextResponse.json(updated);
   } catch (error) {

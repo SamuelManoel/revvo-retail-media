@@ -28,8 +28,10 @@ export async function GET(req: NextRequest) {
     const page  = parseInt(searchParams.get('page')  ?? '1');
     const limit = parseInt(searchParams.get('limit') ?? '50');
     const q     = searchParams.get('q') ?? undefined;
+    const sortBy = searchParams.get('sortBy') ?? undefined;
+    const sortOrder = (searchParams.get('sortOrder') ?? undefined) as 'asc' | 'desc' | undefined;
 
-    const result = await listProducts(store.id, { page, limit, q });
+    const result = await listProducts(store.id, { page, limit, q, sortBy, sortOrder });
 
     return NextResponse.json({ storeId: store.id, store: store.name, ...result });
   } catch (error) {

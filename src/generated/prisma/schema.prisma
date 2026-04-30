@@ -60,14 +60,19 @@ model Store {
   companyId String
   company   Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
 
+  terminalLayoutId String?
+  terminalLayout   TerminalLayout? @relation(fields: [terminalLayoutId], references: [id], onDelete: SetNull)
+
   terminals    Terminal[]
   license      StoreLicense?
   campaigns    Campaign[]
   integrations CompanyIntegration[]
+  medias       Media[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
+  @@index([terminalLayoutId])
   @@map("stores")
 }
 
@@ -93,12 +98,13 @@ model Terminal {
   companyId String
   company   Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
 
-  credential     TerminalCredential?
-  activations    TerminalActivation[]
-  terminalMedias TerminalMedia[]
-  heartbeats     TerminalHeartbeat[]
-  events         TerminalEvent[]
-  campaigns      Campaign[]
+  credential            TerminalCredential?
+  activations           TerminalActivation[]
+  terminalMedias        TerminalMedia[]
+  heartbeats            TerminalHeartbeat[]
+  events                TerminalEvent[]
+  campaigns             Campaign[]
+  activationCodeHistory ActivationCodeHistory[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -227,17 +233,22 @@ model Media {
   companyId String?
   company   Company? @relation(fields: [companyId], references: [id], onDelete: SetNull)
 
+  storeId String?
+  store   Store?  @relation(fields: [storeId], references: [id], onDelete: Cascade)
+
   terminalMedias TerminalMedia[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
+  @@index([storeId])
   @@map("media")
 }
 
 model TerminalMedia {
   id       String    @id @default(uuid())
   order    Int       @default(0)
+  duration Int? // segundos de exibição para imagens; null para vídeos (toca até o fim)
   startsAt DateTime?
   endsAt   DateTime?
 
@@ -250,7 +261,7 @@ model TerminalMedia {
   campaignId String?
   campaign   Campaign? @relation(fields: [campaignId], references: [id], onDelete: SetNull)
 
-  @@unique([terminalId, mediaId])
+  @@unique([terminalId, mediaId, campaignId])
   @@map("terminal_medias")
 }
 
@@ -278,6 +289,18 @@ model TerminalEvent {
   createdAt DateTime @default(now())
 
   @@map("terminal_events")
+}
+
+model ActivationCodeHistory {
+  id   String @id @default(uuid())
+  code String @unique
+
+  terminalId String
+  terminal   Terminal @relation(fields: [terminalId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@map("activation_code_history")
 }
 
 model Configuration {
@@ -367,4 +390,24 @@ model Notification {
   createdAt DateTime @default(now())
 
   @@map("notifications")
+}
+
+model TerminalLayout {
+  id             String  @id @default(uuid())
+  slug           String? @unique // identificador estável para seeds (opcional)
+  name           String
+  description    String?
+  configFound    String  @default("") // código HTML-like com Tailwind para tela "produto encontrado"
+  configNotFound String  @default("") // código para "produto não encontrado"
+  configIdle     String  @default("") // código para tela de descanso ("Passe o produto")
+  isPublic       Boolean @default(true) // sempre true por enquanto (master-only)
+  isActive       Boolean @default(true)
+  thumbnailUrl   String?
+
+  stores Store[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("terminal_layouts")
 }

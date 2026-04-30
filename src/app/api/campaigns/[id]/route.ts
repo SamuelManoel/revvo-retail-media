@@ -11,7 +11,12 @@ const CAMPAIGN_INCLUDE = {
     orderBy: { order: 'asc' as const },
     include: {
       media:    { select: { id: true, url: true, fileName: true, mimeType: true, type: true, size: true } },
-      terminal: { select: { id: true, name: true } },
+      terminal: {
+        select: {
+          id: true, name: true, isPriceChecker: true,
+          store: { select: { terminalLayout: { select: { id: true, name: true } } } },
+        },
+      },
     },
   },
 };
@@ -28,7 +33,7 @@ export async function PATCH(req: NextRequest, { params }: Params) {
   if (!existing) return NextResponse.json({ message: 'Campanha não encontrada' }, { status: 404 });
 
   const body = await req.json();
-  const { name, startsAt, endsAt, storeId, terminalId, thumbnail } = body;
+  const { name, startsAt, endsAt, storeId, terminalId, thumbnail, isActive } = body;
 
   // Build diff for audit log
   type DiffEntry = { from: string | null; to: string | null };
@@ -72,9 +77,41 @@ export async function PATCH(req: NextRequest, { params }: Params) {
     diff['Thumbnail'] = { from: existing.thumbnail, to: thumbnail || null };
     data.thumbnail = thumbnail || null;
   }
+  if (isActive !== undefined && Boolean(isActive) !== existing.isActive) {
+    diff['Status'] = { from: existing.isActive ? 'Ativa' : 'Inativa', to: isActive ? 'Ativa' : 'Inativa' };
+    data.isActive = Boolean(isActive);
+  }
 
   if (Object.keys(data).length === 0) {
     return NextResponse.json({ message: 'Nenhuma alteração detectada' }, { status: 400 });
+  }
+
+  // Regra: um terminal não pode ter outra campanha ativa com período sobreposto.
+  // Só checa se a campanha vai ficar ativa após o update (não bloqueia desativações).
+  const finalTerminalId: string | null = (data.terminalId as string | null | undefined) ?? existing.terminalId;
+  const finalStartsAt: Date = (data.startsAt as Date | undefined) ?? existing.startsAt;
+  const finalEndsAt: Date   = (data.endsAt as Date | undefined)   ?? existing.endsAt;
+  const finalIsActive: boolean = (data.isActive as boolean | undefined) ?? existing.isActive;
+  if (finalTerminalId && finalIsActive) {
+    const conflict = await prisma.campaign.findFirst({
+      where: {
+        id: { not: id },
+        terminalId: finalTerminalId,
+        isActive: true,
+        startsAt: { lte: finalEndsAt },
+        endsAt:   { gte: finalStartsAt },
+      },
+      select: { id: true, name: true, startsAt: true, endsAt: true },
+    });
+    if (conflict) {
+      const fmt = (d: Date) => d.toISOString().slice(0, 10);
+      return NextResponse.json(
+        {
+          message: `Já existe a campanha ativa "${conflict.name}" (${fmt(conflict.startsAt)} → ${fmt(conflict.endsAt)}) neste terminal. Desative-a ou ajuste as datas.`,
+        },
+        { status: 409 },
+      );
+    }
   }
 
   const campaign = await prisma.campaign.update({
@@ -102,7 +139,8 @@ export async function PATCH(req: NextRequest, { params }: Params) {
   return NextResponse.json(campaign);
 }
 
-// DELETE /api/campaigns/[id]
+// DELETE /api/campaigns/[id] — soft-delete (preserva histórico).
+// Marca a campanha como inativa em vez de remover a linha.
 export async function DELETE(_req: NextRequest, { params }: Params) {
   const session = await getSession();
   if (!session) return NextResponse.json({ message: 'Não autenticado' }, { status: 401 });
@@ -110,10 +148,28 @@ export async function DELETE(_req: NextRequest, { params }: Params) {
   const { id } = await params;
   const where = session.isMaster ? { id } : { id, companyId: session.companyId };
 
-  try {
-    await prisma.campaign.delete({ where });
-    return NextResponse.json({ success: true });
-  } catch {
-    return NextResponse.json({ message: 'Campanha não encontrada' }, { status: 404 });
+  const existing = await prisma.campaign.findFirst({ where });
+  if (!existing) return NextResponse.json({ message: 'Campanha não encontrada' }, { status: 404 });
+
+  if (!existing.isActive) {
+    return NextResponse.json({ message: 'Campanha já está inativa' }, { status: 400 });
   }
+
+  await prisma.campaign.update({
+    where: { id },
+    data: { isActive: false },
+  });
+
+  await prisma.campaignLog.create({
+    data: {
+      campaignId:  id,
+      action:      'updated',
+      description: `Campanha desativada — "${existing.name}"`,
+      userId:      session.userId,
+      userName:    session.name,
+      diff: { 'Status': { from: 'Ativa', to: 'Inativa' } },
+    },
+  });
+
+  return NextResponse.json({ success: true, deactivated: true });
 }

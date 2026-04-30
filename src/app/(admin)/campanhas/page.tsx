@@ -13,12 +13,18 @@ type Media    = { id: string; url: string | null; fileName: string; mimeType: st
 type CampaignMedia = {
   id: string;
   order: number;
+  duration: number | null;
   startsAt: string | null;
   endsAt:   string | null;
   terminalId: string;
   mediaId: string;
   media:    Media;
-  terminal: { id: string; name: string };
+  terminal: {
+    id: string;
+    name: string;
+    isPriceChecker: boolean;
+    store: { terminalLayout: { id: string; name: string } | null } | null;
+  };
 };
 
 type Campaign = {
@@ -28,6 +34,7 @@ type Campaign = {
   endsAt:   string;
   createdAt: string;
   thumbnail: string | null;
+  isActive: boolean;
   store:    { id: string; name: string } | null;
   terminal: { id: string; name: string } | null;
   terminalMedias: CampaignMedia[];
@@ -69,7 +76,8 @@ function parseDateLocal(iso: string | null): Date | null {
   return new Date(y, m - 1, d);
 }
 
-function campaignStatus(c: Campaign): 'active' | 'scheduled' | 'expired' {
+function campaignStatus(c: Campaign): 'active' | 'scheduled' | 'expired' | 'inactive' {
+  if (!c.isActive) return 'inactive';
   const now  = new Date();
   const ends = parseDateLocal(c.endsAt);
   const starts = parseDateLocal(c.startsAt);
@@ -93,9 +101,10 @@ function Field({ label, children }: { label: string; children: React.ReactNode }
   );
 }
 
-function StatusBadge({ status }: { status: 'active' | 'scheduled' | 'expired' }) {
+function StatusBadge({ status }: { status: 'active' | 'scheduled' | 'expired' | 'inactive' }) {
   if (status === 'active')    return <span className="rounded-full bg-success/10 px-2 py-0.5 text-xs font-medium text-success">Ativa</span>;
   if (status === 'scheduled') return <span className="rounded-full bg-warning/10 px-2 py-0.5 text-xs font-medium text-warning">Agendada</span>;
+  if (status === 'inactive')  return <span className="rounded-full bg-muted/15 px-2 py-0.5 text-xs font-medium text-muted">Inativa</span>;
   return                             <span className="rounded-full bg-danger/10 px-2 py-0.5 text-xs font-medium text-danger">Expirada</span>;
 }
 
@@ -382,13 +391,98 @@ function LogIcon({ action }: { action: string }) {
 /* ────────────────────────────────────────────────────────────────
    Media card
 ──────────────────────────────────────────────────────────────── */
+function DurationInput({ cm, onSaved }: { cm: CampaignMedia; onSaved: (id: string, duration: number) => void }) {
+  const initial = cm.duration ?? 10;
+  const [value, setValue] = useState<string>(String(initial));
+  const [saving, setSaving] = useState(false);
+
+  useEffect(() => { setValue(String(cm.duration ?? 10)); }, [cm.duration]);
+
+  async function commit() {
+    const n = Number(value);
+    if (!Number.isFinite(n)) { setValue(String(cm.duration ?? 10)); return; }
+    const clamped = Math.min(300, Math.max(3, Math.round(n)));
+    setValue(String(clamped));
+    if (clamped === (cm.duration ?? 10)) return;
+    setSaving(true);
+    try {
+      const res = await fetch(`/api/admin/terminals/${cm.terminalId}/media/${cm.id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ duration: clamped }),
+      });
+      if (res.ok) onSaved(cm.id, clamped);
+    } catch { /* ignore */ } finally { setSaving(false); }
+  }
+
+  return (
+    <div className="flex items-center gap-1.5">
+      <span className="text-xs text-muted">Duração:</span>
+      <input
+        type="number" min={3} max={300} step={1}
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
+        onBlur={commit}
+        onKeyDown={(e) => { if (e.key === 'Enter') (e.target as HTMLInputElement).blur(); }}
+        disabled={saving}
+        className="w-14 rounded-md border border-border bg-surface px-1.5 py-0.5 text-xs text-foreground outline-none focus:border-accent focus:ring-1 focus:ring-accent-soft-hover disabled:opacity-60"
+        onClick={(e) => e.stopPropagation()}
+        onMouseDown={(e) => e.stopPropagation()}
+        onDragStart={(e) => e.stopPropagation()}
+      />
+      <span className="text-xs text-muted">seg</span>
+    </div>
+  );
+}
+
+function LockedPriceCheckerCard({ layoutName }: { layoutName: string | null }) {
+  return (
+    <div className="overflow-hidden rounded-xl border-2 border-dashed border-accent/40 bg-accent-soft/30">
+      <div className="flex items-center justify-between px-3 py-1.5 border-b border-accent/20 bg-accent/10">
+        <div className="flex items-center gap-1.5 text-xs font-semibold text-accent">
+          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+            <rect width="18" height="11" x="3" y="11" rx="2" ry="2" /><path d="M7 11V7a5 5 0 0 1 10 0v4" />
+          </svg>
+          Padrão
+        </div>
+        <span className="text-xs text-accent/70">Final</span>
+      </div>
+
+      <div className="relative h-32 flex items-center justify-center bg-gradient-to-br from-accent/10 via-accent/5 to-transparent">
+        <svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-accent/70">
+          <rect width="20" height="14" x="2" y="3" rx="2" /><line x1="8" x2="16" y1="21" y2="21" /><line x1="12" x2="12" y1="17" y2="21" />
+        </svg>
+      </div>
+
+      <div className="p-3 space-y-1.5">
+        <p className="truncate text-sm font-semibold text-foreground">Layout busca de preço</p>
+        <div className="flex items-center gap-2">
+          <span className="rounded-full bg-accent-soft px-2 py-0.5 text-xs font-medium text-accent">layout</span>
+          <span className="text-xs text-muted truncate">{layoutName ?? 'Padrão da loja'}</span>
+        </div>
+        <p className="text-xs text-muted">Exibido após a playlist até bipar um produto.</p>
+      </div>
+
+      <div className="px-3 py-2 border-t border-accent/20 bg-accent/5">
+        <p className="text-xs text-muted flex items-center gap-1.5">
+          <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <circle cx="12" cy="12" r="10" /><path d="M12 16v-4" /><path d="M12 8h.01" />
+          </svg>
+          Item fixo — não pode ser excluído ou reordenado.
+        </p>
+      </div>
+    </div>
+  );
+}
+
 function MediaCard({
-  cm, index, onEdit, onDelete, onPreview,
+  cm, index, onEdit, onDelete, onPreview, onDurationSaved,
 }: {
   cm: CampaignMedia; index: number;
   onEdit: (cm: CampaignMedia) => void;
   onDelete: (cm: CampaignMedia) => void;
   onPreview: (media: Media) => void;
+  onDurationSaved: (id: string, duration: number) => void;
 }) {
   const { media } = cm;
   const now       = new Date();
@@ -441,6 +535,11 @@ function MediaCard({
           <span className="text-xs text-muted">{formatSize(media.size)}</span>
         </div>
         <p className="text-xs text-muted">{cm.terminal.name}</p>
+        {media.type === 'image' ? (
+          <DurationInput cm={cm} onSaved={onDurationSaved} />
+        ) : (
+          <p className="text-xs text-muted italic">Duração: tempo total do vídeo</p>
+        )}
         {(cm.startsAt || cm.endsAt) && (
           <p className={`text-xs ${expired ? 'text-danger/70' : 'text-muted'}`}>
             {fmtDate(cm.startsAt)} → {fmtDate(cm.endsAt)}
@@ -469,12 +568,14 @@ function MediaCard({
 /* ────────────────────────────────────────────────────────────────
    Draggable grid
 ──────────────────────────────────────────────────────────────── */
-function DraggableGrid({ items, onReorder, onEdit, onDelete, onPreview }: {
+function DraggableGrid({ items, onReorder, onEdit, onDelete, onPreview, onDurationSaved, trailing }: {
   items: CampaignMedia[];
   onReorder: (items: CampaignMedia[]) => void;
   onEdit: (cm: CampaignMedia) => void;
   onDelete: (cm: CampaignMedia) => void;
   onPreview: (media: Media) => void;
+  onDurationSaved: (id: string, duration: number) => void;
+  trailing?: React.ReactNode;
 }) {
   const [local, setLocal] = useState<CampaignMedia[]>(items);
   const dragging = useRef<{ id: string; index: number } | null>(null);
@@ -505,9 +606,10 @@ function DraggableGrid({ items, onReorder, onEdit, onDelete, onPreview }: {
           style={{ opacity: draggingId === cm.id ? 0.4 : 1 }}
           className="cursor-grab active:cursor-grabbing transition-opacity"
         >
-          <MediaCard cm={cm} index={index} onEdit={onEdit} onDelete={onDelete} onPreview={onPreview} />
+          <MediaCard cm={cm} index={index} onEdit={onEdit} onDelete={onDelete} onPreview={onPreview} onDurationSaved={onDurationSaved} />
         </div>
       ))}
+      {trailing}
     </div>
   );
 }
@@ -515,12 +617,13 @@ function DraggableGrid({ items, onReorder, onEdit, onDelete, onPreview }: {
 /* ────────────────────────────────────────────────────────────────
    Campaign card (collapsible)
 ──────────────────────────────────────────────────────────────── */
-function CampaignCard({ campaign, mediaTerminals, allMedias, stores, onDelete, onRefresh }: {
+function CampaignCard({ campaign, mediaTerminals, allMedias, stores, onDelete, onReactivate, onRefresh }: {
   campaign: Campaign;
   mediaTerminals: Terminal[];
   allMedias: Media[];
   stores: Store[];
   onDelete: (c: Campaign) => void;
+  onReactivate: (c: Campaign) => void;
   onRefresh: () => void;
 }) {
   const [open, setOpen]         = useState(false);
@@ -599,6 +702,10 @@ function CampaignCard({ campaign, mediaTerminals, allMedias, stores, onDelete, o
 
   // Reset logs loaded when campaign changes so logs refresh on next open
   useEffect(() => { setLogsLoaded(false); }, [campaign]);
+
+  function handleDurationSaved(id: string, duration: number) {
+    setItems((prev) => prev.map((cm) => cm.id === id ? { ...cm, duration } : cm));
+  }
 
   async function handleReorder(terminalId: string, reordered: CampaignMedia[]) {
     const groupIds = new Set(reordered.map((cm) => cm.id));
@@ -805,11 +912,19 @@ function CampaignCard({ campaign, mediaTerminals, allMedias, stores, onDelete, o
                   <path d="M17 3a2.85 2.85 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z" />
                 </svg>
               </button>
-              <button onClick={() => onDelete(campaign)} title="Excluir campanha" className="rounded-lg p-1.5 text-muted hover:text-danger hover:bg-danger/10 transition-colors">
-                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M3 6h18" /><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" /><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
-                </svg>
-              </button>
+              {campaign.isActive ? (
+                <button onClick={() => onDelete(campaign)} title="Desativar campanha" className="rounded-lg p-1.5 text-muted hover:text-danger hover:bg-danger/10 transition-colors">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <circle cx="12" cy="12" r="10" /><line x1="4.93" y1="4.93" x2="19.07" y2="19.07" />
+                  </svg>
+                </button>
+              ) : (
+                <button onClick={() => onReactivate(campaign)} title="Reativar campanha" className="rounded-lg p-1.5 text-muted hover:text-success hover:bg-success/10 transition-colors">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8" /><path d="M21 3v5h-5" />
+                  </svg>
+                </button>
+              )}
               <button onClick={() => setOpen((v) => !v)} title={open ? 'Recolher' : 'Expandir'} className="rounded-lg p-1.5 text-muted hover:text-foreground hover:bg-surface-secondary transition-colors">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={`transition-transform duration-200 ${open ? 'rotate-180' : ''}`}>
                   <path d="m6 9 6 6 6-6" />
@@ -870,24 +985,33 @@ function CampaignCard({ campaign, mediaTerminals, allMedias, stores, onDelete, o
                   </div>
                 ) : (
                   <div className="px-5 pb-5 pt-4 space-y-6">
-                    {Array.from(byTerminal.entries()).map(([terminalId, group]) => (
-                      <div key={terminalId}>
-                        <div className="flex items-center gap-2 mb-3">
-                          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-violet-400 shrink-0">
-                            <rect width="20" height="14" x="2" y="3" rx="2" /><line x1="8" x2="16" y1="21" y2="21" /><line x1="12" x2="12" y1="17" y2="21" />
-                          </svg>
-                          <span className="text-xs font-semibold text-muted uppercase tracking-wide">{group[0].terminal.name}</span>
-                          <span className="text-xs text-muted/60">· {group.length} {group.length === 1 ? 'mídia' : 'mídias'}</span>
+                    {Array.from(byTerminal.entries()).map(([terminalId, group]) => {
+                      const term = group[0].terminal;
+                      const layoutName = term.store?.terminalLayout?.name ?? null;
+                      return (
+                        <div key={terminalId}>
+                          <div className="flex items-center gap-2 mb-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-violet-400 shrink-0">
+                              <rect width="20" height="14" x="2" y="3" rx="2" /><line x1="8" x2="16" y1="21" y2="21" /><line x1="12" x2="12" y1="17" y2="21" />
+                            </svg>
+                            <span className="text-xs font-semibold text-muted uppercase tracking-wide">{term.name}</span>
+                            <span className="text-xs text-muted/60">· {group.length} {group.length === 1 ? 'mídia' : 'mídias'}</span>
+                            {term.isPriceChecker && (
+                              <span className="rounded-full bg-accent-soft px-2 py-0.5 text-xs font-medium text-accent">busca preço</span>
+                            )}
+                          </div>
+                          <DraggableGrid
+                            items={group}
+                            onReorder={(reordered) => handleReorder(terminalId, reordered)}
+                            onEdit={openEdit}
+                            onDelete={openDeleteMedia}
+                            onPreview={openPreview}
+                            onDurationSaved={handleDurationSaved}
+                            trailing={term.isPriceChecker ? <LockedPriceCheckerCard layoutName={layoutName} /> : null}
+                          />
                         </div>
-                        <DraggableGrid
-                          items={group}
-                          onReorder={(reordered) => handleReorder(terminalId, reordered)}
-                          onEdit={openEdit}
-                          onDelete={openDeleteMedia}
-                          onPreview={openPreview}
-                        />
-                      </div>
-                    ))}
+                      );
+                    })}
                   </div>
                 )
               )}
@@ -1167,7 +1291,7 @@ export default function CampanhasPage() {
   const [deleting, setDeleting] = useState(false);
 
   const [search, setSearch]           = useState('');
-  const [statusFilter, setStatusFilter] = useState<'all' | 'active' | 'scheduled' | 'expired'>('all');
+  const [statusFilter, setStatusFilter] = useState<'all' | 'active' | 'scheduled' | 'expired' | 'inactive'>('all');
 
   const mediaTerminals = useMemo(() => terminals.filter((t) => t.isMediaDisplay), [terminals]);
 
@@ -1214,6 +1338,23 @@ export default function CampanhasPage() {
     } catch { /* ignore */ } finally { setDeleting(false); setToDelete(null); }
   }
 
+  async function handleReactivate(c: Campaign) {
+    try {
+      const res = await fetch(`/api/campaigns/${c.id}`, {
+        method: 'PATCH', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ isActive: true }),
+      });
+      if (!res.ok) {
+        const d = await res.json().catch(() => ({}));
+        alert(d.message ?? 'Erro ao reativar.');
+        return;
+      }
+      fetchAll();
+    } catch {
+      alert('Erro de conexão.');
+    }
+  }
+
   const filtered = useMemo(() => campaigns.filter((c) => {
     const matchSearch = c.name.toLowerCase().includes(search.toLowerCase());
     const matchStatus = statusFilter === 'all' || campaignStatus(c) === statusFilter;
@@ -1240,7 +1381,7 @@ export default function CampanhasPage() {
       <div className="flex flex-col sm:flex-row gap-3">
         <input type="text" placeholder="Buscar campanha..." value={search} onChange={(e) => setSearch(e.target.value)} className={inputClass + ' max-w-xs'} />
         <div className="flex gap-2 flex-wrap">
-          {(['all', 'active', 'scheduled', 'expired'] as const).map((s) => (
+          {(['all', 'active', 'scheduled', 'expired', 'inactive'] as const).map((s) => (
             <button
               key={s}
               onClick={() => setStatusFilter(s)}
@@ -1248,7 +1389,7 @@ export default function CampanhasPage() {
                 statusFilter === s ? 'bg-accent text-white border-accent' : 'bg-surface text-muted border-border hover:border-accent/40 hover:text-foreground',
               ].join(' ')}
             >
-              {s === 'all' ? 'Todas' : s === 'active' ? 'Ativas' : s === 'scheduled' ? 'Agendadas' : 'Expiradas'}
+              {s === 'all' ? 'Todas' : s === 'active' ? 'Ativas' : s === 'scheduled' ? 'Agendadas' : s === 'expired' ? 'Expiradas' : 'Inativas'}
             </button>
           ))}
         </div>
@@ -1286,6 +1427,7 @@ export default function CampanhasPage() {
               allMedias={allMedias}
               stores={stores}
               onDelete={openDelete}
+              onReactivate={handleReactivate}
               onRefresh={fetchAll}
             />
           ))}
@@ -1341,18 +1483,18 @@ export default function CampanhasPage() {
           <Modal.Container placement="center" size="sm">
             <Modal.Dialog>
               <Modal.Header className="border-b border-border px-6 pb-4 pt-5">
-                <Modal.Heading className="text-base font-semibold text-foreground">Excluir campanha</Modal.Heading>
+                <Modal.Heading className="text-base font-semibold text-foreground">Desativar campanha</Modal.Heading>
                 <Modal.CloseTrigger />
               </Modal.Header>
               <Modal.Body className="px-6 py-5">
                 <p className="text-sm text-muted">
-                  Tem certeza que deseja excluir <span className="font-semibold text-foreground">{toDelete?.name}</span>?
-                  As mídias vinculadas serão desassociadas desta campanha.
+                  Confirmar a desativação de <span className="font-semibold text-foreground">{toDelete?.name}</span>?
+                  As mídias param de ser exibidas no app, mas o histórico fica preservado e dá pra reativar depois.
                 </p>
               </Modal.Body>
               <Modal.Footer className="flex justify-end gap-2 border-t border-border px-6 pb-5 pt-4">
                 <Button variant="ghost" onPress={delModal.close} isDisabled={deleting}>Cancelar</Button>
-                <Button variant="danger" onPress={handleDelete} isDisabled={deleting}>{deleting ? 'Excluindo...' : 'Excluir campanha'}</Button>
+                <Button variant="danger" onPress={handleDelete} isDisabled={deleting}>{deleting ? 'Desativando...' : 'Desativar'}</Button>
               </Modal.Footer>
             </Modal.Dialog>
           </Modal.Container>

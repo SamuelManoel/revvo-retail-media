@@ -90,7 +90,18 @@ const mainNav: NavItem[] = [
         <path d="M12 19V16.5M12 19L18 21M12 19L6 21" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
       </svg>
     ),
-  }, 
+  },
+  {
+    href: "/midias",
+    label: "Mídia",
+    icon: (
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24">
+        <rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor" strokeWidth="1.5" />
+        <circle cx="9" cy="9" r="2" stroke="currentColor" strokeWidth="1.5" />
+        <path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
+    ),
+  },
   {
     href: "/campanhas",
     label: "Campanhas",
@@ -138,7 +149,6 @@ const mainNav: NavItem[] = [
   {
     href: "/relatorios",
     label: "Relatórios",
-    disabled: true,
     icon: (
       <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
         <path d="M3 3v18h18" /><path d="m19 9-5 5-4-4-3 3" />

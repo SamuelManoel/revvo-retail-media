@@ -28,9 +28,11 @@ export async function GET(req: NextRequest, { params }: Params) {
   const page = parseInt(searchParams.get('page') ?? '1');
   const limit = parseInt(searchParams.get('limit') ?? '50');
   const q = searchParams.get('q') ?? undefined;
+  const sortBy = searchParams.get('sortBy') ?? undefined;
+  const sortOrder = (searchParams.get('sortOrder') ?? undefined) as 'asc' | 'desc' | undefined;
 
   try {
-    const result = await listProducts(id, { page, limit, q });
+    const result = await listProducts(id, { page, limit, q, sortBy, sortOrder });
     return NextResponse.json(result);
   } catch (error) {
     console.error('Erro ao listar produtos:', error);
@@ -48,7 +50,7 @@ export async function POST(req: NextRequest, { params }: Params) {
 
   try {
     const body = await req.json();
-    const { ean, produto, preco1, preco2, preco3, codigoProduto, imageUrl } = body;
+    const { ean, produto, preco1, preco2, preco3, codigoProduto, imageUrl, status } = body;
 
     if (!ean || !produto || preco1 === undefined) {
       return NextResponse.json(
@@ -65,6 +67,7 @@ export async function POST(req: NextRequest, { params }: Params) {
       preco3: preco3 !== undefined ? Number(preco3) : null,
       codigoProduto: codigoProduto ?? null,
       imageUrl: imageUrl ?? null,
+      status: status !== undefined ? Boolean(status) : undefined,
     });
 
     return NextResponse.json(product, { status: created ? 201 : 200 });

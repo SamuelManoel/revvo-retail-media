@@ -39,15 +39,8 @@ export async function revokeTerminalLicense(
     return { ok: false, reason: 'Terminal já está inativo' };
   }
 
-  // ── 2. Gerar novo activationCode único ──────────────────────────────────────
-  let newActivationCode: string;
-  let attempts = 0;
-  do {
-    newActivationCode = generateActivationCode();
-    const exists = await prisma.terminal.findUnique({ where: { activationCode: newActivationCode } });
-    if (!exists) break;
-    attempts++;
-  } while (attempts < 5);
+  // ── 2. Gerar novo activationCode único (verifica Terminal + histórico) ───────
+  const newActivationCode = await generateActivationCode();
 
   const now = new Date();
   const lastActivation = terminal.activations[0] ?? null;
@@ -65,6 +58,11 @@ export async function revokeTerminalLicense(
         revokedBy: revokedByUserId,
         activationCode: newActivationCode, // invalida o código antigo
       },
+    });
+
+    // 3a.1 Registrar novo código no histórico
+    await tx.activationCodeHistory.create({
+      data: { code: newActivationCode, terminalId },
     });
 
     // 3b. Revogar credencial (impede JWT existente de passar pelo guard)

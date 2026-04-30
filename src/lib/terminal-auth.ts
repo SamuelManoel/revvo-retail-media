@@ -15,13 +15,33 @@ export type TerminalTokenPayload = {
   type: 'terminal';
 };
 
-export function generateActivationCode(): string {
+function randomCode(): string {
   const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
   let code = '';
   for (let i = 0; i < 8; i++) {
     code += chars[Math.floor(Math.random() * chars.length)];
   }
   return code;
+}
+
+/**
+ * Gera um código de ativação único, garantindo que nunca foi usado antes.
+ * Verifica contra a tabela Terminal (códigos ativos) e ActivationCodeHistory (todos já gerados).
+ * O registro no histórico deve ser feito pelo chamador após persistir o terminal.
+ */
+export async function generateActivationCode(): Promise<string> {
+  let code: string;
+  let attempts = 0;
+  do {
+    code = randomCode();
+    const [activeTerminal, history] = await Promise.all([
+      prisma.terminal.findUnique({ where: { activationCode: code }, select: { id: true } }),
+      prisma.activationCodeHistory.findUnique({ where: { code }, select: { id: true } }),
+    ]);
+    if (!activeTerminal && !history) return code;
+    attempts++;
+  } while (attempts < 10);
+  throw new Error('Não foi possível gerar um código de ativação único após 10 tentativas');
 }
 
 export async function generateTerminalToken(payload: Omit<TerminalTokenPayload, 'type'>): Promise<string> {

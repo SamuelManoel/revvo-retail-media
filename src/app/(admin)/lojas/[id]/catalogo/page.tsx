@@ -15,8 +15,31 @@ type Product = {
   preco2: string | null;
   preco3: string | null;
   image_url: string | null;
+  status: boolean;
   updated_at: string;
 };
+
+type SortKey = 'produto' | 'ean' | 'codigo_produto' | 'preco1' | 'preco2' | 'preco3' | 'status' | 'updated_at';
+type SortOrder = 'asc' | 'desc';
+
+const SORT_STORAGE_KEY = 'catalogo-sort';
+
+const DEFAULT_SORT: { sortBy: SortKey; sortOrder: SortOrder } = { sortBy: 'produto', sortOrder: 'asc' };
+
+function loadSort(): { sortBy: SortKey; sortOrder: SortOrder } {
+  try {
+    const raw = localStorage.getItem(SORT_STORAGE_KEY);
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      if (parsed.sortBy && parsed.sortOrder) return parsed;
+    }
+  } catch { /* ignore */ }
+  return DEFAULT_SORT;
+}
+
+function saveSort(sortBy: SortKey, sortOrder: SortOrder) {
+  try { localStorage.setItem(SORT_STORAGE_KEY, JSON.stringify({ sortBy, sortOrder })); } catch { /* ignore */ }
+}
 
 type Store = { id: string; name: string; company: { id: string; name: string } | null };
 
@@ -26,7 +49,7 @@ const PAGE_SIZE_OPTIONS = [
   { value: '100', label: '100 por página' },
 ];
 
-const EMPTY_FORM = { ean: '', codigoProduto: '', produto: '', preco1: '', preco2: '', preco3: '', imageUrl: '' };
+const EMPTY_FORM = { ean: '', codigoProduto: '', produto: '', preco1: '', preco2: '', preco3: '', imageUrl: '', status: true };
 
 const inputClass = 'w-full rounded-lg border border-border bg-surface px-3 py-2.5 text-sm text-foreground placeholder:text-muted outline-none transition-colors focus:border-accent focus:ring-2 focus:ring-accent-soft-hover';
 
@@ -78,6 +101,8 @@ export default function CatalogoPage() {
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
   const [q, setQ] = useState('');
+  const [sortBy, setSortBy] = useState<SortKey>(DEFAULT_SORT.sortBy);
+  const [sortOrder, setSortOrder] = useState<SortOrder>(DEFAULT_SORT.sortOrder);
 
   // Form modal
   const formModal = useOverlayState();
@@ -101,10 +126,10 @@ export default function CatalogoPage() {
     } catch { /* ignore */ }
   }
 
-  async function fetchProducts(pageNum = 1, query = '', pageLimit = limit) {
+  async function fetchProducts(pageNum = 1, query = '', pageLimit = limit, sb = sortBy, so = sortOrder) {
     setLoading(true);
     try {
-      const params = new URLSearchParams({ page: String(pageNum), limit: String(pageLimit) });
+      const params = new URLSearchParams({ page: String(pageNum), limit: String(pageLimit), sortBy: sb, sortOrder: so });
       if (query) params.set('q', query);
       const res = await fetch(`/api/stores/${id}/products?${params}`);
       if (res.ok) {
@@ -120,25 +145,37 @@ export default function CatalogoPage() {
 
   useEffect(() => {
     fetchStore();
-    fetchProducts();
+    const saved = loadSort();
+    setSortBy(saved.sortBy);
+    setSortOrder(saved.sortOrder);
+    fetchProducts(1, '', limit, saved.sortBy, saved.sortOrder);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
   function handleSearch() {
     setPage(1);
     setQ(search);
-    fetchProducts(1, search, limit);
+    fetchProducts(1, search, limit, sortBy, sortOrder);
   }
 
   function handlePageChange(next: number) {
     setPage(next);
-    fetchProducts(next, q, limit);
+    fetchProducts(next, q, limit, sortBy, sortOrder);
   }
 
   function handleLimitChange(next: number) {
     setLimit(next);
     setPage(1);
-    fetchProducts(1, q, next);
+    fetchProducts(1, q, next, sortBy, sortOrder);
+  }
+
+  function handleSort(column: SortKey) {
+    const newOrder: SortOrder = sortBy === column && sortOrder === 'asc' ? 'desc' : 'asc';
+    setSortBy(column);
+    setSortOrder(newOrder);
+    saveSort(column, newOrder);
+    setPage(1);
+    fetchProducts(1, q, limit, column, newOrder);
   }
 
   function openCreate() {
@@ -159,6 +196,7 @@ export default function CatalogoPage() {
       preco2: p.preco2 ?? '',
       preco3: p.preco3 ?? '',
       imageUrl: p.image_url ?? '',
+      status: p.status,
     });
     setImagePreview(p.image_url);
     setFormError(null);
@@ -204,6 +242,7 @@ export default function CatalogoPage() {
         preco3: form.preco3 ? Number(form.preco3) : null,
         codigoProduto: form.codigoProduto.trim() || null,
         imageUrl: form.imageUrl.trim() || null,
+        status: form.status,
       };
 
       const res = editingId
@@ -262,6 +301,9 @@ export default function CatalogoPage() {
           <Link href="/lojas">
             <Button variant="ghost" size="sm">← Voltar</Button>
           </Link>
+          <Link href={`/lojas/${id}/layout-terminal`}>
+            <Button variant="secondary" size="sm">Layout do terminal</Button>
+          </Link>
           <Button variant="primary" size="sm" onPress={openCreate}>+ Novo produto</Button>
         </div>
       </div>
@@ -308,16 +350,42 @@ export default function CatalogoPage() {
             <table className="w-full text-sm">
               <thead>
                 <tr className="border-b border-border">
-                  {['EAN', 'Código', 'Produto', 'Preço 1', 'Preço 2', 'Preço 3', 'Atualizado', 'Ações'].map((h) => (
-                    <th key={h} className="px-5 py-3 text-left text-xs font-medium text-muted whitespace-nowrap">{h}</th>
+                  {([
+                    ['EAN', 'ean'],
+                    ['Código', 'codigo_produto'],
+                    ['Produto', 'produto'],
+                    ['Preço 1', 'preco1'],
+                    ['Preço 2', 'preco2'],
+                    ['Preço 3', 'preco3'],
+                    ['Status', 'status'],
+                    ['Atualizado', 'updated_at'],
+                  ] as [string, SortKey][]).map(([label, key]) => (
+                    <th key={key} className="px-5 py-3 text-left text-xs font-medium text-muted whitespace-nowrap">
+                      <button
+                        onClick={() => handleSort(key)}
+                        className="inline-flex items-center gap-1 hover:text-foreground transition-colors"
+                      >
+                        {label}
+                        {sortBy === key ? (
+                          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-accent">
+                            {sortOrder === 'asc' ? <path d="m18 15-6-6-6 6"/> : <path d="m6 9 6 6 6-6"/>}
+                          </svg>
+                        ) : (
+                          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="opacity-30">
+                            <path d="m6 9 6-6 6 6"/><path d="m6 15 6 6 6-6"/>
+                          </svg>
+                        )}
+                      </button>
+                    </th>
                   ))}
+                  <th className="px-5 py-3 text-left text-xs font-medium text-muted whitespace-nowrap">Ações</th>
                 </tr>
               </thead>
               <tbody>
                 {loading ? (
                   Array.from({ length: 8 }).map((_, i) => (
                     <tr key={i} className="border-b border-border/50">
-                      {Array.from({ length: 8 }).map((_, j) => (
+                      {Array.from({ length: 9 }).map((_, j) => (
                         <td key={j} className="px-5 py-3.5">
                           <div className="h-3.5 rounded bg-surface-secondary animate-pulse w-20" />
                         </td>
@@ -326,7 +394,7 @@ export default function CatalogoPage() {
                   ))
                 ) : products.length === 0 ? (
                   <tr>
-                    <td colSpan={8} className="px-5 py-12 text-center text-sm text-muted">
+                    <td colSpan={9} className="px-5 py-12 text-center text-sm text-muted">
                       {q ? 'Nenhum produto encontrado para esta busca.' : 'Nenhum produto cadastrado ainda.'}
                     </td>
                   </tr>
@@ -358,6 +426,27 @@ export default function CatalogoPage() {
                       <td className="px-5 py-3 text-foreground font-medium whitespace-nowrap">{fmt(p.preco1)}</td>
                       <td className="px-5 py-3 text-muted whitespace-nowrap">{fmt(p.preco2)}</td>
                       <td className="px-5 py-3 text-muted whitespace-nowrap">{fmt(p.preco3)}</td>
+                      <td className="px-5 py-3">
+                        <button
+                          onClick={async () => {
+                            const newStatus = !p.status;
+                            setProducts((prev) => prev.map((item) => item.id === p.id ? { ...item, status: newStatus } : item));
+                            await fetch(`/api/stores/${id}/products/${p.id}`, {
+                              method: 'PATCH',
+                              headers: { 'Content-Type': 'application/json' },
+                              body: JSON.stringify({ status: newStatus }),
+                            });
+                          }}
+                          className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium transition-colors ${
+                            p.status
+                              ? 'bg-emerald-500/10 text-emerald-600'
+                              : 'bg-zinc-500/10 text-zinc-500'
+                          }`}
+                        >
+                          <span className={`h-1.5 w-1.5 rounded-full ${p.status ? 'bg-emerald-500' : 'bg-zinc-400'}`} />
+                          {p.status ? 'Ativo' : 'Inativo'}
+                        </button>
+                      </td>
                       <td className="px-5 py-3 text-xs text-muted whitespace-nowrap">
                         {new Date(p.updated_at).toLocaleDateString('pt-BR')}
                       </td>
@@ -533,6 +622,22 @@ export default function CatalogoPage() {
                     <input type="number" step="0.01" min="0" placeholder="0,00" value={form.preco3}
                       onChange={(e) => setForm((f) => ({ ...f, preco3: e.target.value }))} className={inputClass} />
                   </Field>
+                </div>
+
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-sm font-medium text-foreground">Produto ativo</p>
+                    <p className="text-xs text-muted">Produtos inativos não aparecem nas consultas do terminal</p>
+                  </div>
+                  <button
+                    type="button"
+                    role="switch"
+                    aria-checked={form.status}
+                    onClick={() => setForm((f) => ({ ...f, status: !f.status }))}
+                    className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${form.status ? 'bg-accent' : 'bg-zinc-300 dark:bg-zinc-600'}`}
+                  >
+                    <span className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${form.status ? 'translate-x-6' : 'translate-x-1'}`} />
+                  </button>
                 </div>
 
                 {formError && <p className="rounded-lg bg-danger/10 px-3 py-2 text-sm text-danger">{formError}</p>}
