@@ -21,6 +21,7 @@ export async function middleware(req: NextRequest) {
     pathname.startsWith('/api/auth/logout') ||
     pathname.startsWith('/api/terminal/') ||
     pathname === '/api/config' ||           // config global pública (lida pelo app sem auth)
+    pathname === '/api/contact' ||          // formulário público do site institucional
     pathname === '/' ||
     pathname === '/login'
   ) {
