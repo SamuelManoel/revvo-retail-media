@@ -55,6 +55,14 @@ export async function GET(req: NextRequest) {
         select: { terminalId: true },
         distinct: ['terminalId'],
       },
+      products: {
+        orderBy: { createdAt: 'asc' },
+        select: {
+          id: true, ean: true, productName: true,
+          preco1: true, preco2: true, preco3: true,
+          createdAt: true,
+        },
+      },
     },
     orderBy: { startsAt: 'desc' },
   });
@@ -94,6 +102,7 @@ export async function GET(req: NextRequest) {
         heartbeats,
         estimatedHours,
         perTerminal,
+        products: c.products,
       };
     }),
   );

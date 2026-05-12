@@ -18,7 +18,19 @@ type CampaignVisibility = {
   effectiveFrom: string; effectiveTo: string;
   terminalCount: number; heartbeats: number; estimatedHours: number;
   perTerminal: { terminalId: string; name: string; heartbeats: number; hours: number }[];
+  products: {
+    id: string; ean: string; productName: string;
+    preco1: string | null; preco2: string | null; preco3: string | null;
+    createdAt: string;
+  }[];
 };
+
+function fmtBRL(value: string | null | undefined): string {
+  if (value == null) return '—';
+  const n = parseFloat(value);
+  if (!Number.isFinite(n)) return '—';
+  return n.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+}
 
 const TABS = ['hourly', 'daily', 'by-terminal', 'top-items', 'not-found', 'campaign-visibility'] as const;
 type Tab = (typeof TABS)[number];
@@ -434,6 +446,40 @@ function CampaignVisibilityTable({ rows }: { rows: CampaignVisibility[] }) {
                     <p className="text-muted">{p.hours.toFixed(1)}h · {p.heartbeats} hb</p>
                   </div>
                 ))}
+              </div>
+            )}
+
+            {r.products.length > 0 && (
+              <div className="mt-4">
+                <p className="text-xs font-semibold text-muted uppercase tracking-wide mb-2">
+                  Produtos da campanha ({r.products.length})
+                </p>
+                <div className="overflow-x-auto rounded-lg border border-border">
+                  <table className="w-full text-xs">
+                    <thead className="bg-surface-secondary/50 text-muted">
+                      <tr>
+                        <th className="px-3 py-1.5 text-left font-medium">EAN</th>
+                        <th className="px-3 py-1.5 text-left font-medium">Produto</th>
+                        <th className="px-3 py-1.5 text-left font-medium">Preço 1</th>
+                        <th className="px-3 py-1.5 text-left font-medium">Preço 2</th>
+                        <th className="px-3 py-1.5 text-left font-medium">Preço 3</th>
+                        <th className="px-3 py-1.5 text-left font-medium">Adicionado</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {r.products.map((p) => (
+                        <tr key={p.id} className="border-t border-border">
+                          <td className="px-3 py-1.5 font-mono">{p.ean}</td>
+                          <td className="px-3 py-1.5 text-foreground">{p.productName}</td>
+                          <td className="px-3 py-1.5">{fmtBRL(p.preco1)}</td>
+                          <td className="px-3 py-1.5">{fmtBRL(p.preco2)}</td>
+                          <td className="px-3 py-1.5">{fmtBRL(p.preco3)}</td>
+                          <td className="px-3 py-1.5 text-muted">{fmtDate(p.createdAt)}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
               </div>
             )}
           </Card.Content>

@@ -2,6 +2,7 @@
 
 import { type ReactNode, useState, useEffect } from "react";
 import { useRouter, usePathname } from "next/navigation";
+import Image from "next/image";
 import { Sidebar } from "./sidebar";
 import { NotificationBell } from "./notification-bell";
 
@@ -115,11 +116,22 @@ export function AdminShell({ children }: { children: ReactNode }) {
 
           {/* Mobile logo */}
           <div className="flex items-center gap-2 md:hidden">
-            <div className="flex h-7 w-7 items-center justify-center rounded-xl bg-accent">
-              <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M12 2v20M2 12h20" />
-              </svg>
-            </div>
+            <Image
+              src="/logo-preto.png"
+              alt="Revvo"
+              width={28}
+              height={28}
+              priority
+              className="h-7 w-7 rounded-xl hidden dark:inline"
+            />
+            <Image
+              src="/logo-branco.png"
+              alt="Revvo"
+              width={28}
+              height={28}
+              priority
+              className="h-7 w-7 rounded-xl dark:hidden"
+            />
             <span className="text-sm font-bold text-foreground">Smart Price</span>
           </div>
 

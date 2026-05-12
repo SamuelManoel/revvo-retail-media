@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 
 export default function LoginPage() {
   const router = useRouter();
@@ -51,11 +52,22 @@ export default function LoginPage() {
         <div className="relative z-10">
           {/* Logo */}
           <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-accent shadow-lg">
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M12 2v20M2 12h20" />
-              </svg>
-            </div>
+            <Image
+              src="/logo-preto.png"
+              alt="Revvo"
+              width={40}
+              height={40}
+              priority
+              className="h-10 w-10 rounded-xl shadow-lg hidden dark:inline"
+            />
+            <Image
+              src="/logo-branco.png"
+              alt="Revvo"
+              width={40}
+              height={40}
+              priority
+              className="h-10 w-10 rounded-xl shadow-lg dark:hidden"
+            />
             <span className="text-xl font-bold text-foreground">Revvo Smart Price</span>
           </div>
         </div>
@@ -100,11 +112,22 @@ export default function LoginPage() {
       <div className="flex w-full flex-col items-center justify-center px-6 py-12 lg:w-1/2">
         {/* Mobile logo */}
         <div className="mb-10 flex items-center gap-3 lg:hidden">
-          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-accent">
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M12 2v20M2 12h20" />
-            </svg>
-          </div>
+          <Image
+            src="/logo-preto.png"
+            alt="Revvo"
+            width={36}
+            height={36}
+            priority
+            className="h-9 w-9 rounded-xl hidden dark:inline"
+          />
+          <Image
+            src="/logo-branco.png"
+            alt="Revvo"
+            width={36}
+            height={36}
+            priority
+            className="h-9 w-9 rounded-xl dark:hidden"
+          />
           <span className="text-lg font-bold text-foreground">Revvo Smart Price</span>
         </div>
 

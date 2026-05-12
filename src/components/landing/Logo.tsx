@@ -1,32 +1,68 @@
-export function Logo({ size = 28 }: { size?: number }) {
-  return (
-    <span className="inline-flex items-center gap-2.5">
-      <span
-        className="relative inline-flex items-center justify-center rounded-xl bg-accent shadow-[0_8px_24px_-8px_var(--accent)]"
-        style={{ width: size, height: size }}
-      >
-        <span
-          className="absolute inset-0 rounded-xl bg-gradient-to-br from-white/30 to-transparent"
-          aria-hidden
+import Image from "next/image";
+
+type Props = {
+  size?: number;
+  withWordmark?: boolean;
+  /**
+   * "auto" usa o logo apropriado conforme o tema (escuro pra dark, claro pra light).
+   * "light" força o logo de fundo escuro (glifo branco).
+   * "dark"  força o logo de fundo claro (glifo preto).
+   */
+  variant?: "auto" | "light" | "dark";
+  className?: string;
+};
+
+export function Logo({ size = 28, withWordmark = true, variant = "auto", className }: Props) {
+  if (variant === "auto") {
+    return (
+      <span className={`inline-flex items-center gap-2.5 ${className ?? ""}`}>
+        {/* light theme → glifo preto */}
+        <Image
+          src="/logo-branco.png"
+          alt="Revvo"
+          width={size}
+          height={size}
+          priority
+          className="rounded-xl shadow-[0_8px_24px_-8px_var(--accent)] dark:hidden"
+          style={{ width: size, height: size }}
         />
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width={size * 0.55}
-          height={size * 0.55}
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="white"
-          strokeWidth="2.6"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          className="relative"
-        >
-          <path d="M12 2v20M2 12h20" />
-        </svg>
+        {/* dark theme → glifo branco */}
+        <Image
+          src="/logo-preto.png"
+          alt="Revvo"
+          width={size}
+          height={size}
+          priority
+          className="hidden rounded-xl shadow-[0_8px_24px_-8px_var(--accent)] dark:inline"
+          style={{ width: size, height: size }}
+        />
+        {withWordmark && (
+          <span className="text-base font-semibold tracking-tight text-foreground">
+            Revvo<span className="text-accent">.</span>
+          </span>
+        )}
       </span>
-      <span className="text-base font-semibold tracking-tight text-foreground">
-        Revvo<span className="text-accent">.</span>
-      </span>
+    );
+  }
+
+  // Variantes forçadas
+  const src = variant === "light" ? "/logo-preto.png" : "/logo-branco.png";
+  return (
+    <span className={`inline-flex items-center gap-2.5 ${className ?? ""}`}>
+      <Image
+        src={src}
+        alt="Revvo"
+        width={size}
+        height={size}
+        priority
+        className="rounded-xl shadow-[0_8px_24px_-8px_var(--accent)]"
+        style={{ width: size, height: size }}
+      />
+      {withWordmark && (
+        <span className="text-base font-semibold tracking-tight text-foreground">
+          Revvo<span className="text-accent">.</span>
+        </span>
+      )}
     </span>
   );
 }

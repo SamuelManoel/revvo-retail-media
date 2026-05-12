@@ -38,6 +38,7 @@ type Campaign = {
   store:    { id: string; name: string } | null;
   terminal: { id: string; name: string } | null;
   terminalMedias: CampaignMedia[];
+  products: CampaignProduct[];
 };
 
 type CampaignLog = {
@@ -48,6 +49,28 @@ type CampaignLog = {
   userId: string;
   diff: Record<string, { from: string | null; to: string | null }> | null;
   createdAt: string;
+};
+
+type CampaignProduct = {
+  id: string;
+  ean: string;
+  productName: string;
+  preco1: string | null;
+  preco2: string | null;
+  preco3: string | null;
+  productId: string | null;
+  storeId: string | null;
+  store: { id: string; name: string } | null;
+  createdAt: string;
+};
+
+type StoreProduct = {
+  id: string;
+  ean: string;
+  produto: string;
+  preco1: string;
+  preco2: string | null;
+  preco3: string | null;
 };
 
 /* ────────────────────────────────────────────────────────────────
@@ -63,6 +86,13 @@ function fmtDate(iso: string | null) {
   if (!iso) return '—';
   const [y, m, d] = iso.slice(0, 10).split('-');
   return `${d}/${m}/${y}`;
+}
+
+function fmtBRL(value: string | number | null | undefined): string {
+  if (value == null) return '—';
+  const n = typeof value === 'string' ? parseFloat(value) : value;
+  if (!Number.isFinite(n)) return '—';
+  return n.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 }
 
 function fmtDateTime(iso: string) {
@@ -627,7 +657,7 @@ function CampaignCard({ campaign, mediaTerminals, allMedias, stores, onDelete, o
   onRefresh: () => void;
 }) {
   const [open, setOpen]         = useState(false);
-  const [activeTab, setActiveTab] = useState<'media' | 'logs'>('media');
+  const [activeTab, setActiveTab] = useState<'media' | 'products' | 'logs'>('media');
   const [items, setItems]       = useState<CampaignMedia[]>(campaign.terminalMedias);
   const [logs, setLogs]         = useState<CampaignLog[]>([]);
   const [logsLoaded, setLogsLoaded] = useState(false);
@@ -637,6 +667,19 @@ function CampaignCard({ campaign, mediaTerminals, allMedias, stores, onDelete, o
   const editModal   = useOverlayState();
   const deleteModal = useOverlayState();
   const editCampaignModal = useOverlayState();
+  const addProductModal   = useOverlayState();
+  const deleteProductModal = useOverlayState();
+
+  // Products
+  const [products, setProducts] = useState<CampaignProduct[]>(campaign.products ?? []);
+  const [addProductStoreId, setAddProductStoreId] = useState<string>(campaign.store?.id ?? '');
+  const [productSearch, setProductSearch] = useState('');
+  const [productResults, setProductResults] = useState<StoreProduct[]>([]);
+  const [productSearching, setProductSearching] = useState(false);
+  const [productAdding, setProductAdding] = useState(false);
+  const [productError, setProductError] = useState<string | null>(null);
+  const [deleteProductTarget, setDeleteProductTarget] = useState<CampaignProduct | null>(null);
+  const [deletingProduct, setDeletingProduct] = useState(false);
 
   // Add media form
   const [addTerminalId, setAddTerminalId] = useState(campaign.terminal?.id ?? '');
@@ -675,6 +718,7 @@ function CampaignCard({ campaign, mediaTerminals, allMedias, stores, onDelete, o
   const [savingCampaign, setSavingCampaign] = useState(false);
 
   useEffect(() => { setItems(campaign.terminalMedias); }, [campaign.terminalMedias]);
+  useEffect(() => { setProducts(campaign.products ?? []); }, [campaign.products]);
 
   const byTerminal = useMemo(() => {
     const map = new Map<string, CampaignMedia[]>();
@@ -695,7 +739,7 @@ function CampaignCard({ campaign, mediaTerminals, allMedias, stores, onDelete, o
     if (res.ok) { setLogs(await res.json()); setLogsLoaded(true); }
   }
 
-  function handleTabChange(tab: 'media' | 'logs') {
+  function handleTabChange(tab: 'media' | 'products' | 'logs') {
     setActiveTab(tab);
     if (tab === 'logs' && !logsLoaded) fetchLogs();
   }
@@ -787,6 +831,81 @@ function CampaignCard({ campaign, mediaTerminals, allMedias, stores, onDelete, o
       setLogsLoaded(false);
       onRefresh();
     } catch { /* ignore */ } finally { setDeleting(false); setDeleteTarget(null); }
+  }
+
+  // ── Products handlers ──────────────────────────────────────────────────
+  function openAddProduct() {
+    setAddProductStoreId(campaign.store?.id ?? '');
+    setProductSearch('');
+    setProductResults([]);
+    setProductError(null);
+    addProductModal.open();
+  }
+
+  async function searchProducts(q: string) {
+    if (!addProductStoreId) { setProductResults([]); return; }
+    setProductSearching(true);
+    try {
+      const url = new URL(`/api/stores/${addProductStoreId}/products`, window.location.origin);
+      if (q.trim()) url.searchParams.set('q', q.trim());
+      url.searchParams.set('limit', '20');
+      const res = await fetch(url.toString());
+      const data = await res.json();
+      setProductResults(Array.isArray(data?.products) ? data.products : []);
+    } catch {
+      setProductResults([]);
+    } finally {
+      setProductSearching(false);
+    }
+  }
+
+  // Re-busca quando a loja muda ou ao digitar (debounce simples)
+  useEffect(() => {
+    if (!addProductModal.isOpen) return;
+    const t = setTimeout(() => { searchProducts(productSearch); }, 300);
+    return () => clearTimeout(t);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [productSearch, addProductStoreId, addProductModal.isOpen]);
+
+  async function addProduct(p: StoreProduct) {
+    if (!addProductStoreId) { setProductError('Selecione uma loja.'); return; }
+    setProductAdding(true);
+    setProductError(null);
+    try {
+      const res = await fetch(`/api/campaigns/${campaign.id}/products`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ storeId: addProductStoreId, ean: p.ean }),
+      });
+      const data = await res.json();
+      if (!res.ok) { setProductError(data.message ?? 'Erro ao adicionar produto.'); return; }
+      // Optimistic: append à lista local; o refresh externo traz tudo de novo
+      setProducts((prev) => [...prev, data]);
+      onRefresh();
+    } catch {
+      setProductError('Erro de conexão.');
+    } finally {
+      setProductAdding(false);
+    }
+  }
+
+  function openDeleteProduct(p: CampaignProduct) {
+    setDeleteProductTarget(p);
+    deleteProductModal.open();
+  }
+
+  async function handleDeleteProduct() {
+    if (!deleteProductTarget) return;
+    setDeletingProduct(true);
+    try {
+      await fetch(`/api/campaigns/${campaign.id}/products/${deleteProductTarget.id}`, { method: 'DELETE' });
+      setProducts((prev) => prev.filter((p) => p.id !== deleteProductTarget.id));
+      deleteProductModal.close();
+      onRefresh();
+    } catch { /* ignore */ } finally {
+      setDeletingProduct(false);
+      setDeleteProductTarget(null);
+    }
   }
 
   function openEditCampaign() {
@@ -940,7 +1059,7 @@ function CampaignCard({ campaign, mediaTerminals, allMedias, stores, onDelete, o
 
               {/* Inner tabs */}
               <div className="flex gap-1 px-5 pt-3 border-b border-border">
-                {(['media', 'logs'] as const).map((tab) => (
+                {(['media', 'products', 'logs'] as const).map((tab) => (
                   <button
                     key={tab}
                     onClick={() => handleTabChange(tab)}
@@ -951,13 +1070,24 @@ function CampaignCard({ campaign, mediaTerminals, allMedias, stores, onDelete, o
                         : 'border-transparent text-muted hover:text-foreground',
                     ].join(' ')}
                   >
-                    {tab === 'media' ? `Mídias (${mediaCount})` : 'Histórico de alterações'}
+                    {tab === 'media'
+                      ? `Mídias (${mediaCount})`
+                      : tab === 'products'
+                        ? `Produtos (${products.length})`
+                        : 'Histórico de alterações'}
                   </button>
                 ))}
                 {activeTab === 'media' && (
                   <div className="ml-auto pb-1.5 flex items-center gap-2">
                     <button onClick={openAdd} className="sm:hidden flex items-center gap-1.5 rounded-lg px-2.5 py-1 text-xs font-medium text-accent border border-accent/30 hover:bg-accent/5 transition-colors">
                       + Mídia
+                    </button>
+                  </div>
+                )}
+                {activeTab === 'products' && (
+                  <div className="ml-auto pb-1.5 flex items-center gap-2">
+                    <button onClick={openAddProduct} className="flex items-center gap-1.5 rounded-lg px-2.5 py-1 text-xs font-medium text-accent border border-accent/30 hover:bg-accent/5 transition-colors">
+                      + Produto
                     </button>
                   </div>
                 )}
@@ -1012,6 +1142,67 @@ function CampaignCard({ campaign, mediaTerminals, allMedias, stores, onDelete, o
                         </div>
                       );
                     })}
+                  </div>
+                )
+              )}
+
+              {/* Products tab */}
+              {activeTab === 'products' && (
+                products.length === 0 ? (
+                  <div className="flex flex-col items-center justify-center gap-3 py-12 text-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-muted/40">
+                      <path d="M16 11V7a4 4 0 0 0-8 0v4M5 9h14l-1 12H6z" />
+                    </svg>
+                    <p className="text-sm text-muted">Nenhum produto vinculado a esta campanha.</p>
+                    <button onClick={openAddProduct} className="inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-medium text-accent border border-accent/30 hover:bg-accent/5 transition-colors">
+                      + Adicionar primeiro produto
+                    </button>
+                  </div>
+                ) : (
+                  <div className="px-5 pb-5 pt-4">
+                    <div className="overflow-x-auto rounded-xl border border-border">
+                      <table className="w-full text-sm">
+                        <thead className="bg-surface-secondary/50 text-xs text-muted">
+                          <tr>
+                            <th className="px-4 py-2 text-left font-medium">EAN</th>
+                            <th className="px-4 py-2 text-left font-medium">Produto</th>
+                            <th className="px-4 py-2 text-left font-medium">Preço 1</th>
+                            <th className="px-4 py-2 text-left font-medium">Preço 2</th>
+                            <th className="px-4 py-2 text-left font-medium">Preço 3</th>
+                            <th className="px-4 py-2 text-left font-medium">Loja</th>
+                            <th className="px-4 py-2 text-left font-medium">Adicionado em</th>
+                            <th className="px-4 py-2"></th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {products.map((p) => (
+                            <tr key={p.id} className="border-t border-border">
+                              <td className="px-4 py-2 font-mono text-xs">{p.ean}</td>
+                              <td className="px-4 py-2 font-medium text-foreground">{p.productName}</td>
+                              <td className="px-4 py-2">{fmtBRL(p.preco1)}</td>
+                              <td className="px-4 py-2">{fmtBRL(p.preco2)}</td>
+                              <td className="px-4 py-2">{fmtBRL(p.preco3)}</td>
+                              <td className="px-4 py-2 text-xs text-muted">{p.store?.name ?? '—'}</td>
+                              <td className="px-4 py-2 text-xs text-muted">{fmtDateTime(p.createdAt)}</td>
+                              <td className="px-4 py-2">
+                                <button
+                                  onClick={() => openDeleteProduct(p)}
+                                  className="rounded-lg p-1.5 text-muted hover:text-danger hover:bg-danger/10 transition-colors"
+                                  title="Remover produto"
+                                >
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                    <path d="M3 6h18" /><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" /><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
+                                  </svg>
+                                </button>
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                    <p className="mt-2 text-xs text-muted">
+                      Os preços e o nome são fixados no momento em que o produto é adicionado. Mudanças posteriores no catálogo não alteram o histórico desta campanha.
+                    </p>
                   </div>
                 )
               )}
@@ -1214,6 +1405,123 @@ function CampaignCard({ campaign, mediaTerminals, allMedias, stores, onDelete, o
       {previewMedia && (
         <MediaPreview media={previewMedia} onClose={() => setPreviewMedia(null)} />
       )}
+
+      {/* ── Add product modal ── */}
+      <Modal state={addProductModal}>
+        <Modal.Backdrop isDismissable>
+          <Modal.Container placement="center" size="lg">
+            <Modal.Dialog>
+              <Modal.Header className="border-b border-border px-6 pb-4 pt-5">
+                <Modal.Heading className="text-base font-semibold text-foreground">Adicionar produto à campanha</Modal.Heading>
+                <Modal.CloseTrigger />
+              </Modal.Header>
+              <Modal.Body className="space-y-4 px-6 py-5">
+                <Field label="Loja">
+                  <select
+                    value={addProductStoreId}
+                    onChange={(e) => { setAddProductStoreId(e.target.value); setProductResults([]); }}
+                    className={inputClass}
+                    disabled={productAdding}
+                  >
+                    <option value="">Selecione uma loja</option>
+                    {stores.map((s) => <option key={s.id} value={s.id}>{s.name}</option>)}
+                  </select>
+                </Field>
+                <Field label="Buscar produto (EAN, código ou nome)">
+                  <input
+                    type="text"
+                    value={productSearch}
+                    onChange={(e) => setProductSearch(e.target.value)}
+                    placeholder="Comece a digitar para buscar"
+                    className={inputClass}
+                    disabled={!addProductStoreId || productAdding}
+                  />
+                </Field>
+                {productError && <p className="rounded-lg bg-danger/10 px-3 py-2 text-sm text-danger">{productError}</p>}
+
+                <div className="rounded-xl border border-border max-h-80 overflow-auto">
+                  {!addProductStoreId ? (
+                    <p className="px-4 py-6 text-sm text-muted text-center">Selecione uma loja para listar os produtos.</p>
+                  ) : productSearching ? (
+                    <p className="px-4 py-6 text-sm text-muted text-center">Buscando...</p>
+                  ) : productResults.length === 0 ? (
+                    <p className="px-4 py-6 text-sm text-muted text-center">Nenhum produto encontrado.</p>
+                  ) : (
+                    <table className="w-full text-sm">
+                      <thead className="bg-surface-secondary/50 text-xs text-muted sticky top-0">
+                        <tr>
+                          <th className="px-3 py-2 text-left font-medium">EAN</th>
+                          <th className="px-3 py-2 text-left font-medium">Produto</th>
+                          <th className="px-3 py-2 text-left font-medium">Preço 1</th>
+                          <th className="px-3 py-2 text-left font-medium">Preço 2</th>
+                          <th className="px-3 py-2 text-left font-medium">Preço 3</th>
+                          <th className="px-3 py-2"></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {productResults.map((p) => {
+                          const already = products.some((cp) => cp.ean === p.ean);
+                          return (
+                            <tr key={p.id} className="border-t border-border">
+                              <td className="px-3 py-2 font-mono text-xs">{p.ean}</td>
+                              <td className="px-3 py-2 truncate max-w-xs" title={p.produto}>{p.produto}</td>
+                              <td className="px-3 py-2">{fmtBRL(p.preco1)}</td>
+                              <td className="px-3 py-2">{fmtBRL(p.preco2)}</td>
+                              <td className="px-3 py-2">{fmtBRL(p.preco3)}</td>
+                              <td className="px-3 py-2">
+                                {already ? (
+                                  <span className="text-xs text-muted">Já adicionado</span>
+                                ) : (
+                                  <button
+                                    onClick={() => addProduct(p)}
+                                    disabled={productAdding}
+                                    className="rounded-lg px-2.5 py-1 text-xs font-medium text-accent border border-accent/30 hover:bg-accent/5 transition-colors disabled:opacity-50"
+                                  >
+                                    + Adicionar
+                                  </button>
+                                )}
+                              </td>
+                            </tr>
+                          );
+                        })}
+                      </tbody>
+                    </table>
+                  )}
+                </div>
+              </Modal.Body>
+              <Modal.Footer className="flex justify-end gap-2 border-t border-border px-6 pb-5 pt-4">
+                <Button variant="ghost" onPress={addProductModal.close} isDisabled={productAdding}>Fechar</Button>
+              </Modal.Footer>
+            </Modal.Dialog>
+          </Modal.Container>
+        </Modal.Backdrop>
+      </Modal>
+
+      {/* ── Delete product confirm ── */}
+      <Modal state={deleteProductModal}>
+        <Modal.Backdrop isDismissable>
+          <Modal.Container placement="center" size="sm">
+            <Modal.Dialog>
+              <Modal.Header className="border-b border-border px-6 pb-4 pt-5">
+                <Modal.Heading className="text-base font-semibold text-foreground">Remover produto</Modal.Heading>
+                <Modal.CloseTrigger />
+              </Modal.Header>
+              <Modal.Body className="px-6 py-5">
+                <p className="text-sm text-muted">
+                  Remover <span className="font-semibold text-foreground">{deleteProductTarget?.productName}</span> (EAN {deleteProductTarget?.ean}) desta campanha?
+                  O snapshot de preços será apagado, mas o produto continua no catálogo da loja.
+                </p>
+              </Modal.Body>
+              <Modal.Footer className="flex justify-end gap-2 border-t border-border px-6 pb-5 pt-4">
+                <Button variant="ghost" onPress={deleteProductModal.close} isDisabled={deletingProduct}>Cancelar</Button>
+                <Button variant="danger" onPress={handleDeleteProduct} isDisabled={deletingProduct}>
+                  {deletingProduct ? 'Removendo...' : 'Remover'}
+                </Button>
+              </Modal.Footer>
+            </Modal.Dialog>
+          </Modal.Container>
+        </Modal.Backdrop>
+      </Modal>
 
       {/* ── Edit campaign modal ── */}
       <Modal state={editCampaignModal}>

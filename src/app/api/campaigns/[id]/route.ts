@@ -19,6 +19,10 @@ const CAMPAIGN_INCLUDE = {
       },
     },
   },
+  products: {
+    orderBy: { createdAt: 'asc' as const },
+    include: { store: { select: { id: true, name: true } } },
+  },
 };
 
 // PATCH /api/campaigns/[id] — update name, dates, storeId, terminalId

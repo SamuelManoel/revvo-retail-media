@@ -63,11 +63,12 @@ model Store {
   terminalLayoutId String?
   terminalLayout   TerminalLayout? @relation(fields: [terminalLayoutId], references: [id], onDelete: SetNull)
 
-  terminals    Terminal[]
-  license      StoreLicense?
-  campaigns    Campaign[]
-  integrations CompanyIntegration[]
-  medias       Media[]
+  terminals        Terminal[]
+  license          StoreLicense?
+  campaigns        Campaign[]
+  campaignProducts CampaignProduct[]
+  integrations     CompanyIntegration[]
+  medias           Media[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -195,12 +196,44 @@ model Campaign {
   thumbnail String? // emoji character chosen by user
 
   terminalMedias TerminalMedia[]
+  products       CampaignProduct[]
   logs           CampaignLog[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   @@map("campaigns")
+}
+
+// Snapshot dos produtos vinculados à campanha. Os preços e o nome são
+// "congelados" no momento em que o produto é adicionado — preserva o
+// histórico mesmo se o produto for atualizado depois.
+model CampaignProduct {
+  id String @id @default(uuid())
+
+  // Snapshot — não é atualizado depois
+  ean         String
+  productName String
+  preco1      Decimal? @db.Decimal(10, 2)
+  preco2      Decimal? @db.Decimal(10, 2)
+  preco3      Decimal? @db.Decimal(10, 2)
+
+  // Referência ao produto original na tabela tenant<store>.products
+  // (sem FK pois é cross-schema; só pra rastreabilidade)
+  productId String?
+
+  campaignId String
+  campaign   Campaign @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+
+  storeId String?
+  store   Store?  @relation(fields: [storeId], references: [id], onDelete: SetNull)
+
+  createdAt DateTime @default(now())
+
+  @@unique([campaignId, ean])
+  @@index([campaignId])
+  @@index([storeId])
+  @@map("campaign_products")
 }
 
 model CampaignLog {

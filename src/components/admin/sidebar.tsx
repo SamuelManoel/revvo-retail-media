@@ -2,6 +2,7 @@
 
 import { type ReactNode } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import {
   TooltipRoot,
@@ -291,20 +292,46 @@ export function Sidebar({
       <div className={`flex h-16 shrink-0 items-center border-b border-border ${collapsed ? "justify-center px-4" : "justify-between px-5"}`}>
         {!collapsed && (
           <Link href="/dashboard" className="flex items-center gap-2.5">
-            <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-accent shadow-sm">
-              <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M12 2v20M2 12h20" />
-              </svg>
-            </div>
+            {/* dark theme → glifo branco */}
+            <Image
+              src="/logo-preto.png"
+              alt="Revvo"
+              width={32}
+              height={32}
+              priority
+              className="h-8 w-8 rounded-xl shadow-sm hidden dark:inline"
+            />
+            {/* light theme → glifo preto */}
+            <Image
+              src="/logo-branco.png"
+              alt="Revvo"
+              width={32}
+              height={32}
+              priority
+              className="h-8 w-8 rounded-xl shadow-sm dark:hidden"
+            />
             <span className="text-[15px] font-bold text-foreground tracking-tight">Smart Price</span>
           </Link>
         )}
 
         {collapsed && (
-          <Link href="/dashboard" className="flex h-8 w-8 items-center justify-center rounded-xl bg-accent shadow-sm">
-            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M12 2v20M2 12h20" />
-            </svg>
+          <Link href="/dashboard" className="flex h-8 w-8 items-center justify-center">
+            <Image
+              src="/logo-preto.png"
+              alt="Revvo"
+              width={32}
+              height={32}
+              priority
+              className="h-8 w-8 rounded-xl shadow-sm hidden dark:inline"
+            />
+            <Image
+              src="/logo-branco.png"
+              alt="Revvo"
+              width={32}
+              height={32}
+              priority
+              className="h-8 w-8 rounded-xl shadow-sm dark:hidden"
+            />
           </Link>
         )}
 

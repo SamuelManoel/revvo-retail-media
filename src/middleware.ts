@@ -16,6 +16,7 @@ export async function middleware(req: NextRequest) {
   if (
     pathname.startsWith('/_next') ||
     pathname.startsWith('/favicon') ||
+    pathname.startsWith('/icons/') ||
     pathname.startsWith('/login') ||
     pathname.startsWith('/api/auth/login') ||
     pathname.startsWith('/api/auth/logout') ||
@@ -23,7 +24,18 @@ export async function middleware(req: NextRequest) {
     pathname === '/api/config' ||           // config global pública (lida pelo app sem auth)
     pathname === '/api/contact' ||          // formulário público do site institucional
     pathname === '/' ||
-    pathname === '/login'
+    pathname === '/login' ||
+    pathname === '/manifest.webmanifest' ||
+    pathname === '/sw.js'
+  ) {
+    return NextResponse.next();
+  }
+
+  // Arquivos estáticos do /public na raiz (logo-*.png, apple-touch-icon.png, *.svg etc.)
+  // Qualquer path não-API com extensão de asset passa direto.
+  if (
+    !pathname.startsWith('/api/') &&
+    /\.(png|jpg|jpeg|svg|webp|gif|avif|ico|woff2?|ttf|css|js|map|webmanifest)$/i.test(pathname)
   ) {
     return NextResponse.next();
   }
