@@ -100,7 +100,7 @@ export function AdminShell({ children }: { children: ReactNode }) {
 
       <div className="flex flex-col flex-1 overflow-hidden min-w-0">
         {/* Top bar */}
-        <header className="flex h-16 shrink-0 items-center gap-4 border-b border-border bg-surface/80 backdrop-blur-md px-5 sticky top-0 z-30">
+        <header className="sticky top-0 z-30 flex shrink-0 items-center gap-4 border-b border-border bg-surface/80 backdrop-blur-md pt-[env(safe-area-inset-top)] h-[calc(env(safe-area-inset-top,0px)+4rem)] px-[max(1.25rem,env(safe-area-inset-left))]">
           {/* Hamburger — mobile only */}
           <button
             onClick={() => setIsMobileOpen(true)}

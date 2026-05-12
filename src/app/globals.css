@@ -103,3 +103,13 @@ summary {
   --accent-soft: color-mix(in oklch, var(--accent) 15%, transparent);
   --accent-soft-hover: color-mix(in oklch, var(--accent) 22%, transparent);
 }
+
+/* ─── PWA / iOS polish ────────────────────────────────────── */
+
+/* Cor das áreas reveladas pelo overscroll (parte do statusbar quando o conteúdo
+   é translúcido) — bate com o tema atual. */
+html { background-color: var(--background); }
+body { background-color: var(--background); }
+
+/* Remove o highlight cinza padrão dos taps no iOS (visual de "app instalado") */
+html { -webkit-tap-highlight-color: transparent; }

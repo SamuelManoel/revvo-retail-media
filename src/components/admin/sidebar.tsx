@@ -289,7 +289,7 @@ export function Sidebar({
       ].join(" ")}
     >
       {/* ── Logo + Collapse ── */}
-      <div className={`flex h-16 shrink-0 items-center border-b border-border ${collapsed ? "justify-center px-4" : "justify-between px-5"}`}>
+      <div className={`flex shrink-0 items-center border-b border-border pt-[env(safe-area-inset-top)] h-[calc(env(safe-area-inset-top,0px)+4rem)] ${collapsed ? "justify-center px-4" : "justify-between px-5"}`}>
         {!collapsed && (
           <Link href="/dashboard" className="flex items-center gap-2.5">
             {/* dark theme → glifo branco */}
