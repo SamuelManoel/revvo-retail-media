@@ -132,7 +132,7 @@ export function AdminShell({ children }: { children: ReactNode }) {
               priority
               className="h-7 w-7 rounded-xl dark:hidden"
             />
-            <span className="text-sm font-bold text-foreground">Smart Price</span>
+            <span className="text-sm font-bold text-foreground">Revvo</span>
           </div>
 
           {/* Page title — desktop */}

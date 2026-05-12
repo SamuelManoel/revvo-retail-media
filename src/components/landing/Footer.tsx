@@ -73,7 +73,7 @@ export function Footer() {
       </div>
 
       <div className="mx-auto mt-12 flex max-w-7xl flex-col items-start justify-between gap-3 border-t border-border/60 px-6 pt-6 text-xs text-muted md:flex-row md:items-center">
-        <p>© {new Date().getFullYear()} Revvo Smart Price. Todos os direitos reservados.</p>
+        <p>© {new Date().getFullYear()} Revvo. Todos os direitos reservados.</p>
         <p>Feito no Brasil com café e dados.</p>
       </div>
     </footer>

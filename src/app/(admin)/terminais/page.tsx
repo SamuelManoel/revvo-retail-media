@@ -274,7 +274,7 @@ export default function TerminaisPage() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold text-foreground">Terminais</h1>
-          <p className="mt-1 text-sm text-muted">Gerencie os terminais de smart price e mídia</p>
+          <p className="mt-1 text-sm text-muted">Gerencie os terminais de busca de preço e mídia</p>
         </div>
         <Button variant="primary" size="sm" onPress={openCreate}>Novo terminal</Button>
       </div>

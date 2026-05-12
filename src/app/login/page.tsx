@@ -68,7 +68,7 @@ export default function LoginPage() {
               priority
               className="h-10 w-10 rounded-xl shadow-lg dark:hidden"
             />
-            <span className="text-xl font-bold text-foreground">Revvo Smart Price</span>
+            <span className="text-xl font-bold text-foreground">Revvo</span>
           </div>
         </div>
 
@@ -104,7 +104,7 @@ export default function LoginPage() {
         </div>
 
         <div className="relative z-10">
-          <p className="text-xs text-muted/60">© {new Date().getFullYear()} Revvo Smart Price. Todos os direitos reservados.</p>
+          <p className="text-xs text-muted/60">© {new Date().getFullYear()} Revvo. Todos os direitos reservados.</p>
         </div>
       </div>
 
@@ -128,7 +128,7 @@ export default function LoginPage() {
             priority
             className="h-9 w-9 rounded-xl dark:hidden"
           />
-          <span className="text-lg font-bold text-foreground">Revvo Smart Price</span>
+          <span className="text-lg font-bold text-foreground">Revvo</span>
         </div>
 
         <div className="w-full max-w-sm">
@@ -146,8 +146,11 @@ export default function LoginPage() {
                 type="text"
                 placeholder="nome-da-sua-conta"
                 autoComplete="organization"
+                autoCapitalize="none"
+                autoCorrect="off"
+                spellCheck={false}
                 value={form.conta}
-                onChange={(e) => { setForm((f) => ({ ...f, conta: e.target.value })); setError(null); }}
+                onChange={(e) => { setForm((f) => ({ ...f, conta: e.target.value.toLowerCase() })); setError(null); }}
                 className="
                   w-full rounded-lg border border-border bg-surface px-3 py-2.5
                   text-sm text-foreground placeholder:text-muted
@@ -163,8 +166,11 @@ export default function LoginPage() {
                 type="email"
                 placeholder="seu@email.com"
                 autoComplete="email"
+                autoCapitalize="none"
+                autoCorrect="off"
+                spellCheck={false}
                 value={form.email}
-                onChange={(e) => { setForm((f) => ({ ...f, email: e.target.value })); setError(null); }}
+                onChange={(e) => { setForm((f) => ({ ...f, email: e.target.value.toLowerCase() })); setError(null); }}
                 className="
                   w-full rounded-lg border border-border bg-surface px-3 py-2.5
                   text-sm text-foreground placeholder:text-muted
@@ -180,6 +186,9 @@ export default function LoginPage() {
                 type="password"
                 placeholder="••••••••"
                 autoComplete="current-password"
+                autoCapitalize="none"
+                autoCorrect="off"
+                spellCheck={false}
                 value={form.password}
                 onChange={(e) => { setForm((f) => ({ ...f, password: e.target.value })); setError(null); }}
                 className="

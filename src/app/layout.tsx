@@ -17,7 +17,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Revvo Admin",
-  description: "Painel administrativo Revvo Smart Price",
+  description: "Painel administrativo Revvo",
   applicationName: "Revvo",
   appleWebApp: {
     capable: true,

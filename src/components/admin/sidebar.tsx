@@ -310,7 +310,7 @@ export function Sidebar({
               priority
               className="h-8 w-8 rounded-xl shadow-sm dark:hidden"
             />
-            <span className="text-[15px] font-bold text-foreground tracking-tight">Smart Price</span>
+            <span className="text-[15px] font-bold text-foreground tracking-tight">Revvo</span>
           </Link>
         )}
 
