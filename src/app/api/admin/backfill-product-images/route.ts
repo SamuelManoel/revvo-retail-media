@@ -5,7 +5,9 @@ import { getSession } from '@/lib/auth';
 import { getTenantSchema, tenantId, updateTenantProductImageUrl } from '@/lib/tenant-db';
 import { tryFetchProductImageFromCosmos, canonicalizeProductImage } from '@/lib/cosmos-cache';
 
-export const maxDuration = 800;
+// Vercel hobby plan permite no máximo 300s. Para batches maiores rode o script
+// CLI em scripts/ — esta rota processa em chunks dentro do limite.
+export const maxDuration = 300;
 
 const pool = new Pool({ connectionString: process.env.DATABASE_URL! });
 
