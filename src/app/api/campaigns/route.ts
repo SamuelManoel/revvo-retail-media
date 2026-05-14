@@ -9,6 +9,7 @@ const CAMPAIGN_INCLUDE = {
     orderBy: { order: 'asc' as const },
     include: {
       media:    { select: { id: true, url: true, fileName: true, mimeType: true, type: true, size: true } },
+      offer:    { select: { id: true, name: true, kind: true, renderedImageUrl: true, storeId: true, companyId: true } },
       terminal: {
         select: {
           id: true, name: true, isPriceChecker: true,
@@ -30,8 +31,20 @@ export async function GET(req: NextRequest) {
 
   const storeId = req.nextUrl.searchParams.get('storeId') ?? undefined;
 
+  // Se filtrar por storeId, força que a campanha pertença à mesma empresa da loja.
+  // Evita inconsistência onde campanha criada por outra empresa aparece num escopo
+  // de loja que pertence a um tenant diferente (causa erro 400 ao vincular ofertas).
+  let storeCompanyId: string | null = null;
+  if (storeId) {
+    const store = await prisma.store.findUnique({ where: { id: storeId }, select: { companyId: true } });
+    if (!store) return NextResponse.json([]);
+    storeCompanyId = store.companyId;
+  }
+
   const where = {
-    ...(session.isMaster ? {} : { companyId: session.companyId }),
+    ...(session.isMaster
+      ? (storeCompanyId ? { companyId: storeCompanyId } : {})
+      : { companyId: session.companyId }),
     ...(storeId ? { storeId } : {}),
   };
 
@@ -56,12 +69,15 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ message: 'name, startsAt e endsAt são obrigatórios' }, { status: 400 });
   }
 
-  const companyId = session.companyId;
+  // Quando há `storeId`, a campanha herda o `companyId` da loja — evita
+  // master criar campanha com seu próprio companyId em loja de outro tenant.
+  let companyId = session.companyId;
 
   if (storeId) {
-    const storeWhere = session.isMaster ? { id: storeId } : { id: storeId, companyId };
-    const store = await prisma.store.findFirst({ where: storeWhere, select: { id: true } });
+    const storeWhere = session.isMaster ? { id: storeId } : { id: storeId, companyId: session.companyId };
+    const store = await prisma.store.findFirst({ where: storeWhere, select: { id: true, companyId: true } });
     if (!store) return NextResponse.json({ message: 'Loja não encontrada' }, { status: 404 });
+    companyId = store.companyId;
   }
 
   // Regra: um terminal não pode ter outra campanha ativa cujo período se sobreponha.

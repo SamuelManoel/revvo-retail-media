@@ -126,11 +126,23 @@ export default function CatalogoPage() {
     } catch { /* ignore */ }
   }
 
-  async function fetchProducts(pageNum = 1, query = '', pageLimit = limit, sb = sortBy, so = sortOrder) {
+  // Filtros de presença de preço
+  const [filterP1, setFilterP1] = useState(false);
+  const [filterP2, setFilterP2] = useState(false);
+  const [filterP3, setFilterP3] = useState(false);
+
+  async function fetchProducts(
+    pageNum = 1, query = '', pageLimit = limit,
+    sb = sortBy, so = sortOrder,
+    p1 = filterP1, p2 = filterP2, p3 = filterP3,
+  ) {
     setLoading(true);
     try {
       const params = new URLSearchParams({ page: String(pageNum), limit: String(pageLimit), sortBy: sb, sortOrder: so });
       if (query) params.set('q', query);
+      if (p1) params.set('hasPreco1', 'true');
+      if (p2) params.set('hasPreco2', 'true');
+      if (p3) params.set('hasPreco3', 'true');
       const res = await fetch(`/api/stores/${id}/products?${params}`);
       if (res.ok) {
         const data = await res.json();
@@ -152,21 +164,28 @@ export default function CatalogoPage() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
+  // Refetch quando filtros de preço mudam
+  useEffect(() => {
+    setPage(1);
+    fetchProducts(1, q, limit, sortBy, sortOrder, filterP1, filterP2, filterP3);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [filterP1, filterP2, filterP3]);
+
   function handleSearch() {
     setPage(1);
     setQ(search);
-    fetchProducts(1, search, limit, sortBy, sortOrder);
+    fetchProducts(1, search, limit, sortBy, sortOrder, filterP1, filterP2, filterP3);
   }
 
   function handlePageChange(next: number) {
     setPage(next);
-    fetchProducts(next, q, limit, sortBy, sortOrder);
+    fetchProducts(next, q, limit, sortBy, sortOrder, filterP1, filterP2, filterP3);
   }
 
   function handleLimitChange(next: number) {
     setLimit(next);
     setPage(1);
-    fetchProducts(1, q, next, sortBy, sortOrder);
+    fetchProducts(1, q, next, sortBy, sortOrder, filterP1, filterP2, filterP3);
   }
 
   function handleSort(column: SortKey) {
@@ -175,7 +194,7 @@ export default function CatalogoPage() {
     setSortOrder(newOrder);
     saveSort(column, newOrder);
     setPage(1);
-    fetchProducts(1, q, limit, column, newOrder);
+    fetchProducts(1, q, limit, column, newOrder, filterP1, filterP2, filterP3);
   }
 
   function openCreate() {
@@ -343,6 +362,34 @@ export default function CatalogoPage() {
               </div>
               <Button variant="primary" size="sm" onPress={handleSearch}>Buscar</Button>
             </div>
+          </div>
+
+          {/* Filtros por presença de preço */}
+          <div className="flex flex-wrap items-center gap-2 px-5 py-3 border-b border-border text-xs">
+            <span className="text-muted">Filtrar:</span>
+            {[
+              { label: 'tem Preço 1', value: filterP1, set: setFilterP1 },
+              { label: 'tem Preço 2', value: filterP2, set: setFilterP2 },
+              { label: 'tem Preço 3', value: filterP3, set: setFilterP3 },
+            ].map((f) => (
+              <button
+                key={f.label}
+                onClick={() => f.set(!f.value)}
+                className={`rounded-full px-3 py-1 border transition-colors ${
+                  f.value ? 'bg-accent text-white border-accent' : 'bg-surface text-muted border-border hover:border-accent/40 hover:text-foreground'
+                }`}
+              >
+                {f.label}
+              </button>
+            ))}
+            {(filterP1 || filterP2 || filterP3) && (
+              <button
+                onClick={() => { setFilterP1(false); setFilterP2(false); setFilterP3(false); }}
+                className="text-muted hover:text-foreground underline"
+              >
+                limpar
+              </button>
+            )}
           </div>
 
           {/* Table */}

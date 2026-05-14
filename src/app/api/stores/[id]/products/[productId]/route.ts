@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getSession } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import { updateProduct, deleteProduct } from '@/lib/tenant-db';
+import { canonicalizeProductImage, tryFetchProductImageFromCosmos } from '@/lib/cosmos-cache';
 
 type Params = { params: Promise<{ id: string; productId: string }> };
 
@@ -36,6 +37,20 @@ export async function PATCH(req: NextRequest, { params }: Params) {
     });
 
     if (!updated) return NextResponse.json({ message: 'Produto não encontrado' }, { status: 404 });
+
+    // Garante que a imagem fique salva em `product-images/{ean}.{ext}` (compartilhado entre tenants).
+    if (!updated.image_url) {
+      const cosmosUrl = await tryFetchProductImageFromCosmos(id, updated.ean);
+      if (cosmosUrl) updated.image_url = cosmosUrl;
+    } else if (!updated.image_url.includes(`/product-images/${updated.ean}.`)) {
+      const canonical = await canonicalizeProductImage({
+        storeId: id,
+        ean: updated.ean,
+        sourceUrl: updated.image_url,
+      });
+      if (canonical) updated.image_url = canonical;
+    }
+
     return NextResponse.json(updated);
   } catch (error) {
     console.error('Erro ao editar produto:', error);

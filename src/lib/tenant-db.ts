@@ -247,6 +247,10 @@ export interface ListProductsOptions {
   q?: string
   sortBy?: string
   sortOrder?: 'asc' | 'desc'
+  /** Quando true, filtra produtos com preço > 0 na respectiva coluna. */
+  hasPreco1?: boolean
+  hasPreco2?: boolean
+  hasPreco3?: boolean
 }
 
 export async function listProducts(
@@ -271,6 +275,9 @@ export async function listProducts(
     params.push(`%${options.q}%`)
     where = `AND (p.produto ILIKE $${params.length} OR p.ean ILIKE $${params.length} OR p.codigo_produto ILIKE $${params.length})`
   }
+  if (options.hasPreco1) where += ` AND p.preco1 IS NOT NULL AND p.preco1 > 0`
+  if (options.hasPreco2) where += ` AND p.preco2 IS NOT NULL AND p.preco2 > 0`
+  if (options.hasPreco3) where += ` AND p.preco3 IS NOT NULL AND p.preco3 > 0`
 
   const countResult = await pool.query(
     `SELECT COUNT(*)::int AS total FROM "${schema}".products p WHERE p.tenant_id = $1 ${where}`,
@@ -411,4 +418,18 @@ export async function deleteAllProducts(storeId: string): Promise<number> {
     [tenantId(storeId)]
   )
   return result.rowCount ?? 0
+}
+
+/** Atualiza a URL da imagem de um produto específico (por EAN) no tenant. */
+export async function updateTenantProductImageUrl(
+  storeId: string,
+  ean: string,
+  imageUrl: string,
+): Promise<boolean> {
+  const schema = getTenantSchema(storeId)
+  const result = await pool.query(
+    `UPDATE "${schema}".products SET image_url = $3, updated_at = NOW() WHERE tenant_id = $1 AND ean = $2`,
+    [tenantId(storeId), ean, imageUrl]
+  )
+  return (result.rowCount ?? 0) > 0
 }

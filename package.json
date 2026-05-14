@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --webpack",
+    "dev": "prisma generate && next dev --webpack",
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
@@ -24,13 +24,16 @@
     "dotenv": "^17.3.1",
     "framer-motion": "^12.38.0",
     "jose": "^6.2.2",
+    "konva": "^10.3.0",
     "mariadb": "^3.5.2",
     "next": "16.2.1",
     "node-html-parser": "^7.1.0",
     "pg": "^8.20.0",
     "prisma": "^7.5.0",
     "react": "19.2.4",
-    "react-dom": "19.2.4"
+    "react-dom": "19.2.4",
+    "react-konva": "^19.2.4",
+    "use-image": "^1.1.4"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",

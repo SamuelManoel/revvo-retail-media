@@ -15,7 +15,7 @@ async function makeSessionToken(payload: Record<string, unknown>, expiresIn = '8
 
 // ── Importação do middleware ───────────────────────────────────────────────
 // O middleware usa next/server diretamente; importamos após configurar o ambiente
-import { middleware } from './middleware';
+import { proxy as middleware } from './proxy';
 
 // ── Helpers ────────────────────────────────────────────────────────────────
 function makeRequest(path: string, cookieToken?: string) {

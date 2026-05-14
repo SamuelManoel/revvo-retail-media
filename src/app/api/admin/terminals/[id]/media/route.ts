@@ -91,7 +91,7 @@ export async function POST(req: NextRequest, { params }: Params) {
         data: {
           campaignId,
           action:      'media_added',
-          description: `Mídia "${terminalMedia.media.fileName}" adicionada no terminal "${terminalMedia.terminal.name}"`,
+          description: `Mídia "${terminalMedia.media?.fileName ?? '(sem nome)'}" adicionada no terminal "${terminalMedia.terminal.name}"`,
           userId:      session.userId,
           userName:    session.name,
         },

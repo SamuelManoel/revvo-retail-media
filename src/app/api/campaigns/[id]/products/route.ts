@@ -71,6 +71,7 @@ export async function POST(req: NextRequest, { params }: Params) {
         preco1: tenantProduct.preco1 ? tenantProduct.preco1 : null,
         preco2: tenantProduct.preco2 ?? null,
         preco3: tenantProduct.preco3 ?? null,
+        imageUrl: tenantProduct.image_url ?? null,
       },
       include: { store: { select: { id: true, name: true } } },
     });

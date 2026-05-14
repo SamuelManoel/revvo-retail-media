@@ -25,6 +25,7 @@ model Company {
   campaigns     Campaign[]
   notifications Notification[]
   integrations  CompanyIntegration[]
+  offers        Offer[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -69,6 +70,7 @@ model Store {
   campaignProducts CampaignProduct[]
   integrations     CompanyIntegration[]
   medias           Media[]
+  offers           Offer[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -217,6 +219,7 @@ model CampaignProduct {
   preco1      Decimal? @db.Decimal(10, 2)
   preco2      Decimal? @db.Decimal(10, 2)
   preco3      Decimal? @db.Decimal(10, 2)
+  imageUrl    String?
 
   // Referência ao produto original na tabela tenant<store>.products
   // (sem FK pois é cross-schema; só pra rastreabilidade)
@@ -279,22 +282,32 @@ model Media {
 }
 
 model TerminalMedia {
-  id       String    @id @default(uuid())
-  order    Int       @default(0)
-  duration Int? // segundos de exibição para imagens; null para vídeos (toca até o fim)
-  startsAt DateTime?
-  endsAt   DateTime?
+  id             String    @id @default(uuid())
+  order          Int       @default(0)
+  duration       Int? // segundos de exibição para imagens; null para vídeos (toca até o fim)
+  // Animação de entrada exibida pelo app ao mostrar este item.
+  // Valores aceitos: 'none' | 'fade' | 'zoom' | 'bounce' | 'slideLeft' | 'slideUp'
+  enterAnimation String    @default("none")
+  startsAt       DateTime?
+  endsAt         DateTime?
 
   terminalId String
   terminal   Terminal @relation(fields: [terminalId], references: [id], onDelete: Cascade)
 
-  mediaId String
-  media   Media  @relation(fields: [mediaId], references: [id], onDelete: Cascade)
+  // Slot do tipo mídia (imagem/vídeo). Mutuamente exclusivo com offerId.
+  mediaId String?
+  media   Media?  @relation(fields: [mediaId], references: [id], onDelete: Cascade)
+
+  // Slot do tipo oferta (renderiza um OfferLayout com dados da Offer).
+  offerId String?
+  offer   Offer?  @relation(fields: [offerId], references: [id], onDelete: Cascade)
 
   campaignId String?
   campaign   Campaign? @relation(fields: [campaignId], references: [id], onDelete: SetNull)
 
   @@unique([terminalId, mediaId, campaignId])
+  @@unique([terminalId, offerId, campaignId])
+  @@index([offerId])
   @@map("terminal_medias")
 }
 
@@ -423,6 +436,98 @@ model Notification {
   createdAt DateTime @default(now())
 
   @@map("notifications")
+}
+
+// Layouts de oferta — criados pelo master e reusáveis por todas as lojas.
+// Cada categoria reflete um tipo de oferta:
+//   "oferta_item"           — uma oferta de 1 produto
+//   "leve_x_pague_y"        — leve X, pague Y (múltiplos itens)
+//   "compre_ganhe_brinde"   — comprou X, ganha brinde (texto/imagem)
+//   "outro"                 — qualquer outro
+model OfferLayout {
+  id            String  @id @default(uuid())
+  slug          String? @unique
+  category      String // ver acima
+  name          String
+  description   String?
+  orientation   String  @default("portrait") // "portrait" | "landscape"
+  backgroundUrl String? // URL pública (Supabase) de uma imagem de fundo opcional
+  template      String  @default("") // código HTML-like com Tailwind + ${...}
+  isActive      Boolean @default(true)
+  thumbnailUrl  String?
+
+  offers Offer[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([category])
+  @@map("offer_layouts")
+}
+
+// Ofertas — campanhas comerciais montadas em cima do catálogo da loja.
+// Aparece na playlist do terminal como um "slot de oferta" (TerminalMedia.offerId).
+model Offer {
+  id   String @id @default(uuid())
+  name String
+  kind String // "oferta_item" | "leve_x_pague_y" | "compre_ganhe_brinde"
+
+  // parâmetros do tipo
+  leveX          Int? // só pra leve_x_pague_y
+  pagueY         Int? // só pra leve_x_pague_y
+  brindeText     String? // só pra compre_ganhe_brinde
+  brindeImageUrl String? // só pra compre_ganhe_brinde
+
+  // URL pública da imagem PNG renderizada pelo backend a partir do layout Konva.
+  // Atualiza sempre que a oferta é (re)gerada. Usada pelo app como uma "mídia" no playlist.
+  renderedImageUrl String?
+  renderedAt       DateTime?
+
+  isActive Boolean @default(true)
+
+  companyId String
+  company   Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+
+  storeId String
+  store   Store  @relation(fields: [storeId], references: [id], onDelete: Cascade)
+
+  layoutId String
+  layout   OfferLayout @relation(fields: [layoutId], references: [id], onDelete: Restrict)
+
+  products       OfferProduct[]
+  terminalMedias TerminalMedia[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([storeId])
+  @@index([companyId])
+  @@map("offers")
+}
+
+// Snapshot dos produtos da oferta — preserva os preços no momento de criação.
+model OfferProduct {
+  id String @id @default(uuid())
+
+  // Snapshot — não atualiza depois
+  ean         String
+  productName String
+  preco1      Decimal? @db.Decimal(10, 2)
+  preco2      Decimal? @db.Decimal(10, 2)
+  preco3      Decimal? @db.Decimal(10, 2)
+  imageUrl    String?
+
+  // Referência ao produto na tabela tenant<store>.products (sem FK pois é cross-schema)
+  productId String?
+
+  offerId String
+  offer   Offer  @relation(fields: [offerId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@unique([offerId, ean])
+  @@index([offerId])
+  @@map("offer_products")
 }
 
 model TerminalLayout {

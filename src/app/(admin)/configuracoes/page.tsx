@@ -258,10 +258,30 @@ export default function ConfiguracoesPage() {
             <div>
               <p className="text-sm font-medium text-foreground">Editor visual de layouts</p>
               <p className="mt-0.5 text-xs text-muted">
-                Crie e edite os layouts (cores, fontes, blocos) usados pelos terminais Price Checker.
+                Crie e edite os layouts (cores, fontes, blocos) usados pelos terminais de busca de preço.
               </p>
             </div>
             <Link href="/configuracoes/layouts-terminal">
+              <Button variant="primary" size="sm">Abrir editor</Button>
+            </Link>
+          </Card.Content>
+        </Card>
+      )}
+
+      {/* Layouts de oferta — somente master */}
+      {isMaster && (
+        <Card>
+          <CardHeader className="border-b border-border pb-4">
+            <h2 className="text-base font-semibold text-foreground">Layouts de Oferta</h2>
+          </CardHeader>
+          <Card.Content className="flex items-center justify-between gap-4 py-6">
+            <div>
+              <p className="text-sm font-medium text-foreground">Templates de ofertas comerciais</p>
+              <p className="mt-0.5 text-xs text-muted">
+                Modelos por categoria (item, leve X pague Y, brinde...) com fundo customizado e variáveis de preço — usados quando uma loja monta uma oferta.
+              </p>
+            </div>
+            <Link href="/configuracoes/layouts-ofertas">
               <Button variant="primary" size="sm">Abrir editor</Button>
             </Link>
           </Card.Content>

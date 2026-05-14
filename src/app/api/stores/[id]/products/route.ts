@@ -6,6 +6,7 @@ import {
   upsertProduct,
   deleteAllProducts,
 } from '@/lib/tenant-db';
+import { canonicalizeProductImage, tryFetchProductImageFromCosmos } from '@/lib/cosmos-cache';
 
 type Params = { params: Promise<{ id: string }> };
 
@@ -30,9 +31,12 @@ export async function GET(req: NextRequest, { params }: Params) {
   const q = searchParams.get('q') ?? undefined;
   const sortBy = searchParams.get('sortBy') ?? undefined;
   const sortOrder = (searchParams.get('sortOrder') ?? undefined) as 'asc' | 'desc' | undefined;
+  const hasPreco1 = searchParams.get('hasPreco1') === 'true';
+  const hasPreco2 = searchParams.get('hasPreco2') === 'true';
+  const hasPreco3 = searchParams.get('hasPreco3') === 'true';
 
   try {
-    const result = await listProducts(id, { page, limit, q, sortBy, sortOrder });
+    const result = await listProducts(id, { page, limit, q, sortBy, sortOrder, hasPreco1, hasPreco2, hasPreco3 });
     return NextResponse.json(result);
   } catch (error) {
     console.error('Erro ao listar produtos:', error);
@@ -69,6 +73,21 @@ export async function POST(req: NextRequest, { params }: Params) {
       imageUrl: imageUrl ?? null,
       status: status !== undefined ? Boolean(status) : undefined,
     });
+
+    // Garante que a imagem fique no path canônico `product-images/{ean}.{ext}`
+    // (compartilhado entre tenants). Síncrono — o proxy weserv cacheia, então
+    // chamadas seguintes com o mesmo EAN são rápidas.
+    if (!product.image_url) {
+      const cosmosUrl = await tryFetchProductImageFromCosmos(id, product.ean);
+      if (cosmosUrl) product.image_url = cosmosUrl;
+    } else if (!product.image_url.includes(`/product-images/${product.ean}.`)) {
+      const canonical = await canonicalizeProductImage({
+        storeId: id,
+        ean: product.ean,
+        sourceUrl: product.image_url,
+      });
+      if (canonical) product.image_url = canonical;
+    }
 
     return NextResponse.json(product, { status: created ? 201 : 200 });
   } catch (error) {

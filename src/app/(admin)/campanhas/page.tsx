@@ -1,6 +1,7 @@
 'use client';
 
-import { useEffect, useRef, useState, useMemo, useCallback } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState, useMemo, useCallback } from 'react';
+import { createPortal } from 'react-dom';
 import { Button, Card, Modal, useOverlayState } from '@heroui/react';
 
 /* ────────────────────────────────────────────────────────────────
@@ -10,15 +11,27 @@ type Terminal = { id: string; name: string; ip: string | null; isMediaDisplay: b
 type Store    = { id: string; name: string };
 type Media    = { id: string; url: string | null; fileName: string; mimeType: string; type: string; size: number };
 
+type EnterAnimation = 'none' | 'fade' | 'zoom' | 'bounce' | 'slideLeft' | 'slideUp';
+
 type CampaignMedia = {
   id: string;
   order: number;
   duration: number | null;
+  enterAnimation: EnterAnimation;
   startsAt: string | null;
   endsAt:   string | null;
   terminalId: string;
-  mediaId: string;
-  media:    Media;
+  mediaId: string | null;
+  offerId: string | null;
+  media:    Media | null;
+  offer: {
+    id: string;
+    name: string;
+    kind: string;
+    renderedImageUrl: string | null;
+    storeId: string;
+    companyId: string;
+  } | null;
   terminal: {
     id: string;
     name: string;
@@ -122,11 +135,12 @@ function campaignStatus(c: Campaign): 'active' | 'scheduled' | 'expired' | 'inac
 const inputClass =
   'w-full rounded-lg border border-border bg-surface px-3 py-2.5 text-sm text-foreground placeholder:text-muted outline-none transition-colors focus:border-accent focus:ring-2 focus:ring-accent-soft-hover';
 
-function Field({ label, children }: { label: string; children: React.ReactNode }) {
+function Field({ label, children, hint }: { label: string; children: React.ReactNode; hint?: string }) {
   return (
     <div className="flex flex-col gap-1.5">
       <label className="text-sm font-medium text-foreground">{label}</label>
       {children}
+      {hint && <p className="text-xs text-muted">{hint}</p>}
     </div>
   );
 }
@@ -465,6 +479,145 @@ function DurationInput({ cm, onSaved }: { cm: CampaignMedia; onSaved: (id: strin
   );
 }
 
+const ANIMATION_OPTIONS: { id: EnterAnimation; label: string; emoji: string }[] = [
+  { id: 'none',       label: 'Nenhuma',     emoji: '○' },
+  { id: 'fade',       label: 'Fade',        emoji: '◐' },
+  { id: 'zoom',       label: 'Zoom In',     emoji: '🔍' },
+  { id: 'bounce',     label: 'Quicar',      emoji: '⤓' },
+  { id: 'slideLeft',  label: 'Da esquerda', emoji: '→' },
+  { id: 'slideUp',    label: 'De baixo',    emoji: '↑' },
+];
+
+function animationClass(a: EnterAnimation): string {
+  return a === 'none' ? '' : `anim-enter-${a}`;
+}
+
+function AnimationPreviewBox({ animation, replayKey }: { animation: EnterAnimation; replayKey: number }) {
+  return (
+    <div className="relative h-20 w-full overflow-hidden rounded-md border border-border bg-surface-secondary">
+      <div
+        key={`${animation}-${replayKey}`}
+        className={`absolute inset-2 flex items-center justify-center rounded-md bg-gradient-to-br from-accent/40 to-accent/10 text-xs font-medium text-foreground ${animationClass(animation)}`}
+      >
+        Prévia
+      </div>
+    </div>
+  );
+}
+
+function AnimationPicker({ cm, onSaved }: { cm: CampaignMedia; onSaved: (id: string, value: EnterAnimation) => void }) {
+  const [open, setOpen] = useState(false);
+  const [value, setValue] = useState<EnterAnimation>(cm.enterAnimation ?? 'none');
+  const [replayKey, setReplayKey] = useState(0);
+  const [saving, setSaving] = useState(false);
+  const [coords, setCoords] = useState<{ top: number; left: number } | null>(null);
+  const btnRef = useRef<HTMLButtonElement>(null);
+  const popRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => { setValue(cm.enterAnimation ?? 'none'); }, [cm.enterAnimation]);
+
+  useLayoutEffect(() => {
+    if (!open) return;
+    function place() {
+      const rect = btnRef.current?.getBoundingClientRect();
+      if (!rect) return;
+      const popWidth = 256; // w-64
+      const margin = 8;
+      let left = rect.left;
+      if (left + popWidth + margin > window.innerWidth) left = window.innerWidth - popWidth - margin;
+      if (left < margin) left = margin;
+      setCoords({ top: rect.bottom + 4, left });
+    }
+    place();
+    window.addEventListener('resize', place);
+    window.addEventListener('scroll', place, true);
+    return () => {
+      window.removeEventListener('resize', place);
+      window.removeEventListener('scroll', place, true);
+    };
+  }, [open]);
+
+  useEffect(() => {
+    if (!open) return;
+    function onDocClick(e: MouseEvent) {
+      const t = e.target as Node;
+      if (btnRef.current?.contains(t)) return;
+      if (popRef.current?.contains(t)) return;
+      setOpen(false);
+    }
+    document.addEventListener('mousedown', onDocClick);
+    return () => document.removeEventListener('mousedown', onDocClick);
+  }, [open]);
+
+  const current = ANIMATION_OPTIONS.find((o) => o.id === value) ?? ANIMATION_OPTIONS[0];
+
+  async function choose(next: EnterAnimation) {
+    setValue(next);
+    setReplayKey((k) => k + 1);
+    if (next === cm.enterAnimation) return;
+    setSaving(true);
+    try {
+      const res = await fetch(`/api/admin/terminals/${cm.terminalId}/media/${cm.id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ enterAnimation: next }),
+      });
+      if (res.ok) onSaved(cm.id, next);
+    } catch { /* ignore */ } finally { setSaving(false); }
+  }
+
+  const popover = open && coords && typeof window !== 'undefined'
+    ? createPortal(
+        <div
+          ref={popRef}
+          style={{ position: 'fixed', top: coords.top, left: coords.left, width: 256 }}
+          className="z-[100] rounded-xl border border-border bg-surface p-2 shadow-xl"
+          onClick={(e) => e.stopPropagation()}
+          onMouseDown={(e) => e.stopPropagation()}
+        >
+          <div className="grid grid-cols-2 gap-2">
+            {ANIMATION_OPTIONS.map((opt) => {
+              const active = opt.id === value;
+              return (
+                <button
+                  key={opt.id}
+                  type="button"
+                  onClick={() => choose(opt.id)}
+                  className={`group flex flex-col gap-1 rounded-lg border p-1.5 text-left transition-colors ${active ? 'border-accent bg-accent/5' : 'border-border hover:border-accent/40'}`}
+                >
+                  <AnimationPreviewBox animation={opt.id} replayKey={replayKey + (active ? 0 : 1)} />
+                  <span className={`px-1 text-[11px] font-medium ${active ? 'text-accent' : 'text-foreground'}`}>{opt.label}</span>
+                </button>
+              );
+            })}
+          </div>
+        </div>,
+        document.body,
+      )
+    : null;
+
+  return (
+    <>
+      <button
+        ref={btnRef}
+        type="button"
+        onClick={(e) => { e.stopPropagation(); setOpen((v) => !v); }}
+        onMouseDown={(e) => e.stopPropagation()}
+        disabled={saving}
+        title="Animação de entrada"
+        className="flex items-center gap-1.5 rounded-md border border-border bg-surface px-2 py-0.5 text-xs text-foreground transition-colors hover:border-accent/60 focus:border-accent focus:ring-1 focus:ring-accent-soft-hover disabled:opacity-60"
+      >
+        <span className="text-muted">Animação:</span>
+        <span className="font-medium">{current.label}</span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={`transition-transform ${open ? 'rotate-180' : ''}`}>
+          <path d="m6 9 6 6 6-6" />
+        </svg>
+      </button>
+      {popover}
+    </>
+  );
+}
+
 function LockedPriceCheckerCard({ layoutName }: { layoutName: string | null }) {
   return (
     <div className="overflow-hidden rounded-xl border-2 border-dashed border-accent/40 bg-accent-soft/30">
@@ -506,26 +659,43 @@ function LockedPriceCheckerCard({ layoutName }: { layoutName: string | null }) {
 }
 
 function MediaCard({
-  cm, index, onEdit, onDelete, onPreview, onDurationSaved,
+  cm, index, onEdit, onDelete, onPreview, onDurationSaved, onAnimationSaved,
 }: {
   cm: CampaignMedia; index: number;
   onEdit: (cm: CampaignMedia) => void;
   onDelete: (cm: CampaignMedia) => void;
   onPreview: (media: Media) => void;
   onDurationSaved: (id: string, duration: number) => void;
+  onAnimationSaved: (id: string, value: EnterAnimation) => void;
 }) {
-  const { media } = cm;
+  const { media, offer } = cm;
   const now       = new Date();
   const ends      = parseDateLocal(cm.endsAt);
   const starts    = parseDateLocal(cm.startsAt);
   const expired   = !!ends && ends < now;
   const scheduled = !expired && !!starts && starts > now;
 
+  // Slot é uma OFERTA (offerId setado, sem media) ou uma MÍDIA convencional.
+  const isOffer = !!offer && !media;
+
+  // Dados unificados para renderizar (imagem + nome + label)
+  const displayUrl     = isOffer ? (offer?.renderedImageUrl ?? null) : (media?.url ?? null);
+  const displayName    = isOffer ? (offer?.name ?? 'Oferta') : (media?.fileName ?? 'Mídia');
+  const displayKind    = isOffer ? 'oferta' : (media?.type ?? 'arquivo');
+  const isVideoMedia   = !isOffer && media?.type === 'video';
+
+  // Mídia surrogate para o preview do modal — passa um objeto Media com fileName/url/type
+  const previewSurrogate: Media = (media ?? ({
+    id: cm.id, url: displayUrl ?? '', fileName: displayName,
+    mimeType: 'image/png', size: 0, type: 'image',
+  } as Media));
+
   return (
     <div className={`overflow-hidden rounded-xl border bg-surface ${expired ? 'border-danger/30 opacity-60' : 'border-border'}`}>
       <div className="flex items-center justify-between px-3 py-1.5 border-b border-border/50 bg-surface-secondary/50">
         <GripIcon />
         <div className="flex items-center gap-1.5">
+          {isOffer  && <span className="rounded-full bg-violet-500/10 px-1.5 py-0.5 text-xs font-medium text-violet-500">Oferta</span>}
           {expired   && <span className="rounded-full bg-danger/10 px-1.5 py-0.5 text-xs font-medium text-danger">Expirada</span>}
           {scheduled && <span className="rounded-full bg-warning/10 px-1.5 py-0.5 text-xs font-medium text-warning">Agendada</span>}
           {!expired && !scheduled && (cm.startsAt || cm.endsAt) && <span className="rounded-full bg-success/10 px-1.5 py-0.5 text-xs font-medium text-success">Vigente</span>}
@@ -535,14 +705,14 @@ function MediaCard({
 
       {/* Clickable thumbnail / preview area */}
       <button
-        onClick={() => onPreview(media)}
+        onClick={() => onPreview(previewSurrogate)}
         className="relative block w-full h-32 group overflow-hidden focus:outline-none"
         title="Clique para visualizar"
       >
-        {media.type === 'image' && media.url ? (
-          <img src={media.url} alt={media.fileName} className="h-full w-full object-cover" />
-        ) : media.url ? (
-          <VideoThumbnail url={media.url} className="h-full w-full" />
+        {!isVideoMedia && displayUrl ? (
+          <img src={displayUrl} alt={displayName} className="h-full w-full object-cover" />
+        ) : isVideoMedia && displayUrl ? (
+          <VideoThumbnail url={displayUrl} className="h-full w-full" />
         ) : (
           <div className="flex h-full w-full items-center justify-center bg-surface-secondary">
             <PlayIcon />
@@ -551,7 +721,7 @@ function MediaCard({
         {/* Hover overlay */}
         <div className="absolute inset-0 flex items-center justify-center bg-black/0 group-hover:bg-black/40 transition-colors">
           <div className="opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1.5 rounded-full bg-white/20 backdrop-blur-sm px-3 py-1.5">
-            {media.type === 'video'
+            {isVideoMedia
               ? <><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" className="h-3.5 w-3.5"><path d="M8 5v14l11-7z"/></svg><span className="text-white text-xs font-medium">Reproduzir</span></>
               : <><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg><span className="text-white text-xs font-medium">Ampliar</span></>}
           </div>
@@ -559,17 +729,18 @@ function MediaCard({
       </button>
 
       <div className="p-3 space-y-1.5">
-        <p className="truncate text-sm font-medium text-foreground" title={media.fileName}>{media.fileName}</p>
+        <p className="truncate text-sm font-medium text-foreground" title={displayName}>{displayName}</p>
         <div className="flex items-center gap-2">
-          <span className="rounded-full bg-accent-soft px-2 py-0.5 text-xs font-medium text-accent">{media.type}</span>
-          <span className="text-xs text-muted">{formatSize(media.size)}</span>
+          <span className="rounded-full bg-accent-soft px-2 py-0.5 text-xs font-medium text-accent">{displayKind}</span>
+          {!isOffer && media && <span className="text-xs text-muted">{formatSize(media.size)}</span>}
         </div>
         <p className="text-xs text-muted">{cm.terminal.name}</p>
-        {media.type === 'image' ? (
-          <DurationInput cm={cm} onSaved={onDurationSaved} />
-        ) : (
+        {isVideoMedia ? (
           <p className="text-xs text-muted italic">Duração: tempo total do vídeo</p>
+        ) : (
+          <DurationInput cm={cm} onSaved={onDurationSaved} />
         )}
+        <AnimationPicker cm={cm} onSaved={onAnimationSaved} />
         {(cm.startsAt || cm.endsAt) && (
           <p className={`text-xs ${expired ? 'text-danger/70' : 'text-muted'}`}>
             {fmtDate(cm.startsAt)} → {fmtDate(cm.endsAt)}
@@ -578,17 +749,40 @@ function MediaCard({
       </div>
 
       <div className="flex gap-2 border-t border-border px-3 py-2">
-        <button onClick={() => onEdit(cm)} className="flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-xs font-medium text-muted hover:text-foreground hover:bg-surface-secondary transition-colors">
-          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M17 3a2.85 2.85 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z" />
-          </svg>
-          Editar
-        </button>
+        {!isOffer && (
+          <button onClick={() => onEdit(cm)} className="flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-xs font-medium text-muted hover:text-foreground hover:bg-surface-secondary transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M17 3a2.85 2.85 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z" />
+            </svg>
+            Editar
+          </button>
+        )}
+        {isOffer && (
+          <a
+            href={(() => {
+              const oid = cm.offerId ?? offer?.id ?? '';
+              const sid = offer?.storeId ?? '';
+              const cid = offer?.companyId ?? '';
+              const qs = new URLSearchParams();
+              if (oid) qs.set('edit', oid);
+              if (sid) qs.set('storeId', sid);
+              if (cid) qs.set('companyId', cid);
+              return `/ofertas?${qs.toString()}`;
+            })()}
+            className="flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-xs font-medium text-muted hover:text-foreground hover:bg-surface-secondary transition-colors"
+            title="Editar oferta"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M17 3a2.85 2.85 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z" />
+            </svg>
+            Ir para a oferta
+          </a>
+        )}
         <button onClick={() => onDelete(cm)} className="flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-xs font-medium text-muted hover:text-danger hover:bg-danger/10 transition-colors">
           <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <path d="M3 6h18" /><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" /><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
           </svg>
-          Excluir
+          {isOffer ? 'Remover oferta' : 'Excluir'}
         </button>
       </div>
     </div>
@@ -598,13 +792,14 @@ function MediaCard({
 /* ────────────────────────────────────────────────────────────────
    Draggable grid
 ──────────────────────────────────────────────────────────────── */
-function DraggableGrid({ items, onReorder, onEdit, onDelete, onPreview, onDurationSaved, trailing }: {
+function DraggableGrid({ items, onReorder, onEdit, onDelete, onPreview, onDurationSaved, onAnimationSaved, trailing }: {
   items: CampaignMedia[];
   onReorder: (items: CampaignMedia[]) => void;
   onEdit: (cm: CampaignMedia) => void;
   onDelete: (cm: CampaignMedia) => void;
   onPreview: (media: Media) => void;
   onDurationSaved: (id: string, duration: number) => void;
+  onAnimationSaved: (id: string, value: EnterAnimation) => void;
   trailing?: React.ReactNode;
 }) {
   const [local, setLocal] = useState<CampaignMedia[]>(items);
@@ -636,7 +831,7 @@ function DraggableGrid({ items, onReorder, onEdit, onDelete, onPreview, onDurati
           style={{ opacity: draggingId === cm.id ? 0.4 : 1 }}
           className="cursor-grab active:cursor-grabbing transition-opacity"
         >
-          <MediaCard cm={cm} index={index} onEdit={onEdit} onDelete={onDelete} onPreview={onPreview} onDurationSaved={onDurationSaved} />
+          <MediaCard cm={cm} index={index} onEdit={onEdit} onDelete={onDelete} onPreview={onPreview} onDurationSaved={onDurationSaved} onAnimationSaved={onAnimationSaved} />
         </div>
       ))}
       {trailing}
@@ -669,6 +864,24 @@ function CampaignCard({ campaign, mediaTerminals, allMedias, stores, onDelete, o
   const editCampaignModal = useOverlayState();
   const addProductModal   = useOverlayState();
   const deleteProductModal = useOverlayState();
+  const addOfferModal     = useOverlayState();
+
+  // Offer placement modal state
+  type AvailableOffer = {
+    id: string; name: string; kind: string;
+    isActive: boolean;
+    renderedImageUrl: string | null;
+    products: { ean: string }[];
+  };
+  const [availableOffers, setAvailableOffers] = useState<AvailableOffer[]>([]);
+  const [availableOffersLoading, setAvailableOffersLoading] = useState(false);
+  const [pickedOfferId, setPickedOfferId] = useState<string>('');
+  const [pickedTerminalId, setPickedTerminalId] = useState<string>('');
+  const [pickedPosition, setPickedPosition] = useState<number>(0);
+  const [pickedDuration, setPickedDuration] = useState<number>(10);
+  const [storeTerminals, setStoreTerminals] = useState<Array<{ id: string; name: string }>>([]);
+  const [placingOffer, setPlacingOffer] = useState(false);
+  const [placeOfferError, setPlaceOfferError] = useState<string | null>(null);
 
   // Products
   const [products, setProducts] = useState<CampaignProduct[]>(campaign.products ?? []);
@@ -751,6 +964,10 @@ function CampaignCard({ campaign, mediaTerminals, allMedias, stores, onDelete, o
     setItems((prev) => prev.map((cm) => cm.id === id ? { ...cm, duration } : cm));
   }
 
+  function handleAnimationSaved(id: string, value: EnterAnimation) {
+    setItems((prev) => prev.map((cm) => cm.id === id ? { ...cm, enterAnimation: value } : cm));
+  }
+
   async function handleReorder(terminalId: string, reordered: CampaignMedia[]) {
     const groupIds = new Set(reordered.map((cm) => cm.id));
     setItems((prev) => {
@@ -826,7 +1043,13 @@ function CampaignCard({ campaign, mediaTerminals, allMedias, stores, onDelete, o
     if (!deleteTarget) return;
     setDeleting(true);
     try {
-      await fetch(`/api/admin/terminals/${deleteTarget.terminalId}/media/${deleteTarget.id}`, { method: 'DELETE' });
+      // Slot de oferta → endpoint específico que limpa também os CampaignProducts
+      // que entraram via essa oferta. Slot de mídia → endpoint clássico.
+      if (deleteTarget.offerId) {
+        await fetch(`/api/offers/${deleteTarget.offerId}/placement?terminalMediaId=${deleteTarget.id}`, { method: 'DELETE' });
+      } else {
+        await fetch(`/api/admin/terminals/${deleteTarget.terminalId}/media/${deleteTarget.id}`, { method: 'DELETE' });
+      }
       deleteModal.close();
       setLogsLoaded(false);
       onRefresh();
@@ -908,6 +1131,76 @@ function CampaignCard({ campaign, mediaTerminals, allMedias, stores, onDelete, o
     }
   }
 
+  // ── Add offer to campaign ──────────────────────────────────────────────
+  function openAddOffer() {
+    setPickedOfferId('');
+    setPickedTerminalId(campaign.terminal?.id ?? '');
+    setPickedPosition(0);
+    setPickedDuration(10);
+    setPlaceOfferError(null);
+    setAvailableOffers([]);
+    setStoreTerminals([]);
+    addOfferModal.open();
+  }
+
+  // Carrega ofertas e terminais ao abrir o modal
+  useEffect(() => {
+    if (!addOfferModal.isOpen) return;
+    if (!campaign.store?.id) {
+      setPlaceOfferError('A campanha precisa ter uma loja vinculada pra receber ofertas.');
+      return;
+    }
+    setAvailableOffersLoading(true);
+    fetch(`/api/offers?storeId=${campaign.store.id}&isActive=true`)
+      .then((r) => r.json())
+      .then((d: AvailableOffer[]) => setAvailableOffers(Array.isArray(d) ? d : []))
+      .catch(() => setAvailableOffers([]))
+      .finally(() => setAvailableOffersLoading(false));
+
+    if (!campaign.terminal?.id) {
+      fetch('/api/terminals')
+        .then((r) => r.json())
+        .then((d: Array<{ id: string; name: string; isMediaDisplay: boolean; store?: { id: string } | null }>) => {
+          const list = Array.isArray(d) ? d : [];
+          setStoreTerminals(
+            list
+              .filter((t) => t.isMediaDisplay && t.store?.id === campaign.store?.id)
+              .map((t) => ({ id: t.id, name: t.name })),
+          );
+        })
+        .catch(() => setStoreTerminals([]));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [addOfferModal.isOpen]);
+
+  async function placeOffer() {
+    if (!pickedOfferId) { setPlaceOfferError('Escolha uma oferta.'); return; }
+    const terminalId = campaign.terminal?.id ?? pickedTerminalId;
+    if (!terminalId) { setPlaceOfferError('Escolha um terminal.'); return; }
+    setPlacingOffer(true);
+    setPlaceOfferError(null);
+    try {
+      const res = await fetch(`/api/offers/${pickedOfferId}/placement`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          campaignId: campaign.id,
+          terminalId,
+          position: pickedPosition,
+          duration: pickedDuration,
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok) { setPlaceOfferError(data.message ?? 'Erro ao adicionar oferta.'); return; }
+      addOfferModal.close();
+      onRefresh();
+    } catch {
+      setPlaceOfferError('Erro de conexão.');
+    } finally {
+      setPlacingOffer(false);
+    }
+  }
+
   function openEditCampaign() {
     setEditName(campaign.name);
     setEditCStartAt(campaign.startsAt.slice(0, 10));
@@ -964,21 +1257,29 @@ function CampaignCard({ campaign, mediaTerminals, allMedias, stores, onDelete, o
                     </svg>
                   </div>
                 ) : (
-                  previews.map((cm, i) => (
-                    <button
-                      key={cm.id}
-                      onClick={() => openPreview(cm.media)}
-                      title={cm.media.fileName}
-                      className="h-12 w-12 rounded-lg border-2 border-surface overflow-hidden bg-surface-secondary shrink-0 hover:ring-2 hover:ring-accent/60 transition-shadow"
-                      style={{ zIndex: previews.length - i }}
-                    >
-                      {cm.media.type === 'image' && cm.media.url
-                        ? <img src={cm.media.url} alt={cm.media.fileName} className="h-full w-full object-cover" />
-                        : cm.media.url
-                          ? <VideoThumbnail url={cm.media.url} className="h-full w-full" />
-                          : <div className="h-full w-full flex items-center justify-center"><PlayIcon className="h-5 w-5 text-muted" /></div>}
-                    </button>
-                  ))
+                  previews.map((cm, i) => {
+                    const thumbUrl = cm.media?.url ?? cm.offer?.renderedImageUrl ?? null;
+                    const thumbName = cm.media?.fileName ?? cm.offer?.name ?? 'Item';
+                    const isVideo = cm.media?.type === 'video';
+                    return (
+                      <button
+                        key={cm.id}
+                        onClick={() => {
+                          if (cm.media) openPreview(cm.media);
+                          else if (cm.offer) openPreview({ id: cm.id, url: cm.offer.renderedImageUrl ?? '', fileName: cm.offer.name, mimeType: 'image/png', size: 0, type: 'image' } as Media);
+                        }}
+                        title={thumbName}
+                        className="h-12 w-12 rounded-lg border-2 border-surface overflow-hidden bg-surface-secondary shrink-0 hover:ring-2 hover:ring-accent/60 transition-shadow"
+                        style={{ zIndex: previews.length - i }}
+                      >
+                        {!isVideo && thumbUrl
+                          ? <img src={thumbUrl} alt={thumbName} className="h-full w-full object-cover" />
+                          : isVideo && thumbUrl
+                            ? <VideoThumbnail url={thumbUrl} className="h-full w-full" />
+                            : <div className="h-full w-full flex items-center justify-center"><PlayIcon className="h-5 w-5 text-muted" /></div>}
+                      </button>
+                    );
+                  })
                 )}
                 {mediaCount > 4 && (
                   <div className="h-12 w-12 rounded-lg border-2 border-surface bg-surface-secondary flex items-center justify-center shrink-0 z-0">
@@ -1025,6 +1326,9 @@ function CampaignCard({ campaign, mediaTerminals, allMedias, stores, onDelete, o
             <div className="flex items-center gap-1.5 shrink-0">
               <button onClick={openAdd} title="Adicionar mídia" className="hidden sm:flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-xs font-medium text-accent border border-accent/30 hover:bg-accent/5 transition-colors">
                 + Mídia
+              </button>
+              <button onClick={openAddOffer} title="Adicionar oferta" className="hidden sm:flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-xs font-medium text-accent border border-accent/30 hover:bg-accent/5 transition-colors">
+                + Oferta
               </button>
               <button onClick={openEditCampaign} title="Editar campanha" className="rounded-lg p-1.5 text-muted hover:text-foreground hover:bg-surface-secondary transition-colors">
                 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -1137,6 +1441,7 @@ function CampaignCard({ campaign, mediaTerminals, allMedias, stores, onDelete, o
                             onDelete={openDeleteMedia}
                             onPreview={openPreview}
                             onDurationSaved={handleDurationSaved}
+                            onAnimationSaved={handleAnimationSaved}
                             trailing={term.isPriceChecker ? <LockedPriceCheckerCard layoutName={layoutName} /> : null}
                           />
                         </div>
@@ -1340,17 +1645,24 @@ function CampaignCard({ campaign, mediaTerminals, allMedias, stores, onDelete, o
                 <Modal.CloseTrigger />
               </Modal.Header>
               <Modal.Body className="space-y-4 px-6 py-5">
-                {editTarget && (
-                  <div className="flex items-center gap-3 rounded-lg border border-border bg-surface-secondary px-3 py-2.5">
-                    {editTarget.media.type === 'image' && editTarget.media.url
-                      ? <img src={editTarget.media.url} alt={editTarget.media.fileName} className="h-10 w-10 rounded-lg object-cover shrink-0" />
-                      : <div className="h-10 w-10 rounded-lg bg-surface flex items-center justify-center shrink-0"><PlayIcon className="h-6 w-6 text-muted" /></div>}
-                    <div className="min-w-0">
-                      <p className="text-sm font-medium text-foreground truncate">{editTarget.media.fileName}</p>
-                      <p className="text-xs text-muted">{editTarget.terminal.name} · {formatSize(editTarget.media.size)}</p>
+                {editTarget && (() => {
+                  const m = editTarget.media;
+                  const o = editTarget.offer;
+                  const thumbUrl = m?.url ?? o?.renderedImageUrl ?? null;
+                  const thumbName = m?.fileName ?? o?.name ?? 'Item';
+                  const isVideo = m?.type === 'video';
+                  return (
+                    <div className="flex items-center gap-3 rounded-lg border border-border bg-surface-secondary px-3 py-2.5">
+                      {!isVideo && thumbUrl
+                        ? <img src={thumbUrl} alt={thumbName} className="h-10 w-10 rounded-lg object-cover shrink-0" />
+                        : <div className="h-10 w-10 rounded-lg bg-surface flex items-center justify-center shrink-0"><PlayIcon className="h-6 w-6 text-muted" /></div>}
+                      <div className="min-w-0">
+                        <p className="text-sm font-medium text-foreground truncate">{thumbName}</p>
+                        <p className="text-xs text-muted">{editTarget.terminal.name}{m ? ` · ${formatSize(m.size)}` : o ? ` · ${o.kind}` : ''}</p>
+                      </div>
                     </div>
-                  </div>
-                )}
+                  );
+                })()}
                 <div className="grid grid-cols-2 gap-3">
                   <Field label="Exibir a partir de">
                     <div className="flex gap-1.5">
@@ -1383,13 +1695,16 @@ function CampaignCard({ campaign, mediaTerminals, allMedias, stores, onDelete, o
           <Modal.Container placement="center" size="sm">
             <Modal.Dialog>
               <Modal.Header className="border-b border-border px-6 pb-4 pt-5">
-                <Modal.Heading className="text-base font-semibold text-foreground">Remover mídia</Modal.Heading>
+                <Modal.Heading className="text-base font-semibold text-foreground">
+                  {deleteTarget?.offerId ? 'Remover oferta da campanha' : 'Remover mídia'}
+                </Modal.Heading>
                 <Modal.CloseTrigger />
               </Modal.Header>
               <Modal.Body className="px-6 py-5">
                 <p className="text-sm text-muted">
-                  Tem certeza que deseja remover <span className="font-semibold text-foreground">{deleteTarget?.media.fileName}</span>?
-                  O arquivo será excluído permanentemente se não estiver vinculado a nenhuma outra campanha.
+                  Remover <span className="font-semibold text-foreground">{deleteTarget?.media?.fileName ?? deleteTarget?.offer?.name ?? 'este item'}</span>?
+                  {deleteTarget?.media && ' O arquivo será excluído permanentemente se não estiver vinculado a nenhuma outra campanha.'}
+                  {deleteTarget?.offerId && ' A oferta em si continua disponível em /ofertas. Os produtos dela que entraram nesta campanha por causa dela serão removidos (a menos que outra oferta da mesma campanha também os utilize).'}
                 </p>
               </Modal.Body>
               <Modal.Footer className="flex justify-end gap-2 border-t border-border px-6 pb-5 pt-4">
@@ -1516,6 +1831,99 @@ function CampaignCard({ campaign, mediaTerminals, allMedias, stores, onDelete, o
                 <Button variant="ghost" onPress={deleteProductModal.close} isDisabled={deletingProduct}>Cancelar</Button>
                 <Button variant="danger" onPress={handleDeleteProduct} isDisabled={deletingProduct}>
                   {deletingProduct ? 'Removendo...' : 'Remover'}
+                </Button>
+              </Modal.Footer>
+            </Modal.Dialog>
+          </Modal.Container>
+        </Modal.Backdrop>
+      </Modal>
+
+      {/* ── Add offer to campaign ── */}
+      <Modal state={addOfferModal}>
+        <Modal.Backdrop isDismissable>
+          <Modal.Container placement="center" size="lg">
+            <Modal.Dialog>
+              <Modal.Header className="border-b border-border px-6 pb-4 pt-5">
+                <Modal.Heading className="text-base font-semibold text-foreground">Adicionar oferta na campanha</Modal.Heading>
+                <Modal.CloseTrigger />
+              </Modal.Header>
+              <Modal.Body className="space-y-4 px-6 py-5">
+                <Field label="Oferta">
+                  {availableOffersLoading ? (
+                    <p className="text-sm text-muted">Carregando ofertas...</p>
+                  ) : availableOffers.length === 0 ? (
+                    <p className="text-sm text-muted">
+                      Nenhuma oferta ativa nesta loja. Crie em <strong>/ofertas</strong>.
+                    </p>
+                  ) : (
+                    <div className="max-h-72 overflow-auto rounded-lg border border-border divide-y divide-border">
+                      {availableOffers.map((o) => (
+                        <label key={o.id} className="flex items-center gap-3 px-3 py-2 cursor-pointer hover:bg-surface-secondary/50">
+                          <input
+                            type="radio"
+                            name="picked-offer"
+                            checked={pickedOfferId === o.id}
+                            onChange={() => setPickedOfferId(o.id)}
+                            className="h-4 w-4 accent-accent"
+                          />
+                          {o.renderedImageUrl ? (
+                            // eslint-disable-next-line @next/next/no-img-element
+                            <img src={o.renderedImageUrl} alt={o.name} className="h-12 w-12 rounded object-cover bg-surface-secondary" />
+                          ) : (
+                            <div className="h-12 w-12 rounded bg-surface-secondary flex items-center justify-center text-[10px] text-muted">sem render</div>
+                          )}
+                          <div className="flex-1 min-w-0">
+                            <p className="text-sm font-medium text-foreground truncate">{o.name}</p>
+                            <p className="text-xs text-muted">{o.products.length} produto(s)</p>
+                          </div>
+                        </label>
+                      ))}
+                    </div>
+                  )}
+                </Field>
+
+                {campaign.terminal?.id ? (
+                  <p className="text-xs text-muted">
+                    Terminal: <strong>{campaign.terminal.name}</strong> (definido pela campanha)
+                  </p>
+                ) : (
+                  <Field label="Terminal">
+                    <select className={inputClass} value={pickedTerminalId} onChange={(e) => setPickedTerminalId(e.target.value)}>
+                      <option value="">Selecione...</option>
+                      {storeTerminals.map((t) => <option key={t.id} value={t.id}>{t.name}</option>)}
+                    </select>
+                  </Field>
+                )}
+
+                <div className="grid grid-cols-2 gap-3">
+                  <Field label="Posição (0 = início)">
+                    <input
+                      type="number"
+                      min={0}
+                      className={inputClass}
+                      value={pickedPosition}
+                      onChange={(e) => setPickedPosition(parseInt(e.target.value) || 0)}
+                    />
+                  </Field>
+                  <Field label="Duração (segundos)" hint="3–300s — quanto tempo a oferta fica na tela">
+                    <input
+                      type="number"
+                      min={3}
+                      max={300}
+                      step={1}
+                      className={inputClass}
+                      value={pickedDuration}
+                      onChange={(e) => setPickedDuration(Math.max(3, Math.min(300, parseInt(e.target.value) || 10)))}
+                    />
+                  </Field>
+                </div>
+
+                {placeOfferError && <p className="rounded-lg bg-danger/10 px-3 py-2 text-sm text-danger">{placeOfferError}</p>}
+              </Modal.Body>
+              <Modal.Footer className="flex justify-end gap-2 border-t border-border px-6 pb-5 pt-4">
+                <Button variant="ghost" onPress={addOfferModal.close} isDisabled={placingOffer}>Cancelar</Button>
+                <Button variant="primary" onPress={placeOffer} isDisabled={placingOffer || !pickedOfferId}>
+                  {placingOffer ? 'Adicionando...' : 'Adicionar à campanha'}
                 </Button>
               </Modal.Footer>
             </Modal.Dialog>

@@ -11,6 +11,7 @@ const CAMPAIGN_INCLUDE = {
     orderBy: { order: 'asc' as const },
     include: {
       media:    { select: { id: true, url: true, fileName: true, mimeType: true, type: true, size: true } },
+      offer:    { select: { id: true, name: true, kind: true, renderedImageUrl: true, storeId: true, companyId: true } },
       terminal: {
         select: {
           id: true, name: true, isPriceChecker: true,

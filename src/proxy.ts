@@ -9,7 +9,7 @@ const SECRET = new TextEncoder().encode(
 // Rotas que só o master pode acessar
 const MASTER_ONLY_PATHS = ['/empresas', '/api/companies', '/licencas'];
 
-export async function middleware(req: NextRequest) {
+export async function proxy(req: NextRequest) {
   const { pathname } = req.nextUrl;
 
   // Passa livre: assets, login, auth, rotas públicas de terminal (Bearer auth própria)

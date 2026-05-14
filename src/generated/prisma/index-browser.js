@@ -237,6 +237,7 @@ exports.Prisma.CampaignProductScalarFieldEnum = {
   preco1: 'preco1',
   preco2: 'preco2',
   preco3: 'preco3',
+  imageUrl: 'imageUrl',
   productId: 'productId',
   campaignId: 'campaignId',
   storeId: 'storeId',
@@ -274,10 +275,12 @@ exports.Prisma.TerminalMediaScalarFieldEnum = {
   id: 'id',
   order: 'order',
   duration: 'duration',
+  enterAnimation: 'enterAnimation',
   startsAt: 'startsAt',
   endsAt: 'endsAt',
   terminalId: 'terminalId',
   mediaId: 'mediaId',
+  offerId: 'offerId',
   campaignId: 'campaignId'
 };
 
@@ -363,6 +366,52 @@ exports.Prisma.NotificationScalarFieldEnum = {
   createdAt: 'createdAt'
 };
 
+exports.Prisma.OfferLayoutScalarFieldEnum = {
+  id: 'id',
+  slug: 'slug',
+  category: 'category',
+  name: 'name',
+  description: 'description',
+  orientation: 'orientation',
+  backgroundUrl: 'backgroundUrl',
+  template: 'template',
+  isActive: 'isActive',
+  thumbnailUrl: 'thumbnailUrl',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.OfferScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  kind: 'kind',
+  leveX: 'leveX',
+  pagueY: 'pagueY',
+  brindeText: 'brindeText',
+  brindeImageUrl: 'brindeImageUrl',
+  renderedImageUrl: 'renderedImageUrl',
+  renderedAt: 'renderedAt',
+  isActive: 'isActive',
+  companyId: 'companyId',
+  storeId: 'storeId',
+  layoutId: 'layoutId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.OfferProductScalarFieldEnum = {
+  id: 'id',
+  ean: 'ean',
+  productName: 'productName',
+  preco1: 'preco1',
+  preco2: 'preco2',
+  preco3: 'preco3',
+  imageUrl: 'imageUrl',
+  productId: 'productId',
+  offerId: 'offerId',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.TerminalLayoutScalarFieldEnum = {
   id: 'id',
   slug: 'slug',
@@ -431,6 +480,9 @@ exports.Prisma.ModelName = {
   IntegrationCategory: 'IntegrationCategory',
   CompanyIntegration: 'CompanyIntegration',
   Notification: 'Notification',
+  OfferLayout: 'OfferLayout',
+  Offer: 'Offer',
+  OfferProduct: 'OfferProduct',
   TerminalLayout: 'TerminalLayout'
 };
 

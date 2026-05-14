@@ -104,6 +104,16 @@ const mainNav: NavItem[] = [
     ),
   },
   {
+    href: "/ofertas",
+    label: "Ofertas",
+    icon: (
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24">
+        <path d="M20.59 13.41 13.42 20.58a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+        <circle cx="7" cy="7" r="1.5" stroke="currentColor" strokeWidth="1.5"/>
+      </svg>
+    ),
+  },
+  {
     href: "/campanhas",
     label: "Campanhas",
     icon: (
